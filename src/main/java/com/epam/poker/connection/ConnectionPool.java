@@ -4,7 +4,6 @@ import com.epam.poker.exception.ConnectionPoolException;
 import com.epam.poker.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -17,18 +16,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    private static Logger LOGGER = LogManager.getLogger();
-    private static String POOL_SIZE_PROPERTIES = "poolSize";
-    private static String PROPERTIES_FILE_PATH = "properties.properties";
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
     private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
     private static final ReentrantLock CONNECTION_LOCKER = new ReentrantLock();
+    private static String POOL_SIZE_PROPERTIES = "poolSize";
+    private static String PROPERTIES_FILE_PATH = "properties.properties";
     private static int poolSize;
     private static Semaphore SEMAPHORE;
     private static ConnectionPool instance = null;
     private final Queue<ProxyConnection> freeConnections;
     private final Queue<ProxyConnection> busyConnections;
-    private final ConnectionCreator connectionCreator = new ConnectionCreator();
 
     public ConnectionPool() {
         try (InputStream inputStream =

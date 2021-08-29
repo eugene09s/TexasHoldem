@@ -1,10 +1,6 @@
 package com.epam.poker.connection;
 
 import com.epam.poker.exception.ConnectionPoolException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
