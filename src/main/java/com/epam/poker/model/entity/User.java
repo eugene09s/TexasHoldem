@@ -5,10 +5,11 @@ import com.epam.poker.model.enumeration.UserRole;
 import com.epam.poker.model.enumeration.UserStatus;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.StringJoiner;
 
 public class User implements Entity {
-    private long userId;
+    private BigInteger userId;
     private String login;
     private String password;
     private String firstName;
@@ -22,7 +23,7 @@ public class User implements Entity {
     private UserRole userRole;
     private UserStatus userStatus;
 
-    public User(long userId, String login, String password, String firstName, String lastName,
+    public User(BigInteger userId, String login, String password, String firstName, String lastName,
                 String email, BigDecimal balance, String photo, String createTime, long phoneNumber,
                 String aboutYourselt, UserRole userRole, UserStatus userStatus) {
         this.userId = userId;
@@ -43,11 +44,11 @@ public class User implements Entity {
     public User() {
     }
 
-    public long getUserId() {
+    public BigInteger getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
 
@@ -154,37 +155,41 @@ public class User implements Entity {
 
         User user = (User) o;
 
-        if (userId != user.userId) return false;
-        if (phoneNumber != user.phoneNumber) return false;
-        if (login != null ? !login.equals(user.login) : user.login != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (balance != null ? !balance.equals(user.balance) : user.balance != null) return false;
-        if (photo != null ? !photo.equals(user.photo) : user.photo != null) return false;
-        if (createTime != null ? !createTime.equals(user.createTime) : user.createTime != null) return false;
-        if (aboutYourselt != null ? !aboutYourselt.equals(user.aboutYourselt) : user.aboutYourselt != null)
+        if (getPhoneNumber() != user.getPhoneNumber()) return false;
+        if (getUserId() != null ? !getUserId().equals(user.getUserId()) : user.getUserId() != null) return false;
+        if (getLogin() != null ? !getLogin().equals(user.getLogin()) : user.getLogin() != null) return false;
+        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
             return false;
-        if (userRole != user.userRole) return false;
-        return userStatus == user.userStatus;
+        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null)
+            return false;
+        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null)
+            return false;
+        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
+        if (getBalance() != null ? !getBalance().equals(user.getBalance()) : user.getBalance() != null) return false;
+        if (getPhoto() != null ? !getPhoto().equals(user.getPhoto()) : user.getPhoto() != null) return false;
+        if (getCreateTime() != null ? !getCreateTime().equals(user.getCreateTime()) : user.getCreateTime() != null)
+            return false;
+        if (getAboutYourselt() != null ? !getAboutYourselt().equals(user.getAboutYourselt()) : user.getAboutYourselt() != null)
+            return false;
+        if (getUserRole() != user.getUserRole()) return false;
+        return getUserStatus() == user.getUserStatus();
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        result = 31 * result + (photo != null ? photo.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (int) (phoneNumber ^ (phoneNumber >>> 32));
-        result = 31 * result + (aboutYourselt != null ? aboutYourselt.hashCode() : 0);
-        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
-        result = 31 * result + (userStatus != null ? userStatus.hashCode() : 0);
+        int result = getUserId() != null ? getUserId().hashCode() : 0;
+        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getBalance() != null ? getBalance().hashCode() : 0);
+        result = 31 * result + (getPhoto() != null ? getPhoto().hashCode() : 0);
+        result = 31 * result + (getCreateTime() != null ? getCreateTime().hashCode() : 0);
+        result = 31 * result + (int) (getPhoneNumber() ^ (getPhoneNumber() >>> 32));
+        result = 31 * result + (getAboutYourselt() != null ? getAboutYourselt().hashCode() : 0);
+        result = 31 * result + (getUserRole() != null ? getUserRole().hashCode() : 0);
+        result = 31 * result + (getUserStatus() != null ? getUserStatus().hashCode() : 0);
         return result;
     }
 
@@ -218,7 +223,7 @@ public class User implements Entity {
             user = new User();
         }
 
-        public UserBuilder setUserId(long userId) {
+        public UserBuilder setUserId(BigInteger userId) {
             user.setUserId(userId);
             return this;
         }
