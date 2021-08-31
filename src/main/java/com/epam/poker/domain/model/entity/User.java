@@ -1,8 +1,8 @@
-package com.epam.poker.model.entity;
+package com.epam.poker.domain.model.entity;
 
-import com.epam.poker.model.Entity;
-import com.epam.poker.model.enumeration.UserRole;
-import com.epam.poker.model.enumeration.UserStatus;
+import com.epam.poker.domain.model.Entity;
+import com.epam.poker.domain.model.enumeration.UserRole;
+import com.epam.poker.domain.model.enumeration.UserStatus;
 
 import java.math.BigDecimal;
 import java.sql.Blob;

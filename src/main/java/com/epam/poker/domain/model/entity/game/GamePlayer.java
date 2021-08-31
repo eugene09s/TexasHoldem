@@ -1,6 +1,6 @@
-package com.epam.poker.model.entity.game;
+package com.epam.poker.domain.model.entity.game;
 
-import com.epam.poker.model.Entity;
+import com.epam.poker.domain.model.Entity;
 
 import java.util.StringJoiner;
 

@@ -1,6 +1,6 @@
-package com.epam.poker.model.entity;
+package com.epam.poker.domain.model.entity;
 
-import com.epam.poker.model.Entity;
+import com.epam.poker.domain.model.Entity;
 
 import java.math.BigDecimal;
 import java.util.StringJoiner;

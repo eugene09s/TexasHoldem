@@ -1,4 +1,4 @@
-package com.epam.poker.model.enumeration;
+package com.epam.poker.domain.model.enumeration;
 
 public enum UserStatus {
     ACTIVE,
