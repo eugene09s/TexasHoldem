@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `pokerschema`.`users` (
                                                      `photo` BLOB NULL,
                                                      `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                      `phone_number` VARCHAR(16) NULL DEFAULT '0000000000000000',
-                                                     `about _yourself` VARCHAR(512) NULL DEFAULT 'write about yourself',
+                                                     `about_yourself` VARCHAR(512) NULL DEFAULT 'write about yourself',
                                                      `user_role_id` BIGINT NOT NULL,
                                                      `user_status_id` BIGINT NOT NULL,
                                                      PRIMARY KEY (`user_id`),
