@@ -59,12 +59,12 @@ CREATE TABLE IF NOT EXISTS `pokerschema`.`games` (
 
 
 CREATE TABLE IF NOT EXISTS `pokerschema`.`game_winners` (
-                                                            `game_winners_id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                            game_winner_id BIGINT NOT NULL AUTO_INCREMENT,
                                                             `game_id` BIGINT NOT NULL,
                                                             `game_winner_user_id` BIGINT NOT NULL,
                                                             INDEX `player_user_id_idx` (`game_winner_user_id` ASC) VISIBLE,
-                                                            PRIMARY KEY (`game_winners_id`),
-                                                            UNIQUE INDEX `game_winners_id_UNIQUE` (`game_winners_id` ASC) VISIBLE,
+                                                            PRIMARY KEY (game_winner_id),
+                                                            UNIQUE INDEX `game_winners_id_UNIQUE` (game_winner_id ASC) VISIBLE,
                                                             CONSTRAINT `game_user_id`
                                                                 FOREIGN KEY (`game_id`)
                                                                     REFERENCES `pokerschema`.`games` (`game_id`)
