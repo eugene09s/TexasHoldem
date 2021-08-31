@@ -5,6 +5,7 @@ import com.epam.poker.model.enumeration.UserRole;
 import com.epam.poker.model.enumeration.UserStatus;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.StringJoiner;
 
 public class User implements Entity {
@@ -15,7 +16,7 @@ public class User implements Entity {
     private String lastName;
     private String email;
     private BigDecimal balance;
-    private String photo;
+    private Blob photo;
     private String createTime;
     private long phoneNumber;
     private String aboutYourselt;
@@ -23,7 +24,7 @@ public class User implements Entity {
     private UserStatus userStatus;
 
     public User(long userId, String login, String password, String firstName, String lastName,
-                String email, BigDecimal balance, String photo, String createTime, long phoneNumber,
+                String email, BigDecimal balance, Blob photo, String createTime, long phoneNumber,
                 String aboutYourselt, UserRole userRole, UserStatus userStatus) {
         this.userId = userId;
         this.login = login;
@@ -99,11 +100,11 @@ public class User implements Entity {
         this.balance = balance;
     }
 
-    public String getPhoto() {
+    public Blob getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Blob photo) {
         this.photo = photo;
     }
 
@@ -198,7 +199,7 @@ public class User implements Entity {
                 .add("lastName='" + lastName + "'")
                 .add("email='" + email + "'")
                 .add("balance=" + balance)
-                .add("photo='" + photo + "'")
+                .add("photo=" + photo)
                 .add("createTime='" + createTime + "'")
                 .add("phoneNumber=" + phoneNumber)
                 .add("aboutYourselt='" + aboutYourselt + "'")
@@ -253,7 +254,7 @@ public class User implements Entity {
             return this;
         }
 
-        public UserBuilder setPhoto(String photo) {
+        public UserBuilder setPhoto(Blob photo) {
             user.setPhoto(photo);
             return this;
         }
