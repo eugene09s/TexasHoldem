@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class ConnectionCreator {
     private static final Properties properties = new Properties();
-    private static final String DB_PROPERTIES_LOCATION = "database.properties";
+    private static final String DB_PROPERTIES_LOCATION = "prop/database.properties";
     private static final String URL_PROPERTY_KEY = "db.url";
     private static final String DB_DRIVER_PROPERTY_KEY = "db.driver";
     private static final String DB_URL;
