@@ -6,6 +6,7 @@ import com.epam.poker.model.enumeration.UserStatus;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
+import java.sql.Timestamp;
 import java.util.StringJoiner;
 
 public class User implements Entity {
@@ -17,14 +18,14 @@ public class User implements Entity {
     private String email;
     private BigDecimal balance;
     private Blob photo;
-    private String createTime;
+    private Timestamp createTime;
     private long phoneNumber;
     private String aboutYourselt;
     private UserRole userRole;
     private UserStatus userStatus;
 
     public User(long userId, String login, String password, String firstName, String lastName,
-                String email, BigDecimal balance, Blob photo, String createTime, long phoneNumber,
+                String email, BigDecimal balance, Blob photo, Timestamp createTime, long phoneNumber,
                 String aboutYourselt, UserRole userRole, UserStatus userStatus) {
         this.userId = userId;
         this.login = login;
@@ -108,11 +109,11 @@ public class User implements Entity {
         this.photo = photo;
     }
 
-    public String getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
@@ -200,7 +201,7 @@ public class User implements Entity {
                 .add("email='" + email + "'")
                 .add("balance=" + balance)
                 .add("photo=" + photo)
-                .add("createTime='" + createTime + "'")
+                .add("createTime=" + createTime)
                 .add("phoneNumber=" + phoneNumber)
                 .add("aboutYourselt='" + aboutYourselt + "'")
                 .add("userRole=" + userRole)
@@ -259,7 +260,7 @@ public class User implements Entity {
             return this;
         }
 
-        public UserBuilder setCreateTime(String createTime) {
+        public UserBuilder setCreateTime(Timestamp createTime) {
             user.setCreateTime(createTime);
             return this;
         }
