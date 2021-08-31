@@ -1,20 +1,22 @@
 package com.epam.poker.model.entity.game;
 
+import com.epam.poker.model.Entity;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.StringJoiner;
 
-public class Game {
+public class Game implements Entity {
     private long gameId;
     private String title;
-    private Timestamp timestamp;
+    private Timestamp date;
     private BigDecimal bank;
     private String fiveCards;
 
-    public Game(long gameId, String title, Timestamp timestamp, BigDecimal bank, String fiveCards) {
+    public Game(long gameId, String title, Timestamp date, BigDecimal bank, String fiveCards) {
         this.gameId = gameId;
         this.title = title;
-        this.timestamp = timestamp;
+        this.date = date;
         this.bank = bank;
         this.fiveCards = fiveCards;
     }
@@ -38,12 +40,12 @@ public class Game {
         this.title = title;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     public BigDecimal getBank() {
@@ -71,7 +73,7 @@ public class Game {
 
         if (gameId != game.gameId) return false;
         if (title != null ? !title.equals(game.title) : game.title != null) return false;
-        if (timestamp != null ? !timestamp.equals(game.timestamp) : game.timestamp != null) return false;
+        if (date != null ? !date.equals(game.date) : game.date != null) return false;
         if (bank != null ? !bank.equals(game.bank) : game.bank != null) return false;
         return fiveCards != null ? fiveCards.equals(game.fiveCards) : game.fiveCards == null;
     }
@@ -80,7 +82,7 @@ public class Game {
     public int hashCode() {
         int result = (int) (gameId ^ (gameId >>> 32));
         result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (bank != null ? bank.hashCode() : 0);
         result = 31 * result + (fiveCards != null ? fiveCards.hashCode() : 0);
         return result;
@@ -91,7 +93,7 @@ public class Game {
         return new StringJoiner(", ", Game.class.getSimpleName() + "[", "]")
                 .add("gameId=" + gameId)
                 .add("title='" + title + "'")
-                .add("timestamp=" + timestamp)
+                .add("timestamp=" + date)
                 .add("bank=" + bank)
                 .add("fiveCards='" + fiveCards + "'")
                 .toString();
@@ -118,8 +120,8 @@ public class Game {
             return this;
         }
 
-        public GameBuilder setTimestamp(Timestamp timestamp) {
-            game.setTimestamp(timestamp);
+        public GameBuilder setDate(Timestamp date) {
+            game.setDate(date);
             return this;
         }
 

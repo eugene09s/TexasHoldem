@@ -1,8 +1,10 @@
 package com.epam.poker.model.entity.game;
 
+import com.epam.poker.model.Entity;
+
 import java.util.StringJoiner;
 
-public class GamePlayer {
+public class GamePlayer implements Entity {
     private long gamePlayerId;
     private String lastAction;
     private String twoCards;
