@@ -6,9 +6,9 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.epam.poker.dao.mapper;
+package com.epam.poker.domain.mapper;
 
-import com.epam.poker.model.Entity;
+import com.epam.poker.domain.model.Entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

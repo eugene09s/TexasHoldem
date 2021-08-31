@@ -1,23 +1,22 @@
-package com.epam.poker.dao.mapper.impl;
+package com.epam.poker.domain.mapper.impl;
 
-import com.epam.poker.dao.mapper.RowMapper;
-import com.epam.poker.model.entity.User;
-import com.epam.poker.model.enumeration.UserRole;
-import com.epam.poker.model.enumeration.UserStatus;
+import com.epam.poker.domain.mapper.RowMapper;
+import com.epam.poker.domain.model.entity.User;
+import com.epam.poker.domain.model.enumeration.UserRole;
+import com.epam.poker.domain.model.enumeration.UserStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.epam.poker.dao.ColumnName.*;
+import static com.epam.poker.domain.dao.ColumnName.*;
 
 public class UserRowMapper implements RowMapper<User> {
 
     @Override
     public User map(ResultSet resultSet) throws SQLException {
-        User user = User.builder()
+        return User.builder()
                 .setUserId(resultSet.getLong(USER_ID))
                 .setLogin(resultSet.getString(USER_LOGIN))
-                .setPassword(resultSet.getString(USER_PASSWORD))
                 .setFirstName(resultSet.getString(USER_FIRST_NAME))
                 .setLastName(resultSet.getString(USER_LAST_NAME))
                 .setEmail(resultSet.getString(USER_EMAIL))
@@ -29,6 +28,5 @@ public class UserRowMapper implements RowMapper<User> {
                 .setUserRole(UserRole.valueOf(resultSet.getString(ROLE_ROLE)))
                 .setUserStatus(UserStatus.valueOf(resultSet.getString(STATUS_STATUS)))
                 .createUser();
-        return user;
     }
 }
