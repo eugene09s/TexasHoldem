@@ -1,8 +1,10 @@
-package com.epam.poker.dao;
+package com.epam.poker.domain.dao;
 
-import com.epam.poker.dao.mapper.RowMapper;
+import com.epam.poker.domain.mapper.RowMapper;
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.model.Entity;
+import com.epam.poker.domain.model.Entity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,11 +23,6 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     }
 
     @Override
-    public List<T> findAll() throws DaoException {
-        return executeQuery("SELECT * FROM " + tableName);
-    }
-
-    @Override
     public int findRowsAmount(Optional<String> additionalCondition) throws DaoException {
         String queryRowsAmount = "SELECT COUNT(*) FROM " + tableName;
         if (additionalCondition.isPresent()) {
@@ -40,15 +37,15 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         }
     }
 
-    @Override
-    public void deleteById(long id) throws DaoException {
-        executeUpdate("DELETE FROM " + tableName + " WHERE id=" + id);
-    }
-
-    @Override
-    public Optional<T> findById(long id) throws DaoException {
-        return executeForSingleResult("SELECT * FROM " + tableName + " WHERE id=" + id);
-    }
+//    @Override
+//    public void deleteById(long id) throws DaoException {
+//        executeUpdate("DELETE FROM " + tableName + " WHERE id=" + id);
+//    }
+//
+//    @Override
+//    public Optional<T> findById(long id) throws DaoException {
+//        return executeForSingleResult("SELECT * FROM " + tableName + " WHERE id=" + id);
+//    }
 
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
         try (PreparedStatement statement = createStatement(query, params)) {

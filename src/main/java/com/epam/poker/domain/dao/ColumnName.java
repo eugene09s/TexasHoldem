@@ -1,4 +1,4 @@
-package com.epam.poker.dao;
+package com.epam.poker.domain.dao;
 
 public final class ColumnName {
     private ColumnName() {
