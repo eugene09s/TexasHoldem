@@ -1,12 +1,12 @@
-package com.epam.poker.domain.mapper.impl.game;
+package com.epam.poker.mapper.impl.game;
 
-import com.epam.poker.domain.mapper.RowMapper;
-import com.epam.poker.domain.model.entity.game.GameWinner;
+import com.epam.poker.mapper.RowMapper;
+import com.epam.poker.model.entity.game.GameWinner;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.epam.poker.domain.dao.ColumnName.*;
+import static com.epam.poker.dao.ColumnName.*;
 
 public class GameWinnerRowMapper implements RowMapper<GameWinner> {
     @Override

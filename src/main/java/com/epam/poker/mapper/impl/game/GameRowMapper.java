@@ -1,12 +1,12 @@
-package com.epam.poker.domain.mapper.impl.game;
+package com.epam.poker.mapper.impl.game;
 
-import com.epam.poker.domain.mapper.RowMapper;
-import com.epam.poker.domain.model.entity.game.Game;
+import com.epam.poker.mapper.RowMapper;
+import com.epam.poker.model.entity.game.Game;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.epam.poker.domain.dao.ColumnName.*;
+import static com.epam.poker.dao.ColumnName.*;
 
 public class GameRowMapper implements RowMapper<Game> {
 
