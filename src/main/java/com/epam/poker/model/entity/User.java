@@ -1,11 +1,10 @@
-package com.epam.poker.domain.model.entity;
+package com.epam.poker.model.entity;
 
-import com.epam.poker.domain.model.Entity;
-import com.epam.poker.domain.model.enumeration.UserRole;
-import com.epam.poker.domain.model.enumeration.UserStatus;
+import com.epam.poker.model.Entity;
+import com.epam.poker.model.enumeration.UserRole;
+import com.epam.poker.model.enumeration.UserStatus;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.StringJoiner;
 
@@ -17,16 +16,14 @@ public class User implements Entity {
     private String lastName;
     private String email;
     private BigDecimal balance;
-    private Blob photo;
-    private Timestamp createTime;
-    private long phoneNumber;
-    private String aboutYourselt;
     private UserRole userRole;
     private UserStatus userStatus;
+    private long phoneNumber;
+    private Timestamp createTime;
 
     public User(long userId, String login, String password, String firstName, String lastName,
-                String email, BigDecimal balance, Blob photo, Timestamp createTime, long phoneNumber,
-                String aboutYourselt, UserRole userRole, UserStatus userStatus) {
+                String email, BigDecimal balance, UserRole userRole, UserStatus userStatus,
+                long phoneNumber, Timestamp createTime) {
         this.userId = userId;
         this.login = login;
         this.password = password;
@@ -34,12 +31,10 @@ public class User implements Entity {
         this.lastName = lastName;
         this.email = email;
         this.balance = balance;
-        this.photo = photo;
-        this.createTime = createTime;
-        this.phoneNumber = phoneNumber;
-        this.aboutYourselt = aboutYourselt;
         this.userRole = userRole;
         this.userStatus = userStatus;
+        this.phoneNumber = phoneNumber;
+        this.createTime = createTime;
     }
 
     public User() {
@@ -49,104 +44,99 @@ public class User implements Entity {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public User setUserId(long userId) {
         this.userId = userId;
+        return this;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public User setLogin(String login) {
         this.login = login;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public User setBalance(BigDecimal balance) {
         this.balance = balance;
-    }
-
-    public Blob getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Blob photo) {
-        this.photo = photo;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(long phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAboutYourselt() {
-        return aboutYourselt;
-    }
-
-    public void setAboutYourselt(String aboutYourselt) {
-        this.aboutYourselt = aboutYourselt;
+        return this;
     }
 
     public UserRole getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(UserRole userRole) {
+    public User setUserRole(UserRole userRole) {
         this.userRole = userRole;
+        return this;
     }
 
     public UserStatus getUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(UserStatus userStatus) {
+    public User setUserStatus(UserStatus userStatus) {
         this.userStatus = userStatus;
+        return this;
+    }
+
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public User setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public User setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+        return this;
     }
 
     @Override
@@ -164,12 +154,9 @@ public class User implements Entity {
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (balance != null ? !balance.equals(user.balance) : user.balance != null) return false;
-        if (photo != null ? !photo.equals(user.photo) : user.photo != null) return false;
-        if (createTime != null ? !createTime.equals(user.createTime) : user.createTime != null) return false;
-        if (aboutYourselt != null ? !aboutYourselt.equals(user.aboutYourselt) : user.aboutYourselt != null)
-            return false;
         if (userRole != user.userRole) return false;
-        return userStatus == user.userStatus;
+        if (userStatus != user.userStatus) return false;
+        return createTime != null ? createTime.equals(user.createTime) : user.createTime == null;
     }
 
     @Override
@@ -181,12 +168,10 @@ public class User implements Entity {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        result = 31 * result + (photo != null ? photo.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (int) (phoneNumber ^ (phoneNumber >>> 32));
-        result = 31 * result + (aboutYourselt != null ? aboutYourselt.hashCode() : 0);
         result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         result = 31 * result + (userStatus != null ? userStatus.hashCode() : 0);
+        result = 31 * result + (int) (phoneNumber ^ (phoneNumber >>> 32));
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         return result;
     }
 
@@ -200,12 +185,10 @@ public class User implements Entity {
                 .add("lastName='" + lastName + "'")
                 .add("email='" + email + "'")
                 .add("balance=" + balance)
-                .add("photo=" + photo)
-                .add("createTime=" + createTime)
-                .add("phoneNumber=" + phoneNumber)
-                .add("aboutYourselt='" + aboutYourselt + "'")
                 .add("userRole=" + userRole)
                 .add("userStatus=" + userStatus)
+                .add("phoneNumber=" + phoneNumber)
+                .add("createTime=" + createTime)
                 .toString();
     }
 
@@ -255,26 +238,6 @@ public class User implements Entity {
             return this;
         }
 
-        public UserBuilder setPhoto(Blob photo) {
-            user.setPhoto(photo);
-            return this;
-        }
-
-        public UserBuilder setCreateTime(Timestamp createTime) {
-            user.setCreateTime(createTime);
-            return this;
-        }
-
-        public UserBuilder setPhoneNumber(long phoneNumber) {
-            user.setPhoneNumber(phoneNumber);
-            return this;
-        }
-
-        public UserBuilder setAboutYourselt(String aboutYourselt) {
-            user.setAboutYourselt(aboutYourselt);
-            return this;
-        }
-
         public UserBuilder setUserRole(UserRole userRole) {
             user.setUserRole(userRole);
             return this;
@@ -285,8 +248,18 @@ public class User implements Entity {
             return this;
         }
 
+        public UserBuilder setPhoneNumber(long phoneNumber) {
+            user.setPhoneNumber(phoneNumber);
+            return this;
+        }
+
+        public UserBuilder setCreateTime(Timestamp timestamp) {
+            user.setCreateTime(timestamp);
+            return this;
+        }
+
         public User createUser() {
-            return new User();
+            return user;
         }
     }
 }

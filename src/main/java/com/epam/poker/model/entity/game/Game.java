@@ -1,6 +1,6 @@
-package com.epam.poker.domain.model.entity.game;
+package com.epam.poker.model.entity.game;
 
-import com.epam.poker.domain.model.Entity;
+import com.epam.poker.model.Entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -136,7 +136,7 @@ public class Game implements Entity {
         }
 
         public Game createGame() {
-            return new Game();
+            return game;
         }
     }
 }

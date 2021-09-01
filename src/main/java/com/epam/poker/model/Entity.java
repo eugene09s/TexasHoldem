@@ -1,4 +1,4 @@
-package com.epam.poker.domain.model;
+package com.epam.poker.model;
 
 import java.io.Serializable;
 

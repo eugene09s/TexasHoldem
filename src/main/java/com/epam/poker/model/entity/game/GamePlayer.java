@@ -1,6 +1,6 @@
-package com.epam.poker.domain.model.entity.game;
+package com.epam.poker.model.entity.game;
 
-import com.epam.poker.domain.model.Entity;
+import com.epam.poker.model.Entity;
 
 import java.util.StringJoiner;
 
@@ -158,7 +158,7 @@ public class GamePlayer implements Entity {
         }
 
         public GamePlayer createGamePlayer() {
-            return new GamePlayer();
+            return gamePlayer;
         }
     }
 }
