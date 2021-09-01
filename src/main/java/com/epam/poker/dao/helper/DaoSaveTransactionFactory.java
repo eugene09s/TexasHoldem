@@ -1,4 +1,4 @@
-package com.epam.poker.domain.dao.helper;
+package com.epam.poker.dao.helper;
 
 import com.epam.poker.connection.ConnectionPool;
 

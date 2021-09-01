@@ -1,10 +1,8 @@
-package com.epam.poker.domain.dao;
+package com.epam.poker.dao;
 
-import com.epam.poker.domain.mapper.RowMapper;
+import com.epam.poker.mapper.RowMapper;
+import com.epam.poker.model.Entity;
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.domain.model.Entity;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -63,9 +61,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     private PreparedStatement createStatement(String query, Object... params) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query);
-        for (int i = 1; i <= params.length; i++) {
-            statement.setObject(i, params[i - 1]);
-        }
+        setParametersInPreparedStatement(statement, params);
         return statement;
     }
 
@@ -80,13 +76,15 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         }
     }
 
-    protected void executeUpdate(String query) throws DaoException {
+    protected boolean executeUpdateQuery(String query, Object... param) throws DaoException {
+        int result = 0;
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(query);
+            PreparedStatement statement = createStatement(query, param);
+            result = statement.executeUpdate(query);
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+        return result == 1;
     }
 
     protected void updateSingle(String query, Object... params) throws DaoException {
@@ -94,6 +92,26 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
+        }
+    }
+
+    public long executeInsertQuery(String query, Object... param) throws DaoException {
+        long generatedId = 0;
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            setParametersInPreparedStatement(statement, param);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            generatedId = resultSet.getLong(1);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return generatedId;
+    }
+
+    private void setParametersInPreparedStatement(PreparedStatement statement, Object... parameters) throws SQLException {
+        for (int i = 1; i <= parameters.length; i++) {
+            statement.setObject(i, parameters[i-1]);
         }
     }
 }

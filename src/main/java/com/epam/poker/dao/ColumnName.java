@@ -1,4 +1,4 @@
-package com.epam.poker.domain.dao;
+package com.epam.poker.dao;
 
 public final class ColumnName {
     private ColumnName() {
@@ -6,9 +6,10 @@ public final class ColumnName {
 
     //Tables
     public static final String USERS = "users";
-    public static final String ROLES = "roles";
-    public static final String STATUSES = "statuses";
-    public static final String RATING_PLAYERS = "rating_players";
+    public static final String PROFILE_PLAYERS = "profile_players";
+    public static final String GAME_PlAYERS = "game_players";
+    public static final String GAMES = "games";
+    public static final String GAME_WINNERS = "game_winners";
 
     //Table "users"
     public static final String USER_ID = "user_id";
@@ -18,26 +19,19 @@ public final class ColumnName {
     public static final String USER_LAST_NAME = "last_name";
     public static final String USER_EMAIL = "email";
     public static final String USER_BALANCE = "balance";
-    public static final String USER_PHOTO = "photo";
-    public static final String USER_CREATE_TIME = "create_time";
+    public static final String USER_ROLE = "role";
+    public static final String USER_STATUS = "status";
     public static final String USER_PHONE_NUMBER = "phone_number";
-    public static final String USER_ABOUT_YOURSELF = "about_yourself";
-    public static final String USER_ROLE_ID = "user_role_id";
-    public static final String USER_STATUS_ID = "user_status_id";
+    public static final String USER_CREATE_TIME = "create_time";
 
-    //Table "roles"
-    public static final String ROLE_ID = "role_id";
-    public static final String ROLE_ROLE = "role";
+    //Table "profile_players"
+    public static final String PROFILE_PLAYER_USER_ID = "player_id";
+    public static final String PROFILE_PLAYER_RANKING = "ranking";
+    public static final String PROFILE_PLAYER_BEST_PRIZE = "best_prize";
+    public static final String PROFILE_PLAYER_AWARD = "award";
+    public static final String PROFILE_PLAYER_PHOTO = "photo";
+    public static final String PROFILE_PLAYER_ABOUT_YOURSELF = "about_yourself";
 
-    //Table "statuses"
-    public static final String STATUS_ID = "status_id";
-    public static final String STATUS_STATUS = "status";
-
-    //Table "rating_players"
-    public static final String RATING_PLAYER_USER_ID = "player_id";
-    public static final String RATING_PLAYER_RANKING = "ranking";
-    public static final String RATING_PLAYER_BEST_PRIZE = "best_prize";
-    public static final String RATING_PLAYER_AWARD = "award";
 
     //Table "game_players"
     public static final String GAME_PLAYER_ID = "game_player_id";

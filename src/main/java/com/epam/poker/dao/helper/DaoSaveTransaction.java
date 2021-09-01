@@ -1,9 +1,9 @@
-package com.epam.poker.domain.dao.helper;
+package com.epam.poker.dao.helper;
 
 import com.epam.poker.connection.ConnectionPool;
 import com.epam.poker.connection.ProxyConnection;
-import com.epam.poker.domain.dao.UserDao;
-import com.epam.poker.domain.dao.impl.UserDaoImpl;
+import com.epam.poker.dao.UserDao;
+import com.epam.poker.dao.impl.UserDaoImpl;
 import com.epam.poker.exception.DaoException;
 
 import java.sql.SQLException;

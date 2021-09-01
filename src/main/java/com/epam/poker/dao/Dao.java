@@ -1,7 +1,7 @@
-package com.epam.poker.domain.dao;
+package com.epam.poker.dao;
 
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.domain.model.Entity;
+import com.epam.poker.model.Entity;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,20 +37,13 @@ public interface Dao<T extends Entity> {
     /**
      * Saves specific object to database.
      *
-     * @param  item  <T> object to save or update.
+     * @param  item  <T> object to update.
+     *
+     * @return boolean value successe or fail update
      *
      * @throws  DaoException  if database errors occurs.
      */
-    void save(T item) throws DaoException;
-
-    /**
-     * Removes specific object in database by id.
-     *
-     * @param  id  an id value of object to remove.
-     *
-     * @throws  DaoException  if database errors occurs.
-     */
-    void deleteById(long id) throws DaoException;
+    boolean update(T item) throws DaoException;
 
     /**
      * Gets rows amount in specific table.
@@ -62,4 +55,5 @@ public interface Dao<T extends Entity> {
      * @throws  DaoException  if database errors occurs.
      */
     int findRowsAmount(Optional<String> additionalCondition) throws DaoException;
+    long add(T t) throws DaoException;
 }
