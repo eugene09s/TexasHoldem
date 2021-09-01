@@ -1,6 +1,6 @@
-package com.epam.poker.domain.dao;
+package com.epam.poker.dao;
 
-import com.epam.poker.domain.model.entity.User;
+import com.epam.poker.model.entity.User;
 import com.epam.poker.exception.DaoException;
 
 import java.math.BigDecimal;
@@ -43,7 +43,7 @@ public interface UserDao  extends Dao<User> {
      *
      * @throws  DaoException  if database errors occurs.
      */
-    Optional<User> findAccountByLoginPassword(String login, String password) throws DaoException;
+    Optional<User> findUserByLoginPassword(String login, String password) throws DaoException;
 
     /**
      * Finds user in database by login and returns container of account
@@ -55,25 +55,29 @@ public interface UserDao  extends Dao<User> {
      *
      * @throws  DaoException  if database errors occurs.
      */
-    Optional<User> findAccountByLogin(String login) throws DaoException;
+    Optional<User> findUserByLogin(String login) throws DaoException;
 
     /**
      * Blocks user by id.
      *
      * @param  id  an id value of user to block.
      *
+     * @return boolean value successe or fail update
+     *
      * @throws  DaoException  if database errors occurs.
      */
-    void blockById(long id) throws DaoException;
+    boolean blockById(long id) throws DaoException;
 
     /**
      * Unblock account by id.
+     *
+     * @return boolean value successe or fail update
      *
      * @param  id  an id value of account to unblock.
      *
      * @throws  DaoException  if database errors occurs.
      */
-    void unblockById(long id) throws DaoException;
+    boolean unblockById(long id) throws DaoException;
 
     /**
      * Adds money value to balance of user by user id.
@@ -81,7 +85,10 @@ public interface UserDao  extends Dao<User> {
      * @param  money  a money value to add.
      * @param  id     an id value of account.
      *
+     * @return boolean value successe or fail update
+     *
      * @throws  DaoException  if database errors occurs.
      */
-    void addMoneyById(BigDecimal money, long id) throws DaoException;
+    boolean addMoneyById(BigDecimal money, long id) throws DaoException;
+    public boolean updatePassword(long userId, String password) throws DaoException;
 }
