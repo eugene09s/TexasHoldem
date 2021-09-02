@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `pokerschema`.`game_winners` (
                                                                     ON UPDATE CASCADE);
 
 CREATE TABLE IF NOT EXISTS `pokerschema`.`profile_players` (
-                                                               `player_id` BIGINT NOT NULL AUTO_INCREMENT,
+                                                               `player_id` BIGINT NOT NULL,
                                                                `ranking` DECIMAL(4,2) NOT NULL DEFAULT 0,
                                                                `best_prize` DECIMAL(10,2) NOT NULL DEFAULT 0,
                                                                `award` VARCHAR(128) NULL DEFAULT NULL,
