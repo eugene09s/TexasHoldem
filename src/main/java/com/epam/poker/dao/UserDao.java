@@ -10,7 +10,7 @@ import java.util.Optional;
 /*
 *   Extending DAO interface for processing Users
  */
-public interface UserDao  extends Dao<User> {
+public interface UserDao extends Dao<User> {
 
     /**
     *   Gets list users in range described as offset and amount of users.
@@ -103,5 +103,5 @@ public interface UserDao  extends Dao<User> {
      */
     boolean update(User item) throws DaoException;
     long add(User t) throws DaoException;
-    public boolean updatePassword(long userId, String password) throws DaoException;
+    boolean updatePassword(long userId, String password) throws DaoException;
 }

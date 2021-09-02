@@ -22,6 +22,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             FROM 
             users 
             """;
+
     public static final String SQL_ADD_USER = """
             INSERT INTO 
             users
@@ -142,7 +143,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public Optional<User> findUserByLogin(String login) throws DaoException {
-        return Optional.empty();
+        return executeForSingleResult(SQL_FIND_BY_LOGIN, login);
     }
 
     @Override
