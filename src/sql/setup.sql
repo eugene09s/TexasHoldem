@@ -53,6 +53,8 @@ CREATE TABLE IF NOT EXISTS `pokerschema`.`profile_players` (
                                                                `award` VARCHAR(128) NULL DEFAULT NULL,
                                                                `photo` BLOB NULL DEFAULT NULL,
                                                                `about_yourself` VARCHAR(512) NULL DEFAULT NULL,
+                                                               `lost_money` DECIMAL(10,2) NOT NULL,
+                                                               `win_money` DECIMAL(10,2) NOT NULL,
                                                                UNIQUE INDEX `player_id_UNIQUE` (`player_id` ASC) VISIBLE,
                                                                PRIMARY KEY (`player_id`),
                                                                CONSTRAINT `player_id`

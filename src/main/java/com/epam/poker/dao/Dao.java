@@ -35,17 +35,6 @@ public interface Dao<T extends Entity> {
     List<T> findAll() throws DaoException;
 
     /**
-     * Saves specific object to database.
-     *
-     * @param  item  <T> object to update.
-     *
-     * @return boolean value successe or fail update
-     *
-     * @throws  DaoException  if database errors occurs.
-     */
-    boolean update(T item) throws DaoException;
-
-    /**
      * Gets rows amount in specific table.
      *
      * @param  additionalCondition  an optional condition to query presented in string.
@@ -55,5 +44,4 @@ public interface Dao<T extends Entity> {
      * @throws  DaoException  if database errors occurs.
      */
     int findRowsAmount(Optional<String> additionalCondition) throws DaoException;
-    long add(T t) throws DaoException;
 }

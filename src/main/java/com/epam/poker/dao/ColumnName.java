@@ -26,12 +26,12 @@ public final class ColumnName {
 
     //Table "profile_players"
     public static final String PROFILE_PLAYER_USER_ID = "player_id";
-    public static final String PROFILE_PLAYER_RANKING = "ranking";
     public static final String PROFILE_PLAYER_BEST_PRIZE = "best_prize";
     public static final String PROFILE_PLAYER_AWARD = "award";
     public static final String PROFILE_PLAYER_PHOTO = "photo";
     public static final String PROFILE_PLAYER_ABOUT_YOURSELF = "about_yourself";
-
+    public static final String PROFILE_PLAYER_LOST_MONEY = "lost_money";
+    public static final String PROFILE_PLAYER_WIN_MONEY = "win_money";
 
     //Table "game_players"
     public static final String GAME_PLAYER_ID = "game_player_id";

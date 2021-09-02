@@ -2,12 +2,10 @@ package com.epam.poker.dao.impl;
 
 import com.epam.poker.dao.AbstractDao;
 import com.epam.poker.dao.UserDao;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.mapper.impl.UserRowMapper;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.enumeration.UserStatus;
-import com.epam.poker.exception.DaoException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -17,7 +15,6 @@ import java.util.Optional;
 import static com.epam.poker.dao.ColumnName.USERS;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
-    private static Logger LOGGER = LogManager.getLogger();
     public static final String SQL_FIND_ALL_USERS = """
             SELECT 
             user_id, login, password, first_name, last_name, email, 
@@ -176,7 +173,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public long add(User user) throws DaoException {
         long generatedId = 0;
-        try {
             generatedId = executeInsertQuery(SQL_ADD_USER,
                     user.getLogin(),
                     user.getPassword(),
@@ -189,10 +185,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     user.getPhoneNumber(),
                     user.getCreateTime()
             );
-        } catch (DaoException e) {
-            LOGGER.error(e);
-            throw new DaoException(e);
-        }
         user.setUserId(generatedId);
         return generatedId;
     }

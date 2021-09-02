@@ -8,20 +8,22 @@ import java.util.StringJoiner;
 
 public class ProfilePlayer implements Entity {
     private long userId;
-    private BigDecimal ranking;
     private BigDecimal bestPrize;
     private String award;
     private Blob photo;
     private String aboutYourselt;
+    private BigDecimal lostMoney;
+    private BigDecimal winMoney;
 
-    public ProfilePlayer(long userId, BigDecimal ranking, BigDecimal bestPrize,
-                         String award, Blob photo, String aboutYourselt) {
+    public ProfilePlayer(long userId, BigDecimal bestPrize, String award, Blob photo,
+                         String aboutYourselt, BigDecimal lostMoney, BigDecimal winMoney) {
         this.userId = userId;
-        this.ranking = ranking;
         this.bestPrize = bestPrize;
         this.award = award;
         this.photo = photo;
         this.aboutYourselt = aboutYourselt;
+        this.lostMoney = lostMoney;
+        this.winMoney = winMoney;
     }
 
     private ProfilePlayer() {
@@ -36,12 +38,21 @@ public class ProfilePlayer implements Entity {
         return this;
     }
 
-    public BigDecimal getRanking() {
-        return ranking;
+    public BigDecimal getLostMoney() {
+        return lostMoney;
     }
 
-    public ProfilePlayer setRanking(BigDecimal ranking) {
-        this.ranking = ranking;
+    public ProfilePlayer setLostMoney(BigDecimal lostMoney) {
+        this.lostMoney = lostMoney;
+        return this;
+    }
+
+    public BigDecimal getWinMoney() {
+        return winMoney;
+    }
+
+    public ProfilePlayer setWinMoney(BigDecimal winMoney) {
+        this.winMoney = winMoney;
         return this;
     }
 
@@ -89,21 +100,24 @@ public class ProfilePlayer implements Entity {
         ProfilePlayer that = (ProfilePlayer) o;
 
         if (userId != that.userId) return false;
-        if (ranking != null ? !ranking.equals(that.ranking) : that.ranking != null) return false;
         if (bestPrize != null ? !bestPrize.equals(that.bestPrize) : that.bestPrize != null) return false;
         if (award != null ? !award.equals(that.award) : that.award != null) return false;
         if (photo != null ? !photo.equals(that.photo) : that.photo != null) return false;
-        return aboutYourselt != null ? aboutYourselt.equals(that.aboutYourselt) : that.aboutYourselt == null;
+        if (aboutYourselt != null ? !aboutYourselt.equals(that.aboutYourselt) : that.aboutYourselt != null)
+            return false;
+        if (lostMoney != null ? !lostMoney.equals(that.lostMoney) : that.lostMoney != null) return false;
+        return winMoney != null ? winMoney.equals(that.winMoney) : that.winMoney == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (ranking != null ? ranking.hashCode() : 0);
         result = 31 * result + (bestPrize != null ? bestPrize.hashCode() : 0);
         result = 31 * result + (award != null ? award.hashCode() : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
         result = 31 * result + (aboutYourselt != null ? aboutYourselt.hashCode() : 0);
+        result = 31 * result + (lostMoney != null ? lostMoney.hashCode() : 0);
+        result = 31 * result + (winMoney != null ? winMoney.hashCode() : 0);
         return result;
     }
 
@@ -111,11 +125,12 @@ public class ProfilePlayer implements Entity {
     public String toString() {
         return new StringJoiner(", ", ProfilePlayer.class.getSimpleName() + "[", "]")
                 .add("userId=" + userId)
-                .add("ranking=" + ranking)
                 .add("bestPrize=" + bestPrize)
                 .add("award='" + award + "'")
                 .add("photo=" + photo)
                 .add("aboutYourselt='" + aboutYourselt + "'")
+                .add("lostMoney=" + lostMoney)
+                .add("winMoney=" + winMoney)
                 .toString();
     }
 
@@ -135,8 +150,13 @@ public class ProfilePlayer implements Entity {
             return this;
         }
 
-        public ProfilePlayerBuilder setRanking(BigDecimal ranking) {
-            profilePlayer.setRanking(ranking);
+        public ProfilePlayerBuilder setLostMoney(BigDecimal money) {
+            profilePlayer.setLostMoney(money);
+            return this;
+        }
+
+        public ProfilePlayerBuilder setWinMoney(BigDecimal money) {
+            profilePlayer.setWinMoney(money);
             return this;
         }
 
