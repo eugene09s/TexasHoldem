@@ -35,16 +35,6 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         }
     }
 
-//    @Override
-//    public void deleteById(long id) throws DaoException {
-//        executeUpdate("DELETE FROM " + tableName + " WHERE id=" + id);
-//    }
-//
-//    @Override
-//    public Optional<T> findById(long id) throws DaoException {
-//        return executeForSingleResult("SELECT * FROM " + tableName + " WHERE id=" + id);
-//    }
-
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
         try (PreparedStatement statement = createStatement(query, params)) {
             ResultSet resultSet = statement.executeQuery();
