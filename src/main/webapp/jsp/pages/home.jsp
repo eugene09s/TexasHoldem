@@ -5,7 +5,6 @@
   Time: 22:41
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -16,13 +15,13 @@
 
 <html>
 <head>
-    <title><fmt:message key="title.main"/></title>
-    <c:import url="../pages/parts/header.jsp"/>
+<%--    <title><fmt:message key="title.main"/></title>--%>
+    <c:import url="parts/head.jsp"/>
 </head>
 <body>
-<c:import url="../pages/parts/navbar.jsp"/>
+<c:import url="parts/navbar.jsp"/>
 
-<div class="all-packages-container">
+<div class="container">
     <span>
         <h2>Texas Poker</h2>
         <p>rules:</p>

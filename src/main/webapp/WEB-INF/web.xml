@@ -5,14 +5,10 @@
          version="5.0">
 
     <display-name>FirstJspServletJsp</display-name>
-    <servlet>
-        <servlet-name>Poker</servlet-name>
-        <servlet-class>com.epam.poker.servlet.Controller</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Poker</servlet-name>
-        <url-pattern>/poker</url-pattern>
-    </servlet-mapping>
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>Controller</servlet-name>-->
+<!--        <url-pattern>/poker</url-pattern>-->
+<!--    </servlet-mapping>-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
