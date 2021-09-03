@@ -1,4 +1,4 @@
-package com.epam.poker.mapper;
+package com.epam.poker.dao.mapper;
 
 import com.epam.poker.model.Entity;
 

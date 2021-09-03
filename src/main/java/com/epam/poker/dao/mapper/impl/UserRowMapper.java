@@ -1,6 +1,6 @@
-package com.epam.poker.mapper.impl;
+package com.epam.poker.dao.mapper.impl;
 
-import com.epam.poker.mapper.RowMapper;
+import com.epam.poker.dao.mapper.RowMapper;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.enumeration.UserRole;
 import com.epam.poker.model.enumeration.UserStatus;

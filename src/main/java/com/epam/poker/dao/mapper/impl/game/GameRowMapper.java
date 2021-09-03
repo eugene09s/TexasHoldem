@@ -1,6 +1,6 @@
-package com.epam.poker.mapper.impl.game;
+package com.epam.poker.dao.mapper.impl.game;
 
-import com.epam.poker.mapper.RowMapper;
+import com.epam.poker.dao.mapper.RowMapper;
 import com.epam.poker.model.entity.game.Game;
 
 import java.sql.ResultSet;
