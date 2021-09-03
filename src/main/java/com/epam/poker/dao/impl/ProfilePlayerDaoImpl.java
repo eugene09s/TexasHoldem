@@ -3,7 +3,7 @@ package com.epam.poker.dao.impl;
 import com.epam.poker.dao.AbstractDao;
 import com.epam.poker.dao.ProfilePlayerDao;
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.mapper.impl.ProfilePlayerRowMapper;
+import com.epam.poker.dao.mapper.impl.ProfilePlayerRowMapper;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 

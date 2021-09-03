@@ -58,6 +58,18 @@ public interface UserDao extends Dao<User> {
     Optional<User> findUserByLogin(String login) throws DaoException;
 
     /**
+     * Finds user in database by login and returns container of account
+     * or empty container if not found.
+     *
+     * @param  email  a email of user.
+     *
+     * @return  an optional container of user.
+     *
+     * @throws  DaoException  if database errors occurs.
+     */
+    Optional<User> findUserByEmail(String email) throws DaoException;
+
+    /**
      * Blocks user by id.
      *
      * @param  id  an id value of user to block.

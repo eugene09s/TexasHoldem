@@ -3,8 +3,8 @@ package com.epam.poker.dao.impl;
 import com.epam.poker.dao.AbstractDao;
 import com.epam.poker.dao.GameDao;
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.mapper.RowMapper;
-import com.epam.poker.mapper.impl.game.GameRowMapper;
+import com.epam.poker.dao.mapper.RowMapper;
+import com.epam.poker.dao.mapper.impl.game.GameRowMapper;
 import com.epam.poker.model.entity.game.Game;
 
 import java.sql.Connection;

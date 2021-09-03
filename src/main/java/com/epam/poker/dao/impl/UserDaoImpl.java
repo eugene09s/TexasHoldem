@@ -3,7 +3,7 @@ package com.epam.poker.dao.impl;
 import com.epam.poker.dao.AbstractDao;
 import com.epam.poker.dao.UserDao;
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.mapper.impl.UserRowMapper;
+import com.epam.poker.dao.mapper.impl.UserRowMapper;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.enumeration.UserStatus;
 
@@ -100,6 +100,16 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             login=?
             """;
 
+    public static final String SQL_FIND_BY_EMAIL = """
+            SELECT
+            user_id, login, first_name, last_name, email,
+            balance, role, status, phone_number, create_time
+            FROM
+            users
+            WHERE
+            email=?
+            """;
+
     public UserDaoImpl(Connection connection) {
         super(connection, new UserRowMapper(), USERS);
     }
@@ -144,6 +154,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> findUserByLogin(String login) throws DaoException {
         return executeForSingleResult(SQL_FIND_BY_LOGIN, login);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) throws DaoException {
+        return executeForSingleResult(SQL_FIND_BY_EMAIL, email);
     }
 
     @Override
