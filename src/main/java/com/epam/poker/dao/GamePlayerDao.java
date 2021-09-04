@@ -4,7 +4,6 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.entity.game.GamePlayer;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface GamePlayerDao extends Dao<GamePlayer> {
     /**

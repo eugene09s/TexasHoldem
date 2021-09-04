@@ -3,6 +3,7 @@ package com.epam.poker._main;
 import com.epam.poker.connection.ConnectionPool;
 import com.epam.poker.dao.UserDao;
 import com.epam.poker.dao.helper.DaoSaveTransaction;
+import com.epam.poker.dao.helper.DaoSaveTransactionFactory;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.enumeration.UserRole;
 import com.epam.poker.model.enumeration.UserStatus;
@@ -18,21 +19,23 @@ public class TestDBMain {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static void main(String... args) {
+        LOGGER.error("Test");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         User user = User.builder()
                 .setUserRole(UserRole.USER)
                 .setUserStatus(UserStatus.ACTIVE)
                 .setBalance(BigDecimal.TEN)
-                .setEmail("Test1_@gmail.com")
+                .setEmail("Test4_@gmail.com")
                 .setCreateTime(timestamp)
-                .setLastName("Vadim")
-                .setFirstName("Burdin")
-                .setLogin("Test1_Vadim1109")
-                .setPassword("232323")
+                .setLastName("Kolia")
+                .setFirstName("Gardiam")
+                .setLogin("Test4_Vadim1109")
+                .setPassword("qrewrwrw")
                 .createUser();
 
-        ConnectionPool connectionPool = new ConnectionPool();
-        DaoSaveTransaction daoSaveTransaction = new DaoSaveTransaction(connectionPool);
+        //ConnectionPool connectionPool = new ConnectionPool();
+        DaoSaveTransactionFactory daoSaveTransactionFactory = new DaoSaveTransactionFactory();
+        DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create();
         UserDao userDao = daoSaveTransaction.createUserDao();
         long id = 0;
         try {
@@ -51,7 +54,7 @@ public class TestDBMain {
         }
         System.out.println(listUsers);
         try {
-            System.out.println(userDao.findUsersAmount());
+            System.out.println("Amount users: " + userDao.findUsersAmount());
         } catch (DaoException e) {
             e.printStackTrace();
         }
