@@ -29,7 +29,7 @@ public class ConnectionCreator {
 
     public ConnectionCreator() {}
 
-    public static Connection createConnection() {
+    public Connection createConnection() {
         try {
             return DriverManager.getConnection(DB_URL, properties);
         } catch (SQLException e) {

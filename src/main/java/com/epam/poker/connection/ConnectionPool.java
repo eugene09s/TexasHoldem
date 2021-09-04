@@ -2,6 +2,7 @@ package com.epam.poker.connection;
 
 import com.epam.poker.exception.ConnectionPoolException;
 import com.epam.poker.exception.DaoException;
+import org.apache.logging.log4j.core.net.UrlConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,19 +21,20 @@ public class ConnectionPool {
     private static ConnectionPool instance = null;
     private final Queue<ProxyConnection> freeConnections;
     private final Queue<ProxyConnection> busyConnections;
+    private final ConnectionCreator connectionCreator = new ConnectionCreator();
 
-    public ConnectionPool() {
+    private ConnectionPool() {
         freeConnections = new ArrayDeque<>();
         busyConnections = new ArrayDeque<>();
         for (int i = 0; i < POOL_SIZE; ++i) {
-                Connection connection = ConnectionCreator.createConnection();
+                Connection connection = connectionCreator.createConnection();
                 ProxyConnection proxyConnection = new ProxyConnection(connection, this);
                 freeConnections.add(proxyConnection);
         }
     }
 
     public static ConnectionPool getInstance() {
-        if (IS_POOL_CREATED.get()) {
+        if (!IS_POOL_CREATED.get()) {
             INSTANCE_LOCKER.lock();
             try {
                 if (!IS_POOL_CREATED.get()) {
