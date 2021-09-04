@@ -9,7 +9,7 @@ public class Parameter {
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String ID = "id";
     public static final String COMMAND = "command";
-    public static final String LANGUAGE = "lang";
+    public static final String LANGUAGE = "prop/locale";
     public static final String REPEATE_PASSWORD = "repeatePassword";
     public static final String MONEY = "money";
     public static final String PAGE = "page";

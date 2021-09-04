@@ -11,6 +11,9 @@ public class CommandName {
     public static final String LOGIN = "login";
     public static final String LOGOUT = "logout";
     public static final String SIGN_UP = "sign-up";
+
+    public static final String CHECK_EXIST_LOGIN = "checkExistLogin";
+    public static final String CHECK_EXIST_EMAIL = "checkExistEmail";
     public static final String LOCALIZATION = "localization";
     public static final String PAGINATION = "pagination";
 }
