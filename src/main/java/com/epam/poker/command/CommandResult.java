@@ -1,12 +1,28 @@
 package com.epam.poker.command;
 
+import java.util.HashMap;
+
 public class CommandResult {
     private final String page;
     private final boolean isRedirect;
+    private HashMap<String, String> responseAjax;
 
-    private CommandResult(String page, boolean isRedirect) {
+    public CommandResult(String page, boolean isRedirect) {
         this.page = page;
         this.isRedirect = isRedirect;
+        responseAjax = new HashMap<>();
+    }
+
+    public void addResponseAjax(HashMap<String, String> values) {
+        responseAjax = values;
+    }
+
+    public boolean isEmptyResponseAjax() {
+        return responseAjax.isEmpty();
+    }
+
+    public HashMap<String, String> getResponseAjax() {
+        return responseAjax;
     }
 
     public static CommandResult redirect(String page) {
