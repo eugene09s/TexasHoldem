@@ -6,6 +6,6 @@
     <title></title>
 </head>
 <body>
-<jsp:forward page="/pages/home.jsp"/>
+<c:redirect url="/poker?command=home-page"/>
 </body>
 </html>
