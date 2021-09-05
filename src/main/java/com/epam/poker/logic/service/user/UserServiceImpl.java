@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final DaoSaveTransactionFactory daoSaveTransactionFactory;
 
     public UserServiceImpl(DaoSaveTransactionFactory daoSaveTransactionFactory) {
@@ -21,17 +21,32 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> findUsersRange(int offset, int amount) throws ServiceException {
-        return null;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.findUsersRange(offset, amount);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public int findUsersAmount() throws ServiceException {
-        return 0;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.findUsersAmount();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public Optional<User> findUserByLoginPassword(String login, String password) throws ServiceException {
-        return Optional.empty();
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.findUserByLoginPassword(login, password);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
@@ -64,32 +79,62 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean blockById(long id) throws ServiceException {
-        return false;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.blockById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public boolean unblockById(long id) throws ServiceException {
-        return false;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.unblockById(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public boolean addMoneyById(BigDecimal money, long id) throws ServiceException {
-        return false;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.addMoneyById(money, id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public boolean update(User item) throws ServiceException {
-        return false;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.update(item);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public long add(User t) throws ServiceException {
-        return 0;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.add(t);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public boolean updatePassword(long userId, String password) throws ServiceException {
-        return false;
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.updatePassword(userId, password);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
