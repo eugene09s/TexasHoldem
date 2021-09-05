@@ -15,29 +15,26 @@ import static com.epam.poker.dao.ColumnName.GAMES;
 
 public class GameDaoImpl extends AbstractDao<Game> implements GameDao {
     public static final String SQL_FIND_ALL_GAMES = """
-            SELECT
-            game_id, title, date, bank, five_cards
-            FROM
-            games
+            SELECT game_id, title, date, bank, five_cards
+            FROM games
             """;
-
     public static final String SQL_ADD_GAME = """
-            INSERT INTO
-            games
+            INSERT INTO games
             (title, date, bank, five_cards)
             VALUES (?,?,?,?)
             """;
-
     public static final String SQL_FIND_GAME_BY_ID = """
-            SELECT
-            game_id, title, date, bank, five_cards
-            FROM
-            games
-            WHERE
-            game_id=?
+            SELECT game_id, title, date, bank, five_cards
+            FROM games
+            WHERE game_id=?
+            """;
+    public static final String SQL_FIND_GAMES_RANGE = """
+            SELECT game_id, title, date, bank, five_cards
+            FROM games
+            LIMIT ?,?
             """;
 
-    protected GameDaoImpl(Connection connection, RowMapper<Game> mapper, String tableName) {
+    public GameDaoImpl(Connection connection) {
         super(connection, new GameRowMapper(), GAMES);
     }
 
@@ -57,8 +54,13 @@ public class GameDaoImpl extends AbstractDao<Game> implements GameDao {
 
     @Override
     public int findGameAmount() throws DaoException {
-        Optional<String> additionalCondition = Optional.of("");
+        Optional<String> additionalCondition = Optional.empty();
         return findRowsAmount(additionalCondition);
+    }
+
+    @Override
+    public List<Game> findGamesRange(int offset, int amount) throws DaoException {
+        return executeQuery(SQL_FIND_GAMES_RANGE, offset, amount);
     }
 
     @Override

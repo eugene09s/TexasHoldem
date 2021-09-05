@@ -4,6 +4,8 @@ import com.epam.poker.dao.mapper.RowMapper;
 import com.epam.poker.model.Entity;
 import com.epam.poker.exception.DaoException;
 
+import java.beans.BeanInfo;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +68,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         }
     }
 
-    protected boolean executeUpdateQuery(String query, Object... param) throws DaoException {
+    protected boolean updateSingle(String query, Object... param) throws DaoException {
         int result = 0;
         try {
             PreparedStatement statement = createStatement(query, param);
@@ -77,22 +79,24 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         return result == 1;
     }
 
-    protected void updateSingle(String query, Object... params) throws DaoException {
+    protected boolean executeUpdateQuery(String query, Object... params) throws DaoException {
+        int result = 0;
         try (PreparedStatement preparedStatement = createStatement(query, params)) {
-            preparedStatement.executeUpdate();
+            result = preparedStatement.executeUpdate();
+            return result == 0;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
 
-    public long executeInsertQuery(String query, Object... param) throws DaoException {
-        long generatedId = 0;
+    protected long executeInsertQuery(String query, Object... param) throws DaoException {
+        long generatedId = -1;
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setParametersInPreparedStatement(statement, param);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            generatedId = resultSet.getLong(1);
+                resultSet.next();
+                generatedId = resultSet.getLong(1);
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -101,7 +105,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     private void setParametersInPreparedStatement(PreparedStatement statement, Object... parameters) throws SQLException {
         for (int i = 1; i <= parameters.length; i++) {
-            statement.setObject(i, parameters[i-1]);
+            statement.setObject(i, parameters[i - 1]);
         }
     }
 }

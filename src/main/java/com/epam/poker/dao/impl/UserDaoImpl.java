@@ -16,98 +16,68 @@ import static com.epam.poker.dao.ColumnName.USERS;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public static final String SQL_FIND_ALL_USERS = """
-            SELECT 
-            user_id, login, password, first_name, last_name, email, 
+            SELECT user_id, login, password, first_name, last_name, email, 
             balance, role, status, phone_number, create_time
-            FROM 
-            users 
+            FROM users 
             """;
-
     public static final String SQL_ADD_USER = """
-            INSERT INTO 
-            users
+            INSERT INTO users
             (login, password, first_name, last_name, email, 
             balance, role, status, phone_number, create_time)
             VALUES (?,?,?,?,?,?,?,?,?,?)
             """;
-
     public static final String SQL_FIND_USER_BY_ID = """
-            SELECT
-            user_id, login, first_name, last_name, email, 
+            SELECT user_id, login, first_name, last_name, email, 
             balance, role, status, phone_number, create_time
-            FROM
-            users
-            WHERE
-            user_id=?
+            FROM users
+            WHERE user_id=?
             """;
-
     public static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD = """
-            SELECT
-            user_id, login, first_name, last_name, email, 
+            SELECT user_id, login, first_name, last_name, email, 
             balance, role, status, phone_number, create_time
-            FROM
-            users
-            WHERE
-            login=?
-            AND
-            password=?
+            FROM users 
+            WHERE login=?
+            AND password=?
             """;
-
     public static final String SQL_UPDATE_USER = """
-            UPDATE 
-            users 
-            SET
-            login=?, first_name=?, last_name=?, email=?, 
+            UPDATE users 
+            SET login=?, first_name=?, last_name=?, email=?, 
             phone_number=?
-            WHERE
-            user_id=?
+            WHERE user_id=?
             """;
-
     public static final String SQL_UPDATE_PASSWORD = """
-            UPDATE 
-            users 
-            SET
-            password=?
-            WHERE
-            user_id=?
+            UPDATE users 
+            SET password=?
+            WHERE user_id=?
             """;
-
     public static final String SQL_BLOCK_OR_UNBLOCK_USER = """
-            UPDATE 
-            users
-            SET
-            status=?
-            WHERE
-            user_id=?
+            UPDATE users
+            SET status=?
+            WHERE user_id=?
             """;
-
     public static final String SQL_ADD_MONEY_BALANCE = """
-            UPDATE
-            users
-            SET
-            balance=balance+?
-            WHERE
-            user_id=?
+            UPDATE users
+            SET balance=balance+?
+            WHERE user_id=?
             """;
-
     public static final String SQL_FIND_BY_LOGIN = """
-            SELECT
-            user_id, login, first_name, last_name, email,
+            SELECT user_id, login, first_name, last_name, email,
             balance, role, status, phone_number, create_time
-            FROM
-            users
-            WHERE
-            login=?
+            FROM users
+            WHERE login=?
             """;
-
     public static final String SQL_FIND_BY_EMAIL = """
-            SELECT
-            user_id, login, first_name, last_name, email,
+            SELECT user_id, login, first_name, last_name, email,
             balance, role, status, phone_number, create_time
-            FROM
-            users
-            WHERE
-            email=?
+            FROM  users
+            WHERE email=?
+            """;
+    public static final String SQL_FIND_USERS_RANGE = """
+            SELECT user_id, login, first_name, last_name, email,
+            balance, role, status, phone_number, create_time
+            FROM users
+            WHERE role='USER'
+            LIMIT ?,?
             """;
 
     public UserDaoImpl(Connection connection) {
@@ -137,7 +107,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public List<User> findUsersRange(int offset, int amount) throws DaoException {
-        return null;
+        return executeQuery(SQL_FIND_USERS_RANGE, offset, amount);
     }
 
     @Override

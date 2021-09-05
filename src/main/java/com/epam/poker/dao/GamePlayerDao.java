@@ -3,6 +3,7 @@ package com.epam.poker.dao;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.entity.game.GamePlayer;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface GamePlayerDao extends Dao<GamePlayer> {
@@ -17,5 +18,4 @@ public interface GamePlayerDao extends Dao<GamePlayer> {
     long add(GamePlayer gamePlayer) throws DaoException;
     List<GamePlayer> findGamePlayerByGameId(long gameId) throws DaoException;
     List<GamePlayer> findGamePlayerByUserId(long userId) throws DaoException;
-
 }
