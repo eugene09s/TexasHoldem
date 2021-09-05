@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 public class UserValidator implements Validator<User> {
     private static final int MAX_FIELD_USER_LENGTH = 32;
-    private static final int MIN_FIELD_USER_LENGTH = 3;
-    private static final int MIN_LOGIN_USER_LENGTH = 8;
+    private static final int MIN_FIELD_USER_LENGTH = 2;
+    private static final int MIN_LOGIN_AND_PASSWORD_USER_LENGTH = 8;
     private static final int MAX_EMAIL_LENGTH = 64;
     private static final int MAX_PHONE_NUMBER_LENGTH = 18;
     private static final String EMAIL_PATTERN = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
@@ -34,19 +34,24 @@ public class UserValidator implements Validator<User> {
         if (phoneNumber.length() > MAX_PHONE_NUMBER_LENGTH) {
             return false;
         }
-        if (login.isEmpty() || login.length() > MAX_FIELD_USER_LENGTH) {
+        if (login.isEmpty() || login.length() > MAX_FIELD_USER_LENGTH
+                || login.length() < MIN_LOGIN_AND_PASSWORD_USER_LENGTH) {
             return false;
         }
-        if (password.isEmpty() || password.length() > MAX_FIELD_USER_LENGTH) {
+        if (password.isEmpty() || password.length() > MAX_FIELD_USER_LENGTH
+                || password.length() < MIN_LOGIN_AND_PASSWORD_USER_LENGTH) {
             return false;
         }
-        if (firstName.isEmpty() || firstName.length() > MAX_FIELD_USER_LENGTH || isValidName(firstName)) {
+        if (firstName.isEmpty() || firstName.length() > MAX_FIELD_USER_LENGTH
+                || firstName.length() < MIN_FIELD_USER_LENGTH|| isValidName(firstName)) {
             return false;
         }
-        if (lastName.isEmpty() || lastName.length() > MAX_FIELD_USER_LENGTH || isValidName(lastName)) {
+        if (lastName.isEmpty() || lastName.length() > MAX_FIELD_USER_LENGTH
+                ||lastName.length() < MIN_FIELD_USER_LENGTH || isValidName(lastName)) {
             return false;
         }
-        if (email.isEmpty() || email.length() > MAX_EMAIL_LENGTH || isValidEmail(email)) {
+        if (email.isEmpty() || email.length() > MAX_EMAIL_LENGTH
+                || isValidEmail(email)) {
             return false;
         }
         return true;
