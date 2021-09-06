@@ -7,7 +7,6 @@ import com.epam.poker.dao.mapper.impl.ProfilePlayerRowMapper;
 import com.epam.poker.model.entity.ProfilePlayer;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
@@ -91,7 +90,7 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
                 profilePlayer.getBestPrize(),
                 profilePlayer.getAward(),
                 profilePlayer.getPhoto(),
-                profilePlayer.getAboutYourselt(),
+                profilePlayer.getAboutYourself(),
                 profilePlayer.getLostMoney(),
                 profilePlayer.getWinMoney(),
                 userId);
@@ -134,7 +133,7 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
                 profilePlayer.getBestPrize(),
                 profilePlayer.getAward(),
                 profilePlayer.getPhoto(),
-                profilePlayer.getAboutYourselt(),
+                profilePlayer.getAboutYourself(),
                 profilePlayer.getLostMoney(),
                 profilePlayer.getWinMoney());
     }

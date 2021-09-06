@@ -1,4 +1,4 @@
-package com.epam.poker.command.impl;
+package com.epam.poker.command.impl.user;
 
 import com.epam.poker.command.Command;
 import com.epam.poker.command.CommandResult;
@@ -10,20 +10,23 @@ import com.epam.poker.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
+import com.epam.poker.logic.service.user.ProfilePlayerService;
 import com.epam.poker.logic.service.user.UserService;
+import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.enumeration.UserRole;
 import com.epam.poker.model.enumeration.UserStatus;
-import com.thoughtworks.qdox.model.expression.ShiftRight;
 
 public class LoginCommand implements Command {
-    private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
+    private static final String PROFILE_PAGE_COMMAND = "poker?command=" + CommandName.PROFILE_PAGE + "&id=";
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
     private final UserService service;
+    private final ProfilePlayerService profilePlayerService;
 
-    public LoginCommand(UserService userService) {
+    public LoginCommand(UserService userService, ProfilePlayerService profilePlayerService) {
         this.service = userService;
+        this.profilePlayerService = profilePlayerService;
     }
 
     @Override
@@ -33,12 +36,12 @@ public class LoginCommand implements Command {
         boolean isUserExist = service.isUserExistByLoginPassword(login, password);
         if (isUserExist) {
             User user = service.findUserByLogin(login);
-            if (!(user.getUserStatus() == UserStatus.BANNED)) {
+            if (user.getUserStatus() != UserStatus.BANNED) {
                 long id = user.getUserId();
-                requestContext.addSession(Attribute.USER_ID, id);
                 UserRole role = user.getUserRole();
+                requestContext.addSession(Attribute.USER_ID, id);
                 requestContext.addSession(Attribute.ROLE, role);
-                return CommandResult.redirect(HOME_PAGE_COMMAND);
+                return CommandResult.redirect(PROFILE_PAGE_COMMAND + id);
             }
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);
         } else {

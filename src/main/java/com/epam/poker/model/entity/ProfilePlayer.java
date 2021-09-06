@@ -10,12 +10,12 @@ public class ProfilePlayer implements Entity {
     private long userId;
     private BigDecimal bestPrize;
     private String award;
-    private Blob photo;
+    private String photo;
     private String aboutYourselt;
     private BigDecimal lostMoney;
     private BigDecimal winMoney;
 
-    public ProfilePlayer(long userId, BigDecimal bestPrize, String award, Blob photo,
+    public ProfilePlayer(long userId, BigDecimal bestPrize, String award, String photo,
                          String aboutYourselt, BigDecimal lostMoney, BigDecimal winMoney) {
         this.userId = userId;
         this.bestPrize = bestPrize;
@@ -74,16 +74,16 @@ public class ProfilePlayer implements Entity {
         return this;
     }
 
-    public Blob getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public ProfilePlayer setPhoto(Blob photo) {
+    public ProfilePlayer setPhoto(String photo) {
         this.photo = photo;
         return this;
     }
 
-    public String getAboutYourselt() {
+    public String getAboutYourself() {
         return aboutYourselt;
     }
 
@@ -127,7 +127,7 @@ public class ProfilePlayer implements Entity {
                 .add("userId=" + userId)
                 .add("bestPrize=" + bestPrize)
                 .add("award='" + award + "'")
-                .add("photo=" + photo)
+                .add("photo='" + photo + "'")
                 .add("aboutYourselt='" + aboutYourselt + "'")
                 .add("lostMoney=" + lostMoney)
                 .add("winMoney=" + winMoney)
@@ -170,8 +170,8 @@ public class ProfilePlayer implements Entity {
             return this;
         }
 
-        public ProfilePlayerBuilder setPhoto(Blob blob) {
-            profilePlayer.setPhoto(blob);
+        public ProfilePlayerBuilder setPhoto(String photo) {
+            profilePlayer.setPhoto(photo);
             return this;
         }
 

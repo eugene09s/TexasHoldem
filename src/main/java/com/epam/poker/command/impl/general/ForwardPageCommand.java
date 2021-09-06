@@ -1,4 +1,4 @@
-package com.epam.poker.command.impl;
+package com.epam.poker.command.impl.general;
 
 import com.epam.poker.command.Command;
 import com.epam.poker.command.CommandResult;

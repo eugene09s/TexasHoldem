@@ -19,7 +19,7 @@ public class ProfilePlayerValidator implements Validator<ProfilePlayer> {
         BigDecimal bestPrize = entity.getBestPrize();
         BigDecimal lostMoney = entity.getLostMoney();
         BigDecimal winMoney = entity.getWinMoney();
-        String aboutYourself = entity.getAboutYourselt();
+        String aboutYourself = entity.getAboutYourself();
         String award = entity.getAward();
         String photo = entity.getPhoto();
         if (bestPrize == null || lostMoney == null

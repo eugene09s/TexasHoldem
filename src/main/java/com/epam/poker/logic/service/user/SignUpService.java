@@ -1,6 +1,7 @@
 package com.epam.poker.logic.service.user;
 
 import com.epam.poker.exception.ServiceException;
+import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 
 /**
@@ -17,7 +18,7 @@ public interface SignUpService {
      * @throws ServiceException if login and password are not passed validation
      *                          and also it's a wrapper for lower errors.
      */
-    long signUp(User user) throws ServiceException;
+    long signUp(User user, ProfilePlayer profilePlayer) throws ServiceException;
 
     /**
      * Finds out if user is exist by login.

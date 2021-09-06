@@ -28,7 +28,7 @@ import java.util.HashMap;
 @MultipartConfig(location = "P:\\epam\\data", maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 2)
 public class Controller extends HttpServlet {
-    private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
+    private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override

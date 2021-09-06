@@ -70,9 +70,8 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     protected boolean updateSingle(String query, Object... param) throws DaoException {
         int result = 0;
-        try {
-            PreparedStatement statement = createStatement(query, param);
-            result = statement.executeUpdate(query);
+        try (PreparedStatement preparedStatement = createStatement(query, param)){
+            result = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
         }

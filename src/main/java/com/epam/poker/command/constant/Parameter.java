@@ -8,6 +8,7 @@ public class Parameter {
     public static final String LAST_NAME = "lastName";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String ID = "id";
+    public static final String USER_ID = "userId";
     public static final String COMMAND = "command";
     public static final String LANGUAGE = "prop/locale";
     public static final String REPEATE_PASSWORD = "repeatePassword";

@@ -6,4 +6,5 @@ public final class Page {
     public static final String LOGIN = "/jsp/pages/login.jsp";
     public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
     public static final String USERS = "/jsp/pages/users.jsp";
+    public static final String PROFILE = "/jsp/pages/profile.jsp";
 }

@@ -11,6 +11,7 @@ import com.epam.poker.logic.service.user.ProfilePlayerServiceImpl;
 import com.epam.poker.logic.service.user.UserService;
 import com.epam.poker.logic.service.user.UserServiceImpl;
 import com.epam.poker.logic.validator.impl.ProfilePlayerValidator;
+import com.epam.poker.logic.validator.impl.UserValidator;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.enumeration.UserRole;
@@ -39,25 +40,25 @@ public class TestDBMain {
 //                .setWinMoney(BigDecimal.valueOf(0))
 //                .createRatingPlayer();
         //ConnectionPool connectionPool = new ConnectionPool();
-        DaoSaveTransactionFactory daoSaveTransactionFactory = new DaoSaveTransactionFactory();
-        DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create();
-        UserService userService = new UserServiceImpl(new DaoSaveTransactionFactory());
-        ProfilePlayerService profilePlayerService = new ProfilePlayerServiceImpl(new DaoSaveTransactionFactory(), new ProfilePlayerValidator());
-        long userId = 0;
-        List<User> userList = null;
-        try {
-            System.out.println(profilePlayerService.findAll());
-//            profilePlayerService.updateAwardByUserId(5,"TopGamer");
-//            profilePlayerService.updateBestPrizeByUserId(5, BigDecimal.valueOf(231));
+//        DaoSaveTransactionFactory daoSaveTransactionFactory = new DaoSaveTransactionFactory();
+//        DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create();
+//        UserService userService = new UserServiceImpl(new DaoSaveTransactionFactory());
+//        ProfilePlayerService profilePlayerService = new ProfilePlayerServiceImpl(new DaoSaveTransactionFactory(), new ProfilePlayerValidator());
+//        long userId = 0;
+//        List<User> userList = null;
+//        try {
 //            System.out.println(profilePlayerService.findAll());
-            userList = userService.findAll();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        System.out.println(userId);
-        for (User user : userList) {
-            System.out.println(user);
-        }
+////            profilePlayerService.updateAwardByUserId(5,"TopGamer");
+////            profilePlayerService.updateBestPrizeByUserId(5, BigDecimal.valueOf(231));
+////            System.out.println(profilePlayerService.findAll());
+//            userList = userService.findAll();
+//        } catch (ServiceException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(userId);
+//        for (User user : userList) {
+//            System.out.println(user);
+//        }
 
 //        List<User> listUsers = null;
 //        try {
@@ -70,6 +71,12 @@ public class TestDBMain {
 //            System.out.println("Amount users: " + userDao.findUsersAmount());
 //        } catch (DaoException e) {
 //            e.printStackTrace();
+//        }
+
+//        UserValidator userValidator = new UserValidator();
+//        List<String> list = List.of("Eugene", "evgeshasha$+adura@gmail.com", "evgesha.shaASS1d.323.ura@gmai.lsdf.com", "eugene", "eweфы", "raja$test@gmail.com");
+//        for (String line : list) {
+//            System.out.println(line + ": " + userValidator.isValidEmail(line));
 //        }
     }
 }

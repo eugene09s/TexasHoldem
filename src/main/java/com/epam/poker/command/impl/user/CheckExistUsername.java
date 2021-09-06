@@ -1,4 +1,4 @@
-package com.epam.poker.command.impl;
+package com.epam.poker.command.impl.user;
 
 import com.epam.poker.command.Command;
 import com.epam.poker.command.CommandResult;
@@ -30,10 +30,11 @@ public class CheckExistUsername implements Command {
         } else {
             isExistUsername = service.isUserLoginExist(username);
         }
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("isExistUsername", String.valueOf(isExistUsername));
+        requestContext.addAttribute("isExistUsername", isExistUsername);
+//        HashMap<String, String> hashMap = new HashMap<>();
+//        hashMap.put("isExistUsername", String.valueOf(isExistUsername));
         CommandResult commandResult = new CommandResult("/",true);
-        commandResult.addResponseAjax(hashMap);
-        return commandResult;
+//        commandResult.addResponseAjax(hashMap);
+        return CommandResult.redirect("#");
     }
 }
