@@ -6,6 +6,6 @@
     <title></title>
 </head>
 <body>
-<c:redirect url="/poker?command=home-page"/>
+<c:redirect url="${pageContext.request.contextPath}/poker?command=home-page"/>
 </body>
 </html>

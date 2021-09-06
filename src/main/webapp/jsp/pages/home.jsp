@@ -25,12 +25,16 @@
 <div class="container">
     <span>
         <h2>Texas Poker</h2>
+        ${pageContext.request.contextPath}
+        ${sessionScope.lang}
         <p>rules:</p>
         <br/>
 		<p>
 			<fmt:message key="poker.rules.text"/>
 		</p>
     </span>
+    <h2>Poker Hands</h2>
+    <img src="/images/rules/pokerHands.png">
 </div>
 
 
