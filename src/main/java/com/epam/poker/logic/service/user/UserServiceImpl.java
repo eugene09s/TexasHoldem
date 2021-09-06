@@ -161,4 +161,14 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<User> findAll() throws ServiceException {
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            return userDao.findAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

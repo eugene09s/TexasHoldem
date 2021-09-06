@@ -128,4 +128,5 @@ public interface UserService {
      */
     boolean isBlockedById(long id) throws ServiceException;
     boolean isUserExistByLoginPassword(String login, String password) throws ServiceException;
+    List<User> findAll() throws ServiceException;
 }
