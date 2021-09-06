@@ -1,4 +1,3 @@
-
 -<%--
   Created by IntelliJ IDEA.
   User: evges
@@ -24,16 +23,19 @@
 
 <div class="container py-3">
     <div class="row flex-column">
-        <form name="loginForm" method="POST" action="controller" class="flex-box col-md-6">
+        <form name="signupForm" method="POST" action="${pageContext.request.contextPath}/poker?command=sign-up"
+              class="flex-box col-md-6">
             <h1><fmt:message key="signup.reg"/></h1>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.login"/></span>
-                <input type="text" class="form-control" name="login" id="loginRegForm" minlength="8" maxlength="32" required>
+                <input type="text" class="form-control" name="login" id="loginRegForm" minlength="8" maxlength="32"
+                       required>
                 <span class="login-error d-none text-danger"><fmt:message key="signup.error.login.isalready"/></span>
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.pass"/></span>
-                <input type="password" name="password" minlength="8" maxlength="32" class="form-control password" required>
+                <input type="password" name="password" minlength="8" maxlength="32" class="form-control password"
+                       required>
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.repeat.pass"/></span>
@@ -53,7 +55,7 @@
                 <input type="email" name="email" minlength="5" maxlength="64" class="form-control" required>
             </div>
             <div class="mb-3">
-                <span class="form-label"><fmt:message key="signup.pass"/></span>
+                <span class="form-label"><fmt:message key="signup.phone.number"/></span>
                 <input type="phone" name="phoneNumber" minlength="7" maxlength="18" class="form-control">
             </div>
             <br/>
