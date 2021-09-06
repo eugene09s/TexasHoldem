@@ -8,7 +8,6 @@ import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.logic.service.user.SignUpService;
-import com.epam.poker.logic.service.user.UserService;
 
 import java.util.HashMap;
 

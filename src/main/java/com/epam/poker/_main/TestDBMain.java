@@ -1,9 +1,17 @@
 package com.epam.poker._main;
 
 import com.epam.poker.connection.ConnectionPool;
+import com.epam.poker.dao.ProfilePlayerDao;
 import com.epam.poker.dao.UserDao;
 import com.epam.poker.dao.helper.DaoSaveTransaction;
 import com.epam.poker.dao.helper.DaoSaveTransactionFactory;
+import com.epam.poker.exception.ServiceException;
+import com.epam.poker.logic.service.user.ProfilePlayerService;
+import com.epam.poker.logic.service.user.ProfilePlayerServiceImpl;
+import com.epam.poker.logic.service.user.UserService;
+import com.epam.poker.logic.service.user.UserServiceImpl;
+import com.epam.poker.logic.validator.impl.ProfilePlayerValidator;
+import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.enumeration.UserRole;
 import com.epam.poker.model.enumeration.UserStatus;
@@ -21,42 +29,47 @@ public class TestDBMain {
     public static void main(String... args) {
         LOGGER.error("Test");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        User user = User.builder()
-                .setUserRole(UserRole.USER)
-                .setUserStatus(UserStatus.ACTIVE)
-                .setBalance(BigDecimal.TEN)
-                .setEmail("Test4_@gmail.com")
-                .setCreateTime(timestamp)
-                .setLastName("Kolia")
-                .setFirstName("Gardiam")
-                .setLogin("Test4_Vadim1109")
-                .setPassword("qrewrwrw")
-                .createUser();
-
+//        ProfilePlayer profilePlayer = ProfilePlayer.builder()
+//                .setUserId(11)
+//                .setBestPrize(BigDecimal.valueOf(199.1))
+//                .setAward("TopWinnerUsers")
+//                .setPhoto(null)
+//                .setAboutYourself("Hello everyone")
+//                .setLostMoney(BigDecimal.valueOf(0))
+//                .setWinMoney(BigDecimal.valueOf(0))
+//                .createRatingPlayer();
         //ConnectionPool connectionPool = new ConnectionPool();
         DaoSaveTransactionFactory daoSaveTransactionFactory = new DaoSaveTransactionFactory();
         DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create();
-        UserDao userDao = daoSaveTransaction.createUserDao();
-        long id = 0;
+        UserService userService = new UserServiceImpl(new DaoSaveTransactionFactory());
+        ProfilePlayerService profilePlayerService = new ProfilePlayerServiceImpl(new DaoSaveTransactionFactory(), new ProfilePlayerValidator());
+        long userId = 0;
+        List<User> userList = null;
         try {
-            id = userDao.add(user);
-            user.setUserId(id);
-        } catch (DaoException e) {
+            System.out.println(profilePlayerService.findAll());
+//            profilePlayerService.updateAwardByUserId(5,"TopGamer");
+//            profilePlayerService.updateBestPrizeByUserId(5, BigDecimal.valueOf(231));
+//            System.out.println(profilePlayerService.findAll());
+            userList = userService.findAll();
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
-        System.out.println(user);
+        System.out.println(userId);
+        for (User user : userList) {
+            System.out.println(user);
+        }
 
-        List<User> listUsers = null;
-        try {
-            listUsers = userDao.findAll();
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-        System.out.println(listUsers);
-        try {
-            System.out.println("Amount users: " + userDao.findUsersAmount());
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+//        List<User> listUsers = null;
+//        try {
+//            listUsers = userDao.findAll();
+//        } catch (DaoException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(listUsers);
+//        try {
+//            System.out.println("Amount users: " + userDao.findUsersAmount());
+//        } catch (DaoException e) {
+//            e.printStackTrace();
+//        }
     }
 }
