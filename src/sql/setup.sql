@@ -48,12 +48,12 @@ CREATE TABLE IF NOT EXISTS `pokerschema`.`game_winners` (
 
 CREATE TABLE IF NOT EXISTS `pokerschema`.`profile_players` (
                                                                `player_id` BIGINT NOT NULL,
-                                                               `best_prize` DECIMAL(10,2) NOT NULL DEFAULT 0,
-                                                               `award` VARCHAR(128) NULL DEFAULT NULL,
-                                                               `photo` BLOB NULL DEFAULT NULL,
-                                                               `about_yourself` VARCHAR(512) NULL DEFAULT NULL,
-                                                               `lost_money` DECIMAL(10,2) NOT NULL,
-                                                               `win_money` DECIMAL(10,2) NOT NULL,
+                                                               `best_prize` DECIMAL(10,2)  DEFAULT 0,
+                                                               `award` VARCHAR(128)  DEFAULT NULL,
+                                                               `photo` VARCHAR(32) DEFAULT NULL,
+                                                               `about_yourself` VARCHAR(512) DEFAULT NULL,
+                                                               `lost_money` DECIMAL(10,2),
+                                                               `win_money` DECIMAL(10,2),
                                                                UNIQUE INDEX `player_id_UNIQUE` (`player_id` ASC) VISIBLE,
                                                                PRIMARY KEY (`player_id`),
                                                                CONSTRAINT `player_id`
