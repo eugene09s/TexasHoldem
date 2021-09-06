@@ -171,4 +171,18 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public User findUserById(long id) throws ServiceException {
+        try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
+            UserDao userDao = daoSaveTransaction.createUserDao();
+            Optional<User> user = userDao.findById(id);
+            if (!user.isPresent()) {
+                throw new ServiceException("User with id=" + id + " is not found.");
+            }
+            return user.get();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

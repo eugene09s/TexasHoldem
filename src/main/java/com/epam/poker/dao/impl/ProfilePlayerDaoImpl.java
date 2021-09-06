@@ -98,7 +98,7 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
     }
 
     @Override
-    public boolean updatePhotoByUserId(long userId, Blob photo) throws DaoException {
+    public boolean updatePhotoByUserId(long userId, String photo) throws DaoException {
         return executeUpdateQuery(SQL_UPDATE_PHOTO_BY_USER_ID, photo, userId);
     }
 

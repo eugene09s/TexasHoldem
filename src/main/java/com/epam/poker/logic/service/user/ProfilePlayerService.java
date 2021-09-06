@@ -41,7 +41,7 @@ public interface ProfilePlayerService {
      */
     ProfilePlayer findProfilePlayerById(long id) throws ServiceException;
     boolean updateProfilePlayerByUserId(long userId, ProfilePlayer profilePlayer) throws ServiceException;
-    boolean updatePhotoByUserId(long userId, Blob photo) throws ServiceException;
+    boolean updatePhotoByUserId(long userId, String photo) throws ServiceException;
     boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws ServiceException;
     boolean updateAwardByUserId(long userId, String award) throws ServiceException;
     boolean updateAboutYourselfByUserId(long userId, String aboutYourself) throws ServiceException;

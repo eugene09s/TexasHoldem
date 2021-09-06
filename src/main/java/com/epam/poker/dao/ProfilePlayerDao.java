@@ -21,7 +21,7 @@ public interface ProfilePlayerDao extends Dao<ProfilePlayer> {
         int findProfilePlayerAmount() throws DaoException;
 //todo documentation code
         boolean updateProfilePlayerByUserId(long userId, ProfilePlayer profilePlayer) throws DaoException;
-        boolean updatePhotoByUserId(long userId, Blob photo) throws DaoException;
+        boolean updatePhotoByUserId(long userId, String photo) throws DaoException;
         boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws DaoException;
         boolean updateAwardByUserId(long userId, String award) throws DaoException;
         boolean updateAboutYourselfByUserId(long userId, String aboutYourself) throws DaoException;

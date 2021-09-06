@@ -68,7 +68,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     }
 
     @Override
-    public boolean updatePhotoByUserId(long userId, Blob photo) throws ServiceException {
+    public boolean updatePhotoByUserId(long userId, String photo) throws ServiceException {
         try (DaoSaveTransaction daoSaveTransaction = daoSaveTransactionFactory.create()) {
             ProfilePlayerDao profilePlayerDao = daoSaveTransaction.createProfilePlayerDao();
             return profilePlayerDao.updatePhotoByUserId(userId, photo);

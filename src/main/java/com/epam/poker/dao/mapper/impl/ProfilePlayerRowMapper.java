@@ -15,7 +15,7 @@ public class ProfilePlayerRowMapper implements RowMapper<ProfilePlayer> {
                 .setUserId(resultSet.getLong(PROFILE_PLAYER_USER_ID))
                 .setBestPrize(resultSet.getBigDecimal(PROFILE_PLAYER_BEST_PRIZE))
                 .setAward(resultSet.getString(PROFILE_PLAYER_AWARD))
-                .setPhoto(resultSet.getBlob(PROFILE_PLAYER_PHOTO))
+                .setPhoto(resultSet.getString(PROFILE_PLAYER_PHOTO))
                 .setAboutYourself(resultSet.getString(PROFILE_PLAYER_ABOUT_YOURSELF))
                 .setLostMoney(resultSet.getBigDecimal(PROFILE_PLAYER_LOST_MONEY))
                 .setWinMoney(resultSet.getBigDecimal(PROFILE_PLAYER_WIN_MONEY))
