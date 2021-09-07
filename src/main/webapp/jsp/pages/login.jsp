@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>--%>
-<%--<fmt:setLocale value="${locale}" scope="session"/>--%>
-<%--<fmt:setBundle basename="content"/>--%>
 
 <!DOCTYPE html>
 <fmt:setLocale value="${sessionScope.lang}"/>
@@ -22,7 +19,6 @@
     <div class="row flex-column">
         <form method="POST" name="loginForm"  action="${pageContext.request.contextPath}/poker?command=login" class="flex-box col-md-6">
             <h1><fmt:message key="login.log.in"/></h1>
-<%--            <input type="hidden" name="command" value="login"/>--%>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="login.login"/></span>
                 <input type="text" class="form-control" minlength="8" maxlength="32" name="login" value="${login}" required>
@@ -36,10 +32,6 @@
                 <fmt:message key="login.error.${errorMessage}"/>
             </h3>
             <br/>
-            ${errorLoginPassMessage}
-            ${wrongAction}
-            ${nullPage}
-
             <button type="submit" name="Log in" class="btn btn-primary"><fmt:message key="login.submit"/></button>
         </form>
     </div>

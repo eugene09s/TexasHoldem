@@ -1,13 +1,13 @@
 package com.epam.poker.controller;
 
-import com.epam.poker.command.Command;
-import com.epam.poker.command.CommandFactory;
-import com.epam.poker.command.CommandResult;
-import com.epam.poker.command.constant.Attribute;
-import com.epam.poker.command.constant.CommandName;
-import com.epam.poker.command.constant.Page;
-import com.epam.poker.command.constant.Parameter;
-import com.epam.poker.connection.ConnectionPool;
+import com.epam.poker.controller.command.Command;
+import com.epam.poker.controller.command.CommandFactory;
+import com.epam.poker.controller.command.CommandResult;
+import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.controller.command.constant.CommandName;
+import com.epam.poker.controller.command.constant.Page;
+import com.epam.poker.controller.command.constant.Parameter;
+import com.epam.poker.model.pool.ConnectionPool;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.controller.request.RequestContextCreator;
 import com.epam.poker.controller.request.RequestFiller;
@@ -25,8 +25,10 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @WebServlet(urlPatterns = {"/poker", "*.do"}, name = "mainServlet")
-@MultipartConfig(location = "P:\\epam\\data", maxFileSize = 1024 * 1024 * 5,
-        maxRequestSize = 1024 * 1024 * 5 * 2)
+@MultipartConfig(location = "P:\\epam\\finalproject\\data",
+        fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 30)
 public class Controller extends HttpServlet {
     private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
     private static final Logger LOGGER = LogManager.getLogger();

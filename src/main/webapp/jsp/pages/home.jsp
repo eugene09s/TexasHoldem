@@ -21,8 +21,8 @@
 </head>
 <body>
 <c:import url="/jsp/parts/navbar.jsp"/>
-p${sessionScope.photo}<br>
-p1${sessionScope}<br>
+session:
+${sessionScope}
 <div class="container">
     <span>
         <h2>Texas Holdem Poker</h2>

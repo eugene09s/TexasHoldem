@@ -1,9 +1,6 @@
 package com.epam.poker.model.entity;
 
-import com.epam.poker.model.Entity;
-
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.util.StringJoiner;
 
 public class ProfilePlayer implements Entity {

@@ -1,10 +1,10 @@
 package com.epam.poker.controller.filter;
 
 
-import com.epam.poker.command.constant.Attribute;
-import com.epam.poker.command.constant.CommandName;
-import com.epam.poker.command.constant.Parameter;
-import com.epam.poker.model.enumeration.UserRole;
+import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.controller.command.constant.CommandName;
+import com.epam.poker.controller.command.constant.Parameter;
+import com.epam.poker.model.entity.enumeration.UserRole;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -54,13 +54,23 @@ public class AccessFilter implements Filter {
                     CommandName.LOGIN,
                     CommandName.LOGIN_PAGE -> roleLine.equalsIgnoreCase(UserRole.GUEST.toString());
             case CommandName.PROFILE_PAGE,
-                    CommandName.LOGOUT -> roleLine.equalsIgnoreCase(UserRole.USER.toString());
+                    CommandName.LOGOUT,
+                    CommandName.UPLOAD_PHOTO -> compareRoles(roleLine);
             case CommandName.BLOCK_USER,
                     CommandName.UNBLOCK_USER,
                     CommandName.USERS -> roleLine.equalsIgnoreCase(ADMIN_ROLE);
-            case CommandName.HOME_PAGE -> true;
+            case CommandName.HOME_PAGE,
+                    CommandName.LOCALIZATION -> true;
             default -> false;
         };
+    }
+
+    private boolean compareRoles(String role) {
+        if (role.equalsIgnoreCase(UserRole.USER.toString())
+                || role.equalsIgnoreCase(UserRole.ADMIN.toString())) {
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -9,7 +9,7 @@
 
     <tag>
         <name>access</name>
-        <tag-class>com.epam.poker.tag.AccessTag</tag-class>
+        <tag-class>com.epam.poker.util.tag.AccessTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>role</name>

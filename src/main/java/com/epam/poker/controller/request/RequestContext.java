@@ -43,6 +43,10 @@ public class RequestContext {
         sessionAttributes.put(attributeName, attributeContent);
     }
 
+    public Map<String, Object> getRequestAttributes() {
+        return requestAttributes;
+    }
+
     public Set<String> getSessionAttributeNames() {
         return sessionAttributes.keySet();
     }

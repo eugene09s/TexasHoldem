@@ -1,28 +1,9 @@
 package com.epam.poker._main;
 
-import com.epam.poker.connection.ConnectionPool;
-import com.epam.poker.dao.ProfilePlayerDao;
-import com.epam.poker.dao.UserDao;
-import com.epam.poker.dao.helper.DaoSaveTransaction;
-import com.epam.poker.dao.helper.DaoSaveTransactionFactory;
-import com.epam.poker.exception.ServiceException;
-import com.epam.poker.logic.service.user.ProfilePlayerService;
-import com.epam.poker.logic.service.user.ProfilePlayerServiceImpl;
-import com.epam.poker.logic.service.user.UserService;
-import com.epam.poker.logic.service.user.UserServiceImpl;
-import com.epam.poker.logic.validator.impl.ProfilePlayerValidator;
-import com.epam.poker.logic.validator.impl.UserValidator;
-import com.epam.poker.model.entity.ProfilePlayer;
-import com.epam.poker.model.entity.User;
-import com.epam.poker.model.enumeration.UserRole;
-import com.epam.poker.model.enumeration.UserStatus;
-import com.epam.poker.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.List;
 
 public class TestDBMain {
     private static final Logger LOGGER = LogManager.getLogger();

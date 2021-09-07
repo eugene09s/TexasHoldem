@@ -19,8 +19,6 @@
     <title><fmt:message key="label.title"/></title>
 </head>
 <body>
-${pageContext.request.contextPath}
-${sessionScope}
 <c:import url="/jsp/parts/navbar.jsp"/>
 <div class="container py-3">
     <div class="row gutters-sm">
@@ -34,7 +32,11 @@ ${sessionScope}
                             <p class="text-secondary mb-1">${user.userStatus}</p>
                             <p class="text-muted font-size-sm">${sessionScope.role}</p>
                             <c:if test="${requestScope.user.userId == sessionScope.userId}">
-                                <button class="btn btn-primary"><fmt:message key="profile.change.photo"/></button>
+<%--                                <form method="POST" action="${pageContext.request.contextPath}/poker?command=upload-photo" enctype="multipart/form-data">--%>
+<%--                                    <input type="hidden" name="multiPartServlet" />--%>
+                                    <button id="ajaxfile" type="file" onclick="uploadFile()" class="btn btn-primary" onChange="this.form.submit()"><fmt:message key="profile.change.photo"/></button>
+
+                                <script src="/js/upload-photo.js"></script>
                             </c:if>
                         </div>
                     </div>
