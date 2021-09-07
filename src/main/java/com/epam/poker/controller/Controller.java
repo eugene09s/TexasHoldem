@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.HashMap;
 
-@WebServlet(urlPatterns = {"/poker", "*.do"})
+@WebServlet(urlPatterns = {"/poker", "*.do"}, name = "mainServlet")
 @MultipartConfig(location = "P:\\epam\\data", maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 2)
 public class Controller extends HttpServlet {

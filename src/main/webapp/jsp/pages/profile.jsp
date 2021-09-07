@@ -19,25 +19,28 @@
     <title><fmt:message key="label.title"/></title>
 </head>
 <body>
-
+${pageContext.request.contextPath}
+${sessionScope}
 <c:import url="/jsp/parts/navbar.jsp"/>
-
 <div class="container py-3">
     <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                        <img src="${pageContext.request.contextPath}/images/photo/${profilePlayer.getPhoto()}" alt="Admin" class="rounded-circle" width="150">
+                        <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" alt="notPhoto"
+                             class="rounded-circle" width="150">
                         <div class="mt-3"><h4>${user.getLogin()}</h4>
-                            <p class="text-secondary mb-1">Full Stack Developer</p>
-                            <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                            <button class="btn btn-primary">Follow</button>
-                            <button class="btn btn-outline-primary">Message</button>
+                            <p class="text-secondary mb-1">${user.userStatus}</p>
+                            <p class="text-muted font-size-sm">${sessionScope.role}</p>
+                            <c:if test="${requestScope.user.userId == sessionScope.userId}">
+                                <button class="btn btn-primary"><fmt:message key="profile.change.photo"/></button>
+                            </c:if>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="card mt-3">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -102,37 +105,47 @@
                 </ul>
             </div>
         </div>
+
         <div class="col-md-8">
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-3"><h6 class="mb-0">Full Name</h6></div>
+                        <div class="col-sm-3"><h6 class="mb-0"><fmt:message key="profile.full.name"/></h6></div>
                         <div class="col-sm-9 text-secondary">${user.getFirstName()} ${user.getLastName()}</div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3"><h6 class="mb-0">Email</h6></div>
+                        <div class="col-sm-3"><h6 class="mb-0"><fmt:message key="profile.email"/></h6></div>
                         <div class="col-sm-9 text-secondary">${user.getEmail()}</div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3"><h6 class="mb-0">Phone</h6></div>
+                        <div class="col-sm-3"><h6 class="mb-0"><fmt:message key="profile.phone"/></h6></div>
                         <div class="col-sm-9 text-secondary">${user.getPhoneNumber()}</div>
                     </div>
                     <hr>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3"><h6 class="mb-0">About yourself</h6></div>
-                        <div class="col-sm-9 text-secondary">${profilePlayer.getAboutYourself()}}</div>
+                        <div class="col-sm-3"><h6 class="mb-0"><fmt:message key="profile.about.yourself"/></h6></div>
+                        <div class="col-sm-9 text-secondary">${profilePlayer.getAboutYourself()}</div>
                     </div>
                     <hr>
+                    <hr>
                     <div class="row">
-                        <div class="col-sm-12"><a class="btn btn-info " target="__blank"
-                                                  href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                        </div>
+                        <div class="col-sm-3"><h6 class="mb-0"><fmt:message key="profile.registered"/></h6></div>
+                        <div class="col-sm-9 text-secondary">${user.createTime}</div>
                     </div>
+                    <hr>
+                    <c:if test="${requestScope.user.userId == sessionScope.userId}">
+                        <div class="row">
+                            <div class="col-sm-12"><a class="btn btn-info " target="__blank"
+                                                      href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </div>
+
             <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
                     <div class="card h-100">
@@ -199,6 +212,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

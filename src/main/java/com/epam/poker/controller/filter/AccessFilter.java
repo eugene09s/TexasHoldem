@@ -48,18 +48,19 @@ public class AccessFilter implements Filter {
         if (commandName == null) {
             return true;
         }
-        switch (commandName) {
-            case CommandName.SIGN_UP:
-            case CommandName.SIGN_UP_PAGE:
-            case CommandName.LOGIN:
-            case CommandName.LOGIN_PAGE:
-                return roleLine.equalsIgnoreCase(UserRole.GUEST.toString());
-            case CommandName.BLOCK_USER:
-            case CommandName.UNBLOCK_USER:
-            case CommandName.USERS:
-                return roleLine.equalsIgnoreCase(ADMIN_ROLE);
-        }
-        return true;
+        return switch (commandName) {
+            case CommandName.SIGN_UP,
+                    CommandName.SIGN_UP_PAGE,
+                    CommandName.LOGIN,
+                    CommandName.LOGIN_PAGE -> roleLine.equalsIgnoreCase(UserRole.GUEST.toString());
+            case CommandName.PROFILE_PAGE,
+                    CommandName.LOGOUT -> roleLine.equalsIgnoreCase(UserRole.USER.toString());
+            case CommandName.BLOCK_USER,
+                    CommandName.UNBLOCK_USER,
+                    CommandName.USERS -> roleLine.equalsIgnoreCase(ADMIN_ROLE);
+            case CommandName.HOME_PAGE -> true;
+            default -> false;
+        };
     }
 
     @Override

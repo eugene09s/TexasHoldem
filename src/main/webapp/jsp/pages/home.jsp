@@ -21,12 +21,11 @@
 </head>
 <body>
 <c:import url="/jsp/parts/navbar.jsp"/>
-
+p${sessionScope.photo}<br>
+p1${sessionScope}<br>
 <div class="container">
     <span>
-        <h2>Texas Poker</h2>
-        ${pageContext.request.contextPath}
-        ${sessionScope.lang}
+        <h2>Texas Holdem Poker</h2>
         <p>rules:</p>
         <br/>
 		<p>
@@ -36,13 +35,6 @@
     <h2>Poker Hands</h2>
     <img src="/images/rules/pokerHands.png">
 </div>
-
-
-<%--<h3>Welcome</h3>--%>
-<%--<hr/>--%>
-<%--${user}, hello!--%>
-<%--<hr/>--%>
-<%--<a href="controller?command=logout">Logout</a>--%>
 
 
 </body>
