@@ -9,7 +9,7 @@ public class ProfilePlayerValidator implements Validator<ProfilePlayer> {
     private static final long MIN_USER_ID = 1;
     private static final int MAX_LENGTH_ABOUT_YOURSELF = 512;
     private static final int MAX_LENGTH_AWARD = 128;
-    private static final int MAX_LENGTH_PHOTO = 32;
+    private static final int MAX_LENGTH_PHOTO = 128;
 
     @Override
     public boolean isValid(ProfilePlayer entity) {

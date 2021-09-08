@@ -25,10 +25,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @WebServlet(urlPatterns = {"/poker", "*.do"}, name = "mainServlet")
-@MultipartConfig(location = "P:\\epam\\finalproject\\data",
-        fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 10,
-        maxRequestSize = 1024 * 1024 * 30)
 public class Controller extends HttpServlet {
     private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
     private static final Logger LOGGER = LogManager.getLogger();

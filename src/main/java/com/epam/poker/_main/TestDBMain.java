@@ -59,5 +59,7 @@ public class TestDBMain {
 //        for (String line : list) {
 //            System.out.println(line + ": " + userValidator.isValidEmail(line));
 //        }
+        String line = "asbodns.a8i-ad.sskn.jg";
+        System.out.printf(line.substring(line.lastIndexOf(".")));
     }
 }
