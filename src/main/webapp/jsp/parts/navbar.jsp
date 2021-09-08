@@ -40,27 +40,6 @@
                        class="btn btn-outline-light me-2 langToggle" data-onstyle="light">RU</a>
                     <a type="button" href="${pageContext.request.contextPath}/poker?command=localization&locale=en"
                        class="btn btn-outline-light me-2 langToggle" data-onstyle="light">EN</a>
-                        <%--                <button type="button" href="${pageContext.request.contextPath}/poker?command=localization?locale=en"--%>
-                        <%--                        class="btn btn-outline-light me-2 langToggle" data-onstyle="light">${sessionScope.lang}</button>--%>
-                        <%--                <script>--%>
-                        <%--                    const toggleBtn = document.querySelector(".langToggle");--%>
-                        <%--                    toggleBtn.addEventListener('click', async () => {--%>
-                        <%--                        if (toggleBtn.textContent === "ru_RU") {--%>
-                        <%--                            toggleBtn.textContent = "en_US";--%>
-                        <%--                            await fetch("/poker?command=localization&locale=en")--%>
-                        <%--                            location.reload();--%>
-                        <%--                            console.log("RU")--%>
-                        <%--                        } else {--%>
-                        <%--                            toggleBtn.textContent = "ru_RU";--%>
-                        <%--                            await fetch("/poker?command=localization&locale=ru").then(() => {--%>
-                        <%--                                location.reload()--%>
-                        <%--                            });--%>
-                        <%--                            location.reload();--%>
-                        <%--                            console.log("EN");--%>
-                        <%--                        }--%>
-                        <%--                    });--%>
-                        <%--                </script>--%>
-
                 </div>
             </sc:access>
 
@@ -69,7 +48,7 @@
                     <li><a href="${pageContext.request.contextPath}/jsp/pages/home.jsp"
                            class="nav-link px-2 text-secondary"><fmt:message
                             key="nav.home.page"/></a></li>
-                    <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
+                    <li><a href="${pageContext.request.contextPath}/poker?command=play-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
                     </li>
                     <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white"><fmt:message
