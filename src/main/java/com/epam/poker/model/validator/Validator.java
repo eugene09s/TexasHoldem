@@ -1,4 +1,4 @@
-package com.epam.poker.model.logic.validator;
+package com.epam.poker.model.validator;
 
 import com.epam.poker.model.entity.Entity;
 

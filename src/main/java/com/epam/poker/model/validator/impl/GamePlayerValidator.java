@@ -1,10 +1,21 @@
-package com.epam.poker.model.logic.validator.impl;
+package com.epam.poker.model.validator.impl;
 
-import com.epam.poker.model.logic.validator.Validator;
+import com.epam.poker.model.validator.Validator;
 import com.epam.poker.model.entity.game.GamePlayer;
 
 public class GamePlayerValidator implements Validator<GamePlayer> {
     private static final int MIN_ID = 1;
+    private static GamePlayerValidator instance;
+
+    private GamePlayerValidator() {
+    }
+
+    public static GamePlayerValidator getInstance() {
+        if (instance == null) {
+            instance = new GamePlayerValidator();
+        }
+        return instance;
+    }
 
     @Override
     public boolean isValid(GamePlayer entity) {

@@ -1,8 +1,8 @@
-package com.epam.poker.model.logic.validator.impl;
+package com.epam.poker.model.validator.impl;
 
-import com.epam.poker.model.logic.validator.Validator;
+import com.epam.poker.model.validator.Validator;
 import com.epam.poker.model.entity.User;
-import com.epam.poker.model.entity.enumeration.UserRole;
+import com.epam.poker.model.entity.type.UserRole;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +17,17 @@ public class UserValidator implements Validator<User> {
     private static final Pattern COMPILED_PATTERN_EMAIL = Pattern.compile(EMAIL_PATTERN);
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";
     private static final Pattern COMPILED_PATTERN_NAME = Pattern.compile(NAME_PATTERN);
+    private static UserValidator instance;
+
+    private UserValidator() {
+    }
+
+    public static UserValidator getInstance() {
+        if (instance == null) {
+            instance = new UserValidator();
+        }
+        return instance;
+    }
 
     @Override
     public boolean isValid(User user) {

@@ -1,6 +1,6 @@
-package com.epam.poker.model.logic.validator.impl;
+package com.epam.poker.model.validator.impl;
 
-import com.epam.poker.model.logic.validator.Validator;
+import com.epam.poker.model.validator.Validator;
 import com.epam.poker.model.entity.ProfilePlayer;
 
 import java.math.BigDecimal;
@@ -10,6 +10,17 @@ public class ProfilePlayerValidator implements Validator<ProfilePlayer> {
     private static final int MAX_LENGTH_ABOUT_YOURSELF = 512;
     private static final int MAX_LENGTH_AWARD = 128;
     private static final int MAX_LENGTH_PHOTO = 128;
+    private static ProfilePlayerValidator instance;
+
+    private ProfilePlayerValidator() {
+    }
+
+    public static ProfilePlayerValidator getInstance() {
+        if (instance == null) {
+            instance = new ProfilePlayerValidator();
+        }
+        return instance;
+    }
 
     @Override
     public boolean isValid(ProfilePlayer entity) {
