@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    private static final AtomicBoolean IS_POOL_CREATED = new AtomicBoolean(false);
-    private static final ReentrantLock INSTANCE_LOCKER = new ReentrantLock();
-    private static final ReentrantLock CONNECTION_LOCKER = new ReentrantLock();
+    private static final AtomicBoolean isPoolCreated = new AtomicBoolean(false);
+    private static final ReentrantLock instanceLocker = new ReentrantLock();
+    private static final ReentrantLock connectionLocker = new ReentrantLock();
     private static final int POOL_SIZE = ConfigManager.getPoolSize();
-    private static final Semaphore SEMAPHORE = new Semaphore(POOL_SIZE, true);
+    private static final Semaphore semaphore = new Semaphore(POOL_SIZE, true);
     private static ConnectionPool instance = null;
     private final Queue<ProxyConnection> freeConnections;
     private final Queue<ProxyConnection> busyConnections;
@@ -33,44 +33,44 @@ public class ConnectionPool {
     }
 
     public static ConnectionPool getInstance() {
-        if (!IS_POOL_CREATED.get()) {
-            INSTANCE_LOCKER.lock();
+        if (!isPoolCreated.get()) {
+            instanceLocker.lock();
             try {
-                if (!IS_POOL_CREATED.get()) {
+                if (!isPoolCreated.get()) {
                     instance = new ConnectionPool();
-                    IS_POOL_CREATED.set(true);
+                    isPoolCreated.set(true);
                 }
             } finally {
-                INSTANCE_LOCKER.unlock();
+                instanceLocker.unlock();
             }
         }
         return instance;
     }
 
     public void releaseConnection(ProxyConnection proxyConnection) {
-        CONNECTION_LOCKER.lock();
+        connectionLocker.lock();
         try {
             if (busyConnections.contains(proxyConnection)) {
                 freeConnections.offer(proxyConnection);
                 busyConnections.poll();
-                SEMAPHORE.release();
+                semaphore.release();
             }
         } finally {
-            CONNECTION_LOCKER.unlock();
+            connectionLocker.unlock();
         }
     }
 
     public ProxyConnection getConnection() {
         try {
-            SEMAPHORE.acquire();
-            CONNECTION_LOCKER.lock();
+            semaphore.acquire();//todo add timer
+            connectionLocker.lock();
             ProxyConnection currentConnection = freeConnections.poll();
             busyConnections.offer(currentConnection);
             return currentConnection;
         } catch (InterruptedException e) {
             throw new ConnectionPoolException(e);
         } finally {
-            CONNECTION_LOCKER.unlock();
+            connectionLocker.unlock();
         }
     }
 
