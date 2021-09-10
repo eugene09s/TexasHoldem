@@ -11,7 +11,6 @@ function checkPassword(pass1, pass2) {
 }
 inputs[1].addEventListener("input", ()=> checkPassword(inputs[0].value, inputs[1].value));
 
-
 //Ckeck exist login
 $(document).ready(function () {
     $('#loginRegForm').blur(function () {

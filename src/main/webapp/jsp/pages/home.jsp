@@ -15,7 +15,6 @@
 
 <html lang="<fmt:message key="html.lang"/>">
 <head>
-<%--    <title><fmt:message key="title.main"/></title>--%>
     <c:import url="/jsp/parts/head.jsp"/>
 	<title><fmt:message key="label.title"/></title>
 </head>

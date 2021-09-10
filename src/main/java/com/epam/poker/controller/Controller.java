@@ -75,7 +75,7 @@ public class Controller extends HttpServlet {
         } else {
             HashMap<String, String> hashMap = commandResult.getResponseAjax();
             response.setContentType("text/plain");
-            response.getWriter().write(hashMap.get("isExistUsername"));
+            response.getWriter().write(hashMap.get(Attribute.CHECK_USERNAME_EXIST));
         }
     }
 

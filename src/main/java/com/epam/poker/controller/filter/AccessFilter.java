@@ -52,7 +52,8 @@ public class AccessFilter implements Filter {
             case CommandName.SIGN_UP,
                     CommandName.SIGN_UP_PAGE,
                     CommandName.LOGIN,
-                    CommandName.LOGIN_PAGE -> roleLine.equalsIgnoreCase(UserRole.GUEST.toString());
+                    CommandName.LOGIN_PAGE,
+                    CommandName.CHECK_EXIST_LOGIN-> roleLine.equalsIgnoreCase(UserRole.GUEST.toString());
             case CommandName.PROFILE_PAGE,
                     CommandName.LOGOUT,
                     CommandName.UPLOAD_PHOTO -> compareRoles(roleLine);

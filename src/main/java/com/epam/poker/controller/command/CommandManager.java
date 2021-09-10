@@ -4,7 +4,6 @@ import com.epam.poker.controller.command.constant.CommandName;
 import com.epam.poker.controller.command.impl.general.*;
 import com.epam.poker.controller.command.impl.user.*;
 
-
 public enum CommandManager {
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand(), CommandName.SIGN_UP_PAGE),
     GO_TO_LOGIN_PAGE(new GoToLoginPageCommand(), CommandName.LOGIN_PAGE),

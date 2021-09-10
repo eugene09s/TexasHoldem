@@ -2,6 +2,7 @@ package com.epam.poker.controller.command.impl.user;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
+import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.controller.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
@@ -28,11 +29,11 @@ public class CheckExistUsername implements Command {
         } else {
             isExistUsername = service.isUserLoginExist(username);
         }
-        requestContext.addAttribute("isExistUsername", isExistUsername);
+        requestContext.addAttribute(Attribute.CHECK_USERNAME_EXIST, isExistUsername);
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("isExistUsername", String.valueOf(isExistUsername));
+        hashMap.put(Attribute.CHECK_USERNAME_EXIST, String.valueOf(isExistUsername));
         CommandResult commandResult = new CommandResult("/",true);
         commandResult.addResponseAjax(hashMap);
-        return CommandResult.redirect("#");
+        return commandResult;
     }
 }
