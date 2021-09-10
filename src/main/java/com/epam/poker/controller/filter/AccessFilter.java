@@ -4,7 +4,7 @@ package com.epam.poker.controller.filter;
 import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.controller.command.constant.CommandName;
 import com.epam.poker.controller.command.constant.Parameter;
-import com.epam.poker.model.entity.enumeration.UserRole;
+import com.epam.poker.model.entity.type.UserRole;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -4,17 +4,20 @@ import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
 import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.controller.command.constant.CommandName;
-import com.epam.poker.controller.command.constant.Page;
+import com.epam.poker.controller.command.constant.PagePath;
 import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.controller.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.logic.service.user.SignUpService;
+import com.epam.poker.model.service.user.SignUpService;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
-import com.epam.poker.model.entity.enumeration.UserRole;
-import com.epam.poker.model.entity.enumeration.UserStatus;
+import com.epam.poker.model.entity.type.UserRole;
+import com.epam.poker.model.entity.type.UserStatus;
+import com.epam.poker.model.service.user.SignUpServiceImpl;
+import com.epam.poker.model.validator.impl.UserValidator;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -28,18 +31,18 @@ public class SignUpCommand implements Command {
     private static final String PRE_AWARD = "Your future award";
     private static final String PRE_ABOUT_YOURSELF = "Write about yourself";
     private static final String PRE_PHOTO = "notAva.jpg";
-
-    private final SignUpService sigUpService;
-
-    public SignUpCommand(SignUpService signUpService) {
-        this.sigUpService = signUpService;
-    }
+    private SignUpService sigUpService = SignUpServiceImpl.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String login = ParameterTaker.takeString(Parameter.LOGIN, requestContext);
         String email = ParameterTaker.takeString(Parameter.EMAIL, requestContext);
-        boolean isLoginAndEmailExist = sigUpService.isUserLoginExist(login) && sigUpService.isUserEmailExist(email);
+        boolean isLoginAndEmailExist = false;
+        try {
+            isLoginAndEmailExist = sigUpService.isUserLoginExist(login) && sigUpService.isUserEmailExist(email);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
         if (!isLoginAndEmailExist) {
             requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
             requestContext.addAttribute(Attribute.SAVED_EMAIL, email);
@@ -64,7 +67,12 @@ public class SignUpCommand implements Command {
                     .setLostMoney(PRE_MONEY)
                     .setWinMoney(PRE_MONEY)
                     .createRatingPlayer();
-            long idUser = sigUpService.signUp(user, profilePlayer);
+            long idUser = 0;
+            try {
+                idUser = sigUpService.signUp(user, profilePlayer);
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
             if (idUser != 0) {
                 return CommandResult.redirect(LOGIN_PAGE_COMMAND);
             } else {
@@ -73,6 +81,6 @@ public class SignUpCommand implements Command {
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, USERNAME_EXIST_KEY);
         }
-        return CommandResult.forward(Page.SIGN_UP);
+        return CommandResult.forward(PagePath.SIGN_UP);
     }
 }

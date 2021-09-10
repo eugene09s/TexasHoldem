@@ -1,7 +1,7 @@
 package com.epam.poker.model.entity;
 
-import com.epam.poker.model.entity.enumeration.UserRole;
-import com.epam.poker.model.entity.enumeration.UserStatus;
+import com.epam.poker.model.entity.type.UserRole;
+import com.epam.poker.model.entity.type.UserStatus;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

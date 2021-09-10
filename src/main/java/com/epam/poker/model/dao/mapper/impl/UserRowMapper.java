@@ -2,8 +2,8 @@ package com.epam.poker.model.dao.mapper.impl;
 
 import com.epam.poker.model.dao.mapper.RowMapper;
 import com.epam.poker.model.entity.User;
-import com.epam.poker.model.entity.enumeration.UserRole;
-import com.epam.poker.model.entity.enumeration.UserStatus;
+import com.epam.poker.model.entity.type.UserRole;
+import com.epam.poker.model.entity.type.UserStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +11,14 @@ import java.sql.SQLException;
 import static com.epam.poker.model.dao.ColumnName.*;
 
 public class UserRowMapper implements RowMapper<User> {
+    private static UserRowMapper instance;
+
+    public static UserRowMapper getInstance() {
+        if (instance == null) {
+            instance = new UserRowMapper();
+        }
+        return instance;
+    }
 
     @Override
     public User map(ResultSet resultSet) throws SQLException {

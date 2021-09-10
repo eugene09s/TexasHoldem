@@ -1,19 +1,18 @@
 package com.epam.poker.controller;
 
 import com.epam.poker.controller.command.Command;
-import com.epam.poker.controller.command.CommandFactory;
 import com.epam.poker.controller.command.CommandResult;
 import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.controller.command.constant.CommandName;
-import com.epam.poker.controller.command.constant.Page;
+import com.epam.poker.controller.command.constant.PagePath;
 import com.epam.poker.controller.command.constant.Parameter;
-import com.epam.poker.model.pool.ConnectionPool;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.controller.request.RequestContextCreator;
 import com.epam.poker.controller.request.RequestFiller;
+import com.epam.poker.exception.DaoException;
+import com.epam.poker.model.pool.ConnectionPool;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,18 +23,20 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.HashMap;
 
-@WebServlet(urlPatterns = {"/poker", "*.do"}, name = "mainServlet")
+@WebServlet(urlPatterns = {"/poker"}, name = "mainServlet")
 public class Controller extends HttpServlet {
-    private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         process(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         process(req, resp);
     }
 
@@ -43,9 +44,8 @@ public class Controller extends HttpServlet {
         RequestContextCreator requestContextCreator = new RequestContextCreator();
         CommandResult commandResult;
         String commandParam = req.getParameter(Parameter.COMMAND);
-        Command command;
+        Command command = Command.of(commandParam);
         try {
-            command = CommandFactory.createCommand(commandParam);
             RequestContext requestContext = requestContextCreator.create(req);
             commandResult = command.execute(requestContext);
             RequestFiller requestFiller = new RequestFiller();
@@ -60,7 +60,7 @@ public class Controller extends HttpServlet {
     private void dispatch(CommandResult commandResult,
                           HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (commandResult.isEmptyResponseAjax()) {
+        if (commandResult.isEmptyResponseAjax()) {//TODO new servlet for AJAX
             String page = commandResult.getPage();
             if (page == null) {
                 response.sendRedirect(HOME_PAGE_COMMAND);
@@ -82,11 +82,11 @@ public class Controller extends HttpServlet {
     private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage)
             throws IOException {
         req.setAttribute(Attribute.ERROR_MESSAGE, errorMessage);
-        RequestDispatcher dispatcher = req.getRequestDispatcher(Page.ERROR);
+        RequestDispatcher dispatcher = req.getRequestDispatcher(PagePath.ERROR);
         try {
             dispatcher.forward(req, resp);
-        } catch (Exception e) {
-            LOGGER.fatal(e);
+        } catch (ServletException e) {
+            LOGGER.error(e);
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -96,7 +96,7 @@ public class Controller extends HttpServlet {
         try {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             connectionPool.closeAll();
-        } catch (Exception e) {
+        } catch (DaoException e) {
             LOGGER.error(e);
         }
         super.destroy();

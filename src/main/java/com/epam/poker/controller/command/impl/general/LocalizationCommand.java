@@ -4,7 +4,7 @@ import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
 import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.controller.command.constant.CommandName;
-import com.epam.poker.controller.command.constant.Page;
+import com.epam.poker.controller.command.constant.PagePath;
 import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.controller.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
@@ -49,7 +49,7 @@ public class LocalizationCommand implements Command {
             case CommandName.SIGN_UP:
                 return SIGN_UP_PAGE;
             default:
-                return Page.HOME;
+                return PagePath.HOME;
         }
     }
 

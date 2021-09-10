@@ -1,6 +1,7 @@
 package com.epam.poker.controller.command;
 
 import com.epam.poker.controller.request.RequestContext;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 
@@ -22,5 +23,9 @@ public interface Command {
      *
      * @throws InvalidParametersException if there are errors in parameters of request.
      */
-    CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException;
+    CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException;
+
+    static Command of(String name) {
+        return CommandManager.of(name);
+    }
 }

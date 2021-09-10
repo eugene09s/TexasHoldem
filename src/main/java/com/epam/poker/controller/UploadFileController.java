@@ -1,11 +1,10 @@
 package com.epam.poker.controller;
 
 import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.dao.helper.DaoSaveTransactionFactory;
-import com.epam.poker.model.logic.service.user.ProfilePlayerService;
-import com.epam.poker.model.logic.service.user.ProfilePlayerServiceImpl;
-import com.epam.poker.model.logic.validator.impl.ProfilePlayerValidator;
+import com.epam.poker.model.service.user.ProfilePlayerService;
+import com.epam.poker.model.service.user.ProfilePlayerServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,13 +44,12 @@ public class UploadFileController extends HttpServlet {
         for (Part part : request.getParts()) {
             part.write(uploadFileDir + fileName);
         }
-        ProfilePlayerService profilePlayerService = new ProfilePlayerServiceImpl(
-                new DaoSaveTransactionFactory(), new ProfilePlayerValidator());
+        ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
         String responseLine = "";
         try {
             profilePlayerService.updatePhotoByUserId(userId, fileName);
             responseLine = "{\"success\": true}";
-        } catch (ServiceException e) {
+        } catch (ServiceException | DaoException e) {
             responseLine = "{\"success\": false}";
             LOGGER.error("Upload photo error. User id= " + userId + " try upload.");
         }

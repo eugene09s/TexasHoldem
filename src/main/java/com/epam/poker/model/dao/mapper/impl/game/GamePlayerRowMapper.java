@@ -2,6 +2,7 @@ package com.epam.poker.model.dao.mapper.impl.game;
 
 import com.epam.poker.model.dao.mapper.RowMapper;
 import com.epam.poker.model.entity.game.GamePlayer;
+import com.epam.poker.model.validator.impl.ProfilePlayerValidator;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,18 @@ import java.sql.SQLException;
 import static com.epam.poker.model.dao.ColumnName.*;
 
 public class GamePlayerRowMapper implements RowMapper<GamePlayer> {
+    private static GamePlayerRowMapper instance;
+
+    private GamePlayerRowMapper() {
+    }
+
+    public static GamePlayerRowMapper getInstance() {
+        if (instance == null) {
+            instance = new GamePlayerRowMapper();
+        }
+        return instance;
+    }
+
     @Override
     public GamePlayer map(ResultSet resultSet) throws SQLException {
         return GamePlayer.builder()

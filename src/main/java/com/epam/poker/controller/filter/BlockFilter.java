@@ -1,17 +1,21 @@
 package com.epam.poker.controller.filter;
 
 import com.epam.poker.controller.command.constant.Attribute;
-import com.epam.poker.model.dao.helper.DaoSaveTransactionFactory;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.logic.service.user.UserServiceImpl;
+import com.epam.poker.model.service.user.UserService;
+import com.epam.poker.model.service.user.UserServiceImpl;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 public class BlockFilter implements Filter {
-    private static final UserServiceImpl USER_SERVICE = new UserServiceImpl(new DaoSaveTransactionFactory());
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,8 +28,12 @@ public class BlockFilter implements Filter {
         Long userId = (Long) session.getAttribute(Attribute.USER_ID);
         if (userId != null) {
             try {
-                if (USER_SERVICE.isBlockedById(userId)) {
-                    session.invalidate();
+                try {
+                    if (userService.isBlockedById(userId)) {
+                        session.invalidate();
+                    }
+                } catch (DaoException e) {
+                    LOGGER.error("Block filter error: " + e);
                 }
             } catch (ServiceException e) {
                 session.invalidate();

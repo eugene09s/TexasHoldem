@@ -8,6 +8,7 @@ public class RequestContext {
     private final Map<String, Object> sessionAttributes;
     private final Map<String, String[]> requestParameters;
     private final String requestHeader;
+    private boolean isSession;//todo functionals
 
     public RequestContext(Map<String, Object> requestAttributes,
                           Map<String, String[]> requestParameters,
