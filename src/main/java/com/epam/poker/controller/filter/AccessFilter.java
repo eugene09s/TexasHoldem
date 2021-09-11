@@ -2,21 +2,20 @@ package com.epam.poker.controller.filter;
 
 
 import com.epam.poker.controller.command.constant.Attribute;
-import com.epam.poker.controller.command.constant.CommandName;
 import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.model.entity.type.UserRole;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 public class AccessFilter implements Filter {
-    private static final String GUEST_ROLE = "GUEST";
-    private static final String ADMIN_ROLE = "ADMIN";
-    private static final String USER_ROLE = "USER";
-    private static final String MANAGER_ROLE = "MANAGER";
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final String WARN_MESSAGE = "Permission denied. Role: ";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -32,9 +31,9 @@ public class AccessFilter implements Filter {
         UserRole userRole = (UserRole) session.getAttribute(Attribute.ROLE);
         String roleLine;
         if (userRole != null) {
-            roleLine = USER_ROLE;
+            roleLine = UserRole.USER.toString();
         } else {
-            roleLine = GUEST_ROLE;
+            roleLine = UserRole.GUEST.toString();
         }
         boolean isAccessAllowed = isAccessAllowed(commandName, roleLine);
         if (isAccessAllowed) {
@@ -48,30 +47,12 @@ public class AccessFilter implements Filter {
         if (commandName == null) {
             return true;
         }
-        return switch (commandName) {
-            case CommandName.SIGN_UP,
-                    CommandName.SIGN_UP_PAGE,
-                    CommandName.LOGIN,
-                    CommandName.LOGIN_PAGE,
-                    CommandName.CHECK_EXIST_LOGIN-> roleLine.equalsIgnoreCase(UserRole.GUEST.toString());
-            case CommandName.PROFILE_PAGE,
-                    CommandName.LOGOUT,
-                    CommandName.UPLOAD_PHOTO -> compareRoles(roleLine);
-            case CommandName.BLOCK_USER,
-                    CommandName.UNBLOCK_USER,
-                    CommandName.USERS -> roleLine.equalsIgnoreCase(ADMIN_ROLE);
-            case CommandName.HOME_PAGE,
-                    CommandName.LOCALIZATION -> true;
-            default -> false;
-        };
-    }
-
-    private boolean compareRoles(String role) {
-        if (role.equalsIgnoreCase(UserRole.USER.toString())
-                || role.equalsIgnoreCase(UserRole.ADMIN.toString())) {
-            return true;
+        try {
+            return UserRole.valueOf(roleLine).isExitCommandName(commandName);
+        } catch (IllegalArgumentException e) {
+            LOGGER.warn(WARN_MESSAGE + roleLine);
+            return false;
         }
-        return false;
     }
 
     @Override
