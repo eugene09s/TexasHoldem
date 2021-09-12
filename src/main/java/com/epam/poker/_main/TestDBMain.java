@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 
 public class TestDBMain {
@@ -75,34 +77,7 @@ public class TestDBMain {
                 .setBestPrize(BigDecimal.valueOf(32))
                 .setUserId(21)
                 .createRatingPlayer();
-        List<ProfilePlayer> profilePlayerList = null;
-        Timestamp start = new Timestamp(System.currentTimeMillis());
-        try {
-//             id = signUpService.signUp(user, profilePlayer);
-            for (int i = 0; i < 2000; ++i) {
-                profilePlayerService.updateAboutYourselfByUserId(21, "Helfdslo ALL");
-                profilePlayerService.updatePhotoByUserId(32, "n2otAva.jpg");
-                profilePlayerService.updateBestPrizeByUserId(35, BigDecimal.valueOf(3233));
-                profilePlayerService.updateProfilePlayerByUserId(21, profilePlayer);
-                profilePlayerService.updatePhotoByUserId(32, "notAva.jpg");
-                profilePlayerService.updateAboutYourselfByUserId(21, "Hello ALL");
-                profilePlayerService.updateBestPrizeByUserId(35, BigDecimal.valueOf(323));
-                userService.updatePassword(9, "1111111111111111");
-            }
 
-//            System.out.println("id1=" + signUpService.signUp(user, profilePlayer));
-//            System.out.println("id2=" + signUpService.signUp(user.setLogin("aaaaaaahd32aa").setEmail("dfsddsk@msd.dff"), profilePlayer));
-            profilePlayerList = profilePlayerService.findAll();
-            userList = userService.findAll();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-        Timestamp end = new Timestamp(System.currentTimeMillis());
-        System.out.println(userList);
-        System.out.println(profilePlayerList);
-        System.out.println(new Timestamp(end.getTime() - start.getTime()));
 
 //        List<User> listUsers = null;
 //        try {
@@ -124,5 +99,13 @@ public class TestDBMain {
 //        }
 //        String line = "asbodns.a8i-ad.sskn.jg";
 //        System.out.printf(line.substring(line.lastIndexOf(".")));
+        String roleLine = "GU3EST";
+        String commandName = "localization";
+        try {
+            System.out.println(UserRole.valueOf(roleLine).isExitCommandName(commandName));
+        } catch (IllegalArgumentException e) {
+            LOGGER.warn("Permission denied");
+        }
+        System.out.println(UserRole.USER.toString());
     }
 }
