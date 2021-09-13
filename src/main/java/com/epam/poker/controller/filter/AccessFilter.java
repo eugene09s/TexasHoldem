@@ -48,7 +48,7 @@ public class AccessFilter implements Filter {
             return true;
         }
         try {
-            return UserRole.valueOf(roleLine).isExitCommandName(commandName);
+            return UserRole.valueOf(roleLine).isExistCommandName(commandName);
         } catch (IllegalArgumentException e) {
             LOGGER.warn(WARN_MESSAGE + roleLine);
             return false;

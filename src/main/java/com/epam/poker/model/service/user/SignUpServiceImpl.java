@@ -4,9 +4,9 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.model.dao.helper.DaoSaveTransaction;
-import com.epam.poker.model.dao.impl.user.ProfilePlayerDao;
+import com.epam.poker.model.dao.ProfilePlayerDao;
 import com.epam.poker.model.dao.impl.user.ProfilePlayerDaoImpl;
-import com.epam.poker.model.dao.impl.user.UserDao;
+import com.epam.poker.model.dao.UserDao;
 import com.epam.poker.model.dao.impl.user.UserDaoImpl;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
@@ -42,8 +42,8 @@ public class SignUpServiceImpl implements SignUpService {
         }
         long userId = 0;
         DaoSaveTransaction transaction = new DaoSaveTransaction();
-        UserDao userDao = UserDaoImpl.getInstance();
-        ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+        UserDao userDao = new UserDaoImpl();
+        ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
         try {
             transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
             userId = userDao.add(user);
@@ -64,7 +64,7 @@ public class SignUpServiceImpl implements SignUpService {
     public boolean isUserLoginExist(String login) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findUserByLogin(login);
             return user.isPresent();
@@ -80,7 +80,7 @@ public class SignUpServiceImpl implements SignUpService {
     public boolean isUserEmailExist(String email) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findUserByEmail(email);
             return user.isPresent();

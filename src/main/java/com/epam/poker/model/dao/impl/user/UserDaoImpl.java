@@ -2,6 +2,7 @@ package com.epam.poker.model.dao.impl.user;
 
 import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.exception.DaoException;
+import com.epam.poker.model.dao.UserDao;
 import com.epam.poker.model.dao.mapper.impl.UserRowMapper;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserStatus;
@@ -13,7 +14,6 @@ import java.util.Optional;
 import static com.epam.poker.model.dao.ColumnName.USERS;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
-    private static UserDao instance;
     public static final String SQL_FIND_ALL_USERS = """
             SELECT user_id, login, password, first_name, last_name, email, 
             balance, role, status, phone_number, create_time
@@ -79,15 +79,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             LIMIT ?,?
             """;
 
-    private UserDaoImpl() {
+    public UserDaoImpl() {
         super(UserRowMapper.getInstance(), USERS);
-    }
-
-    public static UserDao getInstance() {
-        if (instance == null) {
-            instance = new UserDaoImpl();
-        }
-        return instance;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.epam.poker.model.dao.impl.game;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.AbstractDao;
+import com.epam.poker.model.dao.GamePlayerDao;
 import com.epam.poker.model.dao.mapper.impl.game.GamePlayerRowMapper;
 import com.epam.poker.model.entity.game.GamePlayer;
 
@@ -10,8 +11,7 @@ import java.util.Optional;
 
 import static com.epam.poker.model.dao.ColumnName.GAME_PlAYERS;
 
-public class GamePlayerDaoImpl extends AbstractDao<com.epam.poker.model.entity.game.GamePlayer> implements GamePlayerDao {
-    private static GamePlayerDao instance;
+public class GamePlayerDaoImpl extends AbstractDao<GamePlayer> implements GamePlayerDao {
     public static final String SQL_FIND_ALL_GAME_PLAYERS = """
             SELECT game_player_id, last_action, two_cards, combinations_cards,
             game_player_user_id, game_id
@@ -42,15 +42,8 @@ public class GamePlayerDaoImpl extends AbstractDao<com.epam.poker.model.entity.g
             WHERE game_player_id=?
             """;
 
-    private GamePlayerDaoImpl() {
+    public GamePlayerDaoImpl() {
         super(GamePlayerRowMapper.getInstance(), GAME_PlAYERS);
-    }
-
-    public static GamePlayerDao getInstance() {
-        if (instance == null) {
-            instance = new GamePlayerDaoImpl();
-        }
-        return instance;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.model.dao.helper.DaoSaveTransaction;
-import com.epam.poker.model.dao.impl.user.UserDao;
+import com.epam.poker.model.dao.UserDao;
 import com.epam.poker.model.dao.impl.user.UserDaoImpl;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserStatus;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
             throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             List<User> users = userDao.findUsersRange(offset, amount);
             return users;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public int findUsersAmount() throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             int amount = userDao.findUsersAmount();
             return amount;
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     public User findUserByLoginPassword(String login, String password) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findUserByLoginPassword(login, password);
             if (!user.isPresent()) {
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     public User findUserByLogin(String login) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findUserByLogin(login);
             if (!user.isPresent()) {
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findUserByEmail(email);
             if (!user.isPresent()) {
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
     public boolean blockById(long id) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             boolean answer = userDao.blockById(id);
             return answer;
@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
     public boolean unblockById(long id) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             boolean answer = userDao.unblockById(id);
             return answer;
@@ -152,7 +152,7 @@ public class UserServiceImpl implements UserService {
     public boolean addMoneyById(BigDecimal money, long id) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             boolean answer = userDao.addMoneyById(money, id);
             return answer;
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
     public boolean update(User item) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             boolean answer = userDao.update(item);
             return answer;
@@ -184,7 +184,7 @@ public class UserServiceImpl implements UserService {
     public long add(User t) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             long id = userDao.add(t);
             return id;
@@ -200,7 +200,7 @@ public class UserServiceImpl implements UserService {
     public boolean updatePassword(long userId, String password) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             boolean answer = userDao.updatePassword(userId, password);
             return answer;
@@ -216,7 +216,7 @@ public class UserServiceImpl implements UserService {
     public boolean isBlockedById(long id) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findById(id);
             if (!user.isPresent()) {
@@ -235,7 +235,7 @@ public class UserServiceImpl implements UserService {
     public boolean isUserExistByLoginPassword(String login, String password) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findUserByLoginPassword(login, password);
             return user.isPresent();
@@ -251,7 +251,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             List<User> users = userDao.findAll();
             return users;
@@ -267,7 +267,7 @@ public class UserServiceImpl implements UserService {
     public User findUserById(long id) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            UserDao userDao = UserDaoImpl.getInstance();
+            UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             Optional<User> user = userDao.findById(id);
             if (!user.isPresent()) {

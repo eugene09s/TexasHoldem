@@ -2,9 +2,6 @@ package com.epam.poker.model.dao.helper;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.AbstractDao;
-import com.epam.poker.model.dao.impl.user.UserDao;
-import com.epam.poker.model.dao.impl.user.UserDaoImpl;
-import com.epam.poker.model.entity.Entity;
 import com.epam.poker.model.pool.ConnectionPool;
 import com.epam.poker.model.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;

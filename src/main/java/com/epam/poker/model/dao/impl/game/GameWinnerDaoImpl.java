@@ -1,18 +1,17 @@
 package com.epam.poker.model.dao.impl.game;
 
-import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.exception.DaoException;
+import com.epam.poker.model.dao.AbstractDao;
+import com.epam.poker.model.dao.GameWinnerDao;
 import com.epam.poker.model.dao.mapper.impl.game.GameWinnerRowMapper;
 import com.epam.poker.model.entity.game.GameWinner;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
 import static com.epam.poker.model.dao.ColumnName.GAME_WINNERS;
 
 public class GameWinnerDaoImpl extends AbstractDao<GameWinner> implements GameWinnerDao {
-    private static GameWinnerDao instance;
     public static final String SQL_FIND_ALL_GAME_WINNERS = """
             SELECT game_winner_id, game_id, game_winner_user_id
             FROM game_winners
@@ -38,15 +37,8 @@ public class GameWinnerDaoImpl extends AbstractDao<GameWinner> implements GameWi
             WHERE game_winner_id=?
             """;
 
-    private GameWinnerDaoImpl() {
+    public GameWinnerDaoImpl() {
         super(GameWinnerRowMapper.getInstance(), GAME_WINNERS);
-    }
-
-    public static GameWinnerDao getInstance() {
-        if (instance == null) {
-            instance = new GameWinnerDaoImpl();
-        }
-        return instance;
     }
 
     @Override

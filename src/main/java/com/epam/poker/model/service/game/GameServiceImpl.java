@@ -4,7 +4,7 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.model.dao.helper.DaoSaveTransaction;
-import com.epam.poker.model.dao.impl.game.GameDao;
+import com.epam.poker.model.dao.GameDao;
 import com.epam.poker.model.dao.impl.game.GameDaoImpl;
 import com.epam.poker.model.entity.game.Game;
 import com.epam.poker.model.validator.Validator;
@@ -34,7 +34,7 @@ public class GameServiceImpl implements GameService {
         }
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            GameDao gameDao = GameDaoImpl.getInstance();
+            GameDao gameDao = new GameDaoImpl();
             transaction.init((AbstractDao) gameDao);
             return gameDao.add(game);
         } catch (DaoException e) {
@@ -49,7 +49,7 @@ public class GameServiceImpl implements GameService {
     public int findGamesAmout() throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            GameDao gameDao = GameDaoImpl.getInstance();
+            GameDao gameDao = new GameDaoImpl();
             transaction.init((AbstractDao) gameDao);
             return gameDao.findGameAmount();
         } catch (DaoException e) {
@@ -64,7 +64,7 @@ public class GameServiceImpl implements GameService {
     public List<Game> findGamesRange(int offset, int amount) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            GameDao gameDao = GameDaoImpl.getInstance();
+            GameDao gameDao = new GameDaoImpl();
             transaction.init((AbstractDao) gameDao);
             return gameDao.findGamesRange(offset, amount);
         } catch (DaoException e) {
@@ -79,7 +79,7 @@ public class GameServiceImpl implements GameService {
     public Game findGameById(long id) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            GameDao gameDao = GameDaoImpl.getInstance();
+            GameDao gameDao = new GameDaoImpl();
             transaction.init((AbstractDao) gameDao);
             Optional<Game> gameOptional = gameDao.findById(id);
             if (!gameOptional.isPresent()) {

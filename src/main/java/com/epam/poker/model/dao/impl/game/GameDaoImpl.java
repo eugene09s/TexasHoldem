@@ -2,6 +2,7 @@ package com.epam.poker.model.dao.impl.game;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.AbstractDao;
+import com.epam.poker.model.dao.GameDao;
 import com.epam.poker.model.dao.mapper.impl.game.GameRowMapper;
 import com.epam.poker.model.entity.game.Game;
 
@@ -11,7 +12,6 @@ import java.util.Optional;
 import static com.epam.poker.model.dao.ColumnName.GAMES;
 
 public class GameDaoImpl extends AbstractDao<Game> implements GameDao {
-    private static GameDao instance;
     public static final String SQL_FIND_ALL_GAMES = """
             SELECT game_id, title, date, bank, five_cards
             FROM games
@@ -32,15 +32,8 @@ public class GameDaoImpl extends AbstractDao<Game> implements GameDao {
             LIMIT ?,?
             """;
 
-    private GameDaoImpl() {
+    public GameDaoImpl() {
         super(GameRowMapper.getInstance(), GAMES);
-    }
-
-    public static GameDao getInstance() {
-        if (instance == null) {
-            instance = new GameDaoImpl();
-        }
-        return instance;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.model.dao.helper.DaoSaveTransaction;
-import com.epam.poker.model.dao.impl.user.ProfilePlayerDao;
+import com.epam.poker.model.dao.ProfilePlayerDao;
 import com.epam.poker.model.dao.impl.user.ProfilePlayerDaoImpl;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.validator.Validator;
@@ -32,7 +32,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public int findProfilePlayerAmount() throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             int answer = profilePlayerDao.findProfilePlayerAmount();
             return answer;
@@ -48,7 +48,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public List<ProfilePlayer> findAll() throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             List<ProfilePlayer> profilePlayerList = profilePlayerDao.findAll();
             return profilePlayerList;
@@ -64,7 +64,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public ProfilePlayer findProfilePlayerById(long id) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             Optional<ProfilePlayer> profilePlayer = profilePlayerDao.findById(id);
             if (!profilePlayer.isPresent()) {
@@ -83,7 +83,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public boolean updateProfilePlayerByUserId(long userId, ProfilePlayer profilePlayer) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             return profilePlayerDao.updateProfilePlayerByUserId(userId, profilePlayer);
         } catch (DaoException e) {
@@ -98,7 +98,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public boolean updatePhotoByUserId(long userId, String photo) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             return profilePlayerDao.updatePhotoByUserId(userId, photo);
         } catch (DaoException e) {
@@ -113,7 +113,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             return profilePlayerDao.updateBestPrizeByUserId(userId, bestPrize);
         } catch (DaoException e) {
@@ -128,7 +128,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public boolean updateAwardByUserId(long userId, String award) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             return profilePlayerDao.updateAwardByUserId(userId, award);
         } catch (DaoException e) {
@@ -143,7 +143,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public boolean updateAboutYourselfByUserId(long userId, String aboutYourself) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             return profilePlayerDao.updateAboutYourselfByUserId(userId, aboutYourself);
         } catch (DaoException e) {
@@ -158,7 +158,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public boolean updateLostMoneyByUserId(long userId, BigDecimal money) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             return profilePlayerDao.updateLostMoneyByUserId(userId, money);
         } catch (DaoException e) {
@@ -173,7 +173,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     public boolean updateWinMoneyByUserId(long userId, BigDecimal money) throws ServiceException, DaoException {
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             return profilePlayerDao.updateWinMoneyByUserId(userId, money);
         } catch (DaoException e) {
@@ -191,7 +191,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
         }
         DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = ProfilePlayerDaoImpl.getInstance();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             transaction.init((AbstractDao) profilePlayerDao);
             profilePlayerDao.add(profilePlayer);
         } catch (DaoException e) {

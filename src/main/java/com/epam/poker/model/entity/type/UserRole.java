@@ -16,7 +16,7 @@ public enum UserRole {
         this.commandsName.addAll(Set.of(commandsName));
     }
 
-    public boolean isExitCommandName(String command) {
+    public boolean isExistCommandName(String command) {
         return this.commandsName.contains(command);
     }
 }

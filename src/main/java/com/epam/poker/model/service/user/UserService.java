@@ -6,7 +6,6 @@ import com.epam.poker.model.entity.User;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Interface with description of operations with the User.

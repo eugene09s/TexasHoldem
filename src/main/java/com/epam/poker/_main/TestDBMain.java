@@ -1,8 +1,5 @@
 package com.epam.poker._main;
 
-import com.epam.poker.exception.DaoException;
-import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.dao.helper.DaoSaveTransaction;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserRole;
@@ -13,8 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.List;
 
 public class TestDBMain {
@@ -102,7 +97,7 @@ public class TestDBMain {
         String roleLine = "GU3EST";
         String commandName = "localization";
         try {
-            System.out.println(UserRole.valueOf(roleLine).isExitCommandName(commandName));
+            System.out.println(UserRole.valueOf(roleLine).isExistCommandName(commandName));
         } catch (IllegalArgumentException e) {
             LOGGER.warn("Permission denied");
         }

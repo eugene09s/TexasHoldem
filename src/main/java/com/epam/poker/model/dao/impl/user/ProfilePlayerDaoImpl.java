@@ -2,6 +2,7 @@ package com.epam.poker.model.dao.impl.user;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.AbstractDao;
+import com.epam.poker.model.dao.ProfilePlayerDao;
 import com.epam.poker.model.dao.mapper.impl.ProfilePlayerRowMapper;
 import com.epam.poker.model.entity.ProfilePlayer;
 
@@ -12,7 +13,6 @@ import java.util.Optional;
 import static com.epam.poker.model.dao.ColumnName.PROFILE_PLAYERS;
 
 public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements ProfilePlayerDao {
-    private static ProfilePlayerDao instance;
     public static final String SQL_ADD_PROFILE_PLAYER = """
             INSERT INTO profile_players
             (player_id, best_prize, award, photo, about_yourself, lost_money, win_money)
@@ -63,15 +63,8 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
             WHERE player_id=?
             """;
 
-    private ProfilePlayerDaoImpl() {
+    public ProfilePlayerDaoImpl() {
         super(ProfilePlayerRowMapper.getInstance(), PROFILE_PLAYERS);
-    }
-
-    public static ProfilePlayerDao getInstance() {
-        if (instance == null) {
-            instance = new ProfilePlayerDaoImpl();
-        }
-        return instance;
     }
 
     @Override
