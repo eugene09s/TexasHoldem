@@ -48,6 +48,7 @@ public class UploadFileController extends HttpServlet {
         String responseLine = "";
         try {
             profilePlayerService.updatePhotoByUserId(userId, fileName);
+            request.getSession().setAttribute("photo", fileName);
             responseLine = "{\"success\": true}";
         } catch (ServiceException | DaoException e) {
             responseLine = "{\"success\": false}";

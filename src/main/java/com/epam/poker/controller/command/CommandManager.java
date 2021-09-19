@@ -1,6 +1,7 @@
 package com.epam.poker.controller.command;
 
 import com.epam.poker.controller.command.constant.CommandName;
+import com.epam.poker.controller.command.impl.game.GoToGamePage;
 import com.epam.poker.controller.command.impl.general.*;
 import com.epam.poker.controller.command.impl.user.*;
 
@@ -12,7 +13,9 @@ public enum CommandManager {
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
     LOGIN(new LoginCommand(), CommandName.LOGIN),
     LOGOUT(new LogoutCommand(), CommandName.LOGOUT),
+    GO_TO_GAME_PAGE(new GoToGamePage(), CommandName.PLAY_PAGE),
     LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION),
+    GO_TO_CHAT(new GoToChatPageCommand(), CommandName.CHAT_PAGE),
 
     //AJAX
     CHECK_EXIST_LOGIN(new CheckExistUsername(), CommandName.CHECK_EXIST_LOGIN),

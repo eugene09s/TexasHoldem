@@ -39,6 +39,7 @@ public class LoginCommand implements Command {
                 UserRole role = user.getUserRole();
                 requestContext.addSession(Attribute.USER_ID, id);
                 requestContext.addSession(Attribute.ROLE, role);
+                requestContext.addSession(Attribute.LOGIN, user.getLogin());
                 ProfilePlayer profilePlayer = profilePlayerService.findProfilePlayerById(id);
                 requestContext.addSession(Attribute.PHOTO, profilePlayer.getPhoto());
                 return CommandResult.redirect(PROFILE_PAGE_COMMAND + id);
