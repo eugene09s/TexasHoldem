@@ -4,8 +4,6 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.mapper.RowMapper;
 import com.epam.poker.model.entity.Entity;
 import com.epam.poker.model.pool.ProxyConnection;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final String SQL_SELECT_COUNT = "SELECT COUNT(*) FROM ";
     private static final String COUNT = "COUNT(*)";
     private static final String MESSAGE_ERROR = "More than one record found.";
@@ -33,7 +30,6 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         this.proxyConnection = proxyConnection;
     }
 
-    @Override
     public int findRowsAmount(Optional<String> additionalCondition) throws DaoException {
         String queryRowsAmount = SQL_SELECT_COUNT + tableName;
         if (additionalCondition.isPresent()) {
