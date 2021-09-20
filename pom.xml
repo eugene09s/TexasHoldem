@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>16</maven.compiler.target>
         <maven.compiler.source>16</maven.compiler.source>
-        <junit.version>5.7.2</junit.version>
+        <junit.version>5.8.0</junit.version>
     </properties>
 
     <dependencies>
@@ -24,7 +24,12 @@
             <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>9.1.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -73,7 +78,6 @@
             <version>2.0.0</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -92,10 +96,21 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.8.0</version>
+            <version>20030203.000550</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.websocket</groupId>
+            <artifactId>jakarta.websocket-api</artifactId>
+            <version>2.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.8</version>
         </dependency>
     </dependencies>
-	<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -112,4 +127,39 @@
             </plugin>
         </plugins>
     </build>
+<!--    <build>-->
+<!--        <finalName>poker</finalName>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>${maven.compiler.source}</source>-->
+<!--                    <target>${maven.compiler.target}</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-war-plugin</artifactId>-->
+<!--                <version>3.3.1</version>-->
+<!--&lt;!&ndash;                <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <warSourceDirectory>src/main/webapp</warSourceDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;                </configuration>&ndash;&gt;-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--&lt;!&ndash;                todo deploy war&ndash;&gt;-->
+<!--                <groupId>org.apache.tomcat.maven</groupId>-->
+<!--                <artifactId>tomcat7-maven-plugin</artifactId>-->
+<!--                <version>2.2</version>-->
+<!--                <configuration>-->
+<!--                    <url>http://localhost:8081/</url>-->
+<!--                    <server>TomcatServer</server>-->
+<!--                    <path>/</path>-->
+<!--                    <port>8081</port>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 </project>

@@ -38,6 +38,18 @@
         <location>/jsp/pages/error/error.jsp</location>
     </error-page>
     <error-page>
+        <error-code>403</error-code>
+        <location>/jsp/pages/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>402</error-code>
+        <location>/jsp/pages/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/jsp/pages/error/error.jsp</location>
+    </error-page>
+    <error-page>
         <exception-type>java.lang.RuntimeException</exception-type>
         <location>/jsp/pages/error/error.jsp</location>
     </error-page>

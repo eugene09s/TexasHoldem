@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/chat-dialog.css">
+    <script src="/js/chat-dialog.js" defer></script>
+</head>
+<body>
+
+<button type="button" class="chat-btn">Chat</button>
+
+<div class="fixed-chat-dialog d-none">
+    <div class="box box-warning direct-chat direct-chat-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title">Chat Messages</h3>
+            <div class="box-tools pull-right"><span class="dialog-badge"></span>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="direct-chat-messages">
+
+            </div>
+        </div>
+        <div class="box-footer">
+            <form class="dialog-form">
+                <div class="input-group"><input type="text" name="message" autocomplete="off"
+                                                placeholder="Type Message ..." class="form-control">
+                    <span class="input-group-btn"> <button type="button"
+                                                           class="send-msg btn btn-warning btn-flat">Send</button> </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

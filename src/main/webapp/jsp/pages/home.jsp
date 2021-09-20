@@ -32,9 +32,8 @@ ${sessionScope}
 		</p>
     </span>
     <h2>Poker Hands</h2>
-    <img src="/images/rules/pokerHands.png">
+    <img class="w-100" src="/images/rules/pokerHands.png">
 </div>
-
 
 </body>
 </html>
