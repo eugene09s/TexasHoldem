@@ -19,13 +19,22 @@ import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserRole;
 import com.epam.poker.model.entity.type.UserStatus;
 import com.epam.poker.model.service.user.UserServiceImpl;
+import com.epam.poker.util.JwtProvider;
+import jakarta.servlet.http.Cookie;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class LoginCommand implements Command {
     private static final String PROFILE_PAGE_COMMAND = "poker?command=" + CommandName.PROFILE_PAGE + "&id=";
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
+    private static final long LIFE_TIME_COOKIE = 15;
     private static UserService service = UserServiceImpl.getInstance();
     private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException {
@@ -36,12 +45,26 @@ public class LoginCommand implements Command {
             User user = service.findUserByLogin(login);
             if (user.getUserStatus() != UserStatus.BANNED) {
                 long id = user.getUserId();
+
                 UserRole role = user.getUserRole();
                 requestContext.addSession(Attribute.USER_ID, id);
                 requestContext.addSession(Attribute.ROLE, role);
                 requestContext.addSession(Attribute.LOGIN, user.getLogin());
                 ProfilePlayer profilePlayer = profilePlayerService.findProfilePlayerById(id);
                 requestContext.addSession(Attribute.PHOTO, profilePlayer.getPhoto());
+
+                Map<String, String> claims = new HashMap<>();
+                claims.put(Attribute.USER_ID, String.valueOf(id));
+                claims.put(Attribute.ROLE, String.valueOf(role));
+                claims.put(Attribute.LOGIN, user.getLogin());
+                claims.put(Attribute.PHOTO, profilePlayer.getPhoto());
+                String token = jwtProvider.generateToken(claims);
+                Cookie cookie = new Cookie("body", token);
+                cookie.isHttpOnly();
+                cookie.setMaxAge((int) TimeUnit.MINUTES.toSeconds(LIFE_TIME_COOKIE));
+                Cookie[] cookies = {cookie};
+                requestContext.setCookie(cookies);
+
                 return CommandResult.redirect(PROFILE_PAGE_COMMAND + id);
             }
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);

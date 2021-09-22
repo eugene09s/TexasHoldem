@@ -14,6 +14,7 @@ import com.epam.poker.model.pool.ConnectionPool;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 @WebServlet(urlPatterns = {"/poker"}, name = "mainServlet")
@@ -47,9 +49,16 @@ public class Controller extends HttpServlet {
         Command command = Command.of(commandParam);
         try {
             RequestContext requestContext = requestContextCreator.create(req);
+            requestContext.setCookie(req.getCookies());
+            LOGGER.info("Cookies before procces: " + req.getCookies());
             commandResult = command.execute(requestContext);
             RequestFiller requestFiller = new RequestFiller();
             requestFiller.fillData(req, requestContext);
+            Cookie[] cookies = requestContext.getCookies();
+            LOGGER.info("Cookies after procces: " + cookies);
+            for (Cookie cookie : cookies) {
+                resp.addCookie(cookie);
+            }
             dispatch(commandResult, req, resp);
         } catch (Exception e) {
             LOGGER.error(e);
