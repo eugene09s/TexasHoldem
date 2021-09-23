@@ -12,6 +12,7 @@ public final class Attribute {
     public static final String USER = "user";
     public static final String PROFILE_PLAYER = "profilePlayer";
     public static final String PHOTO = "photo";
+    public static final String ACCESS_TOKEN = "accessToken";
     public static final String CHECK_USERNAME_EXIST = "isExistUsername";
 //    public static final String FIRST_NAME = "firstName";
 //    public static final String LAST_NAME = "lastName";

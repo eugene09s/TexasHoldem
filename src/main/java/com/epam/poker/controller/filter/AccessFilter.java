@@ -5,14 +5,19 @@ import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.model.entity.type.UserRole;
 import com.epam.poker.util.JwtProvider;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import jakarta.servlet.*;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public class AccessFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -31,20 +36,26 @@ public class AccessFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         String commandName = servletRequest.getParameter(Parameter.COMMAND);
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-//        String token = getTokenFromRequest(httpServletRequest);
-//        LOGGER.info("Token: " + token);
-//        if (token != null && jwtProvider.validateToken(token)) {
-//            String userLogin = String.valueOf(jwtProvider.getLoginFromToken(token));
-//            LOGGER.info("User login: " + userLogin);
-//        }
-        HttpSession session = httpServletRequest.getSession();
-        UserRole userRole = (UserRole) session.getAttribute(Attribute.ROLE);
-        String roleLine;
-        if (userRole != null) {
-            roleLine = UserRole.USER.toString();
+//        HttpSession session = httpServletRequest.getSession();
+//        UserRole userRole = (UserRole) session.getAttribute(Attribute.ROLE);
+        Cookie[] cookies = httpServletRequest.getCookies();
+        Optional<Cookie> cookieToken = getTokenFromCookies(cookies);
+        UserRole userRole;
+        if (cookieToken.isPresent()) {
+            String token = String.valueOf(cookieToken.get());
+            JwtProvider jwtProvider = JwtProvider.getInstance();
+            if (jwtProvider.validateToken(token)) {
+                Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
+                userRole = (UserRole) claimsJws.getBody().get(Attribute.ROLE);
+            } else {
+                LOGGER.info("Token not valid!");
+                userRole = UserRole.GUEST;
+            }
         } else {
-            roleLine = UserRole.GUEST.toString();
+            LOGGER.info("Token not found or dead!");
+            userRole = UserRole.GUEST;
         }
+        String roleLine = userRole.toString();
         boolean isAccessAllowed = isAccessAllowed(commandName, roleLine);
         if (isAccessAllowed) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -65,13 +76,16 @@ public class AccessFilter implements Filter {
         }
     }
 
-    private String getTokenFromRequest(HttpServletRequest request) {
-        String bearer = request.getHeader(AUTHORIZATION);
-        //hasText
-        if (bearer.startsWith(BEARER)) {
-            return bearer.substring(7);
-        }
-        return null;
+    private Optional<Cookie> getTokenFromCookies(Cookie[] cookies) {
+        return Arrays.stream(cookies)
+                .filter(c -> c.getName().equals(Attribute.ACCESS_TOKEN))
+                .findFirst();
+    }
+
+    public boolean checkLifeTimeToken(Cookie cookie) {
+        LOGGER.info("Cookie: " + cookie.getMaxAge());
+        LOGGER.info("Now: " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+        return cookie.getMaxAge() > TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
     }
 
     @Override

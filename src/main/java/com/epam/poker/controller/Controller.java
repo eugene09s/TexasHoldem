@@ -7,8 +7,6 @@ import com.epam.poker.controller.command.constant.CommandName;
 import com.epam.poker.controller.command.constant.PagePath;
 import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.controller.request.RequestContext;
-import com.epam.poker.controller.request.RequestContextCreator;
-import com.epam.poker.controller.request.RequestFiller;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.pool.ConnectionPool;
 import jakarta.servlet.RequestDispatcher;
@@ -22,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 
 @WebServlet(urlPatterns = {"/poker"}, name = "mainServlet")
@@ -43,22 +40,13 @@ public class Controller extends HttpServlet {
     }
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        RequestContextCreator requestContextCreator = new RequestContextCreator();
         CommandResult commandResult;
         String commandParam = req.getParameter(Parameter.COMMAND);
         Command command = Command.of(commandParam);
         try {
-            RequestContext requestContext = requestContextCreator.create(req);
-            requestContext.setCookie(req.getCookies());
-            LOGGER.info("Cookies before procces: " + req.getCookies());
+            RequestContext requestContext = new RequestContext(req);
             commandResult = command.execute(requestContext);
-            RequestFiller requestFiller = new RequestFiller();
-            requestFiller.fillData(req, requestContext);
-            Cookie[] cookies = requestContext.getCookies();
-            LOGGER.info("Cookies after procces: " + cookies);
-            for (Cookie cookie : cookies) {
-                resp.addCookie(cookie);
-            }
+            requestContext.fillData(req, resp);
             dispatch(commandResult, req, resp);
         } catch (Exception e) {
             LOGGER.error(e);
@@ -85,6 +73,12 @@ public class Controller extends HttpServlet {
             HashMap<String, String> hashMap = commandResult.getResponseAjax();
             response.setContentType("text/plain");
             response.getWriter().write(hashMap.get(Attribute.CHECK_USERNAME_EXIST));
+        }
+    }
+
+    private void setCookies(Cookie[] cookies, HttpServletResponse resp) {
+        for (Cookie cookie : cookies) {
+            resp.addCookie(cookie);
         }
     }
 

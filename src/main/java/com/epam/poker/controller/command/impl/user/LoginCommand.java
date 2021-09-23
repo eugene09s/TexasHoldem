@@ -22,7 +22,6 @@ import com.epam.poker.model.service.user.UserServiceImpl;
 import com.epam.poker.util.JwtProvider;
 import jakarta.servlet.http.Cookie;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -59,11 +58,10 @@ public class LoginCommand implements Command {
                 claims.put(Attribute.LOGIN, user.getLogin());
                 claims.put(Attribute.PHOTO, profilePlayer.getPhoto());
                 String token = jwtProvider.generateToken(claims);
-                Cookie cookie = new Cookie("body", token);
-                cookie.isHttpOnly();
-                cookie.setMaxAge((int) TimeUnit.MINUTES.toSeconds(LIFE_TIME_COOKIE));
-                Cookie[] cookies = {cookie};
-                requestContext.setCookie(cookies);
+                Cookie cookie = new Cookie(Attribute.ACCESS_TOKEN, token);
+                cookie.setHttpOnly(true);
+                cookie.setMaxAge((int) (TimeUnit.MINUTES.toSeconds(LIFE_TIME_COOKIE) + 3*60*60));
+                requestContext.addCookie(cookie);
 
                 return CommandResult.redirect(PROFILE_PAGE_COMMAND + id);
             }
