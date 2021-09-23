@@ -1,16 +1,28 @@
 package com.epam.poker._main;
 
+import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserRole;
 import com.epam.poker.model.entity.type.UserStatus;
 import com.epam.poker.model.service.user.*;
+import com.epam.poker.util.JwtProvider;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.security.Key;
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class TestDBMain {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -94,13 +106,22 @@ public class TestDBMain {
 //        }
 //        String line = "asbodns.a8i-ad.sskn.jg";
 //        System.out.printf(line.substring(line.lastIndexOf(".")));
-        String roleLine = "GU3EST";
-        String commandName = "localization";
-        try {
-            System.out.println(UserRole.valueOf(roleLine).isExistCommandName(commandName));
-        } catch (IllegalArgumentException e) {
-            LOGGER.warn("Permission denied");
-        }
-        System.out.println(UserRole.USER.toString());
+
+        JwtProvider jwtProvider = JwtProvider.getInstance();
+        Map<String, String> claims = new HashMap<>();
+        claims.put("login", "eugene.shadura");
+        claims.put("userId", "27");
+        claims.put("username", "Ivan Makarevich");
+        String token = jwtProvider.generateToken(claims);
+//        System.out.println("Token: " + token);
+//        System.out.println("JWS: " + jwtProvider.getClaimsFromToken(token));
+//        Jws<Claims> claimsList = jwtProvider.getClaimsFromToken(token);
+//        System.out.println(Attribute.USER_ID + claimsList.getBody().get(Attribute.USER_ID));
+//        System.out.println(jwtProvider.validateToken(token));
+//        System.out.println(( TimeUnit.MINUTES.toSeconds(10)));
+//        Date exp = new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(15));
+//        System.out.println(exp);
+//        Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+//        System.out.println(secretKey);
     }
 }

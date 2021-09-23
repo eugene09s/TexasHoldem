@@ -23,6 +23,7 @@ public class HelloServlet extends HttpServlet {
         LOGGER.info("Value info c: " + c);
         LOGGER.warn("Value warn c: " + c);
         LOGGER.fatal("Value warn c: " + c);
+
         try {
             int i = 2;
             i = i / 0;

@@ -1,24 +1,23 @@
 package com.epam.poker.util;
 
 import com.auth0.jwt.exceptions.SignatureGenerationException;
+import com.epam.poker.controller.command.constant.Attribute;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.security.Key;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class JwtProvider {
     private static final JwtProvider instance = new JwtProvider() ;
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final int TOKEN_LIFETIME = 15;
-//    @Value("${jwt.secret}")
     private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private static final long TOKEN_LIFETIME = 15L;
 
     private JwtProvider() {
     }
@@ -28,17 +27,23 @@ public class JwtProvider {
     }
 
     public String generateToken(Map<String, String> claims) {
-        Date date = Date.from(LocalDate.now().plusDays(TOKEN_LIFETIME).atStartOfDay(ZoneId.systemDefault()).toInstant());
-
+        Date exp = new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(TOKEN_LIFETIME));
+        Date now = new Date();
+        String id = UUID.randomUUID().toString().replace("-", "");
         return Jwts.builder()
-                .setIssuer("Stormpath")
-                .setSubject("msilverman")
+                .setId(id)
+                .setIssuedAt(now)
+                .setNotBefore(now)
+                .setExpiration(exp)
+                .setIssuer("Eugene")
+                .setSubject("Shadura")
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(date)
                 .signWith(this.secretKey)
-//                .setId(UUID.randomUUID()
                 .compact();
+    }
+
+    public String findValueByAttributeFromClaimsToken(Jws<Claims> claims, Attribute attribute) {
+        return String.valueOf(claims.getBody().get(attribute));
     }
 
     public boolean validateToken(String token) {
@@ -49,30 +54,23 @@ public class JwtProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException expEx) {
-            LOGGER.info("Token expired");
+            LOGGER.info("Token expired: " + expEx);
         } catch (UnsupportedJwtException unsEx) {
-            LOGGER.info("Unsupported jwt");
+            LOGGER.info("Unsupported jwt: " + unsEx);
         } catch (MalformedJwtException mjEx) {
-            LOGGER.info("Malformed jwt");
+            LOGGER.info("Malformed jwt: " + mjEx);
         } catch (SignatureGenerationException sEx) {
-            LOGGER.info("Invalid signature");
+            LOGGER.info("Invalid signature: " + sEx);
         } catch (Exception e) {
-            LOGGER.info("invalid token");
+            LOGGER.info("invalid token: " + e);
         }
         return false;
     }
 
     public Jws<Claims> getClaimsFromToken(String token) {
-//        Claims jws;
-//        jws = Jwts.parserBuilder()  // (1)
-//                .setSigningKey(key)         // (2)
-//                .build()                    // (3)
-//                .parseClaimsJws(token).getBody();
-        Jws<Claims> jws;
-        jws = Jwts.parserBuilder()  // (1)
-                .setSigningKey(secretKey)         // (2)
-                .build()                    // (3)
-                .parseClaimsJws(token); // (4)
-        return jws;
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token);
     }
 }

@@ -42,11 +42,12 @@ public class AccessFilter implements Filter {
         Optional<Cookie> cookieToken = getTokenFromCookies(cookies);
         UserRole userRole;
         if (cookieToken.isPresent()) {
-            String token = String.valueOf(cookieToken.get());
+            String token = cookieToken.get().getValue();
+            LOGGER.info("Token: " + token);
             JwtProvider jwtProvider = JwtProvider.getInstance();
             if (jwtProvider.validateToken(token)) {
                 Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
-                userRole = (UserRole) claimsJws.getBody().get(Attribute.ROLE);
+                userRole = UserRole.valueOf(claimsJws.getBody().get(Attribute.ROLE).toString());
             } else {
                 LOGGER.info("Token not valid!");
                 userRole = UserRole.GUEST;
