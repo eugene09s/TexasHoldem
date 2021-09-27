@@ -22,7 +22,7 @@ public class CommandResult {
     }
 
     public HashMap<String, String> getResponseAjax() {
-        return responseAjax;
+        return  responseAjax;
     }
 
     public static CommandResult redirect(String page) {

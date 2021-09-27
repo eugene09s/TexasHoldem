@@ -76,12 +76,6 @@ public class Controller extends HttpServlet {
         }
     }
 
-    private void setCookies(Cookie[] cookies, HttpServletResponse resp) {
-        for (Cookie cookie : cookies) {
-            resp.addCookie(cookie);
-        }
-    }
-
     private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage)
             throws IOException {
         req.setAttribute(Attribute.ERROR_MESSAGE, errorMessage);

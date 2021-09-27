@@ -1,23 +1,26 @@
 package com.epam.poker.util;
 
 import com.auth0.jwt.exceptions.SignatureGenerationException;
-import com.epam.poker.controller.command.constant.Attribute;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class JwtProvider {
     private static final JwtProvider instance = new JwtProvider() ;
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private static final long TOKEN_LIFETIME = 15L;
+    private static final String LINE_SECRET_KEY =
+        "H5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDf";
+    private static final Key SECRET_KEY = Keys.hmacShaKeyFor(Decoders.BASE64.decode(LINE_SECRET_KEY));
+    private static final long TOKEN_LIFETIME = 1L;
 
     private JwtProvider() {
     }
@@ -27,31 +30,25 @@ public class JwtProvider {
     }
 
     public String generateToken(Map<String, String> claims) {
-        Date exp = new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(TOKEN_LIFETIME));
-        Date now = new Date();
         String id = UUID.randomUUID().toString().replace("-", "");
+        Instant instant = Instant.now();
         return Jwts.builder()
-                .setId(id)
-                .setIssuedAt(now)
-                .setNotBefore(now)
-                .setExpiration(exp)
-                .setIssuer("Eugene")
-                .setSubject("Shadura")
+                .setSubject("Access token")
                 .setClaims(claims)
-                .signWith(this.secretKey)
+                .setId(id)
+                .setIssuedAt(Date.from(instant))
+                .setExpiration(Date.from(instant.plus(TOKEN_LIFETIME, ChronoUnit.MINUTES)))
+                .signWith(SECRET_KEY)
                 .compact();
-    }
-
-    public String findValueByAttributeFromClaimsToken(Jws<Claims> claims, Attribute attribute) {
-        return String.valueOf(claims.getBody().get(attribute));
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(SECRET_KEY)
                     .build()
-                    .parseClaimsJws(token);
+                    .parseClaimsJws(token)
+                    .getBody();
             return true;
         } catch (ExpiredJwtException expEx) {
             LOGGER.info("Token expired: " + expEx);
@@ -69,7 +66,8 @@ public class JwtProvider {
 
     public Jws<Claims> getClaimsFromToken(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+                .setSigningKey(SECRET_KEY)
+                .setAllowedClockSkewSeconds(5)
                 .build()
                 .parseClaimsJws(token);
     }

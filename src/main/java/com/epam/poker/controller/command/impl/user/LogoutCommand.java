@@ -14,7 +14,7 @@ public class LogoutCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
-        Cookie cookie = new Cookie("accessToken", null);
+        Cookie cookie = new Cookie(Attribute.ACCESS_TOKEN, null);
         cookie.setMaxAge(0);
         requestContext.addCookie(cookie);
         requestContext.addSession(Attribute.INVALIDATE_ATTRIBUTE, true);

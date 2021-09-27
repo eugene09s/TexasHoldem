@@ -30,9 +30,10 @@ public class LoginCommand implements Command {
     private static final String PROFILE_PAGE_COMMAND = "poker?command=" + CommandName.PROFILE_PAGE + "&id=";
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
-    private static final long LIFE_TIME_COOKIE = 15;
+    private static final long LIFE_TIME_COOKIE = 1;
     private static UserService service = UserServiceImpl.getInstance();
     private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static final int TIMEZONE_GMT_PLUS_THREE = 60*60*3;
     private static JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
@@ -60,7 +61,8 @@ public class LoginCommand implements Command {
                 String token = jwtProvider.generateToken(claims);
                 Cookie cookie = new Cookie(Attribute.ACCESS_TOKEN, token);
                 cookie.setHttpOnly(true);
-                cookie.setMaxAge((int) (TimeUnit.MINUTES.toSeconds(LIFE_TIME_COOKIE) + 3*60*60));
+                cookie.setMaxAge(TIMEZONE_GMT_PLUS_THREE +
+                        (int) (TimeUnit.MINUTES.toSeconds(LIFE_TIME_COOKIE)));
                 requestContext.addCookie(cookie);
 
                 return CommandResult.redirect(PROFILE_PAGE_COMMAND + id);
