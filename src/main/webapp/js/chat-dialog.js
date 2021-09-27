@@ -35,7 +35,7 @@ const chatUnit = {
     onOpenSocket() {
 
     },
-    onMessage(msg){
+    onMessage(msg){//todo if my messagge then add class right
         console.log(msg);
         this.messagesBody.insertAdjacentHTML('beforeend', `
             <div class="direct-chat-msg">

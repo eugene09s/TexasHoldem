@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +59,8 @@ public class ChatController {
     public void onMessage(Session session, Message message) {
         message.setName(this.username);
         message.setImg(this.img);
+        String time = LocalTime.now().toString();
+        message.setTime(time.substring(0, time.length() - 8));
         sessionUsers.forEach(s -> {
             try {
                 s.getBasicRemote().sendObject(message);

@@ -1,9 +1,12 @@
 package com.epam.poker.controller.chat;
 
+import java.time.LocalTime;
+
 public class Message {
     private String name;
     private String text;
     private String img;
+    private String time;
 
     private Message() {}
 
@@ -13,6 +16,11 @@ public class Message {
 
     public Message setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Message setTime(String localTime) {
+        this.time = localTime;
         return this;
     }
 
