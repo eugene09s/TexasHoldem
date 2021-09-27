@@ -4,7 +4,8 @@ import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.controller.command.constant.CommandName;
 import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.model.entity.type.UserRole;
-import com.epam.poker.util.JwtProvider;
+import com.epam.poker.model.entity.type.UserStatus;
+import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import jakarta.servlet.*;
@@ -23,7 +24,6 @@ public class AccessFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String WARN_MESSAGE = "Permission denied. Role: ";
     private static final String PERMISSION_DENIED = "Permission denied";
-    private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
     private static JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
@@ -46,6 +46,7 @@ public class AccessFilter implements Filter {
                 Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
                 userRole = UserRole.valueOf(claimsJws.getBody().get(Attribute.ROLE).toString());
                 UserRole userRoleSession = (UserRole) session.getAttribute(Attribute.ROLE);
+//                UserStatus status = UserStatus.valueOf(claimsJws.getBody().get(Attribute.S))
                 if (userRoleSession == null || userRoleSession != userRole) {
                     session.setAttribute(Attribute.USER_ID, claimsJws.getBody().get(Attribute.USER_ID));
                     session.setAttribute(Attribute.LOGIN, claimsJws.getBody().get(Attribute.LOGIN));

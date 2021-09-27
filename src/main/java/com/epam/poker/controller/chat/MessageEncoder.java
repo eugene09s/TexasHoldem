@@ -1,4 +1,4 @@
-package com.epam.poker.chat;
+package com.epam.poker.controller.chat;
 
 import com.google.gson.Gson;
 import jakarta.websocket.EncodeException;

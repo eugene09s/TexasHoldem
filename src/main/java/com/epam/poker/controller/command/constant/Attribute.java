@@ -14,6 +14,7 @@ public final class Attribute {
     public static final String PHOTO = "photo";
     public static final String ACCESS_TOKEN = "accessToken";
     public static final String CHECK_USERNAME_EXIST = "isExistUsername";
+    public static final String STATUS = "status";
 //    public static final String FIRST_NAME = "firstName";
 //    public static final String LAST_NAME = "lastName";
 //    public static final String EMAIL = "email";

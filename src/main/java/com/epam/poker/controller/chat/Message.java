@@ -1,4 +1,4 @@
-package com.epam.poker.chat;
+package com.epam.poker.controller.chat;
 
 public class Message {
     private String name;

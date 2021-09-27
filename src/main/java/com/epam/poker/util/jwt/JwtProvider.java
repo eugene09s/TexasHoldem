@@ -1,4 +1,4 @@
-package com.epam.poker.util;
+package com.epam.poker.util.jwt;
 
 import com.auth0.jwt.exceptions.SignatureGenerationException;
 import io.jsonwebtoken.*;
@@ -17,10 +17,9 @@ import java.util.UUID;
 public class JwtProvider {
     private static final JwtProvider instance = new JwtProvider() ;
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String LINE_SECRET_KEY =
-        "H5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDfH5x90eqka6QHPBFUBrTx9RGyDzKq5FDf";
+    private static final String LINE_SECRET_KEY = ConfigReaderJwt.getSecretKey();
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(Decoders.BASE64.decode(LINE_SECRET_KEY));
-    private static final long TOKEN_LIFETIME = 1L;
+    private static final long TOKEN_LIFETIME = ConfigReaderJwt.getAccessTokenLifeTime();
 
     private JwtProvider() {
     }
