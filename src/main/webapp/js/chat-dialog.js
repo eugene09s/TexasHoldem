@@ -26,11 +26,23 @@ const chatUnit = {
     },
     send(e){
         e.preventDefault();
-
-        this.sendMessage({
-            name:this.name,
-            text:this.msgTextArea.value
-        });
+        if (!checkExistInsertAtackSymbols(this.msgTextArea.value)) {
+            this.sendMessage({
+                name: this.name,
+                text: this.msgTextArea.value
+            });
+        } else {
+            this.msgTextArea.value = "";
+        }
+        function checkExistInsertAtackSymbols(line) {
+            const arraInjectionSymbols = ['{','}', '$','<','>'];
+            for (index = 0; index < arraInjectionSymbols.length; index++) {
+                if (line.indexOf(arraInjectionSymbols[index]) > -1) {
+                    return true;
+                }
+            }
+            return false;
+        }
     },
     onOpenSocket() {
 
