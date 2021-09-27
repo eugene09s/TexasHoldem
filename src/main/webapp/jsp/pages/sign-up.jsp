@@ -45,7 +45,8 @@
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.email"/></span>
-                <input type="email" name="email" minlength="5" maxlength="64" class="form-control" required>
+                <input type="email" name="email" id="emailRegForm" minlength="5" maxlength="64" class="form-control" required>
+                <span class="email-error d-none text-danger"><fmt:message key="signup.error.email.isalready"/></span>
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.phone.number"/></span>

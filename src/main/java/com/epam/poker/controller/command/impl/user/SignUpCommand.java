@@ -11,13 +11,12 @@ import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.service.user.SignUpService;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserRole;
 import com.epam.poker.model.entity.type.UserStatus;
+import com.epam.poker.model.service.user.SignUpService;
 import com.epam.poker.model.service.user.SignUpServiceImpl;
-import com.epam.poker.model.validator.impl.UserValidator;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

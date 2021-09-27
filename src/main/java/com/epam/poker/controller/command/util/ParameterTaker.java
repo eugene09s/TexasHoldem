@@ -8,12 +8,8 @@ import java.math.BigDecimal;
 
 public class ParameterTaker {
 
-    public static String takeString(String parameterName, RequestContext requestContext)
-            throws InvalidParametersException {
+    public static String takeString(String parameterName, RequestContext requestContext) {
         String paramValue = requestContext.getRequestParameter(parameterName);
-        if (paramValue == null) {
-            throw new InvalidParametersException("Invalid " + parameterName + " parameter in request.");
-        }
         return paramValue;
     }
 

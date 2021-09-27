@@ -24,9 +24,6 @@ public class ProfilePlayerValidator implements Validator<ProfilePlayer> {
 
     @Override
     public boolean isValid(ProfilePlayer entity) {
-        if (entity.getUserId() < MIN_USER_ID) {
-            return false;
-        }
         BigDecimal bestPrize = entity.getBestPrize();
         BigDecimal lostMoney = entity.getLostMoney();
         BigDecimal winMoney = entity.getWinMoney();
