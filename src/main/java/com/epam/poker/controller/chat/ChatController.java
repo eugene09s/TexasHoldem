@@ -60,7 +60,7 @@ public class ChatController {
         message.setName(this.username);
         message.setImg(this.img);
         String time = LocalTime.now().toString();
-        message.setTime(time.substring(0, time.length() - 8));
+        message.setTime(time.substring(0, time.length() - 7));
         sessionUsers.forEach(s -> {
             try {
                 s.getBasicRemote().sendObject(message);
@@ -74,7 +74,7 @@ public class ChatController {
         String[] keyValueLines = String.valueOf(cookies).split(";");
         for (String kvPair : keyValueLines) {
             String[] kv = kvPair.split("=");
-            String key = kv[0].replace("[", "");
+            String key = kv[0].replace("[", "").trim();
             String value = kv[1].replace("]", "");
             if (key.equalsIgnoreCase(Attribute.ACCESS_TOKEN)) {
                 return value;

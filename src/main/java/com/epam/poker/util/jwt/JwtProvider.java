@@ -32,7 +32,6 @@ public class JwtProvider {
         String id = UUID.randomUUID().toString().replace("-", "");
         Instant instant = Instant.now();
         return Jwts.builder()
-                .setSubject("Access token")
                 .setClaims(claims)
                 .setId(id)
                 .setIssuedAt(Date.from(instant))
@@ -66,7 +65,7 @@ public class JwtProvider {
     public Jws<Claims> getClaimsFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
-                .setAllowedClockSkewSeconds(5)
+                .setAllowedClockSkewSeconds(10)
                 .build()
                 .parseClaimsJws(token);
     }
