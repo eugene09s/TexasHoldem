@@ -16,4 +16,8 @@ public class Parameter {
     public static final String PAGE = "page";
     public static final String DATE = "date";
 
+    //for JSON
+    public static final String EVENT = "event";
+    public static final String DATA = "data";
+    public static final String TABLE_ID = "tableId";
 }

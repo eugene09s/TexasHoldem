@@ -16,7 +16,7 @@ import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserRole;
 import com.epam.poker.model.entity.type.UserStatus;
 import com.epam.poker.model.service.user.SignUpService;
-import com.epam.poker.model.service.user.SignUpServiceImpl;
+import com.epam.poker.model.service.user.impl.SignUpServiceImpl;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

@@ -10,11 +10,11 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.service.user.ProfilePlayerService;
-import com.epam.poker.model.service.user.ProfilePlayerServiceImpl;
+import com.epam.poker.model.service.user.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.model.service.user.UserService;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
-import com.epam.poker.model.service.user.UserServiceImpl;
+import com.epam.poker.model.service.user.impl.UserServiceImpl;
 
 public class GoToProfilePageCommand implements Command {
     private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();

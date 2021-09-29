@@ -7,10 +7,9 @@ import com.epam.poker.controller.command.constant.Parameter;
 import com.epam.poker.controller.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.service.user.SignUpService;
-import com.epam.poker.model.service.user.SignUpServiceImpl;
+import com.epam.poker.model.service.user.impl.SignUpServiceImpl;
 
 import java.util.HashMap;
 

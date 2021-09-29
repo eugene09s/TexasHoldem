@@ -4,7 +4,7 @@ import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.service.user.ProfilePlayerService;
-import com.epam.poker.model.service.user.ProfilePlayerServiceImpl;
+import com.epam.poker.model.service.user.impl.ProfilePlayerServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
