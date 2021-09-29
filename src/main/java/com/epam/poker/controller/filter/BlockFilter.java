@@ -4,7 +4,7 @@ import com.epam.poker.controller.command.constant.Attribute;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.service.user.UserService;
-import com.epam.poker.model.service.user.UserServiceImpl;
+import com.epam.poker.model.service.user.impl.UserServiceImpl;
 import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
