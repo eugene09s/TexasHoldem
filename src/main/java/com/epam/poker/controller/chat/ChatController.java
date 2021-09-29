@@ -1,6 +1,7 @@
 package com.epam.poker.controller.chat;
 
 import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.util.EndpointAwareConfig;
 import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -18,28 +19,27 @@ import java.util.Set;
 @ServerEndpoint(value = "/chat",
         decoders = {MessageDecoder.class},
         encoders = {MessageEncoder.class},
-        configurator = ServletAwareConfig.class)
+        configurator = EndpointAwareConfig.class)
 public class ChatController {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String LINE_COOKIE = "cookie";
     private static Set<Session> sessionUsers = Collections.synchronizedSet(new HashSet<>());
     private static JwtProvider jwtProvider = JwtProvider.getInstance();
     private Session session;
-    private String username;
     private String token;
+    private String username;
     private String img;
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
         this.session = session;
-        Object cookies = config.getUserProperties().get("cookie");
+        Object cookies = config.getUserProperties().get(LINE_COOKIE);
         this.token = parseToken(cookies);
-        if (null != this.token){
-            if (jwtProvider.validateToken(this.token)) {
-                Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
-                this.username = claimsJws.getBody().get(Attribute.LOGIN).toString();
-                this.img = claimsJws.getBody().get(Attribute.PHOTO).toString();
-                sessionUsers.add(session);
-            }
+        if (null != this.token && jwtProvider.validateToken(this.token)) {
+            Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
+            this.username = claimsJws.getBody().get(Attribute.LOGIN).toString();
+            this.img = claimsJws.getBody().get(Attribute.PHOTO).toString();
+            sessionUsers.add(session);
         } else {
             onClose(session);
         }
