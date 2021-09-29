@@ -1,4 +1,4 @@
-package com.epam.poker.model.entity.game;
+package com.epam.poker.game.entity;
 
 public class Deck {
     private static final String[] CARDS = {

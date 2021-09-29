@@ -1,4 +1,4 @@
-package com.epam.poker.controller.chat;
+package com.epam.poker.util;
 
 import jakarta.websocket.HandshakeResponse;
 import jakarta.websocket.server.HandshakeRequest;
@@ -7,14 +7,15 @@ import jakarta.websocket.server.ServerEndpointConfig;
 import java.util.List;
 import java.util.Map;
 
-public class ServletAwareConfig extends ServerEndpointConfig.Configurator {
+public class EndpointAwareConfig extends ServerEndpointConfig.Configurator {
+    private static final String LINE_COOKIE = "cookie";
 
     @Override
     public void modifyHandshake(ServerEndpointConfig config,
                                 HandshakeRequest request,
                                 HandshakeResponse response) {
         Map<String,List<String>> headers = request.getHeaders();
-        config.getUserProperties().put("cookie",headers.get("cookie"));
+        config.getUserProperties().put(LINE_COOKIE,headers.get(LINE_COOKIE));
     }
 
 }
