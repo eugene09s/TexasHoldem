@@ -54,10 +54,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             SET status=?
             WHERE user_id=?
             """;
-    public static final String SQL_ADD_MONEY_BALANCE = """
+    public static final String SQL_ADD_MONEY_BY_USER_ID = """
             UPDATE users
             SET balance=balance+?
             WHERE user_id=?
+            """;
+    public static final String SQL_ADD_MONEY_BY_LOGIN = """
+            UPDATE users
+            SET balance=balance+?
+            WHERE login=?
+            """;
+    public static final String SQL_MINUS_MONEY_BY_LOGIN = """
+            UPDATE users
+            SET balance=balance-?
+            WHERE login=?
             """;
     public static final String SQL_FIND_BY_LOGIN = """
             SELECT user_id, login, first_name, last_name, email,
@@ -146,7 +156,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public boolean addMoneyById(BigDecimal money, long id) throws DaoException {
-        return executeUpdateQuery(SQL_ADD_MONEY_BALANCE, money, id);
+        return executeUpdateQuery(SQL_ADD_MONEY_BY_USER_ID, money, id);
+    }
+
+    @Override
+    public boolean addMoneyByLogin(BigDecimal money, String login) throws DaoException {
+        return executeUpdateQuery(SQL_ADD_MONEY_BY_LOGIN, money, login);
+    }
+
+    @Override
+    public boolean minusMoneyByLogin(BigDecimal money, String login) throws DaoException {
+        return executeUpdateQuery(SQL_MINUS_MONEY_BY_LOGIN, money, login);
     }
 
     @Override

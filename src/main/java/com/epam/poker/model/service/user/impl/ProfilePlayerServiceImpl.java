@@ -1,4 +1,4 @@
-package com.epam.poker.model.service.user;
+package com.epam.poker.model.service.user.impl;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
@@ -7,6 +7,7 @@ import com.epam.poker.model.dao.helper.DaoSaveTransaction;
 import com.epam.poker.model.dao.ProfilePlayerDao;
 import com.epam.poker.model.dao.impl.user.ProfilePlayerDaoImpl;
 import com.epam.poker.model.entity.ProfilePlayer;
+import com.epam.poker.model.service.user.ProfilePlayerService;
 import com.epam.poker.model.validator.Validator;
 import com.epam.poker.model.validator.impl.ProfilePlayerValidator;
 import org.apache.logging.log4j.LogManager;

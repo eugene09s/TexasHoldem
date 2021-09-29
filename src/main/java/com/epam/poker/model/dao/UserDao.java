@@ -102,7 +102,8 @@ public interface UserDao extends Dao<User> {
      * @throws  DaoException  if database errors occurs.
      */
     boolean addMoneyById(BigDecimal money, long id) throws DaoException;
-
+    boolean addMoneyByLogin(BigDecimal money, String login) throws DaoException;
+    boolean minusMoneyByLogin(BigDecimal money, String login) throws DaoException;
     /**
      * Saves specific object to database.
      * Object User should be conatin UserId field

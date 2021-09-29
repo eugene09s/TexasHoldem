@@ -1,4 +1,4 @@
-package com.epam.poker.model.service.user;
+package com.epam.poker.model.service.user.impl;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
@@ -8,6 +8,7 @@ import com.epam.poker.model.dao.UserDao;
 import com.epam.poker.model.dao.impl.user.UserDaoImpl;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.entity.type.UserStatus;
+import com.epam.poker.model.service.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -155,6 +156,38 @@ public class UserServiceImpl implements UserService {
             UserDao userDao = new UserDaoImpl();
             transaction.init((AbstractDao) userDao);
             boolean answer = userDao.addMoneyById(money, id);
+            return answer;
+        } catch (DaoException e) {
+            LOGGER.error("Transaction error: " + e);
+            throw new ServiceException(e);
+        } finally {
+            transaction.end();
+        }
+    }
+
+    @Override
+    public boolean minusMoneyByLogin(BigDecimal money, String login) throws ServiceException, DaoException {
+        DaoSaveTransaction transaction = new DaoSaveTransaction();
+        try {
+            UserDao userDao = new UserDaoImpl();
+            transaction.init((AbstractDao) userDao);
+            boolean answer = userDao.minusMoneyByLogin(money, login);
+            return answer;
+        } catch (DaoException e) {
+            LOGGER.error("Transaction error: " + e);
+            throw new ServiceException(e);
+        } finally {
+            transaction.end();
+        }
+    }
+
+    @Override
+    public boolean addMoneyByLogin(BigDecimal money, String login) throws ServiceException, DaoException {
+        DaoSaveTransaction transaction = new DaoSaveTransaction();
+        try {
+            UserDao userDao = new UserDaoImpl();
+            transaction.init((AbstractDao) userDao);
+            boolean answer = userDao.addMoneyByLogin(money, login);
             return answer;
         } catch (DaoException e) {
             LOGGER.error("Transaction error: " + e);

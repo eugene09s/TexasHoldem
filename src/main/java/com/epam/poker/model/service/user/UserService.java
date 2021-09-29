@@ -56,6 +56,7 @@ public interface UserService {
      */
     User findUserByLogin(String login) throws ServiceException, DaoException;
 
+
     /**
      * Finds user in database by login and returns container of account
      * or empty container if not found.
@@ -101,7 +102,8 @@ public interface UserService {
      * @throws  ServiceException  if database errors occurs.
      */
     boolean addMoneyById(BigDecimal money, long id) throws ServiceException, DaoException;
-
+    boolean minusMoneyByLogin(BigDecimal money, String login) throws ServiceException, DaoException;
+    boolean addMoneyByLogin(BigDecimal money, String login) throws ServiceException, DaoException;
     /**
      * Saves specific object to database.
      * Object User should be conatin UserId field

@@ -1,4 +1,4 @@
-package com.epam.poker.model.service.user;
+package com.epam.poker.model.service.user.impl;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
@@ -10,6 +10,7 @@ import com.epam.poker.model.dao.UserDao;
 import com.epam.poker.model.dao.impl.user.UserDaoImpl;
 import com.epam.poker.model.entity.ProfilePlayer;
 import com.epam.poker.model.entity.User;
+import com.epam.poker.model.service.user.SignUpService;
 import com.epam.poker.model.validator.Validator;
 import com.epam.poker.model.validator.impl.ProfilePlayerValidator;
 import com.epam.poker.model.validator.impl.UserValidator;
