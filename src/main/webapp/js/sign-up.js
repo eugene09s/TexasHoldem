@@ -20,8 +20,8 @@ $(document).ready(function () {
                 login : $('#loginRegForm').val()
             },
             success : function (response) {
-                console.log("AJAXCheckLogin: "+ response)
-                if (response === 'true') {
+                let obj = JSON.parse(response);
+                if (obj.isExistUsername === 'true') {
                     $('#loginRegForm').addClass("border-danger");
                     $('.login-error').removeClass("d-none");
                 } else {
@@ -42,8 +42,8 @@ $(document).ready(function () {
                 email : $('#emailRegForm').val()
             },
             success : function (response) {
-                console.log("AJAXCheckEmail: "+ response)
-                if (response === 'true') {
+                let obj = JSON.parse(response);
+                if (obj.isExistUsername === 'true') {
                     $('#emailRegForm').addClass("border-danger");
                     $('.email-error').removeClass("d-none");
                 } else {
