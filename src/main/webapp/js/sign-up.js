@@ -20,8 +20,7 @@ $(document).ready(function () {
                 login : $('#loginRegForm').val()
             },
             success : function (response) {
-                let obj = JSON.parse(response);
-                if (obj.isExistUsername === 'true') {
+                if (response.isExistUsername === 'true') {
                     $('#loginRegForm').addClass("border-danger");
                     $('.login-error').removeClass("d-none");
                 } else {
@@ -42,8 +41,7 @@ $(document).ready(function () {
                 email : $('#emailRegForm').val()
             },
             success : function (response) {
-                let obj = JSON.parse(response);
-                if (obj.isExistUsername === 'true') {
+                if (response.isExistUsername === 'true') {
                     $('#emailRegForm').addClass("border-danger");
                     $('.email-error').removeClass("d-none");
                 } else {
