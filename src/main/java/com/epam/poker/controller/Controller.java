@@ -2,17 +2,17 @@ package com.epam.poker.controller;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
-import com.epam.poker.controller.command.constant.Attribute;
-import com.epam.poker.controller.command.constant.CommandName;
-import com.epam.poker.controller.command.constant.PagePath;
-import com.epam.poker.controller.command.constant.Parameter;
+import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.CommandName;
+import com.epam.poker.util.constant.PagePath;
+import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.pool.ConnectionPool;
+import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,11 +20,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 @WebServlet(urlPatterns = {"/poker"}, name = "mainServlet")
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final Gson gson = new Gson();
     private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
 
     @Override
@@ -55,9 +55,10 @@ public class Controller extends HttpServlet {
     }
 
     private void dispatch(CommandResult commandResult,
-                          HttpServletRequest request, HttpServletResponse response)
+                          HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
-        if (commandResult.isEmptyResponseAjax()) {//TODO new servlet for AJAX
+        if (!commandResult.isTypeResponseJson()) {//TODO Perhaps new servlet for send json
             String page = commandResult.getPage();
             if (page == null) {
                 response.sendRedirect(HOME_PAGE_COMMAND);
@@ -70,9 +71,9 @@ public class Controller extends HttpServlet {
                 }
             }
         } else {
-            HashMap<String, String> hashMap = commandResult.getResponseAjax();
-            response.setContentType("text/plain");
-            response.getWriter().write(hashMap.get(Attribute.CHECK_USERNAME_EXIST));
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write((commandResult.getJsonResponse()));
         }
     }
 

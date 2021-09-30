@@ -2,10 +2,10 @@ package com.epam.poker.controller.command.impl.user;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
-import com.epam.poker.controller.command.constant.Attribute;
-import com.epam.poker.controller.command.constant.CommandName;
-import com.epam.poker.controller.command.constant.PagePath;
-import com.epam.poker.controller.command.constant.Parameter;
+import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.CommandName;
+import com.epam.poker.util.constant.PagePath;
+import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.controller.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;

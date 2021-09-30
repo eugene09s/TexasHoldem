@@ -1,6 +1,6 @@
 package com.epam.poker.controller.command.util;
 
-import com.epam.poker.controller.command.constant.Parameter;
+import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.InvalidParametersException;
 

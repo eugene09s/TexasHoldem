@@ -22,9 +22,13 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 
 	// Getting the table data
 	$http({
-		url: '/table-data/' + $routeParams.tableId,
-		method: 'GET'
+		url: '/poker?command=table-data&id=' + $routeParams.tableId,
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json;charset=UTF-8'
+		},
 	}).success(function( data, status, headers, config ) {
+		console.log(data);
 		$scope.table = data.table;
 		$scope.buyInAmount = data.table.maxBuyIn;
 		$scope.betAmount = data.table.bigBlind;

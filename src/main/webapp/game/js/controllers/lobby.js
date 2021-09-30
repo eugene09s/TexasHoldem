@@ -3,9 +3,10 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function ($s
     $scope.newScreenName = '';
 
     $http({
-        url: '/lobby-data',
+        url: '/poker?command=lobby-data',
         method: 'GET'
     }).success(function (data, status, headers, config) {
+        console.log(data)
         for (tableId in data) {
             $scope.lobbyTables[tableId] = data[tableId];
         }

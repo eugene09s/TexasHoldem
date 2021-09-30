@@ -1,6 +1,6 @@
 package com.epam.poker.util.tag;
 
-import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.model.entity.type.UserRole;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.tagext.TagSupport;

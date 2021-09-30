@@ -2,8 +2,8 @@ package com.epam.poker.controller.command.impl.user;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
-import com.epam.poker.controller.command.constant.Attribute;
-import com.epam.poker.controller.command.constant.PagePath;
+import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.PagePath;
 import com.epam.poker.controller.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;
@@ -23,8 +23,7 @@ public class GoToProfilePageCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext)
             throws ServiceException, InvalidParametersException, DaoException {
-        long id;
-        id = ParameterTaker.takeId(requestContext);
+        long id = ParameterTaker.takeId(requestContext);
         ProfilePlayer profilePlayer = profilePlayerService.findProfilePlayerById(id);
         User user = userService.findUserById(id);
         requestContext.addAttribute(Attribute.USER, user);

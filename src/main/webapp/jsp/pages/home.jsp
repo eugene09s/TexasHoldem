@@ -25,7 +25,7 @@ ${sessionScope}
 <div class="container">
     <span>
         <h2>Texas Holdem Poker</h2>
-        <p>rules:</p>
+        <p><a href="https://academypoker.ru/rules-poker.html">Rules</a></p>
         <br/>
 		<p>
 			<fmt:message key="poker.rules.text"/>

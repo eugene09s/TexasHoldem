@@ -6,6 +6,5 @@ import com.epam.poker.game.entity.Gambler;
 public class LeaveFromRoomEvent implements EventSocket {
     @Override
     public void execute(String jsonLine, Gambler gambler) {
-
     }
 }

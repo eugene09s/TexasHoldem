@@ -1,6 +1,6 @@
 package com.epam.poker.controller.request;
 
-import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.util.constant.Attribute;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

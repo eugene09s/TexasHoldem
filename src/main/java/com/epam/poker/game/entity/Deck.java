@@ -1,7 +1,13 @@
 package com.epam.poker.game.entity;
 
-public class Deck {
-    private static final String[] CARDS = {
+import com.epam.poker.model.entity.Entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Deck implements Entity {
+    private static final int SIZE_DECK = 52;
+    private static final List<String> CARDS = new ArrayList<>(List.of(
             "As", "Ah", "Ad", "Ac",
             "Ks", "Kh", "Kd", "Kc",
             "Qs", "Qh", "Qd", "Qc",
@@ -15,9 +21,34 @@ public class Deck {
             "4s", "4h", "4d", "4c",
             "3s", "3h", "3d", "3c",
             "2s", "2h", "2d", "2c"
-    };
+    ));
+    private List<String> freshDeck;
 
-    private void shuffle() {
-
+    public Deck() {
+        this.freshDeck = shuffle();
     }
+
+    private List<String> shuffle() {
+        List<String> cards = new ArrayList<>(CARDS);
+        List<String> shuffledDeck = new ArrayList<>(SIZE_DECK);
+        String randomCard;
+        while (cards.size() > 0){
+            randomCard = cards.remove((int) (Math.random()*( cards.size())));
+            shuffledDeck.add(randomCard);
+        }
+        return shuffledDeck;
+    }
+
+    public List<String> getFullDeck() {
+        return CARDS;
+    }
+
+    public List<String> getFreshDeck() {
+        return this.freshDeck;
+    }
+
+//    public List<String> findCardsByNumberOfDeck(int numberOfCards) {
+//        List<String> deck = new ArrayList<>();
+//        for (int i = 0; i < numberOfCards && n)
+//    }
 }

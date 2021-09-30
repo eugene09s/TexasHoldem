@@ -1,4 +1,4 @@
-package com.epam.poker.controller.command.constant;
+package com.epam.poker.util.constant;
 
 public final class PagePath {
     public static final String ERROR = "/jsp/pages/error/error.jsp";

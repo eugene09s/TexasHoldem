@@ -1,4 +1,4 @@
-package com.epam.poker.controller.command.constant;
+package com.epam.poker.util.constant;
 
 public class CommandName {
     public static final String HOME_PAGE = "home-page";
@@ -20,4 +20,8 @@ public class CommandName {
     public static final String LOCALIZATION = "localization";
     public static final String PAGINATION = "pagination";
     public static final String UPLOAD_PHOTO = "upload-photo";
+
+    //game
+    public static final String LOBBY_DATA = "lobby-data";
+    public static final String TABLE_DATA = "table-data";
 }

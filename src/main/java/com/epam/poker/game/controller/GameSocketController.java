@@ -1,10 +1,10 @@
 package com.epam.poker.game.controller;
 
-import com.epam.poker.controller.command.constant.Attribute;
-import com.epam.poker.controller.command.constant.Parameter;
+import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.game.controller.command.EventSocket;
 import com.epam.poker.game.entity.Gambler;
-import com.epam.poker.game.lobby.Lobby;
+import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.util.EndpointAwareConfig;
 import com.epam.poker.util.jwt.JwtProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -57,8 +57,8 @@ public class GameSocketController {
         } catch (JsonProcessingException e) {
             LOGGER.error("Parse json: " + e);
         }
-        eventName = jsonNode.get(Parameter.EVENT).asText();
-        jsonLineData = jsonNode.get(Parameter.DATA).asText();
+        eventName = jsonNode.get(Parameter.EVENT).toString();
+        jsonLineData = jsonNode.get(Parameter.DATA).toString();
         if (eventName != null && jsonLineData != null) {
             EventSocket eventSocket = EventSocket.of(eventName);
             eventSocket.execute(jsonLineData, this.gambler);
@@ -80,7 +80,7 @@ public class GameSocketController {
 
     @OnClose
     public void onClose() {
-        lobby.deleteGambler(this.gambler.getName(), gambler);
+        lobby.deleteGambler(this.gambler.getName());
     }
 
     @OnError

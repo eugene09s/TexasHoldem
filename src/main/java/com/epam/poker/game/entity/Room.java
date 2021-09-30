@@ -1,17 +1,19 @@
-package com.epam.poker.game.lobby;
+package com.epam.poker.game.entity;
 
-import com.epam.poker.game.entity.Gambler;
-import com.epam.poker.game.entity.Table;
+import com.epam.poker.model.entity.Entity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.EncodeException;
 import jakarta.websocket.Session;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Room {
+public class Room implements Entity {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
     private Map<String, Gambler> gamblers = Collections.synchronizedMap(new HashMap<>());
     private String titleRoom;
@@ -45,10 +47,8 @@ public class Room {
             Session sessionGambler = gambler.getSession();
             try {
                 sessionGambler.getBasicRemote().sendObject(jsonLine);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (EncodeException e) {
-                e.printStackTrace();
+            } catch (IOException | EncodeException e) {
+                LOGGER.error("Send event gambler: " + e);
             }
         }
         return isSuccess;
@@ -59,10 +59,8 @@ public class Room {
             gamblers.forEach((k, v) -> {
                 try {
                     v.getSession().getBasicRemote().sendObject(jsonLine);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (EncodeException e) {
-                    e.printStackTrace();
+                } catch (IOException | EncodeException e) {
+                    LOGGER.error("Send json all users: " + e);
                 }
             });
         }

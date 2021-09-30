@@ -12,32 +12,82 @@ public class Gambler {
     private boolean sittingIn;
     private boolean inHand;
     private boolean hasCards;
-    private String[] cards;
+    private String[] publicCards;
     private BigDecimal bet;
     private int tableId;
     private Session session;
+    private BigDecimal chips;
     private String titleRoom;
+    private boolean sittingOnTable;
+    private int seatTable;
+    private String[] privateCards;
     private String evaluateHand;
     private String img;
 
-    private Gambler(String name, BigDecimal chipsInPlay,
-                    boolean sittingIn, boolean inHand,
-                    boolean hasCards, String[] cards,
-                    BigDecimal bet, Session session,
-                    String nameRoom, String evaluateHand,
-                    String img, int tableId) {
+    public Gambler(String name, BigDecimal chipsInPlay, boolean sittingIn, boolean inHand, boolean hasCards,
+                   String[] publicCards, BigDecimal bet, int tableId, Session session, BigDecimal chips, String titleRoom,
+                   boolean sittingOnTable, int seatTable, String[] privateCards, String evaluateHand, String img) {
         this.name = name;
         this.chipsInPlay = chipsInPlay;
         this.sittingIn = sittingIn;
         this.inHand = inHand;
         this.hasCards = hasCards;
-        this.cards = cards;
+        this.publicCards = publicCards;
         this.bet = bet;
+        this.tableId = tableId;
         this.session = session;
-        this.titleRoom = nameRoom;
+        this.chips = chips;
+        this.titleRoom = titleRoom;
+        this.sittingOnTable = sittingOnTable;
+        this.seatTable = seatTable;
+        this.privateCards = privateCards;
         this.evaluateHand = evaluateHand;
         this.img = img;
-        this.tableId = tableId;
+    }
+
+    public String[] getPublicCards() {
+        return publicCards;
+    }
+
+    public Gambler setPublicCards(String[] publicCards) {
+        this.publicCards = publicCards;
+        return this;
+    }
+
+    public BigDecimal getChips() {
+        return chips;
+    }
+
+    public Gambler setChips(BigDecimal chips) {
+        this.chips = chips;
+        return this;
+    }
+
+    public boolean isSittingOnTable() {
+        return sittingOnTable;
+    }
+
+    public Gambler setSittingOnTable(boolean sittingOnTable) {
+        this.sittingOnTable = sittingOnTable;
+        return this;
+    }
+
+    public int getSeatTable() {
+        return seatTable;
+    }
+
+    public Gambler setSeatTable(int seatTable) {
+        this.seatTable = seatTable;
+        return this;
+    }
+
+    public String[] getPrivateCards() {
+        return privateCards;
+    }
+
+    public Gambler setPrivateCards(String[] privateCards) {
+        this.privateCards = privateCards;
+        return this;
     }
 
     public int getTableId() {
@@ -91,15 +141,6 @@ public class Gambler {
 
     public Gambler setHasCards(boolean hasCards) {
         this.hasCards = hasCards;
-        return this;
-    }
-
-    public String[] getCards() {
-        return cards;
-    }
-
-    public Gambler setCards(String[] cards) {
-        this.cards = cards;
         return this;
     }
 
@@ -159,13 +200,16 @@ public class Gambler {
         if (inHand != gambler.inHand) return false;
         if (hasCards != gambler.hasCards) return false;
         if (tableId != gambler.tableId) return false;
+        if (sittingOnTable != gambler.sittingOnTable) return false;
+        if (seatTable != gambler.seatTable) return false;
         if (name != null ? !name.equals(gambler.name) : gambler.name != null) return false;
         if (chipsInPlay != null ? !chipsInPlay.equals(gambler.chipsInPlay) : gambler.chipsInPlay != null) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(cards, gambler.cards)) return false;
+        if (!Arrays.equals(publicCards, gambler.publicCards)) return false;
         if (bet != null ? !bet.equals(gambler.bet) : gambler.bet != null) return false;
         if (session != null ? !session.equals(gambler.session) : gambler.session != null) return false;
+        if (chips != null ? !chips.equals(gambler.chips) : gambler.chips != null) return false;
         if (titleRoom != null ? !titleRoom.equals(gambler.titleRoom) : gambler.titleRoom != null) return false;
+        if (!Arrays.equals(privateCards, gambler.privateCards)) return false;
         if (evaluateHand != null ? !evaluateHand.equals(gambler.evaluateHand) : gambler.evaluateHand != null)
             return false;
         return img != null ? img.equals(gambler.img) : gambler.img == null;
@@ -178,11 +222,15 @@ public class Gambler {
         result = 31 * result + (sittingIn ? 1 : 0);
         result = 31 * result + (inHand ? 1 : 0);
         result = 31 * result + (hasCards ? 1 : 0);
-        result = 31 * result + Arrays.hashCode(cards);
+        result = 31 * result + Arrays.hashCode(publicCards);
         result = 31 * result + (bet != null ? bet.hashCode() : 0);
         result = 31 * result + tableId;
         result = 31 * result + (session != null ? session.hashCode() : 0);
+        result = 31 * result + (chips != null ? chips.hashCode() : 0);
         result = 31 * result + (titleRoom != null ? titleRoom.hashCode() : 0);
+        result = 31 * result + (sittingOnTable ? 1 : 0);
+        result = 31 * result + seatTable;
+        result = 31 * result + Arrays.hashCode(privateCards);
         result = 31 * result + (evaluateHand != null ? evaluateHand.hashCode() : 0);
         result = 31 * result + (img != null ? img.hashCode() : 0);
         return result;
@@ -196,10 +244,15 @@ public class Gambler {
                 .add("sittingIn=" + sittingIn)
                 .add("inHand=" + inHand)
                 .add("hasCards=" + hasCards)
-                .add("cards=" + Arrays.toString(cards))
+                .add("publicCards=" + Arrays.toString(publicCards))
                 .add("bet=" + bet)
                 .add("tableId=" + tableId)
+                .add("session=" + session)
+                .add("chips=" + chips)
                 .add("titleRoom='" + titleRoom + "'")
+                .add("sittingOnTable=" + sittingOnTable)
+                .add("seatTable=" + seatTable)
+                .add("privateCards=" + Arrays.toString(privateCards))
                 .add("evaluateHand='" + evaluateHand + "'")
                 .add("img='" + img + "'")
                 .toString();
@@ -215,16 +268,50 @@ public class Gambler {
         private boolean sittingIn;
         private boolean inHand;
         private boolean hasCards;
-        private String[] cards;
+        private String[] publicCards;
         private BigDecimal bet;
+        private int tableId;
         private Session session;
-        private String nameRoom;
+        private BigDecimal chips;
+        private String titleRoom;
+        private boolean sittingOnTable;
+        private int seatTable;
+        private String[] privateCards;
         private String evaluateHand;
         private String img;
-        private int tableId;
+
+        public GamblerBuilder setTitleRoom(String titleRoom) {
+            this.titleRoom = titleRoom;
+            return this;
+        }
+
+        public GamblerBuilder setSittingOnTable(boolean sittingOnTable) {
+            this.sittingOnTable = sittingOnTable;
+            return this;
+        }
+
+        public GamblerBuilder setSeatTable(int seatTable) {
+            this.seatTable = seatTable;
+            return this;
+        }
+
+        public GamblerBuilder setPrivateCards(String[] privateCards) {
+            this.privateCards = privateCards;
+            return this;
+        }
 
         public GamblerBuilder setEvaluateHand(String evaluateHand) {
             this.evaluateHand = evaluateHand;
+            return this;
+        }
+
+        public GamblerBuilder setPublicCards(String[] publicCards) {
+            this.publicCards = publicCards;
+            return this;
+        }
+
+        public GamblerBuilder setChips(BigDecimal chips) {
+            this.chips = chips;
             return this;
         }
 
@@ -263,11 +350,6 @@ public class Gambler {
             return this;
         }
 
-        public GamblerBuilder setCards(String[] cards) {
-            this.cards = cards;
-            return this;
-        }
-
         public GamblerBuilder setBet(BigDecimal bet) {
             this.bet = bet;
             return this;
@@ -278,15 +360,10 @@ public class Gambler {
             return this;
         }
 
-        public GamblerBuilder setNameRoom(String nameRoom) {
-            this.nameRoom = nameRoom;
-            return this;
-        }
-
         public Gambler createGambler() {
-            return new Gambler(name, chipsInPlay, sittingIn, inHand,
-                    hasCards, cards, bet, session, nameRoom, evaluateHand,
-                    img, tableId);
+            return new Gambler(name, chipsInPlay, sittingIn, inHand, hasCards, publicCards,
+                    bet, tableId, session, chips, titleRoom, sittingOnTable, seatTable,
+                    privateCards, evaluateHand, img);
         }
     }
 }

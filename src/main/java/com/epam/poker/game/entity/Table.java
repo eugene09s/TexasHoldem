@@ -1,115 +1,253 @@
 package com.epam.poker.game.entity;
 
-public class Table {
-    private int bigBlind;
-    private int id;
-    private String name;
-    private int playersSeatedCount;
-    private int seatsCount;
-    private int smallBlind;
+import com.epam.poker.model.entity.Entity;
 
-    public Table(int bigBlind, int id,
-                 String name, int playersSeatedCount,
-                 int seatsCount, int smallBlind) {
-        this.bigBlind = bigBlind;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Table implements Entity {
+    private long id;
+    private String name;
+    private int seatsCount;
+    private int playersSeatedCount;
+    private BigDecimal bigBlind;
+    private BigDecimal smallBlind;
+    private boolean privateTable;
+    private int playersSittingInCount;
+    private int playersInHandCount;
+    private String lastPlayerToAct;
+    private boolean gameIsOn;
+    private boolean headsUp;
+    private List<Gambler> seats;
+    private Deck deck;
+//    private eventEmitter;
+    private BigDecimal minBuyIn;
+    private BigDecimal maxBuyIn;
+    private Pot pot;
+    private BigDecimal biggestBet;
+    private int dealerSeat;
+    private int activeSeat;
+    private String[] seatsPlace;
+    private String phaseGame;
+    private String[] board;
+    private Log log;
+
+    public Table(long id, String name, int seatsCount, BigDecimal bigBlind,
+                 BigDecimal smallBlind, BigDecimal maxBuyIn, BigDecimal minBuyIn, boolean privateTable) {
         this.id = id;
         this.name = name;
-        this.playersSeatedCount = playersSeatedCount;
         this.seatsCount = seatsCount;
+        this.bigBlind = bigBlind;
+        this.smallBlind = smallBlind;
+        this.maxBuyIn = maxBuyIn;
+        this.minBuyIn = minBuyIn;
+        this.biggestBet = new BigDecimal(0);
+        this.privateTable = privateTable;
+        this.seats = new ArrayList<>(seatsCount);
+        this.deck = new Deck();
+        this.board = new String[]{"", "", "", "", ""};
+        this.pot = new Pot();
+        this.log = new Log();
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSeatsCount(int seatsCount) {
+        this.seatsCount = seatsCount;
+    }
+
+    public void setPlayersSeatedCount(int playersSeatedCount) {
+        this.playersSeatedCount = playersSeatedCount;
+    }
+
+    public void setBigBlind(BigDecimal bigBlind) {
+        this.bigBlind = bigBlind;
+    }
+
+    public void setSmallBlind(BigDecimal smallBlind) {
         this.smallBlind = smallBlind;
     }
 
-    public int getBigBlind() {
-        return bigBlind;
+    public boolean isPrivateTable() {
+        return privateTable;
     }
 
-    public Table setBigBlind(int bigBlind) {
-        this.bigBlind = bigBlind;
-        return this;
+    public void setPrivateTable(boolean privateTable) {
+        this.privateTable = privateTable;
     }
 
-    public int getId() {
+    public int getPlayersSittingInCount() {
+        return playersSittingInCount;
+    }
+
+    public void setPlayersSittingInCount(int playersSittingInCount) {
+        this.playersSittingInCount = playersSittingInCount;
+    }
+
+    public int getPlayersInHandCount() {
+        return playersInHandCount;
+    }
+
+    public void setPlayersInHandCount(int playersInHandCount) {
+        this.playersInHandCount = playersInHandCount;
+    }
+
+    public String getLastPlayerToAct() {
+        return lastPlayerToAct;
+    }
+
+    public void setLastPlayerToAct(String lastPlayerToAct) {
+        this.lastPlayerToAct = lastPlayerToAct;
+    }
+
+    public boolean isGameIsOn() {
+        return gameIsOn;
+    }
+
+    public void setGameIsOn(boolean gameIsOn) {
+        this.gameIsOn = gameIsOn;
+    }
+
+    public boolean isHeadsUp() {
+        return headsUp;
+    }
+
+    public void setHeadsUp(boolean headsUp) {
+        this.headsUp = headsUp;
+    }
+
+    public List<Gambler> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<Gambler> seats) {
+        this.seats = seats;
+    }
+
+    public void addGamblerToSeats(Gambler gambler) {
+        this.seats.add(gambler);
+    }
+
+    public void deleteGamblerToSeats(Gambler gambler) {
+        this.seats.remove(gambler);
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
+    public BigDecimal getMinBuyIn() {
+        return minBuyIn;
+    }
+
+    public void setMinBuyIn(BigDecimal minBuyIn) {
+        this.minBuyIn = minBuyIn;
+    }
+
+    public BigDecimal getMaxBuyIn() {
+        return maxBuyIn;
+    }
+
+    public void setMaxBuyIn(BigDecimal maxBuyIn) {
+        this.maxBuyIn = maxBuyIn;
+    }
+
+    public Pot getPot() {
+        return pot;
+    }
+
+    public void setPot(Pot pot) {
+        this.pot = pot;
+    }
+
+    public BigDecimal getBiggestBet() {
+        return biggestBet;
+    }
+
+    public void setBiggestBet(BigDecimal biggestBet) {
+        this.biggestBet = biggestBet;
+    }
+
+    public int getDealerSeat() {
+        return dealerSeat;
+    }
+
+    public void setDealerSeat(int dealerSeat) {
+        this.dealerSeat = dealerSeat;
+    }
+
+    public int getActiveSeat() {
+        return activeSeat;
+    }
+
+    public void setActiveSeat(int activeSeat) {
+        this.activeSeat = activeSeat;
+    }
+
+    public String[] getSeatsPlace() {
+        return seatsPlace;
+    }
+
+    public void setSeatsPlace(String[] seatsPlace) {
+        this.seatsPlace = seatsPlace;
+    }
+
+    public String getPhaseGame() {
+        return phaseGame;
+    }
+
+    public void setPhaseGame(String phaseGame) {
+        this.phaseGame = phaseGame;
+    }
+
+    public String[] getBoard() {
+        return board;
+    }
+
+    public void setBoard(String[] board) {
+        this.board = board;
+    }
+
+    public Log getLog() {
+        return log;
+    }
+
+    public void setLog(Log log) {
+        this.log = log;
+    }
+
+    public long getId() {
         return id;
-    }
-
-    public Table setId(int id) {
-        this.id = id;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public Table setName(String name) {
-        this.name = name;
-        return this;
+    public int getSeatsCount() {
+        return seatsCount;
     }
 
     public int getPlayersSeatedCount() {
         return playersSeatedCount;
     }
 
-    public Table setPlayersSeatedCount(int playersSeatedCount) {
-        this.playersSeatedCount = playersSeatedCount;
-        return this;
+    public BigDecimal getBigBlind() {
+        return bigBlind;
     }
 
-    public int getSeatsCount() {
-        return seatsCount;
-    }
-
-    public Table setSeatsCount(int seatsCount) {
-        this.seatsCount = seatsCount;
-        return this;
-    }
-
-    public int getSmallBlind() {
+    public BigDecimal getSmallBlind() {
         return smallBlind;
     }
-
-    public Table setSmallBlind(int smallBlind) {
-        this.smallBlind = smallBlind;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Table that = (Table) o;
-
-        if (bigBlind != that.bigBlind) return false;
-        if (id != that.id) return false;
-        if (playersSeatedCount != that.playersSeatedCount) return false;
-        if (seatsCount != that.seatsCount) return false;
-        if (smallBlind != that.smallBlind) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = bigBlind;
-        result = 31 * result + id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + playersSeatedCount;
-        result = 31 * result + seatsCount;
-        result = 31 * result + smallBlind;
-        return result;
-    }
-
-//    public static LobbyTableBuilder builder() {
-//       return new LobbyTableBuilder();
-//    }
-//
-//    public static class LobbyTableBuilder {
-//       private LobbyTable lobbyTable;
-//
-//       public LobbyTableBuilder() {
-//           lobbyTable = new LobbyTable();
-//       }
-//
-//       public LobbyTable createLobbyTable
-//    }
 }

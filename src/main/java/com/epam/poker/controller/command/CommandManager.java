@@ -1,7 +1,9 @@
 package com.epam.poker.controller.command;
 
-import com.epam.poker.controller.command.constant.CommandName;
-import com.epam.poker.controller.command.impl.game.GoToGamePage;
+import com.epam.poker.util.constant.CommandName;
+import com.epam.poker.controller.command.impl.game.GoToGamePageCommand;
+import com.epam.poker.controller.command.impl.game.TakeLobbyDataCommand;
+import com.epam.poker.controller.command.impl.game.TakeTableDataCommand;
 import com.epam.poker.controller.command.impl.general.*;
 import com.epam.poker.controller.command.impl.user.*;
 
@@ -13,13 +15,15 @@ public enum CommandManager {
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
     LOGIN(new LoginCommand(), CommandName.LOGIN),
     LOGOUT(new LogoutCommand(), CommandName.LOGOUT),
-    GO_TO_GAME_PAGE(new GoToGamePage(), CommandName.PLAY_PAGE),
+    GO_TO_GAME_PAGE(new GoToGamePageCommand(), CommandName.PLAY_PAGE),
     LOCALIZATION(new LocalizationCommand(), CommandName.LOCALIZATION),
     GO_TO_CHAT(new GoToChatPageCommand(), CommandName.CHAT_PAGE),
-
     //AJAX
-    CHECK_EXIST_LOGIN(new CheckExistUsername(), CommandName.CHECK_EXIST_LOGIN),
-    CHECK_EXIST_EMAIL(new CheckExistUsername(), CommandName.CHECK_EXIST_EMAIL);
+    CHECK_EXIST_LOGIN(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_LOGIN),
+    CHECK_EXIST_EMAIL(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_EMAIL),
+    //game
+    TAKE_LOBBY_DATA(new TakeLobbyDataCommand(), CommandName.LOBBY_DATA),
+    TAKE_TABLE_DATA(new TakeTableDataCommand(), CommandName.TABLE_DATA);
 
     private final Command command;
     private final String commandName;

@@ -1,28 +1,26 @@
 package com.epam.poker.controller.command;
 
-import java.util.HashMap;
-
 public class CommandResult {
-    private final String page;
-    private final boolean isRedirect;
-    private HashMap<String, String> responseAjax;
+    private  String page;
+    private  boolean isRedirect;
+    private boolean typeResponseJson;
+    private String jsonResponse;
 
-    public CommandResult(String page, boolean isRedirect) {
+    private CommandResult(String page, boolean isRedirect) {
         this.page = page;
         this.isRedirect = isRedirect;
-        responseAjax = new HashMap<>();
     }
 
-    public void addResponseAjax(HashMap<String, String> values) {
-        responseAjax = values;
+    public CommandResult(boolean typeResponseJson) {
+        this.typeResponseJson = typeResponseJson;
     }
 
-    public boolean isEmptyResponseAjax() {
-        return responseAjax.isEmpty();
+    public void setJsonResponse(String response) {
+        this.jsonResponse = response;
     }
 
-    public HashMap<String, String> getResponseAjax() {
-        return  responseAjax;
+    public String getJsonResponse() {
+        return jsonResponse;
     }
 
     public static CommandResult redirect(String page) {
@@ -41,21 +39,11 @@ public class CommandResult {
         return isRedirect;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CommandResult that = (CommandResult) o;
-
-        if (isRedirect != that.isRedirect) return false;
-        return page != null ? page.equals(that.page) : that.page == null;
+    public void setTypeResponseJson(boolean typeResponseJson) {
+        this.typeResponseJson = typeResponseJson;
     }
 
-    @Override
-    public int hashCode() {
-        int result = page != null ? page.hashCode() : 0;
-        result = 31 * result + (isRedirect ? 1 : 0);
-        return result;
+    public boolean isTypeResponseJson() {
+        return typeResponseJson;
     }
 }

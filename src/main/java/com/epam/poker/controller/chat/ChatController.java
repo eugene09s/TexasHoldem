@@ -1,6 +1,6 @@
 package com.epam.poker.controller.chat;
 
-import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.EndpointAwareConfig;
 import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;

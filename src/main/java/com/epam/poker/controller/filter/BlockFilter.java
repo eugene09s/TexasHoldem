@@ -1,6 +1,6 @@
 package com.epam.poker.controller.filter;
 
-import com.epam.poker.controller.command.constant.Attribute;
+import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.service.user.UserService;

@@ -22,7 +22,7 @@
                 <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="${pageContext.request.contextPath}/jsp/pages/home.jsp"
                            class="nav-link px-2 text-secondary"><fmt:message key="nav.home.page"/></a></li>
-                    <li><a href="${pageContext.request.contextPath}/poker?command=play-page"
+                    <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
                     <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white"><fmt:message
                             key="nav.about"/></a>
@@ -34,7 +34,6 @@
                             key="nav.login"/></a>
                     <a type="button" href="${pageContext.request.contextPath}/poker?command=sign-up-page"
                        class="btn btn-warning"><fmt:message key="nav.sign.up.lower"/></a>
-
                     <a type="button" href="${pageContext.request.contextPath}/poker?command=localization&locale=ru"
                        class="btn btn-outline-light me-2 langToggle" data-onstyle="light">RU</a>
                     <a type="button" href="${pageContext.request.contextPath}/poker?command=localization&locale=en"

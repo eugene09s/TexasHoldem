@@ -1,4 +1,4 @@
-package com.epam.poker.controller.command.constant;
+package com.epam.poker.util.constant;
 
 public class Parameter {
     public static final String LOGIN = "login";

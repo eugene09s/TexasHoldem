@@ -4,7 +4,7 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.game.controller.command.EventSocket;
 import com.epam.poker.game.entity.Gambler;
-import com.epam.poker.game.lobby.Lobby;
+import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.service.user.UserService;
 import com.epam.poker.model.service.user.impl.UserServiceImpl;
@@ -25,10 +25,6 @@ public class RegisterToLobbyEvent implements EventSocket {
     private static UserService userService = UserServiceImpl.getInstance();
 
     private RegisterToLobbyEvent() {
-    }
-
-    public static RegisterToLobbyEvent getInstance() {
-        return instance;
     }
 
     @Override
@@ -55,5 +51,9 @@ public class RegisterToLobbyEvent implements EventSocket {
         } catch (IOException | EncodeException e) {
             LOGGER.error("Send JSON: " + e);
         }
+    }
+
+    public static RegisterToLobbyEvent getInstance() {
+        return instance;
     }
 }

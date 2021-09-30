@@ -26,7 +26,7 @@ class Socket {
     }
 
     removeAllListeners() {
-        this.events.clear();
+        this.events.length = 0;
     }
 
     on(event, callback) {

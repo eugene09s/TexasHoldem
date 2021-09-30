@@ -1,8 +1,6 @@
-package com.epam.poker.game.lobby;
+package com.epam.poker.game.entity;
 
-import com.epam.poker.game.entity.Gambler;
-import com.epam.poker.game.entity.Table;
-
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
@@ -15,14 +13,22 @@ public class Lobby {
     private static Lobby instance;
 
     static {
-        Room room = new Room("table-0", new Table(8, 2, "Sample 2-handed Table", 0, 2, 4));
+        Room room = new Room("table-0",
+                new Table(0, "10-handed Table", 10, new BigDecimal(2), new BigDecimal(1),
+                        new BigDecimal(200), new BigDecimal(40), false));
         rooms.put("table-0", room);
-        Room room1 = new Room("table-1", new Table(4, 1, "Sample 6-handed Table", 0, 6, 2));
+        Room room1 = new Room("table-1",
+                new Table(1, "6-handed Table", 6, new BigDecimal(4), new BigDecimal(2),
+                        new BigDecimal(400), new BigDecimal(80), false));
         rooms.put("table-1", room1);
-        Room room2 = new Room("table-2", new Table(2, 0, "Sample 10-handed Table", 0, 10, 1));
-        rooms.put("table-2", room2);
-        Room room3 = new Room("table-3", new Table(2, 3, "Come dude", 0, 5, 1));
-        rooms.put("table-3", room3);
+//        Room room2 = new Room("table-2",
+//                new Table(2, "2-handed Table", 2, new BigDecimal(8), new BigDecimal(4),
+//                        new BigDecimal(800), new BigDecimal(160), false));
+//        rooms.put("table-2", room);
+//        Room room3 = new Room("table-3",
+//                new Table(3, "6-handed Table Private Table", 6, new BigDecimal(20), new BigDecimal(10),
+//                        new BigDecimal(2000), new BigDecimal(400), true));
+//        rooms.put("table-3", room);
     }
 
     private Lobby() {
@@ -54,8 +60,8 @@ public class Lobby {
         return users.put(username, gambler) != null;
     }
 
-    public boolean deleteGambler(String username, Gambler gambler) {
-        return users.remove(username, gambler);
+    public Gambler deleteGambler(String username) {
+        return users.remove(username);
     }
 
     public Room findRoom(String titleRoom) {
@@ -78,10 +84,6 @@ public class Lobby {
             isSuccess = room.deleteGambler(gambler.getName(), gambler);
         }
         return isSuccess;
-    }
-
-    public Map<String, Room> getRooms() {
-        return rooms;
     }
 
     public List<Table> findAllTables() {
