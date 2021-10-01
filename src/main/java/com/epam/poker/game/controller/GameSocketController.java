@@ -82,7 +82,7 @@ public class GameSocketController {
 
     @OnClose
     public void onClose() {
-        disconnectGambler();
+        disconnectGambler();//todo sometimes out of bounds exept
     }
 
     @OnError
@@ -95,8 +95,8 @@ public class GameSocketController {
         if (roomName != null) {
             lobby.findRoom(roomName).getTable().deleteGamblerToSeats(gambler);
             lobby.findRoom(roomName).deleteGambler(gambler);
-            lobby.deleteGambler(this.gambler.getName());
         }
+        lobby.deleteGambler(this.gambler.getName());
         this.gambler = null;
     }
 }

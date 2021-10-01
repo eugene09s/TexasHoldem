@@ -1,11 +1,15 @@
-package com.epam.poker.game.controller.command;
+package com.epam.poker.game.controller.event;
 
-import com.epam.poker.game.controller.command.impl.EnterToRoomEvent;
-import com.epam.poker.game.controller.command.impl.RegisterToLobbyEvent;
+import com.epam.poker.game.controller.event.impl.EnterToRoomEvent;
+import com.epam.poker.game.controller.event.impl.LeaveFromRoomEvent;
+import com.epam.poker.game.controller.event.impl.RegisterToLobbyEvent;
+import com.epam.poker.game.controller.event.impl.SitOnTheTableEvent;
 
 public enum EventManagerGame {
     ENTER_TO_ROOM(EnterToRoomEvent.getInstance(), "enterRoom"),
-    REGISTER_TO_LOBBY(RegisterToLobbyEvent.getInstance(), "register");
+    REGISTER_TO_LOBBY(RegisterToLobbyEvent.getInstance(), "register"),
+    LEAVE_FROM_ROOM(LeaveFromRoomEvent.getInstance(), "leaveRoom"),
+    SEAT_ON_THE_TABLE(SitOnTheTableEvent.getInstance(),"sitOnTheTable");
 
     private final EventSocket event;
     private final  String eventName;

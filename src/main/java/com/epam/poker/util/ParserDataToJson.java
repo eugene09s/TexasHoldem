@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.beans.beancontext.BeanContext;
 import java.util.List;
 
 import static com.epam.poker.util.constant.Attribute.*;
@@ -54,7 +53,7 @@ public class ParserDataToJson {
     private String parserGambler(Gambler gambler) {
         ObjectNode jsonNodes = mapper.createObjectNode();
         jsonNodes.put(NAME, gambler.getName());
-        jsonNodes.put(CHIPS_IN_PLAY, gambler.getChipsInPlay());
+        jsonNodes.put(CHIPS_IN_PLAY, gambler.getMoneyInPlay());
         jsonNodes.put(SITTING_IN, gambler.isSittingIn());
         jsonNodes.put(IN_HAND, gambler.isInHand());
         jsonNodes.put(HAS_CARDS, gambler.isHasCards());

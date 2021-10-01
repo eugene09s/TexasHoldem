@@ -1,6 +1,11 @@
 package com.epam.poker._main;
 
 import com.epam.poker.game.entity.Deck;
+import com.epam.poker.game.entity.Room;
+import com.epam.poker.game.entity.Table;
+import com.epam.poker.util.constant.Attribute;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -16,6 +21,7 @@ public class TestDBMain {
     private static final ObjectMapper mapper = new ObjectMapper();
 //    private static Lobby lobby = Lobby.getInstance();
     private static final Gson gson = new Gson();
+    private static final Map<String, Table> tableMap = Collections.synchronizedMap(new HashMap<>());
 
     public static void main(String... args) {
         LOGGER.error("Test");
@@ -33,10 +39,23 @@ public class TestDBMain {
         arrayNode.add(dataNode);
 
         jsonNodes.putPOJO("data", arrayNode);
-//        System.out.println(jsonNodes);
-        String fdsf = new String();
-        System.out.println("Line: " + fdsf);
+//        System.out.println(jsonNodes.get("data"));
+//        System.out.println(jsonNodes.get("data").asText());
+//        System.out.println(jsonNodes.get("data").textValue());
+        String json = "{\"event\":\"enterRoom\",\"data\":\"2\"}";
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = mapper.readTree(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        JsonNode jsonNode1 = mapper.createObjectNode();
+        System.out.println(jsonNode1.findValue("event"));
+        System.out.println(jsonNode.findValue("fsdf"));
+        System.out.println(jsonNode.get("event").asText());
+        System.out.println(jsonNode);
 
+//        System.out.println(jsonNodes.get("id").toString());
 //        System.out.println(ConfigReaderJwt.getAccessTokenLifeTime());
 //        System.out.println(ConfigReaderJwt.getSecretKey());
 //        System.out.println(LocalTime.now());

@@ -13,9 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
-import jakarta.websocket.EncodeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,7 +49,7 @@ public class RegisterToLobbyEvent implements EventSocket {
         ObjectNode objectNodes = mapper.createObjectNode();
         if (user != null) {
             balanceGambler = user.getBalance();
-            gambler.setChips(balanceGambler);
+            gambler.setBalance(balanceGambler);
             objectNodes.put(Attribute.SUCCESS, true);
             objectNodes.put(Attribute.USERNAME, gambler.getName());
             objectNodes.put(Attribute.TOTAL_CHIPS, balanceGambler);
