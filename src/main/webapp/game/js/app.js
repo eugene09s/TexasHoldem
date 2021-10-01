@@ -2,8 +2,9 @@ class Socket {
     constructor() {
         this.ws = new WebSocket(`ws://${location.host}/game-poker`);
         this.ws.onopen = this.onOpenSocket;
-        this.ws.onmessage = (e) => this.onMessage(JSON.parse(e.data));
+        this.ws.onmessage = (e) => this.onMessage(JSON.parse(e.data));//JSON.parse(e.data));
         this.ws.onclose = this.onClose;
+        this.ws.onerror = (err) => this.onError(err);
         this.events = {};
     }
 
@@ -25,6 +26,10 @@ class Socket {
 
     }
 
+    onError(err) {
+        console.log("!!!WebSocket error: " + err);
+    }
+
     removeAllListeners() {
         this.events.length = 0;
     }
@@ -34,6 +39,8 @@ class Socket {
     }
 
     onMessage(msg) {
+        console.log(msg.event);
+        console.log(msg.data);
         this.events[msg.event](msg.data);
     }
 }
@@ -68,7 +75,7 @@ var app = angular.module('app', ['ngRoute']).config(function ($routeProvider, $l
 
 app.run(function ($rootScope) {
     console.log($rootScope);
-    $rootScope.screenName = '';
+    $rootScope.username = '';
     $rootScope.totalChips = 0;
     $rootScope.sittingOnTable = '';
 });

@@ -10,7 +10,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.notifications = [{},{},{},{},{},{},{},{},{},{}];
 	$scope.showingChipsModal = false;
 	$scope.actionState = '';
-	$scope.table.dealerSeat = null;
+	$scope.table.dealerSeat = -1;
 	$scope.myCards = ['', ''];
 	$scope.mySeat = null;
 	$scope.betAmount = 0;
@@ -28,14 +28,13 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 			'Content-Type': 'application/json;charset=UTF-8'
 		},
 	}).success(function( data, status, headers, config ) {
-		console.log(data);
 		$scope.table = data.table;
 		$scope.buyInAmount = data.table.maxBuyIn;
 		$scope.betAmount = data.table.bigBlind;
 	});
 
 	// Joining the socket room
-	socket.emit( 'enterRoom', $routeParams.tableId );
+	socket.emit( 'enterRoom', $routeParams.tableId);
 
 	$scope.minBetAmount = function() {
 		if( $scope.mySeat === null || typeof $scope.table.seats[$scope.mySeat] === 'undefined' || $scope.table.seats[$scope.mySeat] === null ) return 0;
@@ -136,7 +135,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 
 	// Leaving the socket room
 	$scope.leaveRoom = function() {
-		socket.emit( 'leaveRoom' );
+		socket.emit( 'leaveRoom', "");
 	};
 
 	// A request to sit on a specific seat on the table
