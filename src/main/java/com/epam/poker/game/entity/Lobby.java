@@ -1,5 +1,7 @@
 package com.epam.poker.game.entity;
 
+import com.epam.poker.util.constant.Attribute;
+
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,22 +15,26 @@ public class Lobby {
     private static Lobby instance;
 
     static {
-        Room room = new Room("table-0",
+        String titleRoom = String.format(Attribute.TABLE_WITH_HYPHEN, 0);
+        Room room = new Room(titleRoom,
                 new Table(0, "10-handed Table", 10, new BigDecimal(2), new BigDecimal(1),
                         new BigDecimal(200), new BigDecimal(40), false));
-        rooms.put("table-0", room);
-        Room room1 = new Room("table-1",
+        rooms.put(titleRoom, room);
+        String titleRoom1 = String.format(Attribute.TABLE_WITH_HYPHEN, 1);
+        Room room1 = new Room(titleRoom1,
                 new Table(1, "6-handed Table", 6, new BigDecimal(4), new BigDecimal(2),
                         new BigDecimal(400), new BigDecimal(80), false));
-        rooms.put("table-1", room1);
-//        Room room2 = new Room("table-2",
-//                new Table(2, "2-handed Table", 2, new BigDecimal(8), new BigDecimal(4),
-//                        new BigDecimal(800), new BigDecimal(160), false));
-//        rooms.put("table-2", room);
-//        Room room3 = new Room("table-3",
-//                new Table(3, "6-handed Table Private Table", 6, new BigDecimal(20), new BigDecimal(10),
-//                        new BigDecimal(2000), new BigDecimal(400), true));
-//        rooms.put("table-3", room);
+        rooms.put(titleRoom1, room1);
+        String titleRoom2 = String.format(Attribute.TABLE_WITH_HYPHEN, 2);
+        Room room2 = new Room(titleRoom2,
+                new Table(2, "2-handed Table", 2, new BigDecimal(8), new BigDecimal(4),
+                        new BigDecimal(800), new BigDecimal(160), false));
+        rooms.put(titleRoom2, room2);
+        String titleRoom3 = String.format(Attribute.TABLE_WITH_HYPHEN, 3);
+        Room room3 = new Room(titleRoom3,
+                new Table(3, "6-handed Table Private Table", 6, new BigDecimal(20), new BigDecimal(10),
+                        new BigDecimal(2000), new BigDecimal(400), true));
+        rooms.put(titleRoom3, room3);
     }
 
     private Lobby() {
@@ -65,7 +71,11 @@ public class Lobby {
     }
 
     public Room findRoom(String titleRoom) {
-        return this.rooms.get(titleRoom);
+        return rooms.get(titleRoom);
+    }
+
+    public Table findTableByNameRoom(String titleRoom) {
+        return rooms.get(titleRoom).getTable();
     }
 
     public boolean addGamblerToRoom(String titleRoom, Gambler gambler) {
@@ -81,9 +91,13 @@ public class Lobby {
         boolean isSuccess = false;
         Room room = rooms.get(titleRoom);
         if (room != null) {
-            isSuccess = room.deleteGambler(gambler.getName(), gambler);
+            isSuccess = room.deleteGambler(gambler);
         }
         return isSuccess;
+    }
+
+    public boolean containRoom(String nameRoom) {
+        return rooms.containsKey(nameRoom);
     }
 
     public List<Table> findAllTables() {

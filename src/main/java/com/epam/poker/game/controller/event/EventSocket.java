@@ -1,4 +1,4 @@
-package com.epam.poker.game.controller.command;
+package com.epam.poker.game.controller.event;
 
 import com.epam.poker.game.entity.Gambler;
 

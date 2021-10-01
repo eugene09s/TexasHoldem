@@ -2,7 +2,6 @@ package com.epam.poker.util.constant;
 
 public final class Attribute {
     public static final String USERS = "users";
-    public static final String DATE = "date";
     public static final String ROLE = "role";
     public static final String LANGUAGE = "lang";
     public static final String SAVED_LOGIN = "login";
@@ -48,4 +47,13 @@ public final class Attribute {
     public static final String ACTION = "action";
     public static final String SEAT = "seat";
     public static final String NOTIFICATION = "notification";
+    public static final String USERNAME = "username";
+    public static final String SUCCESS = "success";
+    public static final String TOTAL_CHIPS = "totalChips";
+    public static final String EVENT = "event";
+    public static final String DATA = "data";
+    public static final String IMG = "img";
+    public static final String TABLE_ID = "tableId";
+    public static final String CHIPS = "chips";
+    public static final String ERROR = "error";
 }

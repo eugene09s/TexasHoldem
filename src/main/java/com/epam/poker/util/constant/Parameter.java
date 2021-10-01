@@ -18,6 +18,4 @@ public class Parameter {
 
     //for JSON
     public static final String EVENT = "event";
-    public static final String DATA = "data";
-    public static final String TABLE_ID = "tableId";
 }

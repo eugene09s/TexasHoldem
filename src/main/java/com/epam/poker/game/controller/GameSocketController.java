@@ -2,7 +2,7 @@ package com.epam.poker.game.controller;
 
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
-import com.epam.poker.game.controller.command.EventSocket;
+import com.epam.poker.game.controller.event.EventSocket;
 import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.util.EndpointAwareConfig;
@@ -49,19 +49,21 @@ public class GameSocketController {
 
     @OnMessage
     public void onMessage(String message) {
-        String eventName = null;
-        String jsonLineData = null;
+        String eventName;
         JsonNode jsonNode = null;
         try {
-            jsonNode = mapper.readValue(message, JsonNode.class);
+            jsonNode = mapper.readTree(message);
         } catch (JsonProcessingException e) {
-            LOGGER.error("Parse json: " + e);
+            LOGGER.error("Parse json: " + message + " Error:" + e);
         }
-        eventName = jsonNode.get(Parameter.EVENT).toString();
-        jsonLineData = jsonNode.get(Parameter.DATA).toString();
-        if (eventName != null && jsonLineData != null) {
+        if (jsonNode.findValue(Parameter.EVENT) != null) {
+            eventName = jsonNode.get(Parameter.EVENT).asText();
             EventSocket eventSocket = EventSocket.of(eventName);
-            eventSocket.execute(jsonLineData, this.gambler);
+            if (eventSocket != null) {
+                eventSocket.execute(message, this.gambler);
+            } else {
+                LOGGER.warn("Event not found: " + eventName);
+            }
         }
     }
 
@@ -80,11 +82,21 @@ public class GameSocketController {
 
     @OnClose
     public void onClose() {
-        lobby.deleteGambler(this.gambler.getName());
+        disconnectGambler();
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
         LOGGER.error("Websocket error with user id:" + session + "\n\n" + throwable);
+    }
+
+    private void disconnectGambler() {
+        String roomName = gambler.getTitleRoom();
+        if (roomName != null) {
+            lobby.findRoom(roomName).getTable().deleteGamblerToSeats(gambler);
+            lobby.findRoom(roomName).deleteGambler(gambler);
+            lobby.deleteGambler(this.gambler.getName());
+        }
+        this.gambler = null;
     }
 }
