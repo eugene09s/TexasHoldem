@@ -61,6 +61,7 @@ public class ChatController {
         message.setImg(this.img);
         String time = LocalTime.now().toString();
         message.setTime(time.substring(0, time.length() - 7));
+        message.setText(checkerHtmlInjectionMessage(message.getText()));
         sessionUsers.forEach(s -> {
             try {
                 s.getBasicRemote().sendObject(message);
@@ -81,5 +82,13 @@ public class ChatController {
             }
         }
         return null;
+    }
+
+    private String checkerHtmlInjectionMessage(String line) {
+        return line.replace("$", "Dollars")
+                .replace("<", "&lt;")
+                .replace(">", "&rt;")
+                .replace("}", "circle bracket")
+                .replace("{", "circle bracket");
     }
 }
