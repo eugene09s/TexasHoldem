@@ -87,7 +87,7 @@ public class GameSocketController {
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        LOGGER.error("Websocket error with user id:" + session + "\n\n" + throwable);
+        LOGGER.error("Websocket error with user: " + gambler.getName() + " " + throwable);
     }
 
     private void disconnectGambler() {

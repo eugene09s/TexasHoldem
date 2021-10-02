@@ -58,11 +58,11 @@ public class RegisterToLobbyEvent implements EventSocket {
             objectNodes.put(Attribute.SUCCESS, false);
             objectNodes.put(Attribute.MESSAGE, "Gambler with name " + gambler.getName() + " was not found");
         }
-        ObjectNode responce  = mapper.createObjectNode();
-        responce.putPOJO(Attribute.EVENT, json.get(Attribute.EVENT));
-        responce.putPOJO(Attribute.DATA, objectNodes);
+        ObjectNode response  = mapper.createObjectNode();
+        response.putPOJO(Attribute.EVENT, json.get(Attribute.EVENT));
+        response.putPOJO(Attribute.DATA, objectNodes);
         try {
-            gambler.getSession().getBasicRemote().sendText(String.valueOf(responce));
+            gambler.getSession().getBasicRemote().sendText(String.valueOf(response));
         } catch (IOException e) {
             LOGGER.error("Send JSON: " + e);
         }

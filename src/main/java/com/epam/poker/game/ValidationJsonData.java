@@ -20,10 +20,10 @@ public class ValidationJsonData {
 
     public boolean isValidSitOnTheTableEvent(Gambler gambler, int numberSeat, long tableId) {
         String nameRoom = String.format(Attribute.TABLE_WITH_HYPHEN, tableId);
-        if (numberSeat > -1 && tableId > -1 && lobby.containRoom(nameRoom)
+        if (gambler != null && numberSeat > -1 && tableId > -1 && lobby.containRoom(nameRoom)
                 && lobby.findRoom(nameRoom).getTable().getSeatsCount() > numberSeat
                 && lobby.findRoom(nameRoom).getTable().getSeats().get(numberSeat) == null
-                && gambler.getSittingOnTable() < 0 && gambler.getTitleRoom().equalsIgnoreCase(nameRoom)) {
+                && gambler.getSittingOnTable() < 0 && nameRoom.equalsIgnoreCase(gambler.getTitleRoom())) {
             return true;
         }
         return false;

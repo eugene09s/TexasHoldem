@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 public class SitOnTheTableEvent implements EventSocket {
@@ -30,7 +31,6 @@ public class SitOnTheTableEvent implements EventSocket {
     private static final String MESSAGE_ERROR_CHIPS = "Your chips is invalid!";
     private static final String MESSAGE_ERROR_COMPARE_CHIPS_MAX_MIN_TABLE =
             "The amount of chips should be between the maximum and the minimum amount of allowed buy in";
-
 
     private SitOnTheTableEvent() {
     }
@@ -54,7 +54,7 @@ public class SitOnTheTableEvent implements EventSocket {
             LOGGER.error("Select user from database: " + e);
         }
         JsonNode data = null;
-        ObjectNode response = mapper.createObjectNode();
+        ObjectNode objectNode = mapper.createObjectNode();
         try {
             BigDecimal balanceGambler = user.getBalance();
             gambler.setBalance(balanceGambler);
@@ -63,26 +63,34 @@ public class SitOnTheTableEvent implements EventSocket {
             long tableId = data.get(Attribute.TABLE_ID).asLong();
             BigDecimal chips = new BigDecimal(String.valueOf(data.get(Attribute.CHIPS)));
             if (validationJsonData.isValidSitOnTheTableEvent(gambler, numberSeat, tableId)) {
-                if (!balanceGambler.equals(chips)) {
-                    response.put(Attribute.SUCCESS, false);
-                    response.put(Attribute.ERROR, MESSAGE_ERROR_CHIPS);
-                } else if (compareMinMaxBetOnTable(tableId, chips)) {
-                    response.put(Attribute.SUCCESS, false);
-                    response.put(Attribute.ERROR, MESSAGE_ERROR_COMPARE_CHIPS_MAX_MIN_TABLE);
+                if (chips.compareTo(balanceGambler) >= 0) {
+                    objectNode.put(Attribute.SUCCESS, false);
+                    objectNode.put(Attribute.ERROR, MESSAGE_ERROR_CHIPS);
+                } else if (!isValidMinMaxBetOnTable(tableId, chips)) {
+                    objectNode.put(Attribute.SUCCESS, false);
+                    objectNode.put(Attribute.ERROR, MESSAGE_ERROR_COMPARE_CHIPS_MAX_MIN_TABLE);
                 } else {
-                    response.put(Attribute.SUCCESS, true);
+                    objectNode.put(Attribute.SUCCESS, true);
                     lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId))
                             .addGamblerOnTable(gambler, numberSeat);
                 }
             } else {
-                response.put(Attribute.SUCCESS, false);
+                objectNode.put(Attribute.SUCCESS, false);
+            }
+            ObjectNode response = mapper.createObjectNode();
+            response.putPOJO(Attribute.EVENT, json.get(Attribute.EVENT));
+            response.putPOJO(Attribute.DATA, objectNode);
+            try {
+                gambler.getSession().getBasicRemote().sendText(String.valueOf(response));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } catch (NullPointerException | NumberFormatException e) {
             LOGGER.error("JSON line don't exist data. " + e);
         }
     }
 
-    private boolean compareMinMaxBetOnTable(long tableId, BigDecimal chips)  {
+    private boolean isValidMinMaxBetOnTable(long tableId, BigDecimal chips)  {
         Table table = lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId));
         if (table != null && chips.compareTo(table.getMaxBuyIn()) <= 0
             && chips.compareTo(table.getMinBuyIn()) >= 0) {

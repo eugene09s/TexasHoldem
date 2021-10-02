@@ -31,7 +31,7 @@ public class ParserDataToJson {
         jsonNodes.put(BIG_BLIND, table.getBigBlind());
         jsonNodes.put(SMALL_BLIND, table.getSmallBlind());
         jsonNodes.put(MIN_BUY_IN, table.getMinBuyIn());
-        jsonNodes.put(MAX_BUY_IN, table.getMinBuyIn());
+        jsonNodes.put(MAX_BUY_IN, table.getMaxBuyIn());
         jsonNodes.putPOJO(POT, parsePot(table.getPot()));
         jsonNodes.put(BIGGEST_BET, table.getBiggestBet());
         jsonNodes.put(DEALER_SEAT, table.getDealerSeat());
@@ -64,9 +64,16 @@ public class ParserDataToJson {
 
     private ArrayNode parseArrayGambler(List<Gambler> gamblers) {
         ArrayNode arrayNode = mapper.createArrayNode();
-        for (Gambler gambler : gamblers) {
-            arrayNode.add(parserGambler(gambler));
-        }
+//        if (gamblers.isEmpty()){
+//            ObjectNode objectNode = mapper.createObjectNode();
+//            arrayNode.add(objectNode);
+//        } else {
+            for (Gambler gambler : gamblers) {
+                if (gambler != null) {
+                    arrayNode.add(parserGambler(gambler));
+                }
+            }
+//        }
         return arrayNode;
     }
 

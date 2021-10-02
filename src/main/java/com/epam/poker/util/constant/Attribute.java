@@ -56,4 +56,6 @@ public final class Attribute {
     public static final String TABLE_ID = "tableId";
     public static final String CHIPS = "chips";
     public static final String ERROR = "error";
+    public static final String SENDER = "sender";
+    public static final String RECEIVE_MESSAGE_EVENT = "receiveMessage";
 }
