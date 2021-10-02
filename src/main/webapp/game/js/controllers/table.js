@@ -10,7 +10,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.notifications = [{},{},{},{},{},{},{},{},{},{}];
 	$scope.showingChipsModal = false;
 	$scope.actionState = '';
-	$scope.table.dealerSeat = -1;
+	$scope.table.dealerSeat = null;
 	$scope.myCards = ['', ''];
 	$scope.mySeat = null;
 	$scope.betAmount = 0;
@@ -23,10 +23,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	// Getting the table data
 	$http({
 		url: '/poker?command=table-data&id=' + $routeParams.tableId,
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json;charset=UTF-8'
-		},
+		method: 'GET'
 	}).success(function( data, status, headers, config ) {
 		$scope.table = data.table;
 		$scope.buyInAmount = data.table.maxBuyIn;
@@ -34,7 +31,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	});
 
 	// Joining the socket room
-	socket.emit( 'enterRoom', $routeParams.tableId);
+	socket.emit( 'enterRoom', $routeParams.tableId );
 
 	$scope.minBetAmount = function() {
 		if( $scope.mySeat === null || typeof $scope.table.seats[$scope.mySeat] === 'undefined' || $scope.table.seats[$scope.mySeat] === null ) return 0;
@@ -135,7 +132,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 
 	// Leaving the socket room
 	$scope.leaveRoom = function() {
-		socket.emit( 'leaveRoom', "");
+		socket.emit( 'leaveRoom', "" );
 	};
 
 	// A request to sit on a specific seat on the table
@@ -170,7 +167,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 
 	// Leave the table (not the room)
 	$scope.leaveTable = function() {
-		socket.emit( 'leaveTable', function( response ) {
+		socket.emit( 'leaveTable', "", function( response ) {
 			if( response.success ) {
 				$rootScope.sittingOnTable = null;
 				$rootScope.totalChips = response.totalChips;
@@ -196,7 +193,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	}
 
 	$scope.check = function() {
-		socket.emit( 'check', function( response ) {
+		socket.emit( 'check', "", function( response ) {
 			if( response.success ) {
 				sounds.playCheckSound();
 				$scope.actionState = '';
@@ -206,7 +203,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	}
 
 	$scope.fold = function() {
-		socket.emit( 'fold', function( response ) {
+		socket.emit( 'fold', "",  function( response ) {
 			if( response.success ) {
 				sounds.playFoldSound();
 				$scope.actionState = '';
@@ -216,7 +213,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	}
 
 	$scope.call = function() {
-		socket.emit( 'call', function( response ) {
+		socket.emit( 'call', "", function( response ) {
 			if( response.success ) {
 				sounds.playCallSound();
 				$scope.actionState = '';

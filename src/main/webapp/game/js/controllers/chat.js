@@ -11,7 +11,7 @@ app.controller( 'ChatController', ['$scope', function( $scope ) {
 		if ( $scope.messageText.trim() ) {
 			var message = $scope.messageText.trim();
 			var messageBox = document.querySelector('#messages');
-			socket.send( {event: 'sendMessage', message} );
+			socket.emit( 'sendMessage', message );
 
 			var messageElement = angular.element( '<p class="message"><b>You</b>: ' + htmlEntities( message ) + '</p>' );
 			angular.element( messageBox ).append( messageElement );
@@ -28,10 +28,6 @@ app.controller( 'ChatController', ['$scope', function( $scope ) {
 	});
 
 	function htmlEntities(str) {
-	    return String(str)
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
-			.replace(/"/g, '&quot;');
+	    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
 }]);
