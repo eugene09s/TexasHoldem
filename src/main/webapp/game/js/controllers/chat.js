@@ -9,11 +9,11 @@ app.controller( 'ChatController', ['$scope', function( $scope ) {
 	 */
 	$scope.sendMessage = function() {
 		if ( $scope.messageText.trim() ) {
-			var message = $scope.messageText.trim();
-			var messageBox = document.querySelector('#messages');
+			let message = $scope.messageText.trim();
+			let messageBox = document.querySelector('#messages');
 			socket.emit( 'sendMessage', message );
 
-			var messageElement = angular.element( '<p class="message"><b>You</b>: ' + htmlEntities( message ) + '</p>' );
+			let messageElement = angular.element( '<p class="message"><b>You</b>: ' + htmlEntities( message ) + '</p>' );
 			angular.element( messageBox ).append( messageElement );
 			messageBox.scrollTop = messageBox.scrollHeight;
 			$scope.messageText = '';
@@ -21,8 +21,10 @@ app.controller( 'ChatController', ['$scope', function( $scope ) {
 	}
 
 	socket.on( 'receiveMessage', function( data ) {
-		var messageBox = document.querySelector('#messages');
-		var messageElement = angular.element( '<p class="message"><b>' + data.sender + '</b>: ' + data.message + '</p>' );
+		let messageBox = document.querySelector('#messages');
+		let messageElement = angular.element( '<p class="message">' +
+			'<img src="/images/photo/' + data.img + '" id="chatPhotoGambler" alt="photo">' +
+			'<b>' + data.sender + '</b>: ' + data.message + '</p>' );
 		angular.element( messageBox ).append( messageElement );
 		messageBox.scrollTop = messageBox.scrollHeight;
 	});

@@ -26,7 +26,7 @@ public class Room implements Entity {
     }
 
     public boolean addGambler(String username, Gambler gambler) {
-        if (this.gamblers.put(username, gambler) != null) {
+        if (this.gamblers.put(username, gambler) == null) {
             gambler.setTitleRoom(this.titleRoom);
             return true;
         }
@@ -34,7 +34,7 @@ public class Room implements Entity {
     }
 
     public boolean deleteGambler(Gambler gambler) {
-        if (this.gamblers.remove(gambler.getName(), gambler)) {
+        if (this.gamblers.remove(gambler.getName()) != null) {
             gambler.setTitleRoom(null);
             return true;
         }
@@ -47,21 +47,36 @@ public class Room implements Entity {
         if (gambler != null && jsonLine != null) {
             Session sessionGambler = gambler.getSession();
             try {
-                sessionGambler.getBasicRemote().sendObject(jsonLine);
-            } catch (IOException | EncodeException e) {
+                sessionGambler.getBasicRemote().sendText(jsonLine);
+            } catch (IOException e) {
                 LOGGER.error("Send event gambler: " + e);
             }
         }
         return isSuccess;
     }
 
-    public void sendEventAllGamblers(String jsonLine) {
+    public void broadcastEvent(String jsonLine) {
         if (jsonLine != null) {
             gamblers.forEach((k, v) -> {
                 try {
-                    v.getSession().getBasicRemote().sendObject(jsonLine);
-                } catch (IOException | EncodeException e) {
+                    v.getSession().getBasicRemote().sendText(jsonLine);
+                } catch (IOException e) {
                     LOGGER.error("Send json all users: " + e);
+                }
+            });
+        }
+    }
+
+    public void broadcastEventExcept(String jsonLine, Gambler gambler) {
+        String gamblerName = gambler.getName();
+        if (jsonLine != null) {
+            gamblers.forEach((k, v) -> {
+                if (k != gamblerName) {
+                    try {
+                        v.getSession().getBasicRemote().sendText(jsonLine);
+                    } catch (IOException e) {
+                        LOGGER.error("Send json all users: " + e);
+                    }
                 }
             });
         }
