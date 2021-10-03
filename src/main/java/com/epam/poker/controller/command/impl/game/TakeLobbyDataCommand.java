@@ -8,7 +8,7 @@ import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.game.entity.Table;
-import com.epam.poker.util.ParserDataToJson;
+import com.epam.poker.game.logic.ParserDataToJsonService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public class TakeLobbyDataCommand implements Command {
     private static final Lobby lobby = Lobby.getInstance();
     private static final Gson gson = new Gson();
-    private static final ParserDataToJson parserDataToJson = ParserDataToJson.getInstance();
+    private static final ParserDataToJsonService parserDataToJson = ParserDataToJsonService.getInstance();
     private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override

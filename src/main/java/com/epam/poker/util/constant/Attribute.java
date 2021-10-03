@@ -57,5 +57,8 @@ public final class Attribute {
     public static final String CHIPS = "chips";
     public static final String ERROR = "error";
     public static final String SENDER = "sender";
+    //events
     public static final String RECEIVE_MESSAGE_EVENT = "receiveMessage";
+    public static final String POST_SMALL_BLIND_EVENT = "postSmallBlind";
+
 }

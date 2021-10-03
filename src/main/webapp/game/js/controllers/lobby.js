@@ -25,6 +25,8 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $s
 				}
 				$scope.$digest();
 			});
+		} else {
+			console.log("FALSE !!!!!!!")
 		}
 	}
 }]);

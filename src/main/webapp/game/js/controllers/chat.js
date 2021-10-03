@@ -22,9 +22,11 @@ app.controller( 'ChatController', ['$scope', function( $scope ) {
 
 	socket.on( 'receiveMessage', function( data ) {
 		let messageBox = document.querySelector('#messages');
-		let messageElement = angular.element( '<p class="message">' +
-			'<img src="/images/photo/' + data.img + '" id="chatPhotoGambler" alt="photo">' +
-			'<b>' + data.sender + '</b>: ' + data.message + '</p>' );
+		let photoGambler = "";
+		if (data.img !== 'undefined') {
+			photoGambler = '<img src="/images/photo/' + data.img + '" id="chatPhotoGambler" alt="photo">';
+		}
+		let messageElement = angular.element( '<p class="message">' + photoGambler + '<b> ' + data.sender + '</b>: ' + data.message + '</p>' );
 		angular.element( messageBox ).append( messageElement );
 		messageBox.scrollTop = messageBox.scrollHeight;
 	});
