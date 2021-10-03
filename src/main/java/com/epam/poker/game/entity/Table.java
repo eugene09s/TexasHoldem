@@ -1,27 +1,25 @@
 package com.epam.poker.game.entity;
 
+import com.epam.poker.game.logic.PokerGameService;
 import com.epam.poker.model.entity.Entity;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringJoiner;
 
 public class Table implements Entity {
-    private long id;
+    private PokerGameService pokerGameService = PokerGameService.getInstacne();
+    private int id;
     private String name;
     private int seatsCount;
-    private int playersSeatedCount;
+    private int gamblersSeatedCount;
     private BigDecimal bigBlind;
     private BigDecimal smallBlind;
     private boolean privateTable;
-    private int playersSittingInCount;
-    private int playersInHandCount;
-    private String lastPlayerToAct;
+    private int gamblersSittingInCount;
+    private int gamblersInHandCount;
+    private String lastGamblerToAct;
     private boolean gameIsOn;
     private boolean headsUp;
-    private List<Gambler> seats;
+    private Gambler[] seats;
     private Deck deck;
 //    private eventEmitter;
     private BigDecimal minBuyIn;
@@ -35,7 +33,7 @@ public class Table implements Entity {
     private String[] board;
     private Log log;
 
-    public Table(long id, String name, int seatsCount, BigDecimal bigBlind,
+    public Table(int id, String name, int seatsCount, BigDecimal bigBlind,
                  BigDecimal smallBlind, BigDecimal maxBuyIn, BigDecimal minBuyIn, boolean privateTable) {
         this.id = id;
         this.name = name;
@@ -47,47 +45,41 @@ public class Table implements Entity {
         this.biggestBet = new BigDecimal(0);
         this.seatsPlace = new String[seatsCount];
         this.privateTable = privateTable;
-        this.seats = new ArrayList<>(seatsCount);
-        initSeatsTable(seatsCount);
+        this.seats = new Gambler[seatsCount];
+//        initSeatsTable(seatsCount);
         this.deck = new Deck();
         this.board = new String[]{"", "", "", "", ""};
         this.pot = new Pot();
         this.log = new Log();
     }
 
-    private void initSeatsTable(int seatsCount) {
-        for (int i = 0; i < seatsCount; ++i) {
-            this.seats.add(null);
-        }
-    }
+//    private void initSeatsTable(int seatsCount) {
+//        for (Gambler gambler : this.se)
+//    }
 
-    public void addGamblerOnTable(Gambler gambler, int numberSeat) {
-        this.seats.add(numberSeat, gambler);
+    public void addGamblerOnTable(Gambler gambler, int numberSeat, BigDecimal bet) {
+        this.seats[numberSeat] = gambler;
         gambler.setSittingOnTable(this.id);
+        gambler.setMoneyInPlay(bet);
         gambler.setNumberSeatOnTable(numberSeat);
 //        gambler.setMoneyInPlay(gambler.getBalance());
-        this.playersSeatedCount++;
-        playerSatIn(gambler);
+        this.gamblersSeatedCount++;
+        pokerGameService.playerSatIn(this, gambler);
     }
 
-    private void playerSatIn(Gambler gambler) {
-        this.log.setMessage(gambler.getName() + " sat in");
-        this.log.setAction("");
-        this.log.setSeat("");
-        this.log.setNotification("");
-        gambler.setSittingIn(true);
-        this.playersSittingInCount++;
-        if (!this.gameIsOn && this.playersSittingInCount > 1) {
-//            initializeRound(false); //todo init Round game
+    public void deleteGamblerOfSeatByEntity(Gambler gambler) {
+        for (int i = 0; i < this.seats.length; ++i) {
+            if (this.seats[i].equals(gambler)) {
+                this.seats[i] = null;
+            }
         }
-
     }
 
-    public void deleteGamblerOnTable(Gambler gambler) {
-        this.seats.remove(gambler);
+    public void deleteGamblerOfSeatByIndex(int numberOfSeats) {
+        this.seats[numberOfSeats] = null;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -99,8 +91,8 @@ public class Table implements Entity {
         this.seatsCount = seatsCount;
     }
 
-    public void setPlayersSeatedCount(int playersSeatedCount) {
-        this.playersSeatedCount = playersSeatedCount;
+    public void setGamblersSeatedCount(int gamblersSeatedCount) {
+        this.gamblersSeatedCount = gamblersSeatedCount;
     }
 
     public void setBigBlind(BigDecimal bigBlind) {
@@ -119,28 +111,28 @@ public class Table implements Entity {
         this.privateTable = privateTable;
     }
 
-    public int getPlayersSittingInCount() {
-        return playersSittingInCount;
+    public int getGamblersSittingInCount() {
+        return gamblersSittingInCount;
     }
 
-    public void setPlayersSittingInCount(int playersSittingInCount) {
-        this.playersSittingInCount = playersSittingInCount;
+    public void setGamblersSittingInCount(int gamblersSittingInCount) {
+        this.gamblersSittingInCount = gamblersSittingInCount;
     }
 
-    public int getPlayersInHandCount() {
-        return playersInHandCount;
+    public int getGamblersInHandCount() {
+        return gamblersInHandCount;
     }
 
-    public void setPlayersInHandCount(int playersInHandCount) {
-        this.playersInHandCount = playersInHandCount;
+    public void setGamblersInHandCount(int gamblersInHandCount) {
+        this.gamblersInHandCount = gamblersInHandCount;
     }
 
-    public String getLastPlayerToAct() {
-        return lastPlayerToAct;
+    public String getLastGamblerToAct() {
+        return lastGamblerToAct;
     }
 
-    public void setLastPlayerToAct(String lastPlayerToAct) {
-        this.lastPlayerToAct = lastPlayerToAct;
+    public void setLastGamblerToAct(String lastGamblerToAct) {
+        this.lastGamblerToAct = lastGamblerToAct;
     }
 
     public boolean isGameIsOn() {
@@ -159,26 +151,22 @@ public class Table implements Entity {
         this.headsUp = headsUp;
     }
 
-    public List<Gambler> getSeats() {
+    public Gambler[] getSeats() {
         return seats;
     }
 
-    public void setSeats(List<Gambler> seats) {
+    public void setSeats(Gambler[] seats) {
         this.seats = seats;
     }
 
-    public void addGamblerToSeats(Gambler gambler) {
-        this.seats.add(gambler);
-    }
-
-    public void deleteGamblerToSeats(Gambler gambler) {
-        int seatNumber = gambler.getNumberSeatOnTable();
-        if (seatNumber > -1) {
-            this.seatsPlace[seatNumber] = null;
-            gambler.setNumberSeatOnTable(-1);
-        }
-        this.seats.remove(gambler);
-    }
+//    public void deleteGamblerToSeats(Gambler gambler) {
+//        int seatNumber = gambler.getNumberSeatOnTable();
+//        if (seatNumber > -1) {
+//            this.seatsPlace[seatNumber] = null;
+//            gambler.setNumberSeatOnTable(-1);
+//        }
+//        this.seats.remove(gambler);
+//    }
 
     public Deck getDeck() {
         return deck;
@@ -268,7 +256,7 @@ public class Table implements Entity {
         this.log = log;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -280,8 +268,8 @@ public class Table implements Entity {
         return seatsCount;
     }
 
-    public int getPlayersSeatedCount() {
-        return playersSeatedCount;
+    public int getGamblersSeatedCount() {
+        return gamblersSeatedCount;
     }
 
     public BigDecimal getBigBlind() {
@@ -291,4 +279,5 @@ public class Table implements Entity {
     public BigDecimal getSmallBlind() {
         return smallBlind;
     }
+
 }

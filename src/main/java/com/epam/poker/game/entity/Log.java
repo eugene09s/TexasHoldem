@@ -3,6 +3,7 @@ package com.epam.poker.game.entity;
 import java.util.StringJoiner;
 
 public class Log {
+    private static final String EMPTY_LINE = "";
     private String message;
     private String seat;
     private String action;
@@ -16,10 +17,10 @@ public class Log {
     }
 
     public Log() {
-        this.message = new String();
-        this.action = new String();
-        this.seat = new String();
-        this.notification = new String();
+        this.message = EMPTY_LINE;
+        this.seat = EMPTY_LINE;
+        this.action = EMPTY_LINE;
+        this.notification = EMPTY_LINE;
     }
 
     public String getNotification() {
@@ -84,5 +85,40 @@ public class Log {
                 .add("seat='" + seat + "'")
                 .add("action='" + action + "'")
                 .toString();
+    }
+
+    public static LogBuilder builder() {
+        return new LogBuilder();
+    }
+
+    public static class LogBuilder {
+        private String message;
+        private String seat;
+        private String action;
+        private String notification;
+
+        public LogBuilder setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+
+        public LogBuilder setSeat(String seat) {
+            this.seat = seat;
+            return this;
+        }
+
+        public LogBuilder setAction(String action) {
+            this.action = action;
+            return this;
+        }
+
+        public LogBuilder setNotification(String notification) {
+            this.notification = notification;
+            return this;
+        }
+
+        public Log createLog() {
+            return new Log(message, seat, action, notification);
+        }
     }
 }

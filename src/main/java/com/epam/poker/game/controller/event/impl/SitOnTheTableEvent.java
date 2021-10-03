@@ -53,7 +53,7 @@ public class SitOnTheTableEvent implements EventSocket {
         } catch (ServiceException | DaoException e) {
             LOGGER.error("Select user from database: " + e);
         }
-        JsonNode data = null;
+        JsonNode data;
         ObjectNode objectNode = mapper.createObjectNode();
         try {
             BigDecimal balanceGambler = user.getBalance();
@@ -61,18 +61,18 @@ public class SitOnTheTableEvent implements EventSocket {
             data = json.get(Attribute.DATA);
             int numberSeat = data.get(Attribute.SEAT).asInt();
             long tableId = data.get(Attribute.TABLE_ID).asLong();
-            BigDecimal chips = new BigDecimal(String.valueOf(data.get(Attribute.CHIPS)));
+            BigDecimal bet = new BigDecimal(String.valueOf(data.get(Attribute.CHIPS)));
             if (validationJsonData.isValidSitOnTheTableEvent(gambler, numberSeat, tableId)) {
-                if (chips.compareTo(balanceGambler) >= 0) {
+                if (bet.compareTo(balanceGambler) >= 0) {
                     objectNode.put(Attribute.SUCCESS, false);
                     objectNode.put(Attribute.ERROR, MESSAGE_ERROR_CHIPS);
-                } else if (!isValidMinMaxBetOnTable(tableId, chips)) {
+                } else if (!isValidMinMaxBetOnTable(tableId, bet)) {
                     objectNode.put(Attribute.SUCCESS, false);
                     objectNode.put(Attribute.ERROR, MESSAGE_ERROR_COMPARE_CHIPS_MAX_MIN_TABLE);
                 } else {
                     objectNode.put(Attribute.SUCCESS, true);
                     lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId))
-                            .addGamblerOnTable(gambler, numberSeat);
+                            .addGamblerOnTable(gambler, numberSeat, bet);
                 }
             } else {
                 objectNode.put(Attribute.SUCCESS, false);

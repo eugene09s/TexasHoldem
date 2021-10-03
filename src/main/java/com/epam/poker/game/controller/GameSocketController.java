@@ -1,5 +1,6 @@
 package com.epam.poker.game.controller;
 
+import com.epam.poker.game.logic.PokerGameService;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.game.controller.event.EventSocket;
@@ -93,10 +94,12 @@ public class GameSocketController {
     private void disconnectGambler() {
         String roomName = gambler.getTitleRoom();
         if (roomName != null) {
-            lobby.findRoom(roomName).getTable().deleteGamblerToSeats(gambler);
+//            lobby.findRoom(roomName).getTable().deleteGamblerToSeats(gambler);
             lobby.findRoom(roomName).deleteGambler(gambler);
         }
         lobby.deleteGambler(this.gambler.getName());
         this.gambler = null;
     }
+
+
 }

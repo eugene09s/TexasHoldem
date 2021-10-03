@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Deck implements Entity {
     private static final int SIZE_DECK = 52;
-    private static final List<String> CARDS = new ArrayList<>(List.of(
+    private static final List<String> FULL_DECK_CARDS = new ArrayList<>(List.of(
             "As", "Ah", "Ad", "Ac",
             "Ks", "Kh", "Kd", "Kc",
             "Qs", "Qh", "Qd", "Qc",
@@ -22,33 +22,37 @@ public class Deck implements Entity {
             "3s", "3h", "3d", "3c",
             "2s", "2h", "2d", "2c"
     ));
-    private List<String> freshDeck;
+    private List<String> freshDeckп;
+    private int nextCard;
 
     public Deck() {
-        this.freshDeck = shuffle();
     }
 
-    private List<String> shuffle() {
-        List<String> cards = new ArrayList<>(CARDS);
+    public void shuffle() {
+        List<String> cards = new ArrayList<>(FULL_DECK_CARDS);
         List<String> shuffledDeck = new ArrayList<>(SIZE_DECK);
         String randomCard;
         while (cards.size() > 0){
             randomCard = cards.remove((int) (Math.random()*( cards.size())));
             shuffledDeck.add(randomCard);
         }
-        return shuffledDeck;
+        this.freshDeckп = shuffledDeck;
     }
 
     public List<String> getFullDeck() {
-        return CARDS;
+        return FULL_DECK_CARDS;
     }
 
     public List<String> getFreshDeck() {
-        return this.freshDeck;
+        return this.freshDeckп;
     }
 
-//    public List<String> findCardsByNumberOfDeck(int numberOfCards) {
-//        List<String> deck = new ArrayList<>();
-//        for (int i = 0; i < numberOfCards && n)
-//    }
+    public List<String> pullSomeCardsFromDeck(int numberOfCards) {
+        List<String> dealtCards = new ArrayList<>(numberOfCards);
+        for (int i = 0; i < numberOfCards && this.nextCard < SIZE_DECK; ++i) {
+            dealtCards.add(this.freshDeckп.get(this.nextCard));
+            this.nextCard++;
+        }
+        return dealtCards;
+    }
 }

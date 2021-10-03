@@ -22,7 +22,7 @@ public class ValidationJsonData {
         String nameRoom = String.format(Attribute.TABLE_WITH_HYPHEN, tableId);
         if (gambler != null && numberSeat > -1 && tableId > -1 && lobby.containRoom(nameRoom)
                 && lobby.findRoom(nameRoom).getTable().getSeatsCount() > numberSeat
-                && lobby.findRoom(nameRoom).getTable().getSeats().get(numberSeat) == null
+                && lobby.findRoom(nameRoom).getTable().getSeats()[numberSeat] == null
                 && gambler.getSittingOnTable() < 0 && nameRoom.equalsIgnoreCase(gambler.getTitleRoom())) {
             return true;
         }

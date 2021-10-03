@@ -1,5 +1,6 @@
 package com.epam.poker.game.entity;
 
+import com.epam.poker.game.logic.PokerGameService;
 import com.epam.poker.model.entity.Entity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.EncodeException;
@@ -15,6 +16,7 @@ import java.util.StringJoiner;
 
 public class Room implements Entity {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static PokerGameService pokerGameService = PokerGameService.getInstacne();
     private static final ObjectMapper mapper = new ObjectMapper();
     private Map<String, Gambler> gamblers = Collections.synchronizedMap(new HashMap<>());
     private String titleRoom;
@@ -36,6 +38,10 @@ public class Room implements Entity {
     public boolean deleteGambler(Gambler gambler) {
         if (this.gamblers.remove(gambler.getName()) != null) {
             gambler.setTitleRoom(null);
+            if (gambler.getSittingOnTable() > -1
+                    && this.table.getSeats()[gambler.getSittingOnTable()].equals(gambler)) {
+                pokerGameService.gamblerLeft(this.table, gambler);
+            }
             return true;
         }
         return false;

@@ -3,8 +3,6 @@ package com.epam.poker.game.entity;
 import jakarta.websocket.Session;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.StringJoiner;
 
 public class Gambler {
     private String name;
@@ -18,7 +16,7 @@ public class Gambler {
     private Session session;
     private BigDecimal balance;
     private String titleRoom;
-    private long sittingOnTable;
+    private int sittingOnTable;
     private int numberSeatOnTable;
     private String[] privateCards;
     private String evaluateHand;
@@ -54,6 +52,13 @@ public class Gambler {
         return this;
     }
 
+    public void sitOut() {
+        if (this.sittingOnTable > -1) {
+            this.sittingIn = false;
+            this.inHand = false;
+        }
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }
@@ -63,11 +68,11 @@ public class Gambler {
         return this;
     }
 
-    public long getSittingOnTable() {
+    public int getSittingOnTable() {
         return sittingOnTable;
     }
 
-    public Gambler setSittingOnTable(long sittingOnTable) {
+    public Gambler setSittingOnTable(int sittingOnTable) {
         this.sittingOnTable = sittingOnTable;
         return this;
     }
@@ -81,6 +86,15 @@ public class Gambler {
         return this;
     }
 
+    public void leaveTable() {
+        if (this.sittingOnTable > -1) {
+            sitOut();
+            this.sittingOnTable = -1;
+            this.numberSeatOnTable = -1;
+        }
+    }
+
+//fixme should be another methods set
     public String[] getPrivateCards() {
         return privateCards;
     }
@@ -187,74 +201,6 @@ public class Gambler {
     public Gambler setImg(String img) {
         this.img = img;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Gambler gambler = (Gambler) o;
-
-        if (sittingIn != gambler.sittingIn) return false;
-        if (inHand != gambler.inHand) return false;
-        if (hasCards != gambler.hasCards) return false;
-        if (tableId != gambler.tableId) return false;
-        if (sittingOnTable != gambler.sittingOnTable) return false;
-        if (numberSeatOnTable != gambler.numberSeatOnTable) return false;
-        if (name != null ? !name.equals(gambler.name) : gambler.name != null) return false;
-        if (moneyInPlay != null ? !moneyInPlay.equals(gambler.moneyInPlay) : gambler.moneyInPlay != null) return false;
-        if (!Arrays.equals(publicCards, gambler.publicCards)) return false;
-        if (bet != null ? !bet.equals(gambler.bet) : gambler.bet != null) return false;
-        if (session != null ? !session.equals(gambler.session) : gambler.session != null) return false;
-        if (balance != null ? !balance.equals(gambler.balance) : gambler.balance != null) return false;
-        if (titleRoom != null ? !titleRoom.equals(gambler.titleRoom) : gambler.titleRoom != null) return false;
-        if (!Arrays.equals(privateCards, gambler.privateCards)) return false;
-        if (evaluateHand != null ? !evaluateHand.equals(gambler.evaluateHand) : gambler.evaluateHand != null)
-            return false;
-        return img != null ? img.equals(gambler.img) : gambler.img == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (moneyInPlay != null ? moneyInPlay.hashCode() : 0);
-        result = 31 * result + (sittingIn ? 1 : 0);
-        result = 31 * result + (inHand ? 1 : 0);
-        result = 31 * result + (hasCards ? 1 : 0);
-        result = 31 * result + Arrays.hashCode(publicCards);
-        result = 31 * result + (bet != null ? bet.hashCode() : 0);
-        result = 31 * result + tableId;
-        result = 31 * result + (session != null ? session.hashCode() : 0);
-        result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        result = 31 * result + (titleRoom != null ? titleRoom.hashCode() : 0);
-        result = 31 * result + numberSeatOnTable;
-        result = 31 * result + Arrays.hashCode(privateCards);
-        result = 31 * result + (evaluateHand != null ? evaluateHand.hashCode() : 0);
-        result = 31 * result + (img != null ? img.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", Gambler.class.getSimpleName() + "[", "]")
-                .add("name='" + name + "'")
-                .add("chipsInPlay=" + moneyInPlay)
-                .add("sittingIn=" + sittingIn)
-                .add("inHand=" + inHand)
-                .add("hasCards=" + hasCards)
-                .add("publicCards=" + Arrays.toString(publicCards))
-                .add("bet=" + bet)
-                .add("tableId=" + tableId)
-                .add("session=" + session)
-                .add("chips=" + balance)
-                .add("titleRoom='" + titleRoom + "'")
-                .add("sittingOnTable=" + sittingOnTable)
-                .add("seatTable=" + numberSeatOnTable)
-                .add("privateCards=" + Arrays.toString(privateCards))
-                .add("evaluateHand='" + evaluateHand + "'")
-                .add("img='" + img + "'")
-                .toString();
     }
 
     public static GamblerBuilder builder() {

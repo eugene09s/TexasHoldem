@@ -20,10 +20,9 @@ public class LeaveFromRoomEvent implements EventSocket {
 
     @Override
     public void execute(String jsonLine, Gambler gambler) {
-//        JsonNode json = mapper.createObjectNode();
-//        JsonNode jsonData = json.get(Attribute.DATA);
         if (gambler.getTitleRoom() != null && gambler.getSittingOnTable() < 0) {
             String titleRoom = gambler.getTitleRoom();
+            gambler.leaveTable();
             lobby.findRoom(titleRoom).deleteGambler(gambler);
         } else {
             LOGGER.warn("Gamler name: " + gambler.getName() + " is not room");
