@@ -46,6 +46,11 @@ public class Pot implements Entity {
         }
     }
 
+    public String[] destributeToWinners(Table table, int firstGamblerToAct) {
+        //todo method
+        return null;
+    }
+
     public void addTableBets(List<Gambler> gamblers) {
         BigDecimal smallestBet = BigDecimal.ZERO;
         boolean allBetsAreaEqual = true;

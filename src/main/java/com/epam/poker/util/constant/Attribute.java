@@ -60,5 +60,16 @@ public final class Attribute {
     //events
     public static final String RECEIVE_MESSAGE_EVENT = "receiveMessage";
     public static final String POST_SMALL_BLIND_EVENT = "postSmallBlind";
+    public static final String POST_BIG_BLIND_EVENT = "postBigBlind";
+    public static final String ACT_OTHERS_ALL_IN_EVENT = "actOthersAllIn";
+    public static final String ACT_BETTED_POT_EVENT = "actBettedPot";
+    public static final String ACT_NOT_BETTED_POT_EVENT = "actNotBettedPot";
+    //part of game
+    public static final String SMALL_BLIND_PART_OF_GAME = "smallBlind";
+    public static final String BIG_BLIND_PART_OF_GAME = "bigBlind";
+    public static final String PRE_FLOP_PART_OF_GAME = "preflop";
+    public static final String FLOP_PART_OF_GAME = "flop";
+    public static final String TURN_PART_OF_GAME = "turn";
+    public static final String RIVER_PART_OF_GAME = "river";
 
 }

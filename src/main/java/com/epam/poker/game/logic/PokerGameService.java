@@ -5,7 +5,6 @@ import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Log;
 import com.epam.poker.game.entity.Table;
 import com.epam.poker.util.constant.Attribute;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +20,7 @@ public class PokerGameService {
     private static final byte DO_NOT_CHANGE_DEALER = 1;
     private static final String SMALL_BLIND = "smallBlind";
     private static NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
+    private static EvaluateHandService evaluateHandService = EvaluateHandService.getInstance();
 
     private PokerGameService() {
     }
@@ -90,15 +90,10 @@ public class PokerGameService {
                     || !table.getSeats()[table.getDealerSeat()].isSittingIn()) {
                 //if the dealer should be changed because the game will start with a new player
                 //or if the old dealer is sitting out, give the dealer button to the next player
-                table.setDealerSeat(findNextPlayer(table));
+                table.setDealerSeat(findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false));
             }
             initializeSmallBlind(table);
         }
-    }
-
-    private Integer findPreviousGambler(Table table) {
-        //todo method
-        return null;
     }
 
     public void initializeSmallBlind(Table table) {
@@ -106,7 +101,7 @@ public class PokerGameService {
         if (table.isHeadsUp()) {
             table.setActiveSeat(table.getDealerSeat());
         } else {
-            table.setActiveSeat(findNextPlayer(table));
+            table.setActiveSeat(findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false));
         }
         table.setLastGamblerToAct("10");
         Gambler gambler = table.getSeats()[table.getActiveSeat()];
@@ -189,12 +184,12 @@ public class PokerGameService {
         table.getPot().addTableBets(Arrays.stream(table.getSeats()).toList());
         table.setBiggestBet(BigDecimal.ZERO);
 
-        table.setActiveSeat(findNextPlayer(table));
+        table.setActiveSeat(findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false));
         table.setLastGamblerToAct(String.valueOf(
                 findPreviousGambler(table, table.getActiveSeat().toString(), true, false)));
         notifierTableDataService.notifyALLGamblersOfRoom(table);
         //if all other gamblers are all in, there should be on actions. Move to the next round.
-        if (otherGamblersAreAllIn()) {
+        if (otherGamblersAreAllIn(table)) {
 //            setTimeout(
 //                    endPhase();
 //            ) 1000
@@ -205,8 +200,90 @@ public class PokerGameService {
         }
     }
 
+    private int findNextGambler(Table table, String lineOffset, boolean checkInHand, boolean checkMoneyInGame) {
+        int offset = Integer.parseInt(lineOffset);
+        if (checkInHand || checkMoneyInGame) {
+            if (offset != table.getSeatsCount()) {
+                for (int i = offset + 1; i < table.getSeatsCount(); ++i) {
+                    if (table.getSeats()[i] != null) {
+                        boolean validStatus = true;
+                        if (checkInHand) {
+                            validStatus = table.getSeats()[i].isInHand();
+                        }
+                        if (checkMoneyInGame) {
+                            validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0 ? true : false;
+                        }
+                        if (validStatus) {
+                            return i;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i <= offset; ++i) {
+                if (table.getSeats()[i] != null) {
+                    boolean validStatus = true;
+                    if (checkInHand) {
+                        validStatus = table.getSeats()[i].isInHand();
+                    }
+                    if (checkMoneyInGame) {
+                        validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0 ? true : false;
+                    }
+                    if (validStatus) {
+                        return i;
+                    }
+                }
+            }
+        } else {
+            if (offset != table.getSeatsCount()) {
+                for (int i = offset + 1; i < table.getSeatsCount(); ++i) {
+                    if (table.getSeats()[i] != null && table.getSeats()[i].isInHand()) {
+                        return i;
+                    }
+                }
+            }
+            for (int i = 0; i <= offset; ++i) {
+                if (table.getSeats()[i] != null && table.getSeats()[i].isInHand()) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private boolean otherGamblersAreAllIn(Table table) {
+        int currentGambler = table.getActiveSeat();
+        int gamblerAlIn = 0;
+        for (int i = 0; i < table.getGamblersInHandCount(); ++i) {
+            if (table.getSeats()[currentGambler].getMoneyInPlay().equals(BigDecimal.ZERO)) {
+                gamblerAlIn++;
+            }
+            currentGambler = findNextGambler(table, String.valueOf(currentGambler), true, false);
+        }
+        return gamblerAlIn >= table.getGamblersInHandCount()-1;
+    }
+
     private void showdown(Table table) {
-        //todo method
+        table.getPot().addTableBets(Arrays.stream(table.getSeats()).toList());
+        int currentGambler = findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false);
+        int bestHandRating = 0;
+        for (int i = 0; i < table.getGamblersInHandCount(); ++i) {
+            evaluateHandService.execute(table, table.getSeats()[i]);
+
+                //todo evaluate
+        }
+        String[] message = table.getPot().destributeToWinners(table, currentGambler);
+        for (int i = 0; i < message.length; ++i) {
+            Log log = Log.builder()
+                    .setMessage(message[i])
+                    .setAction("")
+                    .setSeat("")
+                    .setNotification("")
+                    .createLog();
+            table.setLog(log);
+            notifierTableDataService.notifyALLGamblersOfRoom(table);
+        }
+
+        //todo timeout 2000
     }
 
     private void playerSatOut(Table table, Gambler gambler, boolean playerLeft) {
@@ -239,7 +316,7 @@ public class PokerGameService {
                 //if the gamber was not the last gambler to act but they were the gambler who should act in this round
                 if (table.getActiveSeat().equals(gambler.getNumberSeatOnTable())
                         && table.getLastGamblerToAct() != String.valueOf(gambler.getNumberSeatOnTable())) {
-                    actionToNextGambler();
+                    actionToNextGambler(table);
                 } //if the gambler was the last gambler to act and they left when they had to act
                 else if (table.getLastGamblerToAct().equals(String.valueOf(gambler.getNumberSeatOnTable()))
                         && table.getActiveSeat().equals(gambler.getNumberSeatOnTable())) {
@@ -309,8 +386,48 @@ public class PokerGameService {
         return -1;
     }
 
-    private void actionToNextGambler() {
-        //todo method
+    private void actionToNextGambler(Table table) {
+        table.setActiveSeat(findNextGambler(table, String.valueOf(table.getActiveSeat()),
+                true, true));
+
+        switch (table.getPhaseGame()) {
+            case Attribute.SMALL_BLIND_PART_OF_GAME->{
+                Gambler gambler = table.getSeats()[table.getActiveSeat()];
+                notifierTableDataService.notifyGambler(Attribute.POST_SMALL_BLIND_EVENT, gambler);
+                break;
+            }
+            case Attribute.BIG_BLIND_PART_OF_GAME->{
+                Gambler gambler = table.getSeats()[table.getActiveSeat()];
+                notifierTableDataService.notifyGambler(Attribute.POST_BIG_BLIND_EVENT, gambler);
+                break;
+            }
+            case Attribute.PRE_FLOP_PART_OF_GAME->{
+                Gambler gambler = table.getSeats()[table.getActiveSeat()];
+                if (otherGamblersAreAllIn(table)) {
+                    notifierTableDataService.notifyGambler(Attribute.ACT_OTHERS_ALL_IN_EVENT, gambler);
+                } else {
+                    notifierTableDataService.notifyGambler(Attribute.ACT_BETTED_POT_EVENT, gambler);
+                }
+                break;
+            }
+            case Attribute.FLOP_PART_OF_GAME,
+                    Attribute.TURN_PART_OF_GAME,
+                    Attribute.RIVER_PART_OF_GAME->{
+                Gambler gambler = table.getSeats()[table.getActiveSeat()];
+                //if someone has betted
+                if (table.getBiggestBet().compareTo(BigDecimal.ZERO) > 0) {
+                    if (otherGamblersAreAllIn(table)) {
+                        notifierTableDataService.notifyGambler(Attribute.ACT_OTHERS_ALL_IN_EVENT, gambler);
+                    } else {
+                        notifierTableDataService.notifyGambler(Attribute.ACT_BETTED_POT_EVENT, gambler);
+                    }
+                } else {
+                    notifierTableDataService.notifyGambler(Attribute.ACT_NOT_BETTED_POT_EVENT, gambler);
+                }
+                break;
+            }
+        }
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
     }
 
     private void endRound() {
