@@ -1,15 +1,14 @@
 package com.epam.poker.game.logic;
 
-import com.epam.poker.game.entity.Deck;
-import com.epam.poker.game.entity.Gambler;
-import com.epam.poker.game.entity.Log;
-import com.epam.poker.game.entity.Table;
+import com.epam.poker.game.entity.*;
 import com.epam.poker.util.constant.Attribute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PokerGameService {
     private static final PokerGameService instance = new PokerGameService();
@@ -19,8 +18,8 @@ public class PokerGameService {
     private static final int ZERO_MONEY = 0;
     private static final byte DO_NOT_CHANGE_DEALER = 1;
     private static final String SMALL_BLIND = "smallBlind";
+    private static PotService potService = PotService.getInstance();
     private static NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
-    private static EvaluateHandService evaluateHandService = EvaluateHandService.getInstance();
 
     private PokerGameService() {
     }
@@ -143,7 +142,7 @@ public class PokerGameService {
         notifierTableDataService.notifyALLGamblersOfRoom(table);
         //if a gambler left a heads-up match and there are people waiting to gambler, start a new round
         if (table.getGamblersInHandCount() < 2) {
-            endRound();
+            endRound(table);
         } //Else if the gambler was the last to act in this phase, end the phase
         else if (table.getLastGamblerToAct().equals(String.valueOf(gambler.getNumberSeatOnTable()))
                 && table.getActiveSeat() == gambler.getNumberSeatOnTable()) {
@@ -181,7 +180,7 @@ public class PokerGameService {
                 break;
             }
         }
-        table.getPot().addTableBets(Arrays.stream(table.getSeats()).toList());
+        potService.addTableBets(table);
         table.setBiggestBet(BigDecimal.ZERO);
 
         table.setActiveSeat(findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false));
@@ -190,13 +189,16 @@ public class PokerGameService {
         notifierTableDataService.notifyALLGamblersOfRoom(table);
         //if all other gamblers are all in, there should be on actions. Move to the next round.
         if (otherGamblersAreAllIn(table)) {
-//            setTimeout(
-//                    endPhase();
-//            ) 1000
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                LOGGER.error("Sleep 1000 err:" + e);
+            }
+            endPhase(table);
         } else {
             Gambler[] gamblers = table.getSeats();
             Gambler gambler = gamblers[table.getActiveSeat()];
-            notifierTableDataService.notifyGambler("actNotBettedpot", gambler);
+            notifierTableDataService.notifyGambler(Attribute.ACT_NOT_BETTED_POT_EVENT, gambler);
         }
     }
 
@@ -263,18 +265,20 @@ public class PokerGameService {
     }
 
     private void showdown(Table table) {
-        table.getPot().addTableBets(Arrays.stream(table.getSeats()).toList());
+//        table.getPots().addTableBets(Arrays.stream(table.getSeats()).toList());
+        potService.addTableBets(table);
         int currentGambler = findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false);
         int bestHandRating = 0;
         for (int i = 0; i < table.getGamblersInHandCount(); ++i) {
+            EvaluateHandService evaluateHandService = new EvaluateHandService();
             evaluateHandService.execute(table, table.getSeats()[i]);
 
                 //todo evaluate
         }
-        String[] message = table.getPot().destributeToWinners(table, currentGambler);
-        for (int i = 0; i < message.length; ++i) {
+        List<String> message = potService.destributeToWinners(table, currentGambler);
+        for (String msg : message) {
             Log log = Log.builder()
-                    .setMessage(message[i])
+                    .setMessage(msg)
                     .setAction("")
                     .setSeat("")
                     .setNotification("")
@@ -283,7 +287,12 @@ public class PokerGameService {
             notifierTableDataService.notifyALLGamblersOfRoom(table);
         }
 
-        //todo timeout 2000
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            LOGGER.error("Sleep err:" + e);
+        }
+        endRound(table);
     }
 
     private void playerSatOut(Table table, Gambler gambler, boolean playerLeft) {
@@ -298,9 +307,9 @@ public class PokerGameService {
             notifierTableDataService.notifyALLGamblersOfRoom(table);
         }
         if (gambler.getBet().compareTo(BigDecimal.ZERO) > 0) {
-            table.getPot().addGamblersBets(gambler);
+            potService.addGamblersBets(table, gambler);
         }
-        table.getPot().removeGambler(gambler);
+        potService.removeGambler(table, gambler);
         String nextAction = "";
         int playersSittingInCount = table.getGamblersSittingInCount() - 1;
         table.setGamblersSittingInCount(playersSittingInCount);
@@ -310,7 +319,7 @@ public class PokerGameService {
             table.setGamblersInHandCount(playersInHandCount);
             if (playersInHandCount < 2) {
                 if (!playerLeft) {
-                    endRound();
+                    endRound(table);
                 }
             } else {
                 //if the gamber was not the last gambler to act but they were the gambler who should act in this round
@@ -321,7 +330,7 @@ public class PokerGameService {
                 else if (table.getLastGamblerToAct().equals(String.valueOf(gambler.getNumberSeatOnTable()))
                         && table.getActiveSeat().equals(gambler.getNumberSeatOnTable())) {
                     if (!playerLeft) {
-                        endRound();
+                        endRound(table);
                     }
                 }
                 //if the gambler was the last to act but not the gambler who should act
@@ -339,8 +348,8 @@ public class PokerGameService {
     private int findPreviousGambler(Table table, String lineOffset, boolean checkInHand, boolean checkMoneyInGame) {
         int offset = Integer.parseInt(lineOffset);
         if (checkInHand || checkMoneyInGame) {
-            if (offset != table.getSeatsCount()) {
-                for (int i = offset + 1; i < table.getSeatsCount(); ++i) {
+            if (offset != 0) {
+                for (int i = offset - 1; i >= 0; --i) {
                     if (table.getSeats()[i] != null) {
                         boolean validStatus = true;
                         if (checkInHand) {
@@ -355,7 +364,7 @@ public class PokerGameService {
                     }
                 }
             }
-            for (int i = 0; i <= offset; ++i) {
+            for (int i = table.getSeatsCount()-1; i >= offset; --i) {
                 if (table.getSeats()[i] != null) {
                     boolean validStatus = true;
                     if (checkInHand) {
@@ -370,14 +379,14 @@ public class PokerGameService {
                 }
             }
         } else {
-            if (offset != table.getSeatsCount()) {
-                for (int i = offset + 1; i < table.getSeatsCount(); ++i) {
+            if (offset != 0) {
+                for (int i = offset - 1; i >= 0; --i) {
                     if (table.getSeats()[i] != null && table.getSeats()[i].isInHand()) {
                         return i;
                     }
                 }
             }
-            for (int i = 0; i <= offset; ++i) {
+            for (int i = table.getSeatsCount()-1; i >= offset; --i) {
                 if (table.getSeats()[i] != null && table.getSeats()[i].isInHand()) {
                     return i;
                 }
@@ -430,7 +439,49 @@ public class PokerGameService {
         notifierTableDataService.notifyALLGamblersOfRoom(table);
     }
 
-    private void endRound() {
-        //todo method
+    private void endRound(Table table) {
+        potService.addTableBets(table);
+        if (!table.getPots().isEmpty()) {
+            int winnerSeat = findNextGambler(table, String.valueOf(0), true, false);
+            String messageResultGame = potService.givenToWinner(table, table.getSeats()[winnerSeat]);
+                    //todo should be send mesage result
+        }
+        //Sitting out the gamblers who don't have money
+        for (int i = 0; i < table.getSeatsCount(); ++i) {
+            if (table.getSeats()[i] != null
+                    && table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) <=0
+                    && table.getSeats()[i].isSittingIn()) {
+                table.getSeats()[i].sitOut();
+                int gamblersSittingInCount = table.getGamblersSittingInCount() - 1;
+                table.setGamblersSittingInCount(gamblersSittingInCount);
+            }
+        }
+        //if there are not enough gamblers to continue the game, stop it
+        if (table.getGamblersSittingInCount() < 2)  {
+            stopGame(table);
+        } else {
+            initializeRound(table, (byte) 0);
+        }
+    }
+
+    private void stopGame(Table table) {
+        table.setPhaseGame(null);
+        table.setPot(new ArrayList<>(1));
+        table.setActiveSeat(null);
+        table.setBoard(new String[]{"", "", "", "", ""});
+        table.setLastGamblerToAct(null);
+        removeAllCardsFromGame(table);
+        table.setGameIsOn(false);
+        notifierTableDataService.notifyALLGamblersOfRoomGameStop(table);
+    }
+
+    private void removeAllCardsFromGame(Table table) {
+        for (Gambler gambler : table.getSeats()) {
+            if (gambler.isSittingIn()) {
+                gambler.setPublicCards(null);
+                gambler.setPrivateCards(null);
+                gambler.setHasCards(false);
+            }
+        }
     }
 }

@@ -32,9 +32,12 @@ public class ParserDataToJsonService {
                 .put(BIG_BLIND, table.getBigBlind())
                 .put(SMALL_BLIND, table.getSmallBlind())
                 .put(MIN_BUY_IN, table.getMinBuyIn())
-                .put(MAX_BUY_IN, table.getMaxBuyIn())
-                .putPOJO(POT, parsePot(table.getPot()))
-                .put(BIGGEST_BET, table.getBiggestBet())
+                .put(MAX_BUY_IN, table.getMaxBuyIn());
+        List<Pot> pots = table.getPots();
+        for (Pot pot : pots) {
+            jsonNodes.putPOJO(POT, parsePot(pot));
+        }
+        jsonNodes.put(BIGGEST_BET, table.getBiggestBet())
                 .put(DEALER_SEAT, table.getDealerSeat())
                 .put(ACTIVE_SEAT, table.getActiveSeat())
                 .putPOJO(SEATS, parseArrayGambler(table.getSeats()))

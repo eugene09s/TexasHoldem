@@ -19,12 +19,12 @@ public class Gambler {
     private int sittingOnTable;
     private int numberSeatOnTable;
     private String[] privateCards;
-    private String evaluateHand;
+    private EvaluateHand evaluateHand;
     private String img;
 
     public Gambler(String name, BigDecimal chipsInPlay, boolean sittingIn, boolean inHand, boolean hasCards,
                    String[] publicCards, BigDecimal bet, int tableId, Session session, BigDecimal chips, String titleRoom,
-                   int seatTable, String[] privateCards, String evaluateHand, String img) {
+                   int seatTable, String[] privateCards, String img) {
         this.name = name;
         this.moneyInPlay = chipsInPlay;
         this.sittingIn = sittingIn;
@@ -39,7 +39,7 @@ public class Gambler {
         this.sittingOnTable = -1;
         this.numberSeatOnTable = seatTable;
         this.privateCards = privateCards;
-        this.evaluateHand = evaluateHand;
+        this.evaluateHand = new EvaluateHand();
         this.img = img;
     }
 
@@ -92,6 +92,10 @@ public class Gambler {
             this.sittingOnTable = -1;
             this.numberSeatOnTable = -1;
         }
+    }
+
+    public void plusMoneyInTheGame(BigDecimal money) {
+        this.moneyInPlay = this.moneyInPlay.add(money);
     }
 
 //fixme should be another methods set
@@ -185,11 +189,11 @@ public class Gambler {
         return this;
     }
 
-    public String getEvaluateHand() {
+    public EvaluateHand getEvaluateHand() {
         return evaluateHand;
     }
 
-    public Gambler setEvaluateHand(String evaluateHand) {
+    public Gambler setEvaluateHand(EvaluateHand evaluateHand) {
         this.evaluateHand = evaluateHand;
         return this;
     }
@@ -222,7 +226,7 @@ public class Gambler {
         private long sittingOnTable;
         private int seatTable;
         private String[] privateCards;
-        private String evaluateHand;
+        private EvaluateHand evaluateHand;
         private String img;
 
         public GamblerBuilder setTitleRoom(String titleRoom) {
@@ -245,7 +249,7 @@ public class Gambler {
             return this;
         }
 
-        public GamblerBuilder setEvaluateHand(String evaluateHand) {
+        public GamblerBuilder setEvaluateHand(EvaluateHand evaluateHand) {
             this.evaluateHand = evaluateHand;
             return this;
         }
@@ -308,7 +312,7 @@ public class Gambler {
         public Gambler createGambler() {
             return new Gambler(name, chipsInPlay, sittingIn, inHand, hasCards, publicCards,
                     bet, tableId, session, chips, titleRoom, seatTable,
-                    privateCards, evaluateHand, img);
+                    privateCards, img);
         }
     }
 }

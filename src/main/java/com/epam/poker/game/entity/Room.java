@@ -39,7 +39,7 @@ public class Room implements Entity {
         if (this.gamblers.remove(gambler.getName()) != null) {
             gambler.setTitleRoom(null);
             if (gambler.getSittingOnTable() > -1
-                    && this.table.getSeats()[gambler.getSittingOnTable()].equals(gambler)) {
+                    && this.table.getSeats()[gambler.getNumberSeatOnTable()].equals(gambler)) {
                 pokerGameService.gamblerLeft(this.table, gambler);
             }
             return true;

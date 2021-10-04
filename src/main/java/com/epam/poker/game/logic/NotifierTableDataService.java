@@ -14,7 +14,8 @@ import java.io.IOException;
 
 public class NotifierTableDataService {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String EVENT_NAME = "table-data";
+    private static final String EVENT_NAME_TABLE_DATA = "table-data";
+    private static final String EVENT_NAME_GAME_STOP = "gameStopped";
     private static final Lobby lobby = Lobby.getInstance();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final ParserDataToJsonService parserDataToJson = ParserDataToJsonService.getInstance();
@@ -31,7 +32,17 @@ public class NotifierTableDataService {
         long tableId = table.getId();
         String nameRoom = String.format(Attribute.TABLE_WITH_HYPHEN, tableId);
         ObjectNode response = mapper.createObjectNode();
-        response.put(Attribute.EVENT, EVENT_NAME);
+        response.put(Attribute.EVENT, EVENT_NAME_TABLE_DATA);
+        response.putPOJO(Attribute.DATA, parserDataToJson.parseDataTableForRoom(table));
+        lobby.findRoom(nameRoom).broadcastEvent(String.valueOf(response));
+        table.setLog(new Log());
+    }
+
+    public void notifyALLGamblersOfRoomGameStop(Table table) {
+        long tableId = table.getId();
+        String nameRoom = String.format(Attribute.TABLE_WITH_HYPHEN, tableId);
+        ObjectNode response = mapper.createObjectNode();
+        response.put(Attribute.EVENT, EVENT_NAME_GAME_STOP);
         response.putPOJO(Attribute.DATA, parserDataToJson.parseDataTableForRoom(table));
         lobby.findRoom(nameRoom).broadcastEvent(String.valueOf(response));
         table.setLog(new Log());

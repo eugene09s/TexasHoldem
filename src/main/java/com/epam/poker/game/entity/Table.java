@@ -4,6 +4,8 @@ import com.epam.poker.game.logic.PokerGameService;
 import com.epam.poker.model.entity.Entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Table implements Entity {
     private PokerGameService pokerGameService = PokerGameService.getInstacne();
@@ -24,7 +26,7 @@ public class Table implements Entity {
 //    private eventEmitter;
     private BigDecimal minBuyIn;
     private BigDecimal maxBuyIn;
-    private Pot pot;
+    private List<Pot> pot;
     private BigDecimal biggestBet;
     private Integer dealerSeat;
     private Integer activeSeat;
@@ -49,7 +51,7 @@ public class Table implements Entity {
 //        initSeatsTable(seatsCount);
         this.deck = new Deck();
         this.board = new String[]{"", "", "", "", ""};
-        this.pot = new Pot();
+        this.pot = new ArrayList<>(1);
         this.log = new Log();
     }
 
@@ -192,11 +194,15 @@ public class Table implements Entity {
         this.maxBuyIn = maxBuyIn;
     }
 
-    public Pot getPot() {
+    public List<Pot> getPots() {
         return pot;
     }
 
-    public void setPot(Pot pot) {
+    public Pot getPotByIndex(int index) {
+        return this.pot.get(index);
+    }
+
+    public void setPot(List<Pot> pot) {
         this.pot = pot;
     }
 
