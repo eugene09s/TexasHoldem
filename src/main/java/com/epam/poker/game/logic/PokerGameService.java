@@ -20,6 +20,7 @@ public class PokerGameService {
     private static final int ZERO_MONEY = 0;
     private static final byte DO_NOT_CHANGE_DEALER = 1;
     private static final String SMALL_BLIND = "smallBlind";
+    private static final String BIG_BLIND = "bigBlind";
     private static PotService potService = PotService.getInstance();
     private static NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
 
@@ -28,6 +29,85 @@ public class PokerGameService {
 
     public static PokerGameService getInstacne() {
         return instance;
+    }
+
+    public void gamblerChecked(Table table, Gambler gambler) {
+        Log log = Log.builder()
+                .setMessage(gambler.getName() + " checked")
+                .setAction("check")
+                .setSeat(String.valueOf(table.getActiveSeat()))
+                .setNotification("Check")
+                .createLog();
+        table.setLog(log);
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
+        if (table.getLastGamblerToAct() == String.valueOf(table.getActiveSeat())) {
+            endPhase(table);
+        } else {
+            actionToNextGambler(table);
+        }
+    }
+
+    public void gamblerPostedSmallBlind(Table table, Gambler gambler) {
+        BigDecimal bet = gambler.getMoneyInPlay().compareTo(table.getSmallBlind()) >= 0 ?
+                table.getSmallBlind() : gambler.getMoneyInPlay();
+        table.getSeats()[table.getActiveSeat()].setBet(bet);
+        Log log = Log.builder()
+                .setMessage(gambler.getName() + " posted the small blind")
+                .setAction("bet")
+                .setSeat(String.valueOf(table.getActiveSeat()))
+                .setNotification("Posted blind")
+                .createLog();
+        table.setLog(log);
+        BigDecimal biggestBet = table.getBiggestBet().compareTo(bet) < 0 ? bet : table.getBiggestBet();
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
+        initializeBigBlind(table);
+    }
+
+    public void gamblerCalled(Table table, Gambler gambler) {
+        BigDecimal calledAmount = table.getBiggestBet().min(gambler.getBet());
+        gambler.setBet(calledAmount);
+        Log log = Log.builder()
+                .setMessage(gambler.getName() + " called")
+                .setAction("call")
+                .setSeat(String.valueOf(table.getActiveSeat()))
+                .setNotification("Call")
+                .createLog();
+        table.setLog(log);
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
+        if (table.getLastGamblerToAct() == table.getActiveSeat().toString()
+                || otherGamblersAreAllIn(table)) {
+            endPhase(table);
+        } else {
+            actionToNextGambler(table);
+        }
+    }
+
+    public void gamblerBetted(Table table, Gambler gambler, BigDecimal amount) {
+        gambler.setBet(amount);
+        BigDecimal biggestBet = table.getBiggestBet().compareTo(gambler.getBet()) < 0
+                ? gambler.getBet() : table.getBiggestBet();
+        table.setBiggestBet(biggestBet);
+        Log log = Log.builder()
+                .setMessage(gambler.getName() + " betted " + amount)
+                .setAction("bet")
+                .setSeat(String.valueOf(table.getActiveSeat()))
+                .setNotification("Bet " + amount)
+                .createLog();
+        table.setLog(log);
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
+        int previousGamblerSeat = findPreviousGambler(table, String.valueOf(
+                table.getActiveSeat()), true, false);
+        if (previousGamblerSeat == table.getActiveSeat()) {
+            endPhase(table);
+        } else {
+            table.setLastGamblerToAct(String.valueOf(previousGamblerSeat));
+            actionToNextGambler(table);
+        }
+    }
+
+    private void initializeBigBlind(Table table) {
+        table.setPhaseGame(BIG_BLIND);
+        actionToNextGambler(table);
     }
 
     public void playerSatIn(Table table, Gambler gambler) {

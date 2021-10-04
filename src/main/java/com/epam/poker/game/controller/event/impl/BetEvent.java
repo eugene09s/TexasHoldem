@@ -7,6 +7,5 @@ public class BetEvent implements EventSocket {
     @Override
     public void execute(String jsonLine, Gambler gambler) {
 
-
     }
 }
