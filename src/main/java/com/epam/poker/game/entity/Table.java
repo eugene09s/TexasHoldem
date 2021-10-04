@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table implements Entity {
-    private PokerGameService pokerGameService = PokerGameService.getInstacne();
     private int id;
     private String name;
     private int seatsCount;
@@ -23,7 +22,6 @@ public class Table implements Entity {
     private boolean headsUp;
     private Gambler[] seats;
     private Deck deck;
-//    private eventEmitter;
     private BigDecimal minBuyIn;
     private BigDecimal maxBuyIn;
     private List<Pot> pot;
@@ -48,24 +46,19 @@ public class Table implements Entity {
         this.seatsPlace = new String[seatsCount];
         this.privateTable = privateTable;
         this.seats = new Gambler[seatsCount];
-//        initSeatsTable(seatsCount);
         this.deck = new Deck();
         this.board = new String[]{"", "", "", "", ""};
         this.pot = new ArrayList<>(1);
         this.log = new Log();
     }
 
-//    private void initSeatsTable(int seatsCount) {
-//        for (Gambler gambler : this.se)
-//    }
-
     public void addGamblerOnTable(Gambler gambler, int numberSeat, BigDecimal bet) {
         this.seats[numberSeat] = gambler;
         gambler.setSittingOnTable(this.id);
         gambler.setMoneyInPlay(bet);
         gambler.setNumberSeatOnTable(numberSeat);
-//        gambler.setMoneyInPlay(gambler.getBalance());
         this.gamblersSeatedCount++;
+        PokerGameService pokerGameService = PokerGameService.getInstacne();
         pokerGameService.playerSatIn(this, gambler);
     }
 
@@ -160,15 +153,6 @@ public class Table implements Entity {
     public void setSeats(Gambler[] seats) {
         this.seats = seats;
     }
-
-//    public void deleteGamblerToSeats(Gambler gambler) {
-//        int seatNumber = gambler.getNumberSeatOnTable();
-//        if (seatNumber > -1) {
-//            this.seatsPlace[seatNumber] = null;
-//            gambler.setNumberSeatOnTable(-1);
-//        }
-//        this.seats.remove(gambler);
-//    }
 
     public Deck getDeck() {
         return deck;

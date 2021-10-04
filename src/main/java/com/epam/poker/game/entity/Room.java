@@ -3,7 +3,6 @@ package com.epam.poker.game.entity;
 import com.epam.poker.game.logic.PokerGameService;
 import com.epam.poker.model.entity.Entity;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.websocket.EncodeException;
 import jakarta.websocket.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
 
 public class Room implements Entity {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -113,34 +111,5 @@ public class Room implements Entity {
     public Room setTable(Table table) {
         this.table = table;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Room room = (Room) o;
-
-        if (gamblers != null ? !gamblers.equals(room.gamblers) : room.gamblers != null) return false;
-        if (titleRoom != null ? !titleRoom.equals(room.titleRoom) : room.titleRoom != null) return false;
-        return table != null ? table.equals(room.table) : room.table == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = gamblers != null ? gamblers.hashCode() : 0;
-        result = 31 * result + (titleRoom != null ? titleRoom.hashCode() : 0);
-        result = 31 * result + (table != null ? table.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", Room.class.getSimpleName() + "[", "]")
-                .add("gamblers=" + gamblers)
-                .add("titleRoom='" + titleRoom + "'")
-                .add("table=" + table)
-                .toString();
     }
 }

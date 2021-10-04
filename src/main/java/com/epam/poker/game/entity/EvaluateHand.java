@@ -1,12 +1,15 @@
 package com.epam.poker.game.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EvaluateHand {
     private String rank;
     private String name;
     private int rating;
-    private String[] cards;
+    private List<String> cards;
 
-    public EvaluateHand(String rank, String name, int rating, String[] cards) {
+    public EvaluateHand(String rank, String name, int rating, List<String> cards) {
         this.rank = rank;
         this.name = name;
         this.rating = rating;
@@ -16,6 +19,7 @@ public class EvaluateHand {
     public EvaluateHand() {
         this.rank = "";
         this.name = "";
+        this.cards = new ArrayList<>();
     }
 
     public String getRank() {
@@ -45,11 +49,11 @@ public class EvaluateHand {
         return this;
     }
 
-    public String[] getCards() {
+    public List<String> getCards() {
         return cards;
     }
 
-    public EvaluateHand setCards(String[] cards) {
+    public EvaluateHand setCards(List<String> cards) {
         this.cards = cards;
         return this;
     }

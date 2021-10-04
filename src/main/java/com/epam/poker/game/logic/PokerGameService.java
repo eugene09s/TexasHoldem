@@ -1,13 +1,15 @@
 package com.epam.poker.game.logic;
 
-import com.epam.poker.game.entity.*;
+import com.epam.poker.game.entity.Deck;
+import com.epam.poker.game.entity.Gambler;
+import com.epam.poker.game.entity.Log;
+import com.epam.poker.game.entity.Table;
 import com.epam.poker.util.constant.Attribute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PokerGameService {
@@ -265,15 +267,17 @@ public class PokerGameService {
     }
 
     private void showdown(Table table) {
-//        table.getPots().addTableBets(Arrays.stream(table.getSeats()).toList());
         potService.addTableBets(table);
         int currentGambler = findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false);
         int bestHandRating = 0;
         for (int i = 0; i < table.getGamblersInHandCount(); ++i) {
             EvaluateHandService evaluateHandService = new EvaluateHandService();
             evaluateHandService.execute(table, table.getSeats()[i]);
-
-                //todo evaluate
+            if (table.getSeats()[currentGambler].getEvaluateHand().getRating() > bestHandRating) {
+                table.getSeats()[currentGambler].setPublicCards(
+                        table.getSeats()[currentGambler].getPrivateCards());
+            }
+            currentGambler = findNextGambler(table, String.valueOf(currentGambler), true, false);
         }
         List<String> message = potService.destributeToWinners(table, currentGambler);
         for (String msg : message) {
@@ -286,7 +290,6 @@ public class PokerGameService {
             table.setLog(log);
             notifierTableDataService.notifyALLGamblersOfRoom(table);
         }
-
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
