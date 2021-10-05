@@ -11,7 +11,9 @@ async function uploadFile() {
         alert("Error Upload!")
     }
     // await sessionStorage.removeItem('photo')
-    location.reload()
+    setTimeout(function () {
+        location.reload();
+    },1000);
 }
 
 const input = document.getElementById("ajaxfile");
