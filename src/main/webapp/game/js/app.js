@@ -68,7 +68,7 @@ var app = angular.module( 'app', ['ngRoute'] ).config( function( $routeProvider,
 		controller: 'LobbyController', 
 	});
 
-	$routeProvider.otherwise( { redirectTo: '/' } );
+	$routeProvider.otherwise({redirectTo: "/"});
 
 	$locationProvider.html5Mode(true).hashPrefix('!');
 });

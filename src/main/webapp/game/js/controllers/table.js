@@ -305,9 +305,9 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	});
 
 	// When the player is dealt cards
-	socket.on( 'dealingCards', function( cards ) {
-		$scope.myCards[0] = 'card-'+cards[0];
-		$scope.myCards[1] = 'card-'+cards[1];
+	socket.on( 'dealingCards', function( data ) {
+		$scope.myCards[0] = 'card-'+data.firstCard;
+		$scope.myCards[1] = 'card-'+data.secondCard;
 		$scope.$digest();
 	});
 
