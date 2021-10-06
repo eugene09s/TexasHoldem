@@ -21,6 +21,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+import static com.epam.poker.util.constant.Attribute.DATA;
+
 public class SitOnTheTableEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -56,6 +58,8 @@ public class SitOnTheTableEvent implements EventSocket {
         JsonNode data;
         ObjectNode objectNode = mapper.createObjectNode();
         try {
+            ObjectNode response = mapper.createObjectNode();
+            response.putPOJO(Attribute.EVENT, json.get(Attribute.EVENT));
             BigDecimal balanceGambler = user.getBalance();
             gambler.setBalance(balanceGambler);
             data = json.get(Attribute.DATA);
@@ -66,34 +70,39 @@ public class SitOnTheTableEvent implements EventSocket {
                 if (bet.compareTo(balanceGambler) >= 0) {
                     objectNode.put(Attribute.SUCCESS, false);
                     objectNode.put(Attribute.ERROR, MESSAGE_ERROR_CHIPS);
+                    sendEvent(gambler, response, objectNode);
                 } else if (!isValidMinMaxBetOnTable(tableId, bet)) {
                     objectNode.put(Attribute.SUCCESS, false);
                     objectNode.put(Attribute.ERROR, MESSAGE_ERROR_COMPARE_CHIPS_MAX_MIN_TABLE);
+                    sendEvent(gambler, response, objectNode);
                 } else {
                     objectNode.put(Attribute.SUCCESS, true);
+                    sendEvent(gambler, response, objectNode);
                     lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId))
                             .addGamblerOnTable(gambler, numberSeat, bet);
                 }
             } else {
                 objectNode.put(Attribute.SUCCESS, false);
-            }
-            ObjectNode response = mapper.createObjectNode();
-            response.putPOJO(Attribute.EVENT, json.get(Attribute.EVENT));
-            response.putPOJO(Attribute.DATA, objectNode);
-            try {
-                gambler.getSession().getBasicRemote().sendText(String.valueOf(response));
-            } catch (IOException e) {
-                e.printStackTrace();
+                sendEvent(gambler, response, objectNode);
             }
         } catch (NullPointerException | NumberFormatException e) {
             LOGGER.error("JSON line don't exist data. " + e);
         }
     }
 
+    private void sendEvent(Gambler gambler, ObjectNode response, ObjectNode objectNode) {
+        response.putPOJO(DATA, objectNode);
+        try {
+            gambler.getSession().getBasicRemote().sendText(String.valueOf(response));
+        } catch (IOException e) {
+            LOGGER.error("Send JSON: " + e);
+        }
+    }
+
     private boolean isValidMinMaxBetOnTable(long tableId, BigDecimal chips)  {
         Table table = lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId));
         if (table != null && chips.compareTo(table.getMaxBuyIn()) <= 0
-            && chips.compareTo(table.getMinBuyIn()) >= 0) {
+                && chips.compareTo(table.getMinBuyIn()) >= 0) {
             return true;
         }
         return false;

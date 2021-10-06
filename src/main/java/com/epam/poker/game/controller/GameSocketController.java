@@ -11,6 +11,7 @@ import com.epam.poker.util.jwt.JwtProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidNullException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import jakarta.websocket.*;
@@ -88,7 +89,11 @@ public class GameSocketController {
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        LOGGER.error("Websocket error with user: " + gambler.getName() + " " + throwable);
+        String nameGambler = "not authorization";
+        if (gambler != null) {
+            nameGambler = gambler.getName();
+        }
+        LOGGER.error("Websocket error with user: " + nameGambler + ". Error: " + throwable);
     }
 
     private void disconnectGambler() {

@@ -7,7 +7,15 @@ public enum EventManagerGame {
     REGISTER_TO_LOBBY(RegisterToLobbyEvent.getInstance(), "register"),
     LEAVE_FROM_ROOM(LeaveFromRoomEvent.getInstance(), "leaveRoom"),
     SEAT_ON_THE_TABLE(SitOnTheTableEvent.getInstance(),"sitOnTheTable"),
-    CHAT_SEND_MESSAGE(ChatSendMessageEvent.getInstance(), "sendMessage");
+    CHAT_SEND_MESSAGE(ChatSendMessageEvent.getInstance(), "sendMessage"),
+    POST_BLIND(PostBlindPartOfGameEvent.getInstance(), "postBlind"),
+    SIT_IN(SitInEvent.getInstance(), "sitIn"),
+    CALL(CallEvent.getInstance(), "call"),
+    CHECK(CheckEvent.getInstance(), "check"),
+    FOLD(FoldPartOfGameEvent.getInstance(), "fold"),
+    RAISE(RaisePartOfGameEvent.getInstance(), "raise"),
+    LEAVE_TABLE(LeaveTableEvent.getInstance(), "leaveTable"),
+    BET(BetEvent.getInstance(), "bet");
 
     private final EventSocket event;
     private final String eventName;

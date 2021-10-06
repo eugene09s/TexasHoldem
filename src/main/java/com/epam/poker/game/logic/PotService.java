@@ -3,7 +3,8 @@ package com.epam.poker.game.logic;
 import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Pot;
 import com.epam.poker.game.entity.Table;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class PotService {
     private static final PotService instance = new PotService();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private PotService() {
     }
@@ -56,8 +58,9 @@ public class PotService {
             // and recursively add the bets that remained, to the new pot
             for (Gambler gambler : gamblers) {
                 if (gambler != null && gambler.getBet().compareTo(BigDecimal.ZERO) > 0) {
+                    LOGGER.debug(currentPot + "  SmallBet: " + smallestBet);
                     table.getPotByIndex(currentPot).plusAmount(smallestBet);
-                    gambler.setBet(gambler.getBet().min(smallestBet));
+                    gambler.setBet(gambler.getBet().subtract(smallestBet));
                     if (!table.getPots().get(currentPot).getContributors()
                             .contains(gambler.getNumberSeatOnTable())) {
                         table.getPots().get(currentPot).getContributors()
@@ -75,7 +78,7 @@ public class PotService {
         for (Pot pot : pots) {
             int placeInList = pot.getContributors().indexOf(gambler.getNumberSeatOnTable());
             if (placeInList >= 0) {
-                pot.getContributors().remove(placeInList);//perhapse except mark
+                pot.getContributors().remove(placeInList);
             }
         }
     }
@@ -83,7 +86,7 @@ public class PotService {
     public void addGamblersBets(Table table, Gambler gambler) {
         List<Pot> pots = table.getPots();
         int currentPot = pots.size() - 1;
-        pots.get(currentPot).plusAmount(gambler.getBet());
+        pots.get(currentPot).plusAmount(gambler.getBet());//fixme
         gambler.setBet(BigDecimal.ZERO);
         if (!pots.get(currentPot).getContributors().contains(gambler.getNumberSeatOnTable())) {
             pots.get(currentPot).getContributors().add(gambler.getNumberSeatOnTable());
@@ -130,6 +133,6 @@ public class PotService {
     private void reset(Table table) {
         List<Pot> pots = new ArrayList<>(1);
         pots.add(new Pot());
-        table.setPot(pots);
+        table.setPots(pots);
     }
 }

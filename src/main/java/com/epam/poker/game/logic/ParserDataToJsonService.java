@@ -28,7 +28,7 @@ public class ParserDataToJsonService {
                 .put(ID, table.getId())
                 .put(NAME, table.getName())
                 .put(SEATS_COUNT, table.getSeatsCount())
-                .put(PLAYER_SEATED_COUNT, table.getGamblersSeatedCount())
+                .put(PLAYER_SEATED_COUNT, table.getGamblersSittingInCount())
                 .put(BIG_BLIND, table.getBigBlind())
                 .put(SMALL_BLIND, table.getSmallBlind())
                 .put(MIN_BUY_IN, table.getMinBuyIn())
@@ -81,7 +81,7 @@ public class ParserDataToJsonService {
         jsonNodes.put(ID, table.getId())
                 .put(NAME, table.getName())
                 .put(SEATS_COUNT, table.getSeatsCount())
-                .put(PLAYER_SEATED_COUNT, table.getGamblersSeatedCount())
+                .put(PLAYER_SEATED_COUNT, table.getGamblersSittingInCount())
                 .put(BIG_BLIND, table.getBigBlind())
                 .put(SMALL_BLIND, table.getSmallBlind());
         return String.valueOf(jsonNodes);
@@ -91,7 +91,9 @@ public class ParserDataToJsonService {
         ArrayNode arrayNode = mapper.createArrayNode();
         if (lines != null) {
             for (String line : lines) {
-                arrayNode.add(line);
+                if (line != null) {
+                    arrayNode.add(line);
+                }
             }
         }
         return arrayNode;

@@ -13,21 +13,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.List;
 
 import static com.epam.poker.util.constant.Attribute.*;
 
-public class CheckEvent implements EventSocket {
+public class LeaveTableEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static Lobby lobby = Lobby.getInstance();
-    private static final CheckEvent instance = new CheckEvent();
+    private static final LeaveTableEvent instance = new LeaveTableEvent();
     private static PokerGameService pokerGameService = PokerGameService.getInstacne();
-    private static final List<String> PARTS_OF_GAMES = List.of(PRE_FLOP_PART_OF_GAME,
-            FLOP_PART_OF_GAME, TURN_PART_OF_GAME, RIVER_PART_OF_GAME);
 
-    private CheckEvent() {
+    private LeaveTableEvent() {
     }
 
     @Override
@@ -41,19 +37,13 @@ public class CheckEvent implements EventSocket {
         ObjectNode response = mapper.createObjectNode();
         response.putPOJO(EVENT, json.get(EVENT));
         ObjectNode objectNode = mapper.createObjectNode();
-        if (gambler.getSittingOnTable() > -1
+        if (gambler.getNumberSeatOnTable() > -1
                 && lobby.findTableByNameRoom(gambler.getTitleRoom()) != null) {
+            objectNode.put(SUCCESS, true);
+            objectNode.put(TOTAL_CHIPS, gambler.getBalance());
             Table table = lobby.findTableByNameRoom(gambler.getTitleRoom());
-            int activeSeat = table.getActiveSeat();
-            if (table.getSeats()[activeSeat] == gambler
-                    && table.getBiggestBet().equals(BigDecimal.ZERO)
-                    || (table.getPhaseGame().equals(PRE_FLOP_PART_OF_GAME)
-                    && table.getBiggestBet().equals(gambler.getBet()))
-                    && PARTS_OF_GAMES.contains(table.getPhaseGame())) {
-                objectNode.put(SUCCESS, true);
-                sendEvent(gambler, response, objectNode);
-                pokerGameService.gamblerChecked(table, gambler);
-            }
+            pokerGameService.gamblerLeft(table, gambler);
+            sendEvent(gambler, response, objectNode);
         }
     }
 
@@ -66,7 +56,7 @@ public class CheckEvent implements EventSocket {
         }
     }
 
-    public static CheckEvent getInstance() {
+    public static LeaveTableEvent getInstance() {
         return instance;
     }
 }

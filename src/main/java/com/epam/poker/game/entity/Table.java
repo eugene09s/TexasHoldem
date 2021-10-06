@@ -11,20 +11,19 @@ public class Table implements Entity {
     private int id;
     private String name;
     private int seatsCount;
-    private int gamblersSeatedCount;
     private BigDecimal bigBlind;
     private BigDecimal smallBlind;
     private boolean privateTable;
     private int gamblersSittingInCount;
     private int gamblersInHandCount;
-    private String lastGamblerToAct;
+    private int lastGamblerToAct;
     private boolean gameIsOn;
     private boolean headsUp;
     private Gambler[] seats;
     private Deck deck;
     private BigDecimal minBuyIn;
     private BigDecimal maxBuyIn;
-    private List<Pot> pot;
+    private List<Pot> pots;
     private BigDecimal biggestBet;
     private Integer dealerSeat;
     private Integer activeSeat;
@@ -48,23 +47,25 @@ public class Table implements Entity {
         this.seats = new Gambler[seatsCount];
         this.deck = new Deck();
         this.board = new String[]{"", "", "", "", ""};
-        this.pot = new ArrayList<>(1);
+        this.pots = new ArrayList<>(1);
+        this.pots.add(new Pot());
         this.log = new Log();
     }
 
     public void addGamblerOnTable(Gambler gambler, int numberSeat, BigDecimal bet) {
         this.seats[numberSeat] = gambler;
         gambler.setSittingOnTable(this.id);
+        BigDecimal balanceGambler = gambler.getBalance().min(bet);
+        gambler.setBalance(balanceGambler);
         gambler.setMoneyInPlay(bet);
         gambler.setNumberSeatOnTable(numberSeat);
-        this.gamblersSeatedCount++;
         PokerGameService pokerGameService = PokerGameService.getInstacne();
-        pokerGameService.playerSatIn(this, gambler);
+        pokerGameService.gamblerSatIn(this, gambler);
     }
 
     public void deleteGamblerOfSeatByEntity(Gambler gambler) {
         for (int i = 0; i < this.seats.length; ++i) {
-            if (this.seats[i].equals(gambler)) {
+            if (gambler != null && this.seats[i] == gambler) {
                 this.seats[i] = null;
             }
         }
@@ -84,10 +85,6 @@ public class Table implements Entity {
 
     public void setSeatsCount(int seatsCount) {
         this.seatsCount = seatsCount;
-    }
-
-    public void setGamblersSeatedCount(int gamblersSeatedCount) {
-        this.gamblersSeatedCount = gamblersSeatedCount;
     }
 
     public void setBigBlind(BigDecimal bigBlind) {
@@ -122,11 +119,11 @@ public class Table implements Entity {
         this.gamblersInHandCount = gamblersInHandCount;
     }
 
-    public String getLastGamblerToAct() {
+    public int getLastGamblerToAct() {
         return lastGamblerToAct;
     }
 
-    public void setLastGamblerToAct(String lastGamblerToAct) {
+    public void setLastGamblerToAct(int lastGamblerToAct) {
         this.lastGamblerToAct = lastGamblerToAct;
     }
 
@@ -179,15 +176,15 @@ public class Table implements Entity {
     }
 
     public List<Pot> getPots() {
-        return pot;
+        return pots;
     }
 
     public Pot getPotByIndex(int index) {
-        return this.pot.get(index);
+        return this.pots.get(index);
     }
 
-    public void setPot(List<Pot> pot) {
-        this.pot = pot;
+    public void setPots(List<Pot> pots) {
+        this.pots = pots;
     }
 
     public BigDecimal getBiggestBet() {
@@ -256,10 +253,6 @@ public class Table implements Entity {
 
     public int getSeatsCount() {
         return seatsCount;
-    }
-
-    public int getGamblersSeatedCount() {
-        return gamblersSeatedCount;
     }
 
     public BigDecimal getBigBlind() {

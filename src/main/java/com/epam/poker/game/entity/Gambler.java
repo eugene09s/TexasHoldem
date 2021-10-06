@@ -31,7 +31,7 @@ public class Gambler {
         this.inHand = inHand;
         this.hasCards = hasCards;
         this.publicCards = publicCards;
-        this.bet = bet;
+        this.bet = BigDecimal.ZERO;
         this.tableId = tableId;
         this.session = session;
         this.balance = chips;
@@ -75,6 +75,17 @@ public class Gambler {
     public Gambler setSittingOnTable(int sittingOnTable) {
         this.sittingOnTable = sittingOnTable;
         return this;
+    }
+
+    public void bet(BigDecimal amount) {
+        if (amount.compareTo(this.moneyInPlay) > 0) {
+            amount = this.moneyInPlay;
+        }
+        this.moneyInPlay = this.moneyInPlay.subtract(amount);
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            amount  = amount.multiply(new BigDecimal(-1));
+        }
+        this.bet = this.bet.add(amount);
     }
 
     public int getNumberSeatOnTable() {

@@ -48,10 +48,10 @@ public class NotifierTableDataService {
         table.setLog(new Log());
     }
 
-    public void notifyGambler(String eventName, Gambler gambler) {
+    public void notifyGambler(String eventName, Gambler gambler, ObjectNode data) {
         ObjectNode response = mapper.createObjectNode();
         response.put(Attribute.EVENT, eventName);
-        response.put(Attribute.DATA, "");
+        response.putPOJO(Attribute.DATA, data);
         try {
             gambler.getSession().getBasicRemote().sendText(String.valueOf(response));
         } catch (IOException e) {
