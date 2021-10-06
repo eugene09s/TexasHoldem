@@ -88,6 +88,17 @@ public class Gambler {
         this.bet = this.bet.add(amount);
     }
 
+    public void raise(BigDecimal amount) {
+        if (this.moneyInPlay.compareTo(amount) < 0) {
+            amount = this.moneyInPlay;
+        }
+        this.moneyInPlay = this.moneyInPlay.subtract(amount);
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            amount  = amount.multiply(new BigDecimal(-1));
+        }
+        this.bet = this.bet.add(amount);
+    }
+
     public int getNumberSeatOnTable() {
         return numberSeatOnTable;
     }

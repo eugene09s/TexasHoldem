@@ -13,7 +13,7 @@ public enum EventManagerGame {
     CALL(CallEvent.getInstance(), "call"),
     CHECK(CheckEvent.getInstance(), "check"),
     FOLD(FoldPartOfGameEvent.getInstance(), "fold"),
-    RAISE(RaisePartOfGameEvent.getInstance(), "raise"),
+    RAISE(RaiseEvent.getInstance(), "raise"),
     LEAVE_TABLE(LeaveTableEvent.getInstance(), "leaveTable"),
     BET(BetEvent.getInstance(), "bet");
 

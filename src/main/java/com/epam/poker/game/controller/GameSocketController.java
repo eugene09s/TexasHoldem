@@ -97,13 +97,15 @@ public class GameSocketController {
     }
 
     private void disconnectGambler() {
-        String roomName = gambler.getTitleRoom();
-        if (roomName != null) {
+        if (gambler != null) {
+            String roomName = gambler.getTitleRoom();
+            if (roomName != null) {
 //            lobby.findRoom(roomName).getTable().deleteGamblerToSeats(gambler);
-            lobby.findRoom(roomName).deleteGambler(gambler);
+                lobby.findRoom(roomName).deleteGambler(gambler);
+            }
+            lobby.deleteGambler(this.gambler.getName());
+            this.gambler = null;
         }
-        lobby.deleteGambler(this.gambler.getName());
-        this.gambler = null;
     }
 
 

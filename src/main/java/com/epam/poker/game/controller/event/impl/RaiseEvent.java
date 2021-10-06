@@ -5,12 +5,10 @@ import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.game.entity.Table;
 import com.epam.poker.game.logic.PokerGameService;
-import com.epam.poker.util.constant.Attribute;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import jakarta.validation.constraints.NotNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,16 +19,16 @@ import java.util.List;
 import static com.epam.poker.util.constant.Attribute.*;
 import static com.epam.poker.util.constant.Attribute.RIVER_PART_OF_GAME;
 
-public class BetEvent implements EventSocket {
+public class RaiseEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static Lobby lobby = Lobby.getInstance();
-    private static final BetEvent instance = new BetEvent();
     private static PokerGameService pokerGameService = PokerGameService.getInstacne();
     private static final List<String> PARTS_OF_GAMES = List.of(PRE_FLOP_PART_OF_GAME,
             FLOP_PART_OF_GAME, TURN_PART_OF_GAME, RIVER_PART_OF_GAME);
+    private static final RaiseEvent instance = new RaiseEvent();
 
-    private BetEvent() {
+    private RaiseEvent() {
     }
 
     @Override
@@ -41,14 +39,14 @@ public class BetEvent implements EventSocket {
         } catch (JsonProcessingException e) {
             LOGGER.error("Parse json: " + e);
         }
-        BigDecimal bet = BigDecimal.ZERO;
+        BigDecimal amountRaise = BigDecimal.ZERO;
         try {
-            String  lineBet = json.get(DATA).asText();
-            bet = new BigDecimal(lineBet);
+            String lineAmount = json.get(DATA).asText();
+            amountRaise = new BigDecimal(lineAmount);
         } catch (NullPointerException e) {
             LOGGER.warn("Bet in the JSON not found. Error: " + e);
         }
-        if (bet.compareTo(BigDecimal.ZERO) > 0) {
+        if (amountRaise.compareTo(BigDecimal.ZERO) > 0) {
             ObjectNode response = mapper.createObjectNode();
             response.putPOJO(EVENT, json.get(EVENT));
             ObjectNode objectNode = mapper.createObjectNode();
@@ -58,10 +56,13 @@ public class BetEvent implements EventSocket {
                 int activeSeat = table.getActiveSeat();
                 if (table.getSeats()[activeSeat] == gambler
                         && PARTS_OF_GAMES.contains(table.getPhaseGame())
-                        && bet.compareTo(gambler.getMoneyInPlay()) <= 0) {
-                    objectNode.put(SUCCESS, true);
-                    sendEvent(gambler, response, objectNode);
-                    pokerGameService.gamblerBetted(table, gambler, bet);
+                        && table.getBiggestBet().compareTo(BigDecimal.ZERO) > 0) {//fixme perhapse should add check AllIn other gamblers
+                    amountRaise = amountRaise.subtract(gambler.getBet());
+                    if (amountRaise.compareTo(gambler.getMoneyInPlay()) <= 0) {
+                        objectNode.put(SUCCESS, true);
+                        sendEvent(gambler, response, objectNode);
+                        pokerGameService.gamblerRaise(table, gambler, amountRaise);
+                    }
                 }
             }
         }
@@ -76,7 +77,7 @@ public class BetEvent implements EventSocket {
         }
     }
 
-    public static BetEvent getInstance() {
+    public static RaiseEvent getInstance() {
         return instance;
     }
 }

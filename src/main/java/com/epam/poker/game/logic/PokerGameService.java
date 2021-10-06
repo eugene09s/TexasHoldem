@@ -160,6 +160,31 @@ public class PokerGameService {
         }
     }
 
+    public void gamblerRaise(Table table, Gambler gambler, BigDecimal amount) {
+        gambler.raise(amount);
+        BigDecimal oldBiggestBet = table.getBiggestBet();
+        BigDecimal biggestBet = table.getBiggestBet().compareTo(gambler.getBet()) < 0
+                ? gambler.getBet() : table.getBiggestBet();
+        table.setBiggestBet(biggestBet);
+        BigDecimal raiseAmount = table.getBiggestBet().subtract(oldBiggestBet);
+        Log log = Log.builder()
+                .setMessage(gambler.getName() + " raise to " + table.getBiggestBet())
+                .setAction("raise")
+                .setSeat(String.valueOf(table.getActiveSeat()))
+                .setNotification("Raise  " + raiseAmount)
+                .createLog();
+        table.setLog(log);
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
+        int previousGamblerSeat = findPreviousGambler(table,
+                table.getActiveSeat(), true, false);
+        if (previousGamblerSeat == table.getActiveSeat()) {
+            endPhase(table);
+        } else {
+            table.setLastGamblerToAct(previousGamblerSeat);
+            actionToNextGambler(table);
+        }
+    }
+
     public void initializePreflop(Table table) {
         table.setPhaseGame(Attribute.PRE_FLOP_PART_OF_GAME);
         int currentGambler = table.getActiveSeat();
@@ -312,7 +337,10 @@ public class PokerGameService {
             case "preflop" -> {
                 table.setPhaseGame("flop");
                 Deck deck = table.getDeck();
-                table.setBoard(deck.pullSomeCardsFromDeck(3).toArray(new String[0]));
+                String[] cards = deck.pullSomeCardsFromDeck(3).toArray(new String[0]);
+                table.getBoard()[0] = cards[0];
+                table.getBoard()[1] = cards[1];
+                table.getBoard()[2] = cards[2];
             }
             case "flop" -> {
                 table.setPhaseGame("turn");
