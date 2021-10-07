@@ -111,6 +111,8 @@ public class Gambler {
     public void leaveTable() {
         if (this.sittingOnTable > -1) {
             sitOut();
+            this.balance = this.balance.add(this.moneyInPlay);
+            this.moneyInPlay = BigDecimal.ZERO;
             this.sittingOnTable = -1;
             this.numberSeatOnTable = -1;
         }

@@ -60,7 +60,8 @@ public class ParserDataToJsonService {
                 .put(IN_HAND, gambler.isInHand())
                 .put(HAS_CARDS, gambler.isHasCards())
                 .putPOJO(CARDS, parseArray(gambler.getPublicCards()))
-                .put(BET, gambler.getBet());
+                .put(BET, gambler.getBet())
+                .put(IMG, gambler.getImg());
         return jsonNodes;
     }
 

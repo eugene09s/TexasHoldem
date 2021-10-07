@@ -4,6 +4,7 @@ import com.epam.poker.game.controller.event.EventSocket;
 import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.game.entity.Table;
+import com.epam.poker.game.logic.EventHandlerService;
 import com.epam.poker.game.logic.PokerGameService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,7 +24,7 @@ public class PostBlindPartOfGameEvent implements EventSocket {
     private static final ObjectMapper mapper = new ObjectMapper();
     private static Lobby lobby = Lobby.getInstance();
     private static final PostBlindPartOfGameEvent instance = new PostBlindPartOfGameEvent();
-    private static PokerGameService pokerGameService = PokerGameService.getInstacne();
+    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
     private static final List<String> PARTS_OF_GAMES = List.of(PRE_FLOP_PART_OF_GAME,
             FLOP_PART_OF_GAME, TURN_PART_OF_GAME, RIVER_PART_OF_GAME);
     private PostBlindPartOfGameEvent() {
@@ -52,12 +53,12 @@ public class PostBlindPartOfGameEvent implements EventSocket {
                     objectNode.put(SUCCESS, true);
                     sendEvent(gambler, response, objectNode);
                     if (table.getPhaseGame().equals(SMALL_BLIND)) {
-                        pokerGameService.gamblerPostedSmallBlind(table, gambler);
+                        eventHandlerService.gamblerPostedSmallBlind(table, gambler);
                     } else {
-                        pokerGameService.gamblerPostedBigBlind(table, gambler);
+                        eventHandlerService.gamblerPostedBigBlind(table, gambler);
                     }
                 } else {
-                    pokerGameService.gamblerSatOut(table, gambler, false);
+                    eventHandlerService.gamblerSatOut(table, gambler, false);
                     objectNode.put(SUCCESS, true);
                     sendEvent(gambler, response, objectNode);
                 }

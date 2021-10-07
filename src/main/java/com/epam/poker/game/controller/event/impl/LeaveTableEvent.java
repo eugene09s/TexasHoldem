@@ -4,6 +4,7 @@ import com.epam.poker.game.controller.event.EventSocket;
 import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.game.entity.Table;
+import com.epam.poker.game.logic.EventHandlerService;
 import com.epam.poker.game.logic.PokerGameService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,7 +22,7 @@ public class LeaveTableEvent implements EventSocket {
     private static final ObjectMapper mapper = new ObjectMapper();
     private static Lobby lobby = Lobby.getInstance();
     private static final LeaveTableEvent instance = new LeaveTableEvent();
-    private static PokerGameService pokerGameService = PokerGameService.getInstacne();
+    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
 
     private LeaveTableEvent() {
     }
@@ -39,11 +40,13 @@ public class LeaveTableEvent implements EventSocket {
         ObjectNode objectNode = mapper.createObjectNode();
         if (gambler.getNumberSeatOnTable() > -1
                 && lobby.findTableByNameRoom(gambler.getTitleRoom()) != null) {
-            objectNode.put(SUCCESS, true);
-            objectNode.put(TOTAL_CHIPS, gambler.getBalance());
             Table table = lobby.findTableByNameRoom(gambler.getTitleRoom());
-            pokerGameService.gamblerLeft(table, gambler);
-            sendEvent(gambler, response, objectNode);
+            if (table.getSeats()[gambler.getNumberSeatOnTable()] == gambler) {
+                objectNode.put(SUCCESS, true);
+                objectNode.put(TOTAL_CHIPS, gambler.getBalance());
+                eventHandlerService.gamblerLeft(table, gambler);
+                sendEvent(gambler, response, objectNode);
+            }
         }
     }
 

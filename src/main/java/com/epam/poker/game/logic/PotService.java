@@ -86,7 +86,7 @@ public class PotService {
     public void addGamblersBets(Table table, Gambler gambler) {
         List<Pot> pots = table.getPots();
         int currentPot = pots.size() - 1;
-        pots.get(currentPot).plusAmount(gambler.getBet());//fixme
+        pots.get(currentPot).plusAmount(gambler.getBet());
         gambler.setBet(BigDecimal.ZERO);
         if (!pots.get(currentPot).getContributors().contains(gambler.getNumberSeatOnTable())) {
             pots.get(currentPot).getContributors().add(gambler.getNumberSeatOnTable());
@@ -99,22 +99,42 @@ public class PotService {
         Gambler[] gamblers = table.getSeats();
         List<String> messages = new ArrayList<>();
         for (int i = potsCount - 1; i >= 0; --i) {
-            List<Integer> winners = new ArrayList<>();
-            int bestRating;
+            List<Gambler> winners = new ArrayList<>();
+            int bestRating = 0;
             int gamblersCount = gamblers.length;
-            for (int j = 0; j < gamblersCount; j++) {
-                if (gamblers[j] != null && gamblers[j].isInHand() && pots.get(i).getContributors()
-                        .contains(gamblers[j].getNumberSeatOnTable())) {
-//                    if (gamblers[j].getEvaluateHand()) {
-//                        //todo method evaluate
-//                    }
+            for (Gambler gambler : gamblers) {
+                if (gambler != null && gambler.isInHand() && pots.get(i).getContributors()
+                        .contains(gambler.getNumberSeatOnTable())) {
+                    if (gambler.getEvaluateHand().getRating() > bestRating) {
+                        bestRating = gambler.getEvaluateHand().getRating();
+                        winners.add(gambler);
+                    } else if (gambler.getEvaluateHand().getRating() == bestRating) {
+                        winners.add(gambler);
+                    }
                 }
             }
             if (winners.size() == 1) {
-                gamblers[winners.get(0)].plusMoneyInTheGame(pots.get(i).getAmount());
-                //todo evaluated hand
+                BigDecimal moneyInPlay = winners.get(0).getMoneyInPlay().add(pots.get(i).getAmount());
+                winners.get(0).setMoneyInPlay(moneyInPlay);
+                String htmlHand = "[";
+                List<String> cards = winners.get(0).getEvaluateHand().getCards();
+                for (String card : cards) {
+                    htmlHand = htmlHand.concat(card + ", ");
+                }
+                htmlHand = htmlHand.concat("]");
+                htmlHand = htmlHand.replace("/s/g", "&#9824;")
+                        .replace("/c/g", "&#9827")
+                        .replace("/h/g", "&#9829")
+                        .replace("/d/g", "&#9830");
+                messages.add(winners.get(0).getName() + " wins the pot (" + pots.get(i).getAmount()
+                        + ") with" + winners.get(0).getEvaluateHand().getName() + " " + htmlHand);
+            } else {
+                int winnersCount = winners.size();
+//                BigDecimal winnigs =
+                //todo winners
             }
         }
+        reset(table);
         return messages;
     }
 
@@ -130,7 +150,7 @@ public class PotService {
         return gambler.getName() + " wins the pot (" + totalAmount + ")";
     }
 
-    private void reset(Table table) {
+    public void reset(Table table) {
         List<Pot> pots = new ArrayList<>(1);
         pots.add(new Pot());
         table.setPots(pots);

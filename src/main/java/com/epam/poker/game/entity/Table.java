@@ -27,7 +27,6 @@ public class Table implements Entity {
     private BigDecimal biggestBet;
     private Integer dealerSeat;
     private Integer activeSeat;
-    private String[] seatsPlace;
     private String phaseGame;
     private String[] board;
     private Log log;
@@ -42,7 +41,6 @@ public class Table implements Entity {
         this.maxBuyIn = maxBuyIn;
         this.minBuyIn = minBuyIn;
         this.biggestBet = new BigDecimal(0);
-        this.seatsPlace = new String[seatsCount];
         this.privateTable = privateTable;
         this.seats = new Gambler[seatsCount];
         this.deck = new Deck();
@@ -50,17 +48,6 @@ public class Table implements Entity {
         this.pots = new ArrayList<>(1);
         this.pots.add(new Pot());
         this.log = new Log();
-    }
-
-    public void addGamblerOnTable(Gambler gambler, int numberSeat, BigDecimal bet) {
-        this.seats[numberSeat] = gambler;
-        gambler.setSittingOnTable(this.id);
-        BigDecimal balanceGambler = gambler.getBalance().min(bet);
-        gambler.setBalance(balanceGambler);
-        gambler.setMoneyInPlay(bet);
-        gambler.setNumberSeatOnTable(numberSeat);
-        PokerGameService pokerGameService = PokerGameService.getInstacne();
-        pokerGameService.gamblerSatIn(this, gambler);
     }
 
     public void deleteGamblerOfSeatByEntity(Gambler gambler) {
@@ -179,6 +166,10 @@ public class Table implements Entity {
         return pots;
     }
 
+    public boolean isEmptyPots() {
+        return this.pots.get(0).getAmount().compareTo(BigDecimal.ZERO) == 0;
+    }
+
     public Pot getPotByIndex(int index) {
         return this.pots.get(index);
     }
@@ -209,14 +200,6 @@ public class Table implements Entity {
 
     public void setActiveSeat(Integer activeSeat) {
         this.activeSeat = activeSeat;
-    }
-
-    public String[] getSeatsPlace() {
-        return seatsPlace;
-    }
-
-    public void setSeatsPlace(String[] seatsPlace) {
-        this.seatsPlace = seatsPlace;
     }
 
     public String getPhaseGame() {
@@ -262,5 +245,4 @@ public class Table implements Entity {
     public BigDecimal getSmallBlind() {
         return smallBlind;
     }
-
 }

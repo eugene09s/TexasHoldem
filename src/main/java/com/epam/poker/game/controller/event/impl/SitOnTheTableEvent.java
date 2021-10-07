@@ -7,6 +7,7 @@ import com.epam.poker.game.controller.event.EventSocket;
 import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.game.entity.Table;
+import com.epam.poker.game.logic.PokerGameService;
 import com.epam.poker.model.entity.User;
 import com.epam.poker.model.service.user.UserService;
 import com.epam.poker.model.service.user.impl.UserServiceImpl;
@@ -30,6 +31,7 @@ public class SitOnTheTableEvent implements EventSocket {
     private static Lobby lobby = Lobby.getInstance();
     private static ValidationJsonData validationJsonData = ValidationJsonData.getInstance();
     private static UserService userService = UserServiceImpl.getInstance();
+    private static PokerGameService pokerGameService = PokerGameService.getInstacne();
     private static final String MESSAGE_ERROR_CHIPS = "Your chips is invalid!";
     private static final String MESSAGE_ERROR_COMPARE_CHIPS_MAX_MIN_TABLE =
             "The amount of chips should be between the maximum and the minimum amount of allowed buy in";
@@ -78,8 +80,8 @@ public class SitOnTheTableEvent implements EventSocket {
                 } else {
                     objectNode.put(Attribute.SUCCESS, true);
                     sendEvent(gambler, response, objectNode);
-                    lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId))
-                            .addGamblerOnTable(gambler, numberSeat, bet);
+                    Table table = lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId));
+                    pokerGameService.addGamblerOnTable(table, gambler, numberSeat, bet);
                 }
             } else {
                 objectNode.put(Attribute.SUCCESS, false);
@@ -99,7 +101,7 @@ public class SitOnTheTableEvent implements EventSocket {
         }
     }
 
-    private boolean isValidMinMaxBetOnTable(long tableId, BigDecimal chips)  {
+    private boolean isValidMinMaxBetOnTable(long tableId, BigDecimal chips) {
         Table table = lobby.findTableByNameRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId));
         if (table != null && chips.compareTo(table.getMaxBuyIn()) <= 0
                 && chips.compareTo(table.getMinBuyIn()) >= 0) {

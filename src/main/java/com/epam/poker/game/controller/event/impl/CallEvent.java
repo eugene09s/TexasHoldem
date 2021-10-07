@@ -4,6 +4,7 @@ import com.epam.poker.game.controller.event.EventSocket;
 import com.epam.poker.game.entity.Gambler;
 import com.epam.poker.game.entity.Lobby;
 import com.epam.poker.game.entity.Table;
+import com.epam.poker.game.logic.EventHandlerService;
 import com.epam.poker.game.logic.PokerGameService;
 import com.epam.poker.util.constant.Attribute;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,7 +25,7 @@ public class CallEvent implements EventSocket {
     private static final ObjectMapper mapper = new ObjectMapper();
     private static Lobby lobby = Lobby.getInstance();
     private static final CallEvent instance = new CallEvent();
-    private static PokerGameService pokerGameService = PokerGameService.getInstacne();
+    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
     private static final List<String> PARTS_OF_GAMES = List.of(PRE_FLOP_PART_OF_GAME,
             FLOP_PART_OF_GAME, TURN_PART_OF_GAME, RIVER_PART_OF_GAME);
 
@@ -51,7 +52,7 @@ public class CallEvent implements EventSocket {
                    && PARTS_OF_GAMES.contains(table.getPhaseGame())) {
                 objectNode.put(Attribute.SUCCESS, true);
                 sendEvent(gambler, response, objectNode);
-                pokerGameService.gamblerCalled(table, gambler);
+                eventHandlerService.gamblerCalled(table, gambler);
             }
         }
     }
