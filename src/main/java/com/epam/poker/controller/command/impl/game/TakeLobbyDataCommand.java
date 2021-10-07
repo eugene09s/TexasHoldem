@@ -6,9 +6,9 @@ import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.game.entity.Lobby;
-import com.epam.poker.game.entity.Table;
-import com.epam.poker.game.logic.ParserDataToJsonService;
+import com.epam.poker.model.entity.game.Lobby;
+import com.epam.poker.model.entity.game.Table;
+import com.epam.poker.model.service.game.ParserDataToJsonService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
@@ -26,7 +26,9 @@ public class TakeLobbyDataCommand implements Command {
         List<String> lobbyTablesJson = new ArrayList<>();
         List<Table> tables = lobby.findAllTables();
         for (Table table : tables) {
-            lobbyTablesJson.add(parserDataToJson.parseDataTableForLobby(table));
+            if (!table.isPrivateTable()) {
+                lobbyTablesJson.add(parserDataToJson.parseDataTableForLobby(table));
+            }
         }
         CommandResult commandResult = new CommandResult(true);
         commandResult.setJsonResponse(String.valueOf(lobbyTablesJson));

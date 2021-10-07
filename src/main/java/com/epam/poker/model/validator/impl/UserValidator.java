@@ -1,8 +1,8 @@
 package com.epam.poker.model.validator.impl;
 
 import com.epam.poker.model.validator.Validator;
-import com.epam.poker.model.entity.User;
-import com.epam.poker.model.entity.type.UserRole;
+import com.epam.poker.model.entity.database.User;
+import com.epam.poker.model.entity.database.type.UserRole;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -2,7 +2,7 @@ package com.epam.poker.model.dao;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.mapper.RowMapper;
-import com.epam.poker.model.entity.Entity;
+import com.epam.poker.model.entity.database.Entity;
 import com.epam.poker.model.pool.ProxyConnection;
 
 import java.sql.PreparedStatement;

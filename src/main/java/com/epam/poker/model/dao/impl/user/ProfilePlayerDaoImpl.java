@@ -4,7 +4,7 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.model.dao.ProfilePlayerDao;
 import com.epam.poker.model.dao.mapper.impl.ProfilePlayerRowMapper;
-import com.epam.poker.model.entity.ProfilePlayer;
+import com.epam.poker.model.entity.database.ProfilePlayer;
 
 import java.math.BigDecimal;
 import java.util.List;

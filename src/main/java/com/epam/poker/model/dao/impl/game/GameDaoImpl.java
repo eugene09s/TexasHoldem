@@ -4,7 +4,7 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.model.dao.GameDao;
 import com.epam.poker.model.dao.mapper.impl.game.GameRowMapper;
-import com.epam.poker.model.entity.game.Game;
+import com.epam.poker.model.entity.database.game.Game;
 
 import java.util.List;
 import java.util.Optional;

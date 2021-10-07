@@ -3,8 +3,8 @@ package com.epam.poker.controller;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.service.user.ProfilePlayerService;
-import com.epam.poker.model.service.user.impl.ProfilePlayerServiceImpl;
+import com.epam.poker.model.service.database.ProfilePlayerService;
+import com.epam.poker.model.service.database.impl.ProfilePlayerServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,7 +33,7 @@ public class UploadFileController extends HttpServlet {
         Part filePart = request.getPart(FILE);
         String fileLastName = filePart.getSubmittedFileName();
         String fileExt = fileLastName.substring(fileLastName.lastIndexOf("."));
-        long userId = (long) request.getSession().getAttribute(Attribute.USER_ID);
+        long userId = Long.parseLong(String.valueOf(request.getSession().getAttribute(Attribute.USER_ID)));
         String fileName = userId + fileExt;
         String applicationDir = request.getServletContext().getRealPath("");
         String uploadFileDir = applicationDir + UPLOAD_FOLDER + File.separator;
@@ -54,6 +54,6 @@ public class UploadFileController extends HttpServlet {
             responseLine = "{\"success\": false}";
             LOGGER.error("Upload photo error. User id= " + userId + " try upload.");
         }
-        response.getWriter().print(responseLine);//todo don't send response
+        response.getWriter().write(responseLine);//todo don't send response
     }
 }

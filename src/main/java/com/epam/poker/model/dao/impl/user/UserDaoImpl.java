@@ -4,8 +4,8 @@ import com.epam.poker.model.dao.AbstractDao;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.dao.UserDao;
 import com.epam.poker.model.dao.mapper.impl.UserRowMapper;
-import com.epam.poker.model.entity.User;
-import com.epam.poker.model.entity.type.UserStatus;
+import com.epam.poker.model.entity.database.User;
+import com.epam.poker.model.entity.database.type.UserStatus;
 
 import java.math.BigDecimal;
 import java.util.List;

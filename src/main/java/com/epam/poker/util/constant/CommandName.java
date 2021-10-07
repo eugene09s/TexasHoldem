@@ -1,6 +1,6 @@
 package com.epam.poker.util.constant;
 
-public class CommandName {
+public final class CommandName {
     public static final String HOME_PAGE = "home-page";
     public static final String LOGIN_PAGE = "login-page";
     public static final String SIGN_UP_PAGE = "sign-up-page";

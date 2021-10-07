@@ -1,6 +1,6 @@
 package com.epam.poker.util.constant;
 
-public class Parameter {
+public final class Parameter {
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String EMAIL = "email";

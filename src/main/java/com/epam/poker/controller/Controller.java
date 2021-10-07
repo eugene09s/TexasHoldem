@@ -73,7 +73,7 @@ public class Controller extends HttpServlet {
         } else {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write((commandResult.getJsonResponse()));
+            response.getWriter().write(commandResult.getJsonResponse());
         }
     }
 

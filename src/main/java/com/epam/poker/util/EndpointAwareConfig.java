@@ -17,5 +17,4 @@ public class EndpointAwareConfig extends ServerEndpointConfig.Configurator {
         Map<String,List<String>> headers = request.getHeaders();
         config.getUserProperties().put(LINE_COOKIE,headers.get(LINE_COOKIE));
     }
-
 }

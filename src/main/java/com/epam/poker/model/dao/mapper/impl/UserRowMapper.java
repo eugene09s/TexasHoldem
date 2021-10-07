@@ -1,9 +1,9 @@
 package com.epam.poker.model.dao.mapper.impl;
 
 import com.epam.poker.model.dao.mapper.RowMapper;
-import com.epam.poker.model.entity.User;
-import com.epam.poker.model.entity.type.UserRole;
-import com.epam.poker.model.entity.type.UserStatus;
+import com.epam.poker.model.entity.database.User;
+import com.epam.poker.model.entity.database.type.UserRole;
+import com.epam.poker.model.entity.database.type.UserStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

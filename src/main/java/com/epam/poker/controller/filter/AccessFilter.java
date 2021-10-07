@@ -2,7 +2,7 @@ package com.epam.poker.controller.filter;
 
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
-import com.epam.poker.model.entity.type.UserRole;
+import com.epam.poker.model.entity.database.type.UserRole;
 import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

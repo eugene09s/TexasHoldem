@@ -1,7 +1,7 @@
 package com.epam.poker.model.dao;
 
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.model.entity.game.GameWinner;
+import com.epam.poker.model.entity.database.game.GameWinner;
 
 import java.util.List;
 

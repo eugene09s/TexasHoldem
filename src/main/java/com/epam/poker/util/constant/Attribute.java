@@ -64,6 +64,7 @@ public final class Attribute {
     public static final String ACT_OTHERS_ALL_IN_EVENT = "actOthersAllIn";
     public static final String ACT_BETTED_POT_EVENT = "actBettedPot";
     public static final String ACT_NOT_BETTED_POT_EVENT = "actNotBettedPot";
+    public static final String POST_BLIND_EVENT = "postBlind";
     //part of game
     public static final String SMALL_BLIND_PART_OF_GAME = "smallBlind";
     public static final String BIG_BLIND_PART_OF_GAME = "bigBlind";

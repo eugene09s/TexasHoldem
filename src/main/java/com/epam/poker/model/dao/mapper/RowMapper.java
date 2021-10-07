@@ -1,6 +1,6 @@
 package com.epam.poker.model.dao.mapper;
 
-import com.epam.poker.model.entity.Entity;
+import com.epam.poker.model.entity.database.Entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

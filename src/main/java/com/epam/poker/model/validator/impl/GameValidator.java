@@ -1,7 +1,7 @@
 package com.epam.poker.model.validator.impl;
 
 import com.epam.poker.model.validator.Validator;
-import com.epam.poker.model.entity.game.Game;
+import com.epam.poker.model.entity.database.game.Game;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

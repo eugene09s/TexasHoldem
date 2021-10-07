@@ -1,9 +1,7 @@
 package com.epam.poker.model.dao.mapper.impl.game;
 
 import com.epam.poker.model.dao.mapper.RowMapper;
-import com.epam.poker.model.entity.game.Game;
-import com.epam.poker.model.entity.game.GameWinner;
-import com.epam.poker.model.validator.impl.ProfilePlayerValidator;
+import com.epam.poker.model.entity.database.game.GameWinner;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

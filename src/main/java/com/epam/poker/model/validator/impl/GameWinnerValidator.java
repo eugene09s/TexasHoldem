@@ -1,7 +1,7 @@
 package com.epam.poker.model.validator.impl;
 
 import com.epam.poker.model.validator.Validator;
-import com.epam.poker.model.entity.game.GameWinner;
+import com.epam.poker.model.entity.database.game.GameWinner;
 
 public class GameWinnerValidator implements Validator<GameWinner> {
     private static final int MIN_ID = 1;

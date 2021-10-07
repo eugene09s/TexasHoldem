@@ -1,7 +1,7 @@
 package com.epam.poker.model.validator.impl;
 
 import com.epam.poker.model.validator.Validator;
-import com.epam.poker.model.entity.ProfilePlayer;
+import com.epam.poker.model.entity.database.ProfilePlayer;
 
 import java.math.BigDecimal;
 
