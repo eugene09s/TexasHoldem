@@ -3,6 +3,8 @@ package com.epam.poker.model.service.game;
 import com.epam.poker.model.entity.game.EvaluateHand;
 import com.epam.poker.model.entity.game.Gambler;
 import com.epam.poker.model.entity.game.Table;
+import com.epam.poker.util.constant.Parameter;
+import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
 
 import java.util.*;
 
@@ -22,8 +24,8 @@ public class EvaluateHandService {
         put("3", "three");
         put("2", "deuce");
     }};
-    private static final List<String> cardNames = List.of(
-            "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
+    private static final List<Character> cardNames = List.of(
+            '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A');
     private static final char SPADES_SUIT = 's';
     private static final char HEARTS_SUIT = 'h';
     private static final char DIAMONDS_SUIT = 'd';
@@ -40,7 +42,7 @@ public class EvaluateHandService {
     private static final String ROYAL_FLUSH = "royal flush";
     private List<String> straight;
     private Map<Character, List<String>> flushes;
-    private Map<Character, String[]> pairs;
+    private Map<Character, List<String>> pairs;
     private EvaluateHand evaluateHand;
 
     public EvaluateHandService() {
@@ -52,9 +54,15 @@ public class EvaluateHandService {
     }
 
     public void execute(Table table, Gambler gambler) {
-        List<String> cards = List.of(table.getBoard());
+        List<String> cards = new ArrayList<>(7);
+        for (String card : table.getBoard()) {
+            cards.add(card);
+        }
         cards.add(gambler.getPrivateCards()[0]);
         cards.add(gambler.getPrivateCards()[1]);
+        cards.sort((a, b) -> {
+            return cardNames.indexOf(b.charAt(0)) - cardNames.indexOf(a.charAt(0));
+        });
         flushes.get(cards.get(0).charAt(1)).add(cards.get(0));
         straight.add(cards.get(0));
         restOfCards(cards);
@@ -85,8 +93,8 @@ public class EvaluateHandService {
         int kickets = 0;
         int i = 0;
         if (numberOfPairs == 1) {
-            for (Map.Entry<Character, String[]> entry : pairs.entrySet()) {
-                evaluateHand.setCards(List.of(entry.getValue()));
+            for (Map.Entry<Character, List<String>> entry : pairs.entrySet()) {
+                evaluateHand.setCards(entry.getValue());
             }
             if (evaluateHand.getCards().size() == 2) {
                 evaluateHand.setRank(PAIR);
@@ -117,11 +125,110 @@ public class EvaluateHandService {
                 }
             }
         } else if (numberOfPairs == 2) { //if there are two pairs
-            //Add to the evaluated hand, the pair with the greatest value
-//                if (pairs)
-            //todo should be doing
-        } else { //if there are three pairs
-            //todo should be doing
+            List<Character> pairKeys = new ArrayList<>();
+            for (Map.Entry<Character, List<String>> entry : pairs.entrySet()) {
+                pairKeys.add(entry.getKey());
+            }
+            // Add to the evaluated hand, the pair with the greatest value
+            if (pairs.get(pairKeys.get(0)).size() > pairs.get(pairKeys.get(1)).size()
+                    || (pairs.get(pairKeys.get(0)).size() == pairs.get(pairKeys.get(1)).size())
+                    && cardNames.indexOf(pairKeys.get(0)) > cardNames.indexOf(pairKeys.get(1))) {
+                evaluateHand.setCards(pairs.get(pairKeys.get(0)));
+                pairs.remove(pairKeys.get(0));
+            } else {
+                evaluateHand.setCards(pairs.get(pairKeys.get(1)));
+                pairs.remove(pairKeys.get(1));
+            }
+            // If the biggest pair has two cards
+            if (evaluateHand.getCards().size() == 2) {
+                // Add the other two cards to the evaluated hand
+                for (int j = 0; j < 2; ++j) {
+                    evaluateHand.getCards().add(pairs.get(pairKeys.get(0)).get(j));
+                }
+                evaluateHand.setRank(TWO_PAIR);
+                // Add one kicker
+                while (kickets < 1) {
+                    if (cards.get(i).charAt(0) != evaluateHand.getCards().get(0).charAt(0)
+                            && cards.get(i).charAt(0) != evaluateHand.getCards().get(2).charAt(0)) {
+                        evaluateHand.getCards().add(cards.get(i));
+                        kickets++;
+                    }
+                    ++i;
+                }
+            } else if (evaluateHand.getCards().size() == 3) {
+                evaluateHand.setRank(FULL_HOUSE);
+                for (int j = 0; j < 2; ++j) {
+                    evaluateHand.getCards().add(pairs.get(pairKeys.get(0)).get(j));
+                }
+                // If the biggest pair has four cards
+            } else {
+                evaluateHand.setRank(FOUR_OF_KIND);
+                while (kickets < 1) {
+                    if (cards.get(i).charAt(0) != evaluateHand.getCards().get(0).charAt(0)) {
+                        evaluateHand.getCards().add(cards.get(i));
+                        kickets++;
+                    }
+                    ++i;
+                }
+            }
+        } else { // If there are three pairs
+            List<Character> pairKeys = new ArrayList<>();
+            // If there is a pair with three cards, it's the biggest pair
+            for (Map.Entry<Character, List<String>> entry : pairs.entrySet()) {
+                pairKeys.add(entry.getKey());
+                if (entry.getValue().size() == 3) {
+                    evaluateHand.setRank(FULL_HOUSE);
+                    evaluateHand.setCards(entry.getValue());
+                    pairs.remove(entry.getKey());
+                    break;
+                }
+            }
+            //Else, there are three pairs of two cards, so find the biggest one
+            if (evaluateHand.getCards().size() == 0) {
+                evaluateHand.setRank(TWO_PAIR);
+                if (cardNames.indexOf(pairKeys.get(0)) > cardNames.indexOf(pairKeys.get(1))) {
+                    if (cardNames.indexOf(pairKeys.get(0)) > cardNames.indexOf(pairKeys.get(2))) {
+                        evaluateHand.setCards(pairs.get(pairKeys.get(0)));
+                        pairs.remove(pairKeys.get(0));
+                    } else {
+                        evaluateHand.setCards(pairs.get(pairKeys.get(2)));
+                        pairs.remove(pairKeys.get(2));
+                    }
+                } else {
+                    if (cardNames.indexOf(pairKeys.get(1)) > cardNames.indexOf(pairKeys.get(2))) {
+                        evaluateHand.setCards(pairs.get(pairKeys.get(1)));
+                        pairs.remove(pairKeys.get(2));
+                    } else {
+                        evaluateHand.setCards(pairs.get(pairKeys.get(2)));
+                        pairs.remove(pairKeys.get(2));
+                    }
+                }
+            }
+            pairKeys = new ArrayList<>();
+            for (Map.Entry<Character, List<String>> entry : pairs.entrySet()) {
+                pairKeys.add(entry.getKey());
+            }
+            //Adding the second biggest pair in the hand
+            if (cardNames.indexOf(pairKeys.get(0)) > cardNames.indexOf(pairKeys.get(1))) {
+                for (int j = 0; j < 2; ++j) {
+                    evaluateHand.getCards().add(pairs.get(pairKeys.get(0)).get(j));
+                }
+            } else {
+                for (int j = 0; j < 2; ++j) {
+                    evaluateHand.getCards().add(pairs.get(pairKeys.get(1)).get(j));
+                }
+            }
+            // If the biggest pair has two cards, add one kicker
+            if (evaluateHand.getRank().equals(TWO_PAIR)) {
+                while (kickets < 1) {
+                    if (cards.get(i).charAt(0) != evaluateHand.getCards().get(0).charAt(0)
+                            && cards.get(i).charAt(0) != evaluateHand.getCards().get(2).charAt(0)) {
+                        evaluateHand.getCards().add(cards.get(i));
+                        kickets++;
+                    }
+                    ++i;
+                }
+            }
         }
     }
 
@@ -235,29 +342,30 @@ public class EvaluateHandService {
         }
     }
 
-    private void restOfCards(List<String> cards) {
-        for (int i = 0; i < 7; ++i) {
+    public void restOfCards(List<String> cards) {
+        for (int i = 1; i < 7; ++i) {
             flushes.get(cards.get(i).charAt(1)).add(cards.get(i));
             int currentCardValue = cardNames.indexOf(cards.get(i).charAt(0));
             int previousCardValue = cardNames.indexOf(straight.get(straight.size() - 1).charAt(0));
+            // If the current value is smaller than the value of the prevous card by one,
+            // push it to the straight array
             if (currentCardValue + 1 == previousCardValue) {
                 straight.add(cards.get(i));
             } else if (currentCardValue != previousCardValue && straight.size() < 5) {
+                straight = new ArrayList<>();
                 straight.add(cards.get(i));//perhapse bug
             } else if (currentCardValue == previousCardValue) {
                 if (!pairs.containsKey(cards.get(i).charAt(0))) {
                     String[] pair = new String[]{cards.get(i - 1), cards.get(i)};
-                    pairs.put(cards.get(i).charAt(0), pair);
+                    List<String> listPair = new ArrayList<>();
+                    listPair.add(pair[0]);
+                    listPair.add(pair[1]);
+                    pairs.put(cards.get(i).charAt(0), listPair);
                 } else {
-                    String[] card = new String[]{cards.get(i)};
-                    pairs.put(cards.get(i).charAt(0), card);
+                    pairs.get(cards.get(i).charAt(0)).add(cards.get(i));
                 }
             }
         }
-    }
-
-    private int sort(String cardFirst, String cardSecond) {
-        return cardNames.indexOf(cardFirst.charAt(0)) - cardNames.indexOf(cardSecond.charAt(0));
     }
 
     private int calcRateHand(List<String> cards) {

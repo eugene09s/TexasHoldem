@@ -132,7 +132,7 @@ public class PokerGameService {
     private void initializeNextPhase(Table table) {
         switch (table.getPhaseGame()) {
             case Attribute.PRE_FLOP_PART_OF_GAME -> {
-                table.setPhaseGame(Attribute.PRE_FLOP_PART_OF_GAME);
+                table.setPhaseGame(Attribute.FLOP_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 String[] cards = deck.pullSomeCardsFromDeck(3).toArray(new String[0]);
                 table.getBoard()[0] = cards[0];
@@ -140,12 +140,12 @@ public class PokerGameService {
                 table.getBoard()[2] = cards[2];
             }
             case Attribute.FLOP_PART_OF_GAME -> {
-                table.setPhaseGame(Attribute.FLOP_PART_OF_GAME);
+                table.setPhaseGame(Attribute.TURN_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 table.getBoard()[3] =  deck.pullSomeCardsFromDeck(1).get(0);;
             }
             case Attribute.TURN_PART_OF_GAME -> {
-                table.setPhaseGame(Attribute.TURN_PART_OF_GAME);
+                table.setPhaseGame(Attribute.RIVER_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 table.getBoard()[4] = deck.pullSomeCardsFromDeck(1).get(0);
             }
@@ -240,11 +240,11 @@ public class PokerGameService {
         int bestHandRating = 0;
         for (int i = 0; i < table.getGamblersInHandCount(); ++i) {
             EvaluateHandService evaluateHandService = new EvaluateHandService();
-            evaluateHandService.execute(table, table.getSeats()[i]);
+            evaluateHandService.execute(table, table.getSeats()[currentGambler]);
             if (table.getSeats()[currentGambler].getEvaluateHand().getRating() > bestHandRating) {
-                table.getSeats()[currentGambler].setPublicCards(
-                        table.getSeats()[currentGambler].getPrivateCards());
+                bestHandRating = table.getSeats()[currentGambler].getEvaluateHand().getRating();
             }
+            table.getSeats()[currentGambler].setPublicCards(table.getSeats()[currentGambler].getPrivateCards());
             currentGambler = findNextGambler(table, String.valueOf(currentGambler), true, false);
         }
         List<String> message = potService.destributeToWinners(table, currentGambler);

@@ -101,12 +101,14 @@ public class PotService {
         for (int i = potsCount - 1; i >= 0; --i) {
             List<Gambler> winners = new ArrayList<>();
             int bestRating = 0;
-            int gamblersCount = gamblers.length;
+            //int gamblersCount = gamblers.length;
             for (Gambler gambler : gamblers) {
-                if (gambler != null && gambler.isInHand() && pots.get(i).getContributors()
+                if (gambler != null && gambler.isInHand()
+                        && pots.get(i).getContributors()
                         .contains(gambler.getNumberSeatOnTable())) {
                     if (gambler.getEvaluateHand().getRating() > bestRating) {
                         bestRating = gambler.getEvaluateHand().getRating();
+                        winners = new ArrayList<>();
                         winners.add(gambler);
                     } else if (gambler.getEvaluateHand().getRating() == bestRating) {
                         winners.add(gambler);
