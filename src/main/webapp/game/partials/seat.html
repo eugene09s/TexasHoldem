@@ -7,6 +7,7 @@
 		<a class="sitIn" ng-show="!player.name" ng-click="showBuyInModal( {seat:seatIndex} )">Sit In</a>
 		<div class="player-content" ng-show="player.name">
 			<div ng-show="!notifications[seatIndex].message">
+				<img ng-show="player.sittingIn" src="/images/photo/{{player.img}}" id="seatPhotoGambler" alt="photo">
 				<span>{{player.name}}</span>
 				<span ng-show="player.sittingIn">{{player.chipsInPlay}}</span>
 				<span ng-show="!player.sittingIn">Sitting Out</span>
