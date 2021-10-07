@@ -1,4 +1,4 @@
-package com.epam.poker.model.entity.database;
+package com.epam.poker.model.entity;
 
 import java.io.Serializable;
 

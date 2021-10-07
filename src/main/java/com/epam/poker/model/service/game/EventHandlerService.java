@@ -251,4 +251,32 @@ public class EventHandlerService {
             pokerGameService.actionToNextGambler(table);
         }
     }
+
+    public void gamblerSatIn(Table table, Gambler gambler) {
+        Log log = Log.builder()
+                .setMessage(gambler.getName() + " sat in")
+                .setAction("")
+                .setSeat("")
+                .setNotification("")
+                .createLog();
+        table.setLog(log);
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
+        gambler.setSittingIn(true);
+        int playersSittingInCount = table.getGamblersSittingInCount() + 1;
+        table.setGamblersSittingInCount(playersSittingInCount);
+        notifierTableDataService.notifyALLGamblersOfRoom(table);
+        if (!table.isGameIsOn() && playersSittingInCount > 1) {
+            pokerGameService.initializeRound(table, false);
+        }
+    }
+
+    public void gamblerSitOnTheTable(Table table, Gambler gambler, int numberSeat, BigDecimal bet) {
+        table.getSeats()[numberSeat] = gambler;
+        gambler.setSittingOnTable(table.getId());
+        BigDecimal balanceGambler = gambler.getBalance().subtract(bet);
+        gambler.setBalance(balanceGambler);
+        gambler.setMoneyInPlay(bet);
+        gambler.setNumberSeatOnTable(numberSeat);
+        gamblerSatIn(table, gambler);
+    }
 }

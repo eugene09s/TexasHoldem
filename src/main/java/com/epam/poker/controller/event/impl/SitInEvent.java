@@ -4,6 +4,7 @@ import com.epam.poker.controller.event.EventSocket;
 import com.epam.poker.model.entity.game.Gambler;
 import com.epam.poker.model.entity.game.Lobby;
 import com.epam.poker.model.entity.game.Table;
+import com.epam.poker.model.service.game.EventHandlerService;
 import com.epam.poker.model.service.game.PokerGameService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,9 +23,7 @@ public class SitInEvent implements EventSocket {
     private static final ObjectMapper mapper = new ObjectMapper();
     private static Lobby lobby = Lobby.getInstance();
     private static final SitInEvent instance = new SitInEvent();
-    private static PokerGameService pokerGameService = PokerGameService.getInstacne();
-    private static final List<String> PARTS_OF_GAMES = List.of(PRE_FLOP_PART_OF_GAME,
-            FLOP_PART_OF_GAME, TURN_PART_OF_GAME, RIVER_PART_OF_GAME);
+    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
 
     private SitInEvent() {
     }
@@ -50,9 +49,8 @@ public class SitInEvent implements EventSocket {
             Table table = lobby.findTableByNameRoom(gambler.getTitleRoom());
             objectNode.put(SUCCESS, true);
             sendEvent(gambler, response, objectNode);
-            pokerGameService.gamblerSatIn(table, gambler);
+            eventHandlerService.gamblerSatIn(table, gambler);
         }
-
     }
 
     private void sendEvent(Gambler gambler, ObjectNode response, ObjectNode objectNode) {

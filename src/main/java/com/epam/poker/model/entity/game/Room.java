@@ -1,7 +1,7 @@
 package com.epam.poker.model.entity.game;
 
 import com.epam.poker.model.service.game.EventHandlerService;
-import com.epam.poker.model.entity.database.Entity;
+import com.epam.poker.model.entity.Entity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.Session;
 import org.apache.logging.log4j.LogManager;

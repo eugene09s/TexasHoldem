@@ -1,6 +1,6 @@
 package com.epam.poker.model.entity.database.game;
 
-import com.epam.poker.model.entity.database.Entity;
+import com.epam.poker.model.entity.Entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

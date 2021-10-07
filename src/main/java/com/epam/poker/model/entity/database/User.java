@@ -1,5 +1,6 @@
 package com.epam.poker.model.entity.database;
 
+import com.epam.poker.model.entity.Entity;
 import com.epam.poker.model.entity.database.type.UserRole;
 import com.epam.poker.model.entity.database.type.UserStatus;
 

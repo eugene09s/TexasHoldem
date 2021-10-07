@@ -53,36 +53,7 @@ public class PokerGameService {
         actionToNextGambler(table);
     }
 
-    public void addGamblerOnTable(Table table, Gambler gambler, int numberSeat, BigDecimal bet) {
-        table.getSeats()[numberSeat] = gambler;
-        gambler.setSittingOnTable(table.getId());
-        BigDecimal balanceGambler = gambler.getBalance().subtract(bet);
-        gambler.setBalance(balanceGambler);
-        gambler.setMoneyInPlay(bet);
-        gambler.setNumberSeatOnTable(numberSeat);
-//        table.setSeatedCount + 1;//todo seated count
-        gamblerSatIn(table, gambler);
-    }
-
-    public void gamblerSatIn(Table table, Gambler gambler) {
-        Log log = Log.builder()
-                .setMessage(gambler.getName() + " sat in")
-                .setAction("")
-                .setSeat("")
-                .setNotification("")
-                .createLog();
-        table.setLog(log);
-        notifierTableDataService.notifyALLGamblersOfRoom(table);
-        gambler.setSittingIn(true);
-        int playersSittingInCount = table.getGamblersSittingInCount() + 1;
-        table.setGamblersSittingInCount(playersSittingInCount);
-        notifierTableDataService.notifyALLGamblersOfRoom(table);
-        if (!table.isGameIsOn() && playersSittingInCount > 1) {
-            initializeRound(table, false);
-        }
-    }
-
-    private void initializeRound(Table table, boolean changeDealer) {
+    public void initializeRound(Table table, boolean changeDealer) {
         if (table.getGamblersSittingInCount() > 1) {
             table.setGameIsOn(true);
             table.setBoard(new String[]{"", "", "", "", ""});
@@ -160,21 +131,21 @@ public class PokerGameService {
 
     private void initializeNextPhase(Table table) {
         switch (table.getPhaseGame()) {
-            case "preflop" -> {
-                table.setPhaseGame("flop");
+            case Attribute.PRE_FLOP_PART_OF_GAME -> {
+                table.setPhaseGame(Attribute.PRE_FLOP_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 String[] cards = deck.pullSomeCardsFromDeck(3).toArray(new String[0]);
                 table.getBoard()[0] = cards[0];
                 table.getBoard()[1] = cards[1];
                 table.getBoard()[2] = cards[2];
             }
-            case "flop" -> {
-                table.setPhaseGame("turn");
+            case Attribute.FLOP_PART_OF_GAME -> {
+                table.setPhaseGame(Attribute.FLOP_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 table.getBoard()[3] =  deck.pullSomeCardsFromDeck(1).get(0);;
             }
-            case "turn" -> {
-                table.setPhaseGame("river");
+            case Attribute.TURN_PART_OF_GAME -> {
+                table.setPhaseGame(Attribute.TURN_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 table.getBoard()[4] = deck.pullSomeCardsFromDeck(1).get(0);
             }

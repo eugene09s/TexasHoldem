@@ -1,6 +1,6 @@
 package com.epam.poker.model.validator;
 
-import com.epam.poker.model.entity.database.Entity;
+import com.epam.poker.model.entity.Entity;
 
 /**
  * Interface as template of <T> object validator.

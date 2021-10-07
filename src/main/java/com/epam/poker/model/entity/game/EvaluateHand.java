@@ -1,9 +1,11 @@
 package com.epam.poker.model.entity.game;
 
+import com.epam.poker.model.entity.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class EvaluateHand {
+public class EvaluateHand implements Entity {
     private String rank;
     private String name;
     private int rating;

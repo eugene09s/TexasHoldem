@@ -1,10 +1,12 @@
 package com.epam.poker.model.entity.game;
 
+import com.epam.poker.model.entity.Entity;
+import jakarta.websocket.EndpointConfig;
 import jakarta.websocket.Session;
 
 import java.math.BigDecimal;
 
-public class Gambler {
+public class Gambler implements Entity {
     private String name;
     private BigDecimal moneyInPlay;
     private boolean sittingIn;

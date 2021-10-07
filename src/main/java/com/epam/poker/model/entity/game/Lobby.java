@@ -1,5 +1,6 @@
 package com.epam.poker.model.entity.game;
 
+import com.epam.poker.model.entity.Entity;
 import com.epam.poker.util.constant.Attribute;
 
 import java.math.BigDecimal;
@@ -7,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Lobby {
+public class Lobby implements Entity {
     private static final AtomicBoolean isLobbyCreated = new AtomicBoolean();
     private static final ReentrantLock instanceLocker = new ReentrantLock();
     private static final Map<String, Gambler> users = Collections.synchronizedMap(new HashMap<>());

@@ -7,7 +7,7 @@ import com.epam.poker.model.entity.game.Table;
 import java.util.*;
 
 public class EvaluateHandService {
-    private static final Map<String, String> cardsFullNameByKeyName = new HashMap<String, String>() {{
+    private static final Map<String, String> cardsFullNameByKeyName = new HashMap<>() {{
         put("A", "ace");
         put("K", "king");
         put("Q", "queen");
