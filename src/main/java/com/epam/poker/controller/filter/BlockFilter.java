@@ -49,7 +49,7 @@ public class BlockFilter implements Filter {
                         deleteBlackToken.setMaxAge(0);
                         response.addCookie(deleteBlackToken);
                     }
-                } catch (ServiceException | DaoException e) {
+                } catch (ServiceException e) {
                     LOGGER.warn("Check user blocking by id: " + e);
                 }
             }

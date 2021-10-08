@@ -5,6 +5,7 @@ import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
+import com.epam.poker.util.tag.AccessTag;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/upload"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
@@ -26,6 +28,7 @@ public class UploadFileController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String UPLOAD_FOLDER = "images/photo";
     private static final String FILE = "file";
+    private static final String DEFAULT_PHOTO = "notAva.jpg";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,12 +37,13 @@ public class UploadFileController extends HttpServlet {
         String fileLastName = filePart.getSubmittedFileName();
         String fileExt = fileLastName.substring(fileLastName.lastIndexOf("."));
         long userId = Long.parseLong(String.valueOf(request.getSession().getAttribute(Attribute.USER_ID)));
-        String fileName = userId + fileExt;
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + fileExt;
         String applicationDir = request.getServletContext().getRealPath("");
         String uploadFileDir = applicationDir + UPLOAD_FOLDER + File.separator;
-        File fileSaveDir = new File(uploadFileDir);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdirs();
+        File fileDir = new File(uploadFileDir);
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
         }
         for (Part part : request.getParts()) {
             part.write(uploadFileDir + fileName);
@@ -47,8 +51,13 @@ public class UploadFileController extends HttpServlet {
         ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
         String responseLine = "";
         try {
+            String oldFileName = profilePlayerService.findProfilePlayerById(userId).getPhoto();
+            File file = new File(uploadFileDir + oldFileName);
+            if (!oldFileName.equals(DEFAULT_PHOTO) && file.delete()) {
+                LOGGER.info("Photo deleted: " + oldFileName);
+            }
             profilePlayerService.updatePhotoByUserId(userId, fileName);
-            request.getSession().setAttribute("photo", fileName);
+            request.getSession().setAttribute(Attribute.PHOTO, fileName);
             responseLine = "{\"success\": true}";
         } catch (ServiceException | DaoException e) {
             responseLine = "{\"success\": false}";

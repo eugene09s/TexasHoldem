@@ -1,5 +1,10 @@
 package com.epam.poker.controller.filter;
 
+import com.epam.poker.exception.DaoException;
+import com.epam.poker.exception.ServiceException;
+import com.epam.poker.model.database.ProfilePlayer;
+import com.epam.poker.service.database.ProfilePlayerService;
+import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.model.database.type.UserRole;
@@ -22,6 +27,7 @@ public class AccessFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String WARN_MESSAGE = "Permission denied. Role: ";
     private static final String PERMISSION_DENIED = "Permission denied";
+    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
     private static JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
@@ -44,11 +50,15 @@ public class AccessFilter implements Filter {
                 Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
                 userRole = UserRole.valueOf(claimsJws.getBody().get(Attribute.ROLE).toString());
                 UserRole userRoleSession = (UserRole) session.getAttribute(Attribute.ROLE);
-//                UserStatus status = UserStatus.valueOf(claimsJws.getBody().get(Attribute.S))
                 if (userRoleSession == null || userRoleSession != userRole) {
                     session.setAttribute(Attribute.USER_ID, claimsJws.getBody().get(Attribute.USER_ID));
                     session.setAttribute(Attribute.LOGIN, claimsJws.getBody().get(Attribute.LOGIN));
-                    session.setAttribute(Attribute.PHOTO, claimsJws.getBody().get(Attribute.PHOTO));
+                    try {
+                        session.setAttribute(Attribute.PHOTO, profilePlayerService.findProfilePlayerById(
+                                Long.parseLong(claimsJws.getBody().get(Attribute.USER_ID).toString())).getPhoto());
+                    } catch (ServiceException | DaoException e) {
+                        LOGGER.error("User not found" + e);
+                    }
                 }
             } else {
                 LOGGER.info("Token not valid!");

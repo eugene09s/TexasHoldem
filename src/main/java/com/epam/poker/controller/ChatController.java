@@ -3,6 +3,10 @@ package com.epam.poker.controller;
 import com.epam.poker.controller.chat.Message;
 import com.epam.poker.controller.chat.MessageDecoder;
 import com.epam.poker.controller.chat.MessageEncoder;
+import com.epam.poker.exception.DaoException;
+import com.epam.poker.exception.ServiceException;
+import com.epam.poker.service.database.ProfilePlayerService;
+import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.EndpointAwareConfig;
 import com.epam.poker.util.jwt.JwtProvider;
@@ -28,18 +32,24 @@ public class ChatController {
     private static final String LINE_COOKIE = "cookie";
     private static Set<Session> sessionUsers = Collections.synchronizedSet(new HashSet<>());
     private static JwtProvider jwtProvider = JwtProvider.getInstance();
-    private String token;
     private String username;
     private String img;
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
+        String token = null;
         Object cookies = config.getUserProperties().get(LINE_COOKIE);
-        this.token = parseToken(cookies);
-        if (null != this.token && jwtProvider.validateToken(this.token)) {
+        token = parseToken(cookies);
+        if (null != token && jwtProvider.validateToken(token)) {
             Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
             this.username = claimsJws.getBody().get(Attribute.LOGIN).toString();
-            this.img = claimsJws.getBody().get(Attribute.PHOTO).toString();
+            ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+            try {
+                this.img = profilePlayerService.findProfilePlayerById(
+                        Long.parseLong(claimsJws.getBody().get(Attribute.USER_ID).toString())).getPhoto();
+            } catch (ServiceException | DaoException e) {
+                LOGGER.error("User not found with name: " + username + " Error: " + e);
+            }
             sessionUsers.add(session);
         } else {
             onClose(session);
@@ -57,7 +67,7 @@ public class ChatController {
     }
 
     @OnMessage
-    public void onMessage(Session session, Message message) {
+    public void onMessage(Message message) {
         message.setName(this.username);
         message.setImg(this.img);
         String time = LocalTime.now().toString();

@@ -1,5 +1,9 @@
 package com.epam.poker.controller;
 
+import com.epam.poker.exception.DaoException;
+import com.epam.poker.exception.ServiceException;
+import com.epam.poker.service.database.ProfilePlayerService;
+import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.controller.event.EventSocket;
@@ -34,7 +38,14 @@ public class GameSocketController {
         if (null != token && jwtProvider.validateToken(token)) {
             Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
             String username = claimsJws.getBody().get(Attribute.LOGIN).toString();
-            String img = claimsJws.getBody().get(Attribute.PHOTO).toString();
+            ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+            String img = "";
+            try {
+                img = profilePlayerService.findProfilePlayerById(
+                        Long.parseLong(claimsJws.getBody().get(Attribute.USER_ID).toString())).getPhoto();
+            } catch (ServiceException | DaoException e) {
+                LOGGER.error("User not found with name: " + username + " Error: " + e);
+            }
             lobby.addGambler(username, gambler);
             gambler = Gambler.builder()
                     .setName(username)

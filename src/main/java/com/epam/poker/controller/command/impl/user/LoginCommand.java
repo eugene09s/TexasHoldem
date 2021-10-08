@@ -60,7 +60,6 @@ public class LoginCommand implements Command {
                 claims.put(Attribute.USER_ID, String.valueOf(id));
                 claims.put(Attribute.ROLE, String.valueOf(role));
                 claims.put(Attribute.LOGIN, user.getLogin());
-                claims.put(Attribute.PHOTO, profilePlayer.getPhoto());
                 String token = jwtProvider.generateToken(claims);
                 Cookie cookie = new Cookie(Attribute.ACCESS_TOKEN, token);
                 cookie.setHttpOnly(true);
