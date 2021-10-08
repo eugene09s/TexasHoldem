@@ -1,7 +1,7 @@
 package com.epam.poker.util;
 
-import com.epam.poker.model.entity.game.Gambler;
-import com.epam.poker.model.entity.game.Lobby;
+import com.epam.poker.model.game.Gambler;
+import com.epam.poker.model.game.Lobby;
 import com.epam.poker.util.constant.Attribute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

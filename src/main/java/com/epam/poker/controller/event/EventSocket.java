@@ -1,6 +1,6 @@
 package com.epam.poker.controller.event;
 
-import com.epam.poker.model.entity.game.Gambler;
+import com.epam.poker.model.game.Gambler;
 
 public interface EventSocket {
     void execute(String jsonLine, Gambler gambler);

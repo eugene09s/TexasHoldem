@@ -1,10 +1,10 @@
 package com.epam.poker.controller.event.impl;
 
 import com.epam.poker.controller.event.EventSocket;
-import com.epam.poker.model.entity.game.Gambler;
-import com.epam.poker.model.entity.game.Lobby;
-import com.epam.poker.model.service.database.UserService;
-import com.epam.poker.model.service.database.impl.UserServiceImpl;
+import com.epam.poker.model.game.Gambler;
+import com.epam.poker.model.game.Lobby;
+import com.epam.poker.service.database.UserService;
+import com.epam.poker.service.database.impl.UserServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

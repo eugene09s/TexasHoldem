@@ -6,9 +6,9 @@ import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.entity.game.Lobby;
-import com.epam.poker.model.entity.game.Table;
-import com.epam.poker.model.service.game.ParserDataToJsonService;
+import com.epam.poker.model.game.Lobby;
+import com.epam.poker.model.game.Table;
+import com.epam.poker.service.game.ParserDataToJsonService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 

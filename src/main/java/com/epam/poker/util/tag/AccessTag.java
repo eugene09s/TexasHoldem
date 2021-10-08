@@ -1,7 +1,7 @@
 package com.epam.poker.util.tag;
 
 import com.epam.poker.util.constant.Attribute;
-import com.epam.poker.model.entity.database.type.UserRole;
+import com.epam.poker.model.database.type.UserRole;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.tagext.TagSupport;
 

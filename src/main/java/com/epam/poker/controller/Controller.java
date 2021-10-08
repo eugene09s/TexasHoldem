@@ -8,7 +8,7 @@ import com.epam.poker.util.constant.PagePath;
 import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.DaoException;
-import com.epam.poker.model.pool.ConnectionPool;
+import com.epam.poker.pool.ConnectionPool;
 import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

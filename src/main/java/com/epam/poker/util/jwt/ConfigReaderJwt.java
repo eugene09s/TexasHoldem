@@ -1,7 +1,6 @@
 package com.epam.poker.util.jwt;
 
-import com.epam.poker.exception.ConnectionPoolException;
-import com.epam.poker.model.pool.ConnectionPool;
+import com.epam.poker.pool.ConnectionPool;
 
 import java.io.IOException;
 import java.io.InputStream;
