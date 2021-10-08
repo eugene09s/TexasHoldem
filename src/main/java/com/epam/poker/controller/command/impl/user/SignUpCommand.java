@@ -2,6 +2,7 @@ package com.epam.poker.controller.command.impl.user;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
+import com.epam.poker.util.LineHasher;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.CommandName;
 import com.epam.poker.util.constant.PagePath;
@@ -17,13 +18,20 @@ import com.epam.poker.model.database.type.UserRole;
 import com.epam.poker.model.database.type.UserStatus;
 import com.epam.poker.service.database.SignUpService;
 import com.epam.poker.service.database.impl.SignUpServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
 public class SignUpCommand implements Command {
     private static final String LOGIN_PAGE_COMMAND = "poker?command=" + CommandName.LOGIN_PAGE;
-    private static final BigDecimal INITIAL_BALANCE_USER = BigDecimal.valueOf(198.99);
+    private static final BigDecimal INITIAL_BALANCE_USER = BigDecimal.ZERO;
+    private static final String SHA_256 = "SHA-256";
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String USERNAME_EXIST_KEY = "username.exist";
     private static final String INVALID_DATA_KEY = "invalid.data";
     private static final BigDecimal PRE_MONEY = BigDecimal.valueOf(0);
@@ -46,9 +54,11 @@ public class SignUpCommand implements Command {
             requestContext.addAttribute(Attribute.SAVED_LOGIN, login);
             requestContext.addAttribute(Attribute.SAVED_EMAIL, email);
             Timestamp nowTime = new Timestamp(System.currentTimeMillis());
+            String pass = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
+            LineHasher lineHasher = new LineHasher();
             User user = User.builder()
                     .setLogin(login)
-                    .setPassword(ParameterTaker.takeString(Parameter.PASSWORD, requestContext))
+                    .setPassword(lineHasher.hashingLine(pass))
                     .setFirstName(ParameterTaker.takeString(Parameter.FIRST_NAME, requestContext))
                     .setLastName(ParameterTaker.takeString(Parameter.LAST_NAME, requestContext))
                     .setEmail(ParameterTaker.takeString(Parameter.EMAIL, requestContext))

@@ -6,7 +6,6 @@ import com.epam.poker.model.database.ProfilePlayer;
 import java.math.BigDecimal;
 
 public class ProfilePlayerValidator implements Validator<ProfilePlayer> {
-    private static final long MIN_USER_ID = 1;
     private static final int MAX_LENGTH_ABOUT_YOURSELF = 512;
     private static final int MAX_LENGTH_AWARD = 128;
     private static final int MAX_LENGTH_PHOTO = 128;

@@ -2,6 +2,7 @@ package com.epam.poker.controller.command.impl.user;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
+import com.epam.poker.util.LineHasher;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.CommandName;
 import com.epam.poker.util.constant.PagePath;
@@ -40,20 +41,21 @@ public class LoginCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException {
         String login = ParameterTaker.takeString(Parameter.LOGIN, requestContext);
-        String password = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
-        boolean isUserExist = service.isUserExistByLoginPassword(login, password);
+        String pass = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
+        LineHasher lineHasher = new LineHasher();
+        String hashPass = lineHasher.hashingLine(pass);
+        boolean isUserExist = service.isUserExistByLoginPassword(login, hashPass);
         if (isUserExist) {
             User user = service.findUserByLogin(login);
             if (user.getUserStatus() != UserStatus.BANNED) {
                 long id = user.getUserId();
-
                 UserRole role = user.getUserRole();
                 requestContext.addSession(Attribute.USER_ID, id);
                 requestContext.addSession(Attribute.ROLE, role);
                 requestContext.addSession(Attribute.LOGIN, user.getLogin());
                 ProfilePlayer profilePlayer = profilePlayerService.findProfilePlayerById(id);
                 requestContext.addSession(Attribute.PHOTO, profilePlayer.getPhoto());
-
+                //create jwt token
                 Map<String, String> claims = new HashMap<>();
                 claims.put(Attribute.USER_ID, String.valueOf(id));
                 claims.put(Attribute.ROLE, String.valueOf(role));
@@ -65,7 +67,6 @@ public class LoginCommand implements Command {
                 cookie.setMaxAge(TIMEZONE_GMT_PLUS_THREE +
                         (int) (TimeUnit.MINUTES.toSeconds(LIFE_TIME_COOKIE)));
                 requestContext.addCookie(cookie);
-
                 return CommandResult.redirect(PROFILE_PAGE_COMMAND + id);
             }
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);

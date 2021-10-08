@@ -61,5 +61,6 @@
     </div>
 </div>
 <script src="/js/sign-up.js"></script>
+<script src="/lib/sha256.js"></script>
 </body>
 </html>
