@@ -36,60 +36,71 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     @Override
-    public long signUp(User user, ProfilePlayer profilePlayer)
-            throws ServiceException, DaoException {
+    public long signUp(User user, ProfilePlayer profilePlayer) throws ServiceException {
         if (!userValidator.isValid(user) || !profilePlayerValidator.isValid(profilePlayer)) {
             throw new ServiceException("Invalid user or profile player data.");
         }
         long userId = 0;
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
-        UserDao userDao = new UserDaoImpl();
-        ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
         try {
-            transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
-            userId = userDao.add(user);
-            profilePlayer.setUserId(userId);
-            profilePlayerDao.add(profilePlayer);
-            transaction.commit();
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            UserDao userDao = new UserDaoImpl();
+            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+            try {
+                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                userId = userDao.add(user);
+                profilePlayer.setUserId(userId);
+                profilePlayerDao.add(profilePlayer);
+                transaction.commit();
+            } catch (DaoException e) {
+                transaction.rollback();
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.endTransaction();
+            }
         } catch (DaoException e) {
-            transaction.rollback();
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.endTransaction();
         }
         return userId;
     }
 
     @Override
-    public boolean isUserLoginExist(String login) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public boolean isUserLoginExist(String login) throws ServiceException {
         try {
-            UserDao userDao = new UserDaoImpl();
-            transaction.init((AbstractDao) userDao);
-            Optional<User> user = userDao.findUserByLogin(login);
-            return user.isPresent();
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                UserDao userDao = new UserDaoImpl();
+                transaction.init((AbstractDao) userDao);
+                Optional<User> user = userDao.findUserByLogin(login);
+                return user.isPresent();
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean isUserEmailExist(String email) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public boolean isUserEmailExist(String email) throws ServiceException {
         try {
-            UserDao userDao = new UserDaoImpl();
-            transaction.init((AbstractDao) userDao);
-            Optional<User> user = userDao.findUserByEmail(email);
-            return user.isPresent();
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                UserDao userDao = new UserDaoImpl();
+                transaction.init((AbstractDao) userDao);
+                Optional<User> user = userDao.findUserByEmail(email);
+                return user.isPresent();
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 }

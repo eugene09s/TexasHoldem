@@ -1,6 +1,5 @@
 package com.epam.poker.service.database;
 
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.ProfilePlayer;
 import com.epam.poker.model.database.User;
@@ -19,7 +18,7 @@ public interface SignUpService {
      * @throws ServiceException if login and password are not passed validation
      *                          and also it's a wrapper for lower errors.
      */
-    long signUp(User user, ProfilePlayer profilePlayer) throws ServiceException, DaoException;
+    long signUp(User user, ProfilePlayer profilePlayer) throws ServiceException;
 
     /**
      * Finds out if user is exist by login.
@@ -29,7 +28,7 @@ public interface SignUpService {
      *
      * @throws ServiceException a wrapper for lower errors.
      */
-    boolean isUserLoginExist(String login) throws ServiceException, DaoException;
+    boolean isUserLoginExist(String login) throws ServiceException;
 
     /**
      * Finds out if user is exist by login.
@@ -39,5 +38,5 @@ public interface SignUpService {
      *
      * @throws ServiceException a wrapper for lower errors.
      */
-    boolean isUserEmailExist(String email) throws ServiceException, DaoException;
+    boolean isUserEmailExist(String email) throws ServiceException;
 }

@@ -29,69 +29,85 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public long add(Game game) throws ServiceException, DaoException {
+    public long add(Game game) throws ServiceException {
         if (!gameValidator.isValid(game)) {
             throw new ServiceException("Invalid game data.");
         }
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            GameDao gameDao = new GameDaoImpl();
-            transaction.init((AbstractDao) gameDao);
-            return gameDao.add(game);
-        } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public int findGamesAmout() throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
-        try {
-            GameDao gameDao = new GameDaoImpl();
-            transaction.init((AbstractDao) gameDao);
-            return gameDao.findGameAmount();
-        } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public List<Game> findGamesRange(int offset, int amount) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
-        try {
-            GameDao gameDao = new GameDaoImpl();
-            transaction.init((AbstractDao) gameDao);
-            return gameDao.findGamesRange(offset, amount);
-        } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public Game findGameById(long id) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
-        try {
-            GameDao gameDao = new GameDaoImpl();
-            transaction.init((AbstractDao) gameDao);
-            Optional<Game> gameOptional = gameDao.findById(id);
-            if (!gameOptional.isPresent()) {
-                throw new ServiceException("Game id=" + id + " is not found");
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                GameDao gameDao = new GameDaoImpl();
+                transaction.init((AbstractDao) gameDao);
+                return gameDao.add(game);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
             }
-            return gameOptional.get();
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
+        }
+    }
+
+    @Override
+    public int findGamesAmount() throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                GameDao gameDao = new GameDaoImpl();
+                transaction.init((AbstractDao) gameDao);
+                return gameDao.findGameAmount();
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Game> findGamesRange(int offset, int amount) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                GameDao gameDao = new GameDaoImpl();
+                transaction.init((AbstractDao) gameDao);
+                return gameDao.findGamesRange(offset, amount);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Game findGameById(long id) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                GameDao gameDao = new GameDaoImpl();
+                transaction.init((AbstractDao) gameDao);
+                Optional<Game> gameOptional = gameDao.findById(id);
+                if (!gameOptional.isPresent()) {
+                    throw new ServiceException("Game id=" + id + " is not found");
+                }
+                return gameOptional.get();
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         }
     }
 }

@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 
-public class DaoSaveTransaction implements AutoCloseable{
+public class DaoSaveTransaction {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private ProxyConnection proxyConnection;
@@ -77,23 +77,5 @@ public class DaoSaveTransaction implements AutoCloseable{
             LOGGER.error("Commit error close: " + e);
             throw new DaoException(e);
         }
-    }
-
-    @Override
-    public void close() throws DaoException, SQLException {
-        if (proxyConnection == null) {
-            LOGGER.error("Connection equal null!");
-            throw new DaoException("Connection don't close");
-        }
-        if (!proxyConnection.getAutoCommit()) {
-            try {
-                proxyConnection.setAutoCommit(true);
-            } catch (SQLException e) {
-                LOGGER.error("End transaction. Set auto commit error: " + e);
-                throw new DaoException(e);
-            }
-        }
-        connectionPool.releaseConnection(proxyConnection);
-        proxyConnection = null;
     }
 }

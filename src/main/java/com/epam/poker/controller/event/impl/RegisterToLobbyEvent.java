@@ -42,7 +42,7 @@ public class RegisterToLobbyEvent implements EventSocket {
         User user = null;
         try {
             user = userService.findUserByLogin(gambler.getName());
-        } catch (ServiceException | DaoException e) {
+        } catch (ServiceException e) {
             LOGGER.error("Select user from database: " + e);
         }
         BigDecimal balanceGambler;

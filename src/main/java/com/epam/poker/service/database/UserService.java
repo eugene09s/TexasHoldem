@@ -1,6 +1,5 @@
 package com.epam.poker.service.database;
 
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.User;
 
@@ -20,7 +19,7 @@ public interface UserService {
      *
      *   @throws ServiceException if database errors occurs.
      */
-    List<User> findUsersRange(int offset, int amount) throws ServiceException, DaoException;
+    List<User> findUsersRange(int offset, int amount) throws ServiceException;
 
     /**
      * Gets users amount in database.
@@ -29,7 +28,7 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    int findUsersAmount() throws ServiceException, DaoException;
+    int findUsersAmount() throws ServiceException;
 
     /**
      * Finds user in database by login and password and returns container of account
@@ -42,7 +41,7 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    User findUserByLoginPassword(String login, String password) throws ServiceException, DaoException;
+    User findUserByLoginPassword(String login, String password) throws ServiceException;
 
     /**
      * Finds user in database by login and returns container of account
@@ -54,7 +53,7 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    User findUserByLogin(String login) throws ServiceException, DaoException;
+    User findUserByLogin(String login) throws ServiceException;
 
 
     /**
@@ -67,7 +66,7 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    User findUserByEmail(String email) throws ServiceException, DaoException;
+    User findUserByEmail(String email) throws ServiceException;
 
     /**
      * Blocks user by id.
@@ -78,7 +77,7 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    boolean blockById(long id) throws ServiceException, DaoException;
+    boolean blockById(long id) throws ServiceException;
 
     /**
      * Unblock account by id.
@@ -89,7 +88,7 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    boolean unblockById(long id) throws ServiceException, DaoException;
+    boolean unblockById(long id) throws ServiceException;
 
     /**
      * Adds money value to balance of user by user id.
@@ -101,9 +100,9 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    boolean addMoneyById(BigDecimal money, long id) throws ServiceException, DaoException;
-    boolean minusMoneyByLogin(BigDecimal money, String login) throws ServiceException, DaoException;
-    boolean addMoneyByLogin(BigDecimal money, String login) throws ServiceException, DaoException;
+    boolean addMoneyById(BigDecimal money, long id) throws ServiceException;
+    boolean minusMoneyByLogin(BigDecimal money, String login) throws ServiceException;
+    boolean addMoneyByLogin(BigDecimal money, String login) throws ServiceException;
     /**
      * Saves specific object to database.
      * Object User should be conatin UserId field
@@ -114,9 +113,9 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    boolean update(User item) throws ServiceException, DaoException;
-    long add(User t) throws ServiceException, DaoException;
-    boolean updatePassword(long userId, String password) throws ServiceException, DaoException;
+    boolean update(User item) throws ServiceException;
+    long add(User t) throws ServiceException;
+    boolean updatePassword(long userId, String password) throws ServiceException;
 
     /**
      * Finds out if user is blocked by user id.
@@ -128,8 +127,8 @@ public interface UserService {
      * @throws ServiceException  if user is not found and
      *                            also it's a wrapper for lower errors.
      */
-    boolean isBlockedById(long id) throws ServiceException, DaoException;
-    boolean isUserExistByLoginPassword(String login, String password) throws ServiceException, DaoException;
-    List<User> findAll() throws ServiceException, DaoException;
-    User findUserById(long id) throws ServiceException, DaoException;
+    boolean isBlockedById(long id) throws ServiceException;
+    boolean isUserExistByLoginPassword(String login, String password) throws ServiceException;
+    List<User> findAll() throws ServiceException;
+    User findUserById(long id) throws ServiceException;
 }

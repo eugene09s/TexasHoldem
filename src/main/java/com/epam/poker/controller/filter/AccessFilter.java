@@ -56,7 +56,7 @@ public class AccessFilter implements Filter {
                     try {
                         session.setAttribute(Attribute.PHOTO, profilePlayerService.findProfilePlayerById(
                                 Long.parseLong(claimsJws.getBody().get(Attribute.USER_ID).toString())).getPhoto());
-                    } catch (ServiceException | DaoException e) {
+                    } catch (ServiceException e) {
                         LOGGER.error("User not found" + e);
                     }
                 }

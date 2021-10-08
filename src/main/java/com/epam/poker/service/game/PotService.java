@@ -101,7 +101,6 @@ public class PotService {
         for (int i = potsCount - 1; i >= 0; --i) {
             List<Gambler> winners = new ArrayList<>();
             int bestRating = 0;
-            //int gamblersCount = gamblers.length;
             for (Gambler gambler : gamblers) {
                 if (gambler != null && gambler.isInHand()
                         && pots.get(i).getContributors()
@@ -118,26 +117,36 @@ public class PotService {
             if (winners.size() == 1) {
                 BigDecimal moneyInPlay = winners.get(0).getMoneyInPlay().add(pots.get(i).getAmount());
                 winners.get(0).setMoneyInPlay(moneyInPlay);
-                String htmlHand = "[";
-                List<String> cards = winners.get(0).getEvaluateHand().getCards();
-                for (String card : cards) {
-                    htmlHand = htmlHand.concat(card + ", ");
-                }
-                htmlHand = htmlHand.concat("]");
-                htmlHand = htmlHand.replace("/s/g", "&#9824;")
-                        .replace("/c/g", "&#9827")
-                        .replace("/h/g", "&#9829")
-                        .replace("/d/g", "&#9830");
                 messages.add(winners.get(0).getName() + " wins the pot (" + pots.get(i).getAmount()
-                        + ") with" + winners.get(0).getEvaluateHand().getName() + " " + htmlHand);
+                        + ") with " + winners.get(0).getEvaluateHand().getName() + " "
+                        + handlerMessage(winners.get(0).getEvaluateHand().getCards()));
             } else {
                 int winnersCount = winners.size();
-//                BigDecimal winnigs =
-                //todo winners
+                BigDecimal winnigs = pots.get(i).getAmount().divide(BigDecimal.valueOf(winnersCount));
+                boolean isOddMoney = winnigs.multiply(BigDecimal.valueOf(winnersCount)).equals(pots.get(i).getAmount());
+                for (Gambler gambler : winners) {
+                    BigDecimal gamblersWinnings = BigDecimal.ZERO;
+                    if (isOddMoney && gambler.getNumberSeatOnTable() == firstGamblerToAct) {
+                        gamblersWinnings = winnigs.add(BigDecimal.ONE);
+                    } else {
+                        gamblersWinnings = winnigs;
+                    }
+                    gambler.setMoneyInPlay(gambler.getMoneyInPlay().add(gamblersWinnings));
+                    messages.add(gambler.getName() + " ties the pot (" + gamblersWinnings + ") with "
+                            + gambler.getEvaluateHand().getName() + " "
+                            + handlerMessage(gambler.getEvaluateHand().getCards()));
+                }
             }
-        }
+        }//todo update money gambler in the database
         reset(table);
         return messages;
+    }
+
+    private String handlerMessage(List<String> cards) {
+        return cards.toString().replace("s", "&#9824;")
+                .replace("c", "&#9827;")
+                .replace("h", "&#9829;")
+                .replace("d", "&#9830;");
     }
 
     public String givenToWinner(Table table, Gambler gambler) {

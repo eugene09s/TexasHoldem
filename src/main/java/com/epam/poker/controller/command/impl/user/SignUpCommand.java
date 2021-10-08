@@ -47,7 +47,7 @@ public class SignUpCommand implements Command {
         boolean isLoginAndEmailExist = false;
         try {
             isLoginAndEmailExist = sigUpService.isUserLoginExist(login) && sigUpService.isUserEmailExist(email);
-        } catch (DaoException e) {
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
         if (!isLoginAndEmailExist) {
@@ -76,12 +76,7 @@ public class SignUpCommand implements Command {
                     .setLostMoney(PRE_MONEY)
                     .setWinMoney(PRE_MONEY)
                     .createRatingPlayer();
-            long idUser = 0;
-            try {
-                idUser = sigUpService.signUp(user, profilePlayer);
-            } catch (DaoException e) {
-                e.printStackTrace();
-            }
+            long idUser = sigUpService.signUp(user, profilePlayer);
             if (idUser != 0) {
                 return CommandResult.redirect(LOGIN_PAGE_COMMAND);
             } else {

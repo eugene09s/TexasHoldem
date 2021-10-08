@@ -59,7 +59,7 @@ public class UploadFileController extends HttpServlet {
             profilePlayerService.updatePhotoByUserId(userId, fileName);
             request.getSession().setAttribute(Attribute.PHOTO, fileName);
             responseLine = "{\"success\": true}";
-        } catch (ServiceException | DaoException e) {
+        } catch (ServiceException e) {
             responseLine = "{\"success\": false}";
             LOGGER.error("Upload photo error. User id= " + userId + " try upload.");
         }

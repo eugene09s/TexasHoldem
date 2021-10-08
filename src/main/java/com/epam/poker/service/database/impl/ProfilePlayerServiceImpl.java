@@ -30,176 +30,220 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     }
 
     @Override
-    public int findProfilePlayerAmount() throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public int findProfilePlayerAmount() throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            int answer = profilePlayerDao.findProfilePlayerAmount();
-            return answer;
-        } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public List<ProfilePlayer> findAll() throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
-        try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            List<ProfilePlayer> profilePlayerList = profilePlayerDao.findAll();
-            return profilePlayerList;
-        } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
-            throw new ServiceException(e);
-        } finally {
-            transaction.end();
-        }
-    }
-
-    @Override
-    public ProfilePlayer findProfilePlayerById(long id) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
-        try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            Optional<ProfilePlayer> profilePlayer = profilePlayerDao.findById(id);
-            if (!profilePlayer.isPresent()) {
-                throw new ServiceException("Profile player id=" + id + " is not found");
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                int answer = profilePlayerDao.findProfilePlayerAmount();
+                return answer;
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
             }
-            return profilePlayer.get();
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean updateProfilePlayerByUserId(long userId, ProfilePlayer profilePlayer) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public List<ProfilePlayer> findAll() throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            return profilePlayerDao.updateProfilePlayerByUserId(userId, profilePlayer);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                List<ProfilePlayer> profilePlayerList = profilePlayerDao.findAll();
+                return profilePlayerList;
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean updatePhotoByUserId(long userId, String photo) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public ProfilePlayer findProfilePlayerById(long id) throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            return profilePlayerDao.updatePhotoByUserId(userId, photo);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                Optional<ProfilePlayer> profilePlayer = profilePlayerDao.findById(id);
+                if (!profilePlayer.isPresent()) {
+                    throw new ServiceException("Profile player id=" + id + " is not found");
+                }
+                return profilePlayer.get();
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public boolean updateProfilePlayerByUserId(long userId, ProfilePlayer profilePlayer) throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            return profilePlayerDao.updateBestPrizeByUserId(userId, bestPrize);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.updateProfilePlayerByUserId(userId, profilePlayer);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean updateAwardByUserId(long userId, String award) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public boolean updatePhotoByUserId(long userId, String photo) throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            return profilePlayerDao.updateAwardByUserId(userId, award);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.updatePhotoByUserId(userId, photo);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean updateAboutYourselfByUserId(long userId, String aboutYourself) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            return profilePlayerDao.updateAboutYourselfByUserId(userId, aboutYourself);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.updateBestPrizeByUserId(userId, bestPrize);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean updateLostMoneyByUserId(long userId, BigDecimal money) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public boolean updateAwardByUserId(long userId, String award) throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            return profilePlayerDao.updateLostMoneyByUserId(userId, money);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.updateAwardByUserId(userId, award);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public boolean updateWinMoneyByUserId(long userId, BigDecimal money) throws ServiceException, DaoException {
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
+    public boolean updateAboutYourselfByUserId(long userId, String aboutYourself) throws ServiceException {
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            return profilePlayerDao.updateWinMoneyByUserId(userId, money);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.updateAboutYourselfByUserId(userId, aboutYourself);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 
     @Override
-    public void add(ProfilePlayer profilePlayer) throws ServiceException, DaoException {
+    public boolean updateLostMoneyByUserId(long userId, BigDecimal money) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.updateLostMoneyByUserId(userId, money);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateWinMoneyByUserId(long userId, BigDecimal money) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.updateWinMoneyByUserId(userId, money);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void add(ProfilePlayer profilePlayer) throws ServiceException {
         if (!profilePlayerValidator.isValid(profilePlayer)) {
             throw new ServiceException("Invalid profile player data.");
         }
-        DaoSaveTransaction transaction = new DaoSaveTransaction();
         try {
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            transaction.init((AbstractDao) profilePlayerDao);
-            profilePlayerDao.add(profilePlayer);
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                profilePlayerDao.add(profilePlayer);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
         } catch (DaoException e) {
-            LOGGER.error("Transaction error: " + e);
             throw new ServiceException(e);
-        } finally {
-            transaction.end();
         }
     }
 }

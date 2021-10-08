@@ -47,7 +47,7 @@ public class ChatController {
             try {
                 this.img = profilePlayerService.findProfilePlayerById(
                         Long.parseLong(claimsJws.getBody().get(Attribute.USER_ID).toString())).getPhoto();
-            } catch (ServiceException | DaoException e) {
+            } catch (ServiceException e) {
                 LOGGER.error("User not found with name: " + username + " Error: " + e);
             }
             sessionUsers.add(session);
