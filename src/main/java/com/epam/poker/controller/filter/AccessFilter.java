@@ -42,7 +42,10 @@ public class AccessFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
         Cookie[] cookies = httpServletRequest.getCookies();
-        Optional<Cookie> cookieToken = getTokenFromCookies(cookies);
+        Optional<Cookie> cookieToken = Optional.empty();
+        if (cookies != null) {
+            cookieToken = getTokenFromCookies(cookies);
+        }
         UserRole userRole;
         if (cookieToken.isPresent()) {
             String token = cookieToken.get().getValue();

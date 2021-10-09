@@ -4,7 +4,7 @@ import com.epam.poker.service.validator.Validator;
 import com.epam.poker.model.database.game.GamePlayer;
 
 public class GamePlayerValidator implements Validator<GamePlayer> {
-    private static final int MIN_ID = 1;
+    private static final int MIN_ID = 0;
     private static GamePlayerValidator instance;
 
     private GamePlayerValidator() {
@@ -21,13 +21,12 @@ public class GamePlayerValidator implements Validator<GamePlayer> {
     public boolean isValid(GamePlayer entity) {
         String lastAction = entity.getLastAction();
         String twoCards = entity.getTwoCards();
-        String combinationsCards = entity.getCombinationsCards();
-        if (lastAction == null || twoCards == null || combinationsCards == null) {
+//        String combinationsCards = entity.getCombinationsCards();
+        if (lastAction == null || twoCards == null) {
             return false;
         }
         long userId = entity.getUserId();
-        long gameId = entity.getGameId();
-        if (userId < MIN_ID || gameId < MIN_ID) {
+        if (userId < MIN_ID) {
             return false;
         }
         return true;

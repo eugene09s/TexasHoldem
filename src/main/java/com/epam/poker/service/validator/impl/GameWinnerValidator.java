@@ -4,7 +4,7 @@ import com.epam.poker.service.validator.Validator;
 import com.epam.poker.model.database.game.GameWinner;
 
 public class GameWinnerValidator implements Validator<GameWinner> {
-    private static final int MIN_ID = 1;
+    private static final int MIN_ID = 0;
     private static GameWinnerValidator instance;
 
     private GameWinnerValidator() {
@@ -19,9 +19,8 @@ public class GameWinnerValidator implements Validator<GameWinner> {
 
     @Override
     public boolean isValid(GameWinner entity) {
-        long gameId = entity.getGameId();
         long userid = entity.getUserId();
-        if (gameId < MIN_ID || userid < MIN_ID) {
+        if (userid < MIN_ID) {
             return false;
         }
         return true;

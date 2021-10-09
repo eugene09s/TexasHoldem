@@ -15,6 +15,6 @@ public interface GamePlayerDao extends Dao<GamePlayer> {
      */
     int findGamePLayerAmount() throws DaoException;
     long add(GamePlayer gamePlayer) throws DaoException;
-    List<GamePlayer> findGamePlayerByGameId(long gameId) throws DaoException;
-    List<GamePlayer> findGamePlayerByUserId(long userId) throws DaoException;
+    List<GamePlayer> findGamePlayersByGameId(long gameId) throws DaoException;
+    List<GamePlayer> findGamePlayersByUserId(long userId) throws DaoException;
 }

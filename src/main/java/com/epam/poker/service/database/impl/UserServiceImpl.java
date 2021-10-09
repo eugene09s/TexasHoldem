@@ -1,11 +1,11 @@
 package com.epam.poker.service.database.impl;
 
+import com.epam.poker.dao.AbstractDao;
+import com.epam.poker.dao.UserDao;
+import com.epam.poker.dao.helper.DaoSaveTransaction;
+import com.epam.poker.dao.impl.user.UserDaoImpl;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.dao.AbstractDao;
-import com.epam.poker.dao.helper.DaoSaveTransaction;
-import com.epam.poker.dao.UserDao;
-import com.epam.poker.dao.impl.user.UserDaoImpl;
 import com.epam.poker.model.database.User;
 import com.epam.poker.model.database.type.UserStatus;
 import com.epam.poker.service.database.UserService;
@@ -13,7 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -84,7 +83,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -107,7 +106,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -130,7 +129,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -149,7 +148,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -168,7 +167,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -187,7 +186,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -206,7 +205,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -225,7 +224,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -244,26 +243,26 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public long add(User t) throws ServiceException {
+    public long add(User user) throws ServiceException {
         try {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
                 transaction.init((AbstractDao) userDao);
-                return userDao.add(t);
+                return userDao.add(user);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
                 throw new ServiceException(e);
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -305,7 +304,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -325,7 +324,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -344,7 +343,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }
@@ -366,7 +365,7 @@ public class UserServiceImpl implements UserService {
             } finally {
                 transaction.end();
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }

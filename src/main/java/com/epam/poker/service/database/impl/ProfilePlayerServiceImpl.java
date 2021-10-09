@@ -1,5 +1,7 @@
 package com.epam.poker.service.database.impl;
 
+import com.epam.poker.dao.UserDao;
+import com.epam.poker.dao.impl.user.UserDaoImpl;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.dao.AbstractDao;
@@ -7,12 +9,14 @@ import com.epam.poker.dao.helper.DaoSaveTransaction;
 import com.epam.poker.dao.ProfilePlayerDao;
 import com.epam.poker.dao.impl.user.ProfilePlayerDaoImpl;
 import com.epam.poker.model.database.ProfilePlayer;
+import com.epam.poker.model.database.User;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.validator.Validator;
 import com.epam.poker.service.validator.impl.ProfilePlayerValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.print.attribute.standard.MediaSize;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -145,6 +149,81 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
                 transaction.end();
             }
         } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateLostMoneyByLogin(String login, BigDecimal money) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                UserDao userDao = new UserDaoImpl();
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                 Optional<User> userOptional = userDao.findUserByLogin(login);
+                if (!userOptional.isPresent()) {
+                    throw new ServiceException("User login=" + login + " is not found");
+                }
+                long userId = userOptional.get().getUserId();
+                return profilePlayerDao.updateLostMoneyByUserId(userId, money);
+            } catch (DaoException e) {
+                transaction.rollback();
+                throw new ServiceException(e);
+            } finally {
+                transaction.endTransaction();
+            }
+        } catch (DaoException | ServiceException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateWinMoneyByLogin(String login, BigDecimal money) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                UserDao userDao = new UserDaoImpl();
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                Optional<User> userOptional = userDao.findUserByLogin(login);
+                if (!userOptional.isPresent()) {
+                    throw new ServiceException("User login=" + login + " is not found");
+                }
+                long userId = userOptional.get().getUserId();
+                return profilePlayerDao.updateWinMoneyByUserId(userId, money);
+            } catch (DaoException e) {
+                transaction.rollback();
+                throw new ServiceException(e);
+            } finally {
+                transaction.endTransaction();
+            }
+        } catch (DaoException | ServiceException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateBestPrizeByLogin(String login, BigDecimal money) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                UserDao userDao = new UserDaoImpl();
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                Optional<User> userOptional = userDao.findUserByLogin(login);
+                if (!userOptional.isPresent()) {
+                    throw new ServiceException("User login=" + login + " is not found");
+                }
+                long userId = userOptional.get().getUserId();
+                return profilePlayerDao.updateBestPrizeByUserId(userId, money);
+            } catch (DaoException e) {
+                transaction.rollback();
+                throw new ServiceException(e);
+            } finally {
+                transaction.endTransaction();
+            }
+        } catch (DaoException | ServiceException e) {
             throw new ServiceException(e);
         }
     }

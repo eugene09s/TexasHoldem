@@ -1,7 +1,6 @@
 package com.epam.poker.controller.filter;
 
 import com.epam.poker.util.constant.Attribute;
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.impl.UserServiceImpl;
@@ -35,7 +34,10 @@ public class BlockFilter implements Filter {
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         Cookie[] cookies = httpServletRequest.getCookies();
-        Optional<Cookie> cookieToken = getTokenFromCookies(cookies);
+        Optional<Cookie> cookieToken = Optional.empty();
+        if (cookies != null) {
+            cookieToken = getTokenFromCookies(cookies);
+        }
         if (cookieToken.isPresent()) {
             String token = cookieToken.get().getValue();
             if (jwtProvider.validateToken(token)) {
