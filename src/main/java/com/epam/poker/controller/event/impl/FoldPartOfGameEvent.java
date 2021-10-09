@@ -1,6 +1,7 @@
 package com.epam.poker.controller.event.impl;
 
 import com.epam.poker.controller.event.EventSocket;
+import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.game.Gambler;
 import com.epam.poker.model.game.Lobby;
 import com.epam.poker.model.game.Table;
@@ -48,7 +49,11 @@ public class FoldPartOfGameEvent implements EventSocket {
                     && PARTS_OF_GAMES.contains(table.getPhaseGame())) {
                 objectNode.put(SUCCESS, true);
                 sendEvent(gambler, response, objectNode);
-                eventHandlerService.gamblerFolded(table, gambler);
+                try {
+                    eventHandlerService.gamblerFolded(table, gambler);
+                } catch (ServiceException e) {
+                    LOGGER.error("Service game error: " + e);
+                }
             }
         }
     }

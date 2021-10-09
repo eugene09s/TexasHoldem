@@ -1,6 +1,7 @@
 package com.epam.poker.controller.event.impl;
 
 import com.epam.poker.controller.event.EventSocket;
+import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.game.Gambler;
 import com.epam.poker.model.game.Lobby;
 import com.epam.poker.model.game.Table;
@@ -61,7 +62,11 @@ public class RaiseEvent implements EventSocket {
                     if (amountRaise.compareTo(gambler.getMoneyInPlay()) <= 0) {
                         objectNode.put(SUCCESS, true);
                         sendEvent(gambler, response, objectNode);
-                        eventHandlerService.gamblerRaise(table, gambler, amountRaise);
+                        try {
+                            eventHandlerService.gamblerRaise(table, gambler, amountRaise);
+                        } catch (ServiceException e) {
+                            LOGGER.error("Service game error: " + e);
+                        }
                     }
                 }
             }

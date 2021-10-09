@@ -22,7 +22,7 @@ public class Deck implements Entity {
             "3s", "3h", "3d", "3c",
             "2s", "2h", "2d", "2c"
     ));
-    private List<String> freshDeckп;
+    private List<String> freshDeck;
     private int nextCard;
 
     public Deck() {
@@ -36,7 +36,7 @@ public class Deck implements Entity {
             randomCard = cards.remove((int) (Math.random()*( cards.size())));
             shuffledDeck.add(randomCard);
         }
-        this.freshDeckп = shuffledDeck;
+        this.freshDeck = shuffledDeck;
     }
 
     public List<String> getFullDeck() {
@@ -44,13 +44,13 @@ public class Deck implements Entity {
     }
 
     public List<String> getFreshDeck() {
-        return this.freshDeckп;
+        return this.freshDeck;
     }
 
     public List<String> pullSomeCardsFromDeck(int numberOfCards) {
         List<String> dealtCards = new ArrayList<>(numberOfCards);
         for (int i = 0; i < numberOfCards && this.nextCard < SIZE_DECK; ++i) {
-            dealtCards.add(this.freshDeckп.get(this.nextCard));
+            dealtCards.add(this.freshDeck.get(this.nextCard));
             this.nextCard++;
         }
         return dealtCards;

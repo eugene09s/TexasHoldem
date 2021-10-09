@@ -116,5 +116,6 @@ public interface UserDao extends Dao<User> {
      */
     boolean update(User item) throws DaoException;
     long add(User t) throws DaoException;
-    boolean updatePassword(long userId, String password) throws DaoException;
+    boolean updatePasswordByUserId(long userId, String password) throws DaoException;
+    boolean updateBalanceByLogin(String login, BigDecimal money) throws DaoException;
 }

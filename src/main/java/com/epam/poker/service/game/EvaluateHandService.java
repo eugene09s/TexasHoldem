@@ -191,7 +191,7 @@ public class EvaluateHandService {
             }
         }
         // If the biggest pair has two cards, add one kicker
-        if (evaluateHand.getRank().equals(TWO_PAIR)) {
+        if (TWO_PAIR.equals(evaluateHand.getRank())) {
             while (kickets < 1) {
                 if (cards.get(i).charAt(0) != evaluateHand.getCards().get(0).charAt(0)
                         && cards.get(i).charAt(0) != evaluateHand.getCards().get(2).charAt(0)) {
@@ -218,7 +218,7 @@ public class EvaluateHandService {
         for (Map.Entry<Character, List<String>> entry : flushes.entrySet()) {
             int flushLength = entry.getValue().size();
             if (flushLength >= 5) {
-                if (evaluateHand.getRank().equals(STRAIGHT)) {
+                if (STRAIGHT.equals(evaluateHand.getRank())) {
                     List<String> straightFlush = new ArrayList<>();
                     straightFlush.add(entry.getValue().get(0));
                     int j = 1;
@@ -246,8 +246,8 @@ public class EvaluateHandService {
                         }
                     }
                 }
-                if (evaluateHand.getRank().equals(STRAIGHT_FLUSH)
-                        && evaluateHand.getRank().equals(ROYAL_FLUSH)) {
+                if (STRAIGHT_FLUSH.equals(evaluateHand.getRank())
+                        && ROYAL_FLUSH.equals(evaluateHand.getRank())) {
                     evaluateHand.setRank(FLUSH);
                     evaluateHand.setCards(entry.getValue().subList(0, 5));
                 }

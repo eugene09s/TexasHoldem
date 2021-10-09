@@ -1,5 +1,6 @@
 package com.epam.poker.model.game;
 
+import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.Entity;
 import com.epam.poker.service.game.EventHandlerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,8 +15,9 @@ import java.util.Map;
 
 public class Room implements Entity {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
     private static final ObjectMapper mapper = new ObjectMapper();
+    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
+    private StatisticResultGame statisticResultGame = new StatisticResultGame();
     private Map<String, Gambler> gamblers = Collections.synchronizedMap(new HashMap<>());
     private String titleRoom;
     private Table table;
@@ -38,7 +40,11 @@ public class Room implements Entity {
             gambler.setTitleRoom(null);
             if (gambler.getSittingOnTable() > -1
                     && this.table.getSeats()[gambler.getNumberSeatOnTable()].equals(gambler)) {
-                eventHandlerService.gamblerLeft(this.table, gambler);
+                try {
+                    eventHandlerService.gamblerLeft(this.table, gambler);
+                } catch (ServiceException e) {
+                    LOGGER.error("Service game error: " + e);
+                }
             }
             return true;
         }
@@ -84,6 +90,23 @@ public class Room implements Entity {
                 }
             });
         }
+    }
+
+    public StatisticResultGame getStatisticResultGame() {
+        return statisticResultGame;
+    }
+
+    public Room setStatisticResultGame(StatisticResultGame statisticResultGame) {
+        this.statisticResultGame = statisticResultGame;
+        return this;
+    }
+
+    public static EventHandlerService getEventHandlerService() {
+        return eventHandlerService;
+    }
+
+    public static void setEventHandlerService(EventHandlerService eventHandlerService) {
+        Room.eventHandlerService = eventHandlerService;
     }
 
     public Map<String, Gambler> getGamblers() {

@@ -44,11 +44,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             phone_number=?
             WHERE user_id=?
             """;
-    public static final String SQL_UPDATE_PASSWORD = """
+    public static final String SQL_UPDATE_PASSWORD_BY_ID = """
             UPDATE users 
             SET password=?
             WHERE user_id=?
             """;
+    public static final String SQL_UPDATE_BALANCE_BY_LOGIN = """
+            UPDATE users 
+            SET balance=?
+            WHERE login=?
+            """;
+
     public static final String SQL_BLOCK_OR_UNBLOCK_USER = """
             UPDATE users
             SET status=?
@@ -143,15 +149,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public boolean blockById(long id) throws DaoException {
         return executeUpdateQuery(SQL_BLOCK_OR_UNBLOCK_USER,
-                UserStatus.BANNED.toString(),
-                id);
+                UserStatus.BANNED.toString(), id);
     }
 
     @Override
     public boolean unblockById(long id) throws DaoException {
         return executeUpdateQuery(SQL_BLOCK_OR_UNBLOCK_USER,
-                UserStatus.ACTIVE.toString(),
-                id);
+                UserStatus.ACTIVE.toString(), id);
     }
 
     @Override
@@ -170,9 +174,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean updatePassword(long userId, String password) throws DaoException {
-        return executeUpdateQuery(SQL_UPDATE_PASSWORD,
-                password, userId);
+    public boolean updatePasswordByUserId(long userId, String password) throws DaoException {
+        return executeUpdateQuery(SQL_UPDATE_PASSWORD_BY_ID, password, userId);
+    }
+
+    @Override
+    public boolean updateBalanceByLogin(String login, BigDecimal money) throws DaoException {
+        return executeUpdateQuery(SQL_UPDATE_BALANCE_BY_LOGIN, money, login);
     }
 
     @Override

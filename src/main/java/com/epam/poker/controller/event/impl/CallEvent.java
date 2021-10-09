@@ -1,6 +1,7 @@
 package com.epam.poker.controller.event.impl;
 
 import com.epam.poker.controller.event.EventSocket;
+import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.game.Gambler;
 import com.epam.poker.model.game.Lobby;
 import com.epam.poker.model.game.Table;
@@ -51,7 +52,11 @@ public class CallEvent implements EventSocket {
                    && PARTS_OF_GAMES.contains(table.getPhaseGame())) {
                 objectNode.put(Attribute.SUCCESS, true);
                 sendEvent(gambler, response, objectNode);
-                eventHandlerService.gamblerCalled(table, gambler);
+                try {
+                    eventHandlerService.gamblerCalled(table, gambler);
+                } catch (ServiceException e) {
+                    LOGGER.error("Service game error: " + e);
+                }
             }
         }
     }

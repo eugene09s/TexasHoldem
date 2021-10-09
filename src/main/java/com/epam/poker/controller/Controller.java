@@ -41,7 +41,8 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         CommandResult commandResult;
-        String commandParam = req.getParameter(Parameter.COMMAND);
+        String commandParam = "";
+        commandParam = req.getParameter(Parameter.COMMAND);
         Command command = Command.of(commandParam);
         try {
             RequestContext requestContext = new RequestContext(req);

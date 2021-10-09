@@ -1,5 +1,6 @@
 package com.epam.poker.service.game;
 
+import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.game.*;
 import com.epam.poker.util.constant.Attribute;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,8 +65,7 @@ public class PokerGameService {
                 //if a player is sitting on the current seat
                 if (table.getSeats()[i] != null
                         && table.getSeats()[i].isSittingIn()) {
-                    if (table.getSeats()[i] != null
-                            && table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) == 0) {
+                    if (table.getSeats()[i].getMoneyInPlay().equals(BigDecimal.ZERO)) {
                         table.getSeats()[i].sitOut();
                         int playersSittinCount = table.getGamblersSittingInCount() - 1;
                         table.setGamblersSittingInCount(playersSittinCount);
@@ -122,14 +122,14 @@ public class PokerGameService {
         gambler.setEvaluateHand(new EvaluateHand());
     }
 
-    public void endPhase(Table table) {
+    public void endPhase(Table table) throws ServiceException {
         switch (table.getPhaseGame()) {
             case "preflop", "flop", "turn" -> initializeNextPhase(table);
             case "river" -> showdown(table);
         }
     }
 
-    private void initializeNextPhase(Table table) {
+    private void initializeNextPhase(Table table) throws ServiceException {
         switch (table.getPhaseGame()) {
             case Attribute.PRE_FLOP_PART_OF_GAME -> {
                 table.setPhaseGame(Attribute.FLOP_PART_OF_GAME);
@@ -160,7 +160,7 @@ public class PokerGameService {
         //if all other gamblers are all in, there should be on actions. Move to the next round.
         if (otherGamblersAreAllIn(table)) {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(4000);
             } catch (InterruptedException e) {
                 LOGGER.error("Sleep thread err:" + e);
             }
@@ -234,7 +234,7 @@ public class PokerGameService {
         return gamblerAlIn >= table.getGamblersInHandCount() - 1;
     }
 
-    private void showdown(Table table) {
+    private void showdown(Table table) throws ServiceException {
         potService.addTableBets(table);
         int currentGambler = findNextGambler(table, String.valueOf(table.getDealerSeat()), true, false);
         int bestHandRating = 0;
@@ -259,7 +259,7 @@ public class PokerGameService {
             notifierTableDataService.notifyALLGamblersOfRoom(table);
         }
         try {
-            Thread.sleep(4000);
+            Thread.sleep(7000);
         } catch (InterruptedException e) {
             LOGGER.error("Sleep err:" + e);
         }
@@ -359,7 +359,12 @@ public class PokerGameService {
         potService.addTableBets(table);
         if (!table.isEmptyPots()) {
             int winnerSeat = findNextGambler(table, String.valueOf(0), true, false);
-            String messageResultGame = potService.givenToWinner(table, table.getSeats()[winnerSeat]);
+            String messageResultGame = null;
+            try {
+                messageResultGame = potService.givenToWinner(table, table.getSeats()[winnerSeat]);
+            } catch (ServiceException e) {
+                LOGGER.warn("End Round error: " + e);
+            }
             Log log = Log.builder()
                     .setMessage(messageResultGame)
                     .setAction("")
@@ -400,7 +405,7 @@ public class PokerGameService {
 
     private void removeAllCardsFromGame(Table table) {
         for (Gambler gambler : table.getSeats()) {
-            if (gambler != null && gambler.isSittingIn()) {
+            if (gambler != null) {
                 gambler.setPublicCards(null);
                 gambler.setPrivateCards(null);
                 gambler.setHasCards(false);

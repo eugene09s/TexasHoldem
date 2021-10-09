@@ -10,4 +10,5 @@ public interface GameService {
     int findGamesAmount() throws ServiceException;
     List<Game> findGamesRange(int offset, int amount) throws ServiceException;
     Game findGameById(long id) throws ServiceException;
+    List<Game> findAll() throws ServiceException;
 }

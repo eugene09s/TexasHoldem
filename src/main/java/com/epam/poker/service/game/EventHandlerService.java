@@ -1,15 +1,29 @@
 package com.epam.poker.service.game;
 
-import com.epam.poker.model.game.Gambler;
-import com.epam.poker.model.game.Log;
-import com.epam.poker.model.game.Table;
+import com.epam.poker.exception.ServiceException;
+import com.epam.poker.model.database.game.GamePlayer;
+import com.epam.poker.model.game.*;
+import com.epam.poker.service.database.GamePlayerService;
+import com.epam.poker.service.database.ProfilePlayerService;
+import com.epam.poker.service.database.UserService;
+import com.epam.poker.service.database.impl.GamePlayerServiceImpl;
+import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
+import com.epam.poker.service.database.impl.UserServiceImpl;
+import com.epam.poker.util.constant.Attribute;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class EventHandlerService {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final EventHandlerService instance = new EventHandlerService();
     private static PotService potService = PotService.getInstance();
+    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
     private static NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
+    private static Lobby lobby = Lobby.getInstance();
+    private static UserService userService = UserServiceImpl.getInstance();
     private static PokerGameService pokerGameService = PokerGameService.getInstacne();
 
     private EventHandlerService() {
@@ -19,8 +33,8 @@ public class EventHandlerService {
         return instance;
     }
 
-    public void gamblerFolded(Table table, Gambler gambler) {
-        foldGambler(gambler);
+    public void gamblerFolded(Table table, Gambler gambler) throws ServiceException {
+        foldGambler(table, gambler);
         Log log = Log.builder()
                 .setMessage(gambler.getName() + " folded")
                 .setAction("fold")
@@ -46,8 +60,33 @@ public class EventHandlerService {
         }
     }
 
-    private void foldGambler(Gambler gambler) {
+    private void foldGambler(Table table, Gambler gambler) throws ServiceException {
         if (gambler != null) {
+            BigDecimal loseMoney = table.getPots().get(0).getAmount()
+                    .divide(BigDecimal.valueOf(table.getGamblersInHandCount()));
+            profilePlayerService.updateLostMoneyByLogin(gambler.getName(), loseMoney);
+            StatisticResultGame statisticResultGame = lobby.findRoom(String.format(
+                    Attribute.TABLE_WITH_HYPHEN, table.getId())).getStatisticResultGame();
+            String twoCardsOfGambler = "";
+            if (gambler.getPrivateCards() != null) {
+                twoCardsOfGambler = Arrays.toString(gambler.getPrivateCards());
+            }
+            long userId = -1;
+            try {
+                userId = userService.findUserByLogin(gambler.getName()).getUserId();
+            } catch (ServiceException e) {
+                LOGGER.error("User not fount login: %s " + lobby + e);
+            }
+            if (userId == -1) {
+                throw new ServiceException("Error found user by login");
+            }
+            GamePlayer gamePlayer = GamePlayer.builder()
+                    .setLastAction(table.getPhaseGame())
+                    .setTwoCards(twoCardsOfGambler)
+                    .setCombinationsCards("")
+                    .setUserId(userId)
+                    .createGamePlayer();
+            statisticResultGame.getGamePlayers().add(gamePlayer);
             gambler.setHasCards(false);
             gambler.setInHand(false);
             gambler.setPrivateCards(null);
@@ -55,7 +94,7 @@ public class EventHandlerService {
         }
     }
 
-    public void gamblerChecked(Table table, Gambler gambler) {
+    public void gamblerChecked(Table table, Gambler gambler) throws ServiceException {
         Log log = Log.builder()
                 .setMessage(gambler.getName() + " checked")
                 .setAction("check")
@@ -154,7 +193,7 @@ public class EventHandlerService {
         notifierTableDataService.notifyALLGamblersOfRoom(table);
     }
 
-    public void gamblerLeft(Table table, Gambler gambler) {
+    public void gamblerLeft(Table table, Gambler gambler) throws ServiceException {
         Log log = Log.builder()
                 .setMessage(gambler.getName() + " left")
                 .setAction("")
@@ -162,30 +201,33 @@ public class EventHandlerService {
                 .setNotification("")
                 .createLog();
         table.setLog(log);
-        if (gambler.isSittingIn()) {
-            gamblerSatOut(table, gambler, true);
-        }
-        gambler.leaveTable();
-//        int gamblersSeatedCount = table.getGamblersSittingInCount() - 1;
-//        table.setGamblersSittingInCount(gamblersSeatedCount);
-        //todo seated count -1
-        //if there are not enough gamblers to continue the game
-        if (table.getGamblersSittingInCount() < 2) {//seated count!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            table.setDealerSeat(null);
-        }
-        table.deleteGamblerOfSeatByEntity(gambler);
-        notifierTableDataService.notifyALLGamblersOfRoom(table);
-        //if a gambler left a heads-up match and there are people waiting to gambler, start a new round
-        if (table.getGamblersInHandCount() < 2) {
-            pokerGameService.endRound(table);
-        } //Else if the gambler was the last to act in this phase, end the phase
-        else if (table.getLastGamblerToAct() == gambler.getNumberSeatOnTable()
-                && table.getActiveSeat() == gambler.getNumberSeatOnTable()) {
-            pokerGameService.endPhase(table);
+        int numberSeat = gambler.getNumberSeatOnTable();
+        if (gambler.getSittingOnTable() > -1) {
+            if (gambler.isSittingIn()) {
+                gamblerSatOut(table, gambler, true);
+            }
+            gambler.leaveTable();
+            if (gambler.getBalance().compareTo(BigDecimal.ZERO) >= 0) {
+                userService.updateBalanceByLogin(gambler.getName(), gambler.getBalance());
+            }
+            //if there are not enough gamblers to continue the game
+            if (table.getGamblersSittingInCount() < 2) {
+                table.setDealerSeat(null);
+            }
+            table.deleteGamblerOfSeatByEntity(gambler);
+            notifierTableDataService.notifyALLGamblersOfRoom(table);
+            //if a gambler left a heads-up match and there are people waiting to gambler, start a new round
+            if (table.getGamblersInHandCount() < 2) {
+                pokerGameService.endRound(table);
+            } //Else if the gambler was the last to act in this phase, end the phase
+            else if (table.getLastGamblerToAct() == numberSeat
+                    && table.getActiveSeat() == numberSeat) {
+                pokerGameService.endPhase(table);
+            }
         }
     }
 
-    public void gamblerCalled(Table table, Gambler gambler) {
+    public void gamblerCalled(Table table, Gambler gambler) throws ServiceException {
         BigDecimal calledAmount = table.getBiggestBet().subtract(gambler.getBet());
         gambler.bet(calledAmount);
         Log log = Log.builder()
@@ -204,7 +246,7 @@ public class EventHandlerService {
         }
     }
 
-    public void gamblerBetted(Table table, Gambler gambler, BigDecimal amount) {
+    public void gamblerBetted(Table table, Gambler gambler, BigDecimal amount) throws ServiceException {
         gambler.bet(amount);
         BigDecimal biggestBet = table.getBiggestBet().compareTo(gambler.getBet()) < 0
                 ? gambler.getBet() : table.getBiggestBet();
@@ -227,7 +269,7 @@ public class EventHandlerService {
         }
     }
 
-    public void gamblerRaise(Table table, Gambler gambler, BigDecimal amount) {
+    public void gamblerRaise(Table table, Gambler gambler, BigDecimal amount) throws ServiceException {
         gambler.raise(amount);
         BigDecimal oldBiggestBet = table.getBiggestBet();
         BigDecimal biggestBet = table.getBiggestBet().compareTo(gambler.getBet()) < 0

@@ -40,10 +40,13 @@ public interface ProfilePlayerService {
     ProfilePlayer findProfilePlayerById(long id) throws ServiceException;
     boolean updateProfilePlayerByUserId(long userId, ProfilePlayer profilePlayer) throws ServiceException;
     boolean updatePhotoByUserId(long userId, String photo) throws ServiceException;
-    boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws ServiceException;
     boolean updateAwardByUserId(long userId, String award) throws ServiceException;
     boolean updateAboutYourselfByUserId(long userId, String aboutYourself) throws ServiceException;
-    boolean updateLostMoneyByUserId(long userId, BigDecimal money) throws ServiceException;
+    boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws ServiceException;
     boolean updateWinMoneyByUserId(long userId, BigDecimal money) throws ServiceException;
+    boolean updateLostMoneyByUserId(long userId, BigDecimal money) throws ServiceException;
+    boolean updateLostMoneyByLogin(String login, BigDecimal money) throws ServiceException;
+    boolean updateWinMoneyByLogin(String login, BigDecimal money) throws ServiceException;
+    boolean updateBestPrizeByLogin(String login, BigDecimal bestPrize) throws ServiceException;
     void add(ProfilePlayer profilePlayer) throws ServiceException;
 }

@@ -116,6 +116,7 @@ public interface UserService {
     boolean update(User item) throws ServiceException;
     long add(User t) throws ServiceException;
     boolean updatePassword(long userId, String password) throws ServiceException;
+    boolean updateBalanceByLogin(String login, BigDecimal money) throws ServiceException;
 
     /**
      * Finds out if user is blocked by user id.

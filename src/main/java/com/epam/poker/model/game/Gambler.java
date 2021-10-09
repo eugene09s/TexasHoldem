@@ -13,7 +13,6 @@ public class Gambler implements Entity {
     private boolean hasCards;
     private String[] publicCards;
     private BigDecimal bet;
-    private int tableId;
     private Session session;
     private BigDecimal balance;
     private String titleRoom;
@@ -24,7 +23,7 @@ public class Gambler implements Entity {
     private String img;
 
     public Gambler(String name, BigDecimal chipsInPlay, boolean sittingIn, boolean inHand, boolean hasCards,
-                   String[] publicCards, BigDecimal bet, int tableId, Session session, BigDecimal chips, String titleRoom,
+                   String[] publicCards, BigDecimal bet, Session session, BigDecimal chips, String titleRoom,
                    int seatTable, String[] privateCards, String img) {
         this.name = name;
         this.moneyInPlay = chipsInPlay;
@@ -33,7 +32,6 @@ public class Gambler implements Entity {
         this.hasCards = hasCards;
         this.publicCards = publicCards;
         this.bet = BigDecimal.ZERO;
-        this.tableId = tableId;
         this.session = session;
         this.balance = chips;
         this.titleRoom = titleRoom;
@@ -130,15 +128,6 @@ public class Gambler implements Entity {
 
     public Gambler setPrivateCards(String[] privateCards) {
         this.privateCards = privateCards;
-        return this;
-    }
-
-    public int getTableId() {
-        return tableId;
-    }
-
-    public Gambler setTableId(int tableId) {
-        this.tableId = tableId;
         return this;
     }
 
@@ -244,7 +233,6 @@ public class Gambler implements Entity {
         private boolean hasCards;
         private String[] publicCards;
         private BigDecimal bet;
-        private int tableId;
         private Session session;
         private BigDecimal chips;
         private String titleRoom;
@@ -294,10 +282,6 @@ public class Gambler implements Entity {
             return this;
         }
 
-        public GamblerBuilder setTableId(int tableId) {
-            this.tableId = tableId;
-            return this;
-        }
 
         public GamblerBuilder setName(String name) {
             this.name = name;
@@ -336,7 +320,7 @@ public class Gambler implements Entity {
 
         public Gambler createGambler() {
             return new Gambler(name, chipsInPlay, sittingIn, inHand, hasCards, publicCards,
-                    bet, tableId, session, chips, titleRoom, seatTable,
+                    bet, session, chips, titleRoom, seatTable,
                     privateCards, img);
         }
     }

@@ -51,7 +51,6 @@ public class GameSocketController {
                     .setName(username)
                     .setSession(session)
                     .setImg(img)
-                    .setTableId(-1)
                     .createGambler();
         } else {
             onClose();
