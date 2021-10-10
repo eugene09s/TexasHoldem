@@ -29,9 +29,7 @@ import java.sql.Timestamp;
 
 public class SignUpCommand implements Command {
     private static final String LOGIN_PAGE_COMMAND = "poker?command=" + CommandName.LOGIN_PAGE;
-    private static final BigDecimal INITIAL_BALANCE_USER = BigDecimal.ZERO;
-    private static final String SHA_256 = "SHA-256";
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final BigDecimal INITIAL_BALANCE_USER = BigDecimal.TEN;
     private static final String USERNAME_EXIST_KEY = "username.exist";
     private static final String INVALID_DATA_KEY = "invalid.data";
     private static final BigDecimal PRE_MONEY = BigDecimal.valueOf(0);
@@ -77,7 +75,7 @@ public class SignUpCommand implements Command {
                     .setWinMoney(PRE_MONEY)
                     .createRatingPlayer();
             long idUser = sigUpService.signUp(user, profilePlayer);
-            if (idUser != 0) {
+            if (idUser != -1) {
                 return CommandResult.redirect(LOGIN_PAGE_COMMAND);
             } else {
                 requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_DATA_KEY);

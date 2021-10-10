@@ -13,7 +13,7 @@
             <PatternLayout pattern="${pattern_file}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="1MB"/>
+                <SizeBasedTriggeringPolicy size="16MB"/>
             </Policies>
             <DefaultRolloverStrategy max="15"/>
         </RollingFile>
