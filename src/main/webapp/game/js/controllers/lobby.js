@@ -1,6 +1,5 @@
 app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $scope, $rootScope, $http ) {
 	$scope.lobbyTables = [];
-	$scope.username = '';
 
 	$http({
 		url: '/poker?command=lobby-data',

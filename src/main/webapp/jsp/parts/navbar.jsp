@@ -20,7 +20,7 @@
 
             <sc:access role="GUEST">
                 <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="${pageContext.request.contextPath}/jsp/pages/home.jsp"
+                    <li><a href="${pageContext.request.contextPath}/poker?command=home-page"
                            class="nav-link px-2 text-secondary"><fmt:message key="nav.home.page"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
@@ -43,7 +43,7 @@
 
             <sc:access role="USER">
                 <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="${pageContext.request.contextPath}/jsp/pages/home.jsp"
+                    <li><a href="${pageContext.request.contextPath}/poker?command=home-page"
                            class="nav-link px-2 text-secondary"><fmt:message
                             key="nav.home.page"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=play-page"
@@ -64,10 +64,8 @@
                              width="40" height="40" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="#"><fmt:message key="nav.setting"/></a></li>
-                        <li><a class="dropdown-item"
-                               href="${pageContext.request.contextPath}/poker?command=profile-page&id=${sessionScope.get("userId")}"><fmt:message
-                                key="nav.profile"/></a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/poker?command=account-settings-page"><fmt:message key="nav.setting"/></a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/poker?command=profile-page&id=${sessionScope.get("userId")}"><fmt:message key="nav.profile"/></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -84,9 +82,10 @@
                 </div>
                 <c:import url="/jsp/parts/chat-dialog.html"/>
             </sc:access>
+
             <sc:access role="ADMIN">
                 <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="${pageContext.request.contextPath}/jsp/pages/home.jsp"
+                    <li><a href="${pageContext.request.contextPath}/poker?command=home-page"
                            class="nav-link px-2 text-secondary"><fmt:message
                             key="nav.home.page"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
