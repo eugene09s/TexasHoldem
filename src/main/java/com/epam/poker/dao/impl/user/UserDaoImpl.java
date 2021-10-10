@@ -26,35 +26,39 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             VALUES (?,?,?,?,?,?,?,?,?,?)
             """;
     public static final String SQL_FIND_USER_BY_ID = """
-            SELECT user_id, login, first_name, last_name, email, 
+            SELECT user_id, login, password, first_name, last_name, email, 
             balance, role, status, phone_number, create_time
             FROM users
             WHERE user_id=?
             """;
     public static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD = """
-            SELECT user_id, login, first_name, last_name, email, 
+            SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
-            FROM users 
+            FROM users
             WHERE login=?
             AND password=?
             """;
     public static final String SQL_UPDATE_USER = """
-            UPDATE users 
-            SET login=?, first_name=?, last_name=?, email=?, 
+            UPDATE users
+            SET login=?, first_name=?, last_name=?, email=?,
             phone_number=?
             WHERE user_id=?
             """;
     public static final String SQL_UPDATE_PASSWORD_BY_ID = """
-            UPDATE users 
+            UPDATE users
             SET password=?
             WHERE user_id=?
             """;
     public static final String SQL_UPDATE_BALANCE_BY_LOGIN = """
-            UPDATE users 
+            UPDATE users
             SET balance=?
             WHERE login=?
             """;
-
+    public static final String SQL_UPDATE_GENERAL_INFO_BY_ID = """
+            UPDATE users
+            SET first_name=?, last_name=?, phone_number=?
+            WHERE user_id=?
+            """;
     public static final String SQL_BLOCK_OR_UNBLOCK_USER = """
             UPDATE users
             SET status=?
@@ -76,19 +80,19 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             WHERE login=?
             """;
     public static final String SQL_FIND_BY_LOGIN = """
-            SELECT user_id, login, first_name, last_name, email,
+            SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
             FROM users
             WHERE login=?
             """;
     public static final String SQL_FIND_BY_EMAIL = """
-            SELECT user_id, login, first_name, last_name, email,
+            SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
             FROM  users
             WHERE email=?
             """;
     public static final String SQL_FIND_USERS_RANGE = """
-            SELECT user_id, login, first_name, last_name, email,
+            SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
             FROM users
             WHERE role='USER'
@@ -176,6 +180,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public boolean updatePasswordByUserId(long userId, String password) throws DaoException {
         return executeUpdateQuery(SQL_UPDATE_PASSWORD_BY_ID, password, userId);
+    }
+
+    @Override
+    public boolean updateGeneralInfoByUserId(long userId, User user) throws DaoException {
+        return executeUpdateQuery(SQL_UPDATE_GENERAL_INFO_BY_ID,
+                user.getFirstName(), user.getLastName(),
+                user.getPhoneNumber(), userId);
     }
 
     @Override

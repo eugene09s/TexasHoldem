@@ -1,8 +1,12 @@
 package com.epam.poker.util.constant;
 
+import com.mysql.cj.util.DnsSrv;
+
 public final class Parameter {
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
+    public static final String CURRENT_PASSWORD = "currPas";
+    public static final String NEW_PASSWORD = "newPas";
     public static final String EMAIL = "email";
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
@@ -15,6 +19,7 @@ public final class Parameter {
     public static final String MONEY = "money";
     public static final String PAGE = "page";
     public static final String DATE = "date";
+    public static final String BIO = "bio";
 
     //for JSON
     public static final String EVENT = "event";

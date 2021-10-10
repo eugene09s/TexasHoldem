@@ -268,25 +268,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updatePassword(long userId, String password) throws ServiceException {
-        try {
-            DaoSaveTransaction transaction = new DaoSaveTransaction();
-            try {
-                UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
-                return userDao.updatePasswordByUserId(userId, password);
-            } catch (DaoException e) {
-                LOGGER.error("Transaction error: " + e);
-                throw new ServiceException(e);
-            } finally {
-                transaction.end();
-            }
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public boolean updateBalanceByLogin(String login, BigDecimal money) throws ServiceException {
         try {
             DaoSaveTransaction transaction = new DaoSaveTransaction();

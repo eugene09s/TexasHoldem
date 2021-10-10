@@ -70,11 +70,6 @@ public class RequestContext {
                 session.setAttribute(attributeName, attributeValue);
             }
         }
-//        if (cookies != null) {
-//            for (Cookie cookie : this.cookies) {
-//                response.addCookie(cookie);
-//            }
-//        }
         for (Cookie cookie : newCookies) {
             response.addCookie(cookie);
         }
@@ -118,6 +113,10 @@ public class RequestContext {
 
     public Object getSessionAttribute(String attributeName) {
         return sessionAttributes.get(attributeName);
+    }
+
+    public Cookie[] getCookies() {
+        return cookies;
     }
 
     public String getHeader() {

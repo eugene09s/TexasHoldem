@@ -40,7 +40,7 @@ public class SignUpServiceImpl implements SignUpService {
         if (!userValidator.isValid(user) || !profilePlayerValidator.isValid(profilePlayer)) {
             throw new ServiceException("Invalid user or profile player data.");
         }
-        long userId = 0;
+        long userId = -1;
         try {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             UserDao userDao = new UserDaoImpl();

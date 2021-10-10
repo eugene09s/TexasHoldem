@@ -44,7 +44,7 @@ public class AccessFilter implements Filter {
         Cookie[] cookies = httpServletRequest.getCookies();
         Optional<Cookie> cookieToken = Optional.empty();
         if (cookies != null) {
-            cookieToken = getTokenFromCookies(cookies);
+            cookieToken = jwtProvider.getTokenFromCookies(cookies);
         }
         UserRole userRole;
         if (cookieToken.isPresent()) {
@@ -98,12 +98,6 @@ public class AccessFilter implements Filter {
             LOGGER.warn(WARN_MESSAGE + roleLine);
             return false;
         }
-    }
-
-    private Optional<Cookie> getTokenFromCookies(Cookie[] cookies) {
-        return Arrays.stream(cookies)
-                .filter(c -> c.getName().equals(Attribute.ACCESS_TOKEN))
-                .findFirst();
     }
 
     @Override

@@ -1,18 +1,18 @@
 package com.epam.poker.util.jwt;
 
 import com.auth0.jwt.exceptions.SignatureGenerationException;
+import com.epam.poker.util.constant.Attribute;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class JwtProvider {
     private static final JwtProvider instance = new JwtProvider() ;
@@ -68,5 +68,11 @@ public class JwtProvider {
                 .setAllowedClockSkewSeconds(10)
                 .build()
                 .parseClaimsJws(token);
+    }
+
+    public Optional<Cookie> getTokenFromCookies(Cookie[] cookies) {
+        return Arrays.stream(cookies)
+                .filter(c -> c.getName().equals(Attribute.ACCESS_TOKEN))
+                .findFirst();
     }
 }

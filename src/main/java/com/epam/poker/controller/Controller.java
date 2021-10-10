@@ -59,7 +59,7 @@ public class Controller extends HttpServlet {
                           HttpServletRequest request,
                           HttpServletResponse response)
             throws ServletException, IOException {
-        if (!commandResult.isTypeResponseJson()) {//TODO Perhaps new servlet for send json
+        if (!commandResult.isTypeResponseJson()) {
             String page = commandResult.getPage();
             if (page == null) {
                 response.sendRedirect(HOME_PAGE_COMMAND);
