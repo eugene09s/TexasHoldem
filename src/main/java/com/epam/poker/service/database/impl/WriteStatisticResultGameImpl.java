@@ -10,18 +10,15 @@ import com.epam.poker.dao.impl.game.GamePlayerDaoImpl;
 import com.epam.poker.dao.impl.game.GameWinnerDaoImpl;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.database.game.Game;
 import com.epam.poker.model.database.game.GamePlayer;
 import com.epam.poker.model.database.game.GameWinner;
-import com.epam.poker.model.game.StatisticResultGame;
+import com.epam.poker.model.dto.StatisticResultGame;
 import com.epam.poker.service.database.WriteStatisticResultGame;
 import com.epam.poker.service.validator.impl.GamePlayerValidator;
 import com.epam.poker.service.validator.impl.GameValidator;
 import com.epam.poker.service.validator.impl.GameWinnerValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
 
 public class WriteStatisticResultGameImpl implements WriteStatisticResultGame {
     private static final Logger LOGGER = LogManager.getLogger();

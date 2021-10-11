@@ -10,7 +10,7 @@ import com.epam.poker.exception.ServiceException;
 
 public class GoToHomePageCommand implements Command {
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         return CommandResult.forward(PagePath.HOME);
     }
 }

@@ -23,7 +23,7 @@ public class CheckExistUsernameCommand implements Command {
     private static SignUpService service = SignUpServiceImpl.getInstance();
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, DaoException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException {
         boolean isExistUsername = true;
         String username = ParameterTaker.takeString(Parameter.LOGIN, requestContext);
         if (username == null) {

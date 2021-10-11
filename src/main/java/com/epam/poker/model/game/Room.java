@@ -2,6 +2,7 @@ package com.epam.poker.model.game;
 
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.Entity;
+import com.epam.poker.model.dto.StatisticResultGame;
 import com.epam.poker.service.game.EventHandlerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.Session;

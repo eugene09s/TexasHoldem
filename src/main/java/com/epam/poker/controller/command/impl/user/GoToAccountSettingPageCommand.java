@@ -29,7 +29,7 @@ public class GoToAccountSettingPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext)
-            throws ServiceException, InvalidParametersException, DaoException {
+            throws ServiceException, InvalidParametersException {
         Optional<Cookie> cookieToken = jwtProvider.getTokenFromCookies(requestContext.getCookies());
         String token = cookieToken.get().getValue();
         Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);

@@ -22,7 +22,7 @@ public class GoToProfilePageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext)
-            throws ServiceException, InvalidParametersException, DaoException {
+            throws ServiceException, InvalidParametersException {
         long id = ParameterTaker.takeId(requestContext);
         ProfilePlayer profilePlayer = profilePlayerService.findProfilePlayerById(id);
         User user = userService.findUserById(id);

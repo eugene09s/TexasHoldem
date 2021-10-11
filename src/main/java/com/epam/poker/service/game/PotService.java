@@ -5,6 +5,7 @@ import com.epam.poker.model.database.game.Game;
 import com.epam.poker.model.database.game.GamePlayer;
 import com.epam.poker.model.database.game.GameWinner;
 import com.epam.poker.model.game.*;
+import com.epam.poker.model.dto.StatisticResultGame;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.WriteStatisticResultGame;

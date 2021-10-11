@@ -20,6 +20,7 @@
     <title>
         <fmt:message key="label.title" />
     </title>
+
 </head>
 
 <body>
@@ -33,7 +34,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                        <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" alt="notPhoto" class="rounded-circle" width="200">
+                        <img src="${pageContext.request.contextPath}/images/photo/${profilePlayer.photo}" alt="notPhoto" class="rounded-circle" width="200">
                         <div class="mt-3">
                             <h4>${user.getLogin()}</h4>
                             <p class="text-secondary mb-1">${user.userStatus}</p>

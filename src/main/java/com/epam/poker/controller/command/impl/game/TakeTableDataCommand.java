@@ -23,7 +23,7 @@ public class TakeTableDataCommand implements Command {
     private static final ParserDataToJsonService parserDataToJson = ParserDataToJsonService.getInstance();
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         long tableId = ParameterTaker.takeId(requestContext);
         Room room = lobby.findRoom(String.format(Attribute.TABLE_WITH_HYPHEN, tableId));
         String jsonLine = null;

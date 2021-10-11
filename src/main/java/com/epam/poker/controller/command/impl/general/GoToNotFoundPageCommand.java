@@ -14,7 +14,7 @@ public class GoToNotFoundPageCommand implements Command {
     private static final String MESSAGE_ERROR = "404 Page not found";
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         requestContext.addAttribute(Attribute.ERROR_MESSAGE, MESSAGE_ERROR);
         return CommandResult.forward(PagePath.ERROR);
     }

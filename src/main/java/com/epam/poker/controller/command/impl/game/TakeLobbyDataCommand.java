@@ -22,7 +22,7 @@ public class TakeLobbyDataCommand implements Command {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         List<String> lobbyTablesJson = new ArrayList<>();
         List<Table> tables = lobby.findAllTables();
         for (Table table : tables) {

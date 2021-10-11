@@ -39,7 +39,7 @@ public class LoginCommand implements Command {
     private static JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
-    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException {
+    public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         String login = ParameterTaker.takeString(Parameter.LOGIN, requestContext);
         String pass = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
         LineHasher lineHasher = new LineHasher();

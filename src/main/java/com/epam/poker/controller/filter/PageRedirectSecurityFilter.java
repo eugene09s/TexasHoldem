@@ -20,9 +20,9 @@ public class PageRedirectSecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-//        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-//        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-//        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + indexPath);
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + indexPath);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
