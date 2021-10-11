@@ -122,15 +122,16 @@ public class ProfilePlayer implements Entity {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", ProfilePlayer.class.getSimpleName() + "[", "]")
-                .add("userId=" + userId)
-                .add("bestPrize=" + bestPrize)
-                .add("award='" + award + "'")
-                .add("photo='" + photo + "'")
-                .add("aboutYourselt='" + aboutYourselt + "'")
-                .add("lostMoney=" + lostMoney)
-                .add("winMoney=" + winMoney)
-                .toString();
+        final StringBuilder sb = new StringBuilder("ProfilePlayer{");
+        sb.append("userId=").append(userId);
+        sb.append(", bestPrize=").append(bestPrize);
+        sb.append(", award='").append(award).append('\'');
+        sb.append(", photo='").append(photo).append('\'');
+        sb.append(", aboutYourselt='").append(aboutYourselt).append('\'');
+        sb.append(", lostMoney=").append(lostMoney);
+        sb.append(", winMoney=").append(winMoney);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static ProfilePlayerBuilder builder() {

@@ -82,11 +82,13 @@ public class Log implements Entity {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Log.class.getSimpleName() + "[", "]")
-                .add("message='" + message + "'")
-                .add("seat='" + seat + "'")
-                .add("action='" + action + "'")
-                .toString();
+        final StringBuilder sb = new StringBuilder("Log{");
+        sb.append("message='").append(message).append('\'');
+        sb.append(", seat='").append(seat).append('\'');
+        sb.append(", action='").append(action).append('\'');
+        sb.append(", notification='").append(notification).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     public static LogBuilder builder() {

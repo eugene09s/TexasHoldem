@@ -55,4 +55,31 @@ public class Deck implements Entity {
         }
         return dealtCards;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Deck deck = (Deck) o;
+
+        if (nextCard != deck.nextCard) return false;
+        return freshDeck != null ? freshDeck.equals(deck.freshDeck) : deck.freshDeck == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = freshDeck != null ? freshDeck.hashCode() : 0;
+        result = 31 * result + nextCard;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Deck{");
+        sb.append("freshDeck=").append(freshDeck);
+        sb.append(", nextCard=").append(nextCard);
+        sb.append('}');
+        return sb.toString();
+    }
 }

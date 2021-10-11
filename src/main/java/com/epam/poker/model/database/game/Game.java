@@ -90,13 +90,14 @@ public class Game implements Entity {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Game.class.getSimpleName() + "[", "]")
-                .add("gameId=" + gameId)
-                .add("title='" + title + "'")
-                .add("timestamp=" + date)
-                .add("bank=" + bank)
-                .add("fiveCards='" + fiveCards + "'")
-                .toString();
+        final StringBuilder sb = new StringBuilder("Game{");
+        sb.append("gameId=").append(gameId);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", date=").append(date);
+        sb.append(", bank=").append(bank);
+        sb.append(", fiveCards='").append(fiveCards).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     public static GameBuilder builder() {

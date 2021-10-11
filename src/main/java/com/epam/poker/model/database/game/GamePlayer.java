@@ -106,14 +106,15 @@ public class GamePlayer implements Entity {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", GamePlayer.class.getSimpleName() + "[", "]")
-                .add("gamePlayerId=" + gamePlayerId)
-                .add("lastAction='" + lastAction + "'")
-                .add("twoCards='" + twoCards + "'")
-                .add("combinationsCards='" + combinationsCards + "'")
-                .add("UserId=" + userId)
-                .add("gameId=" + gameId)
-                .toString();
+        final StringBuilder sb = new StringBuilder("GamePlayer{");
+        sb.append("gamePlayerId=").append(gamePlayerId);
+        sb.append(", lastAction='").append(lastAction).append('\'');
+        sb.append(", twoCards='").append(twoCards).append('\'');
+        sb.append(", combinationsCards='").append(combinationsCards).append('\'');
+        sb.append(", userId=").append(userId);
+        sb.append(", gameId=").append(gameId);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static GamePlayerBuilder builder() {

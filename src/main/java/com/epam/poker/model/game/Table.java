@@ -4,6 +4,7 @@ import com.epam.poker.model.Entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Table implements Entity {
@@ -243,5 +244,94 @@ public class Table implements Entity {
 
     public BigDecimal getSmallBlind() {
         return smallBlind;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Table table = (Table) o;
+
+        if (id != table.id) return false;
+        if (seatsCount != table.seatsCount) return false;
+        if (privateTable != table.privateTable) return false;
+        if (gamblersSittingInCount != table.gamblersSittingInCount) return false;
+        if (gamblersInHandCount != table.gamblersInHandCount) return false;
+        if (lastGamblerToAct != table.lastGamblerToAct) return false;
+        if (gameIsOn != table.gameIsOn) return false;
+        if (headsUp != table.headsUp) return false;
+        if (name != null ? !name.equals(table.name) : table.name != null) return false;
+        if (bigBlind != null ? !bigBlind.equals(table.bigBlind) : table.bigBlind != null) return false;
+        if (smallBlind != null ? !smallBlind.equals(table.smallBlind) : table.smallBlind != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(seats, table.seats)) return false;
+        if (deck != null ? !deck.equals(table.deck) : table.deck != null) return false;
+        if (minBuyIn != null ? !minBuyIn.equals(table.minBuyIn) : table.minBuyIn != null) return false;
+        if (maxBuyIn != null ? !maxBuyIn.equals(table.maxBuyIn) : table.maxBuyIn != null) return false;
+        if (pots != null ? !pots.equals(table.pots) : table.pots != null) return false;
+        if (biggestBet != null ? !biggestBet.equals(table.biggestBet) : table.biggestBet != null) return false;
+        if (dealerSeat != null ? !dealerSeat.equals(table.dealerSeat) : table.dealerSeat != null) return false;
+        if (activeSeat != null ? !activeSeat.equals(table.activeSeat) : table.activeSeat != null) return false;
+        if (phaseGame != null ? !phaseGame.equals(table.phaseGame) : table.phaseGame != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(board, table.board)) return false;
+        return log != null ? log.equals(table.log) : table.log == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + seatsCount;
+        result = 31 * result + (bigBlind != null ? bigBlind.hashCode() : 0);
+        result = 31 * result + (smallBlind != null ? smallBlind.hashCode() : 0);
+        result = 31 * result + (privateTable ? 1 : 0);
+        result = 31 * result + gamblersSittingInCount;
+        result = 31 * result + gamblersInHandCount;
+        result = 31 * result + lastGamblerToAct;
+        result = 31 * result + (gameIsOn ? 1 : 0);
+        result = 31 * result + (headsUp ? 1 : 0);
+        result = 31 * result + Arrays.hashCode(seats);
+        result = 31 * result + (deck != null ? deck.hashCode() : 0);
+        result = 31 * result + (minBuyIn != null ? minBuyIn.hashCode() : 0);
+        result = 31 * result + (maxBuyIn != null ? maxBuyIn.hashCode() : 0);
+        result = 31 * result + (pots != null ? pots.hashCode() : 0);
+        result = 31 * result + (biggestBet != null ? biggestBet.hashCode() : 0);
+        result = 31 * result + (dealerSeat != null ? dealerSeat.hashCode() : 0);
+        result = 31 * result + (activeSeat != null ? activeSeat.hashCode() : 0);
+        result = 31 * result + (phaseGame != null ? phaseGame.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(board);
+        result = 31 * result + (log != null ? log.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Table{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", seatsCount=").append(seatsCount);
+        sb.append(", bigBlind=").append(bigBlind);
+        sb.append(", smallBlind=").append(smallBlind);
+        sb.append(", privateTable=").append(privateTable);
+        sb.append(", gamblersSittingInCount=").append(gamblersSittingInCount);
+        sb.append(", gamblersInHandCount=").append(gamblersInHandCount);
+        sb.append(", lastGamblerToAct=").append(lastGamblerToAct);
+        sb.append(", gameIsOn=").append(gameIsOn);
+        sb.append(", headsUp=").append(headsUp);
+        sb.append(", seats=").append(Arrays.toString(seats));
+        sb.append(", deck=").append(deck);
+        sb.append(", minBuyIn=").append(minBuyIn);
+        sb.append(", maxBuyIn=").append(maxBuyIn);
+        sb.append(", pots=").append(pots);
+        sb.append(", biggestBet=").append(biggestBet);
+        sb.append(", dealerSeat=").append(dealerSeat);
+        sb.append(", activeSeat=").append(activeSeat);
+        sb.append(", phaseGame='").append(phaseGame).append('\'');
+        sb.append(", board=").append(Arrays.toString(board));
+        sb.append(", log=").append(log);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -67,11 +67,12 @@ public class GameWinner implements Entity {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", GameWinner.class.getSimpleName() + "[", "]")
-                .add("gameWinnerId=" + gameWinnerId)
-                .add("gameId=" + gameId)
-                .add("UserId=" + userId)
-                .toString();
+        final StringBuilder sb = new StringBuilder("GameWinner{");
+        sb.append("gameWinnerId=").append(gameWinnerId);
+        sb.append(", gameId=").append(gameId);
+        sb.append(", userId=").append(userId);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static GameWinnerBuilder builder() {

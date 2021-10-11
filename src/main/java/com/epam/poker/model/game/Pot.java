@@ -30,7 +30,7 @@ public class Pot implements Entity {
     }
 
     public boolean isEmpty() {
-        if (amount.equals(0) && contributors.isEmpty()) {
+        if (amount.equals(BigDecimal.ZERO) && contributors.isEmpty()) {
             return true;
         }
         return false;
@@ -51,5 +51,32 @@ public class Pot implements Entity {
 
     public void removeGambler(Gambler gambler) {
         this.contributors.remove(gambler.getNumberSeatOnTable());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pot pot = (Pot) o;
+
+        if (amount != null ? !amount.equals(pot.amount) : pot.amount != null) return false;
+        return contributors != null ? contributors.equals(pot.contributors) : pot.contributors == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = amount != null ? amount.hashCode() : 0;
+        result = 31 * result + (contributors != null ? contributors.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Pot{");
+        sb.append("amount=").append(amount);
+        sb.append(", contributors=").append(contributors);
+        sb.append('}');
+        return sb.toString();
     }
 }

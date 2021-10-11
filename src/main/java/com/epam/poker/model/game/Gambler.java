@@ -4,6 +4,7 @@ import com.epam.poker.model.Entity;
 import jakarta.websocket.Session;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class Gambler implements Entity {
     private String name;
@@ -62,10 +63,6 @@ public class Gambler implements Entity {
         return balance;
     }
 
-    public Gambler setBalance(BigDecimal balance) {
-        this.balance = balance;
-        return this;
-    }
 
     public int getSittingOnTable() {
         return sittingOnTable;
@@ -102,10 +99,6 @@ public class Gambler implements Entity {
         return numberSeatOnTable;
     }
 
-    public Gambler setNumberSeatOnTable(int numberSeatOnTable) {
-        this.numberSeatOnTable = numberSeatOnTable;
-        return this;
-    }
 
     public void leaveTable() {
         if (this.sittingOnTable > -1) {
@@ -121,59 +114,30 @@ public class Gambler implements Entity {
         this.moneyInPlay = this.moneyInPlay.add(money);
     }
 
-//fixme should be another methods set
     public String[] getPrivateCards() {
         return privateCards;
     }
 
-    public Gambler setPrivateCards(String[] privateCards) {
-        this.privateCards = privateCards;
-        return this;
-    }
+
 
     public String getName() {
         return name;
-    }
-
-    public Gambler setName(String name) {
-        this.name = name;
-        return this;
     }
 
     public BigDecimal getMoneyInPlay() {
         return moneyInPlay;
     }
 
-    public Gambler setMoneyInPlay(BigDecimal moneyInPlay) {
-        this.moneyInPlay = moneyInPlay;
-        return this;
-    }
-
     public boolean isSittingIn() {
         return sittingIn;
-    }
-
-    public Gambler setSittingIn(boolean sittingIn) {
-        this.sittingIn = sittingIn;
-        return this;
     }
 
     public boolean isInHand() {
         return inHand;
     }
 
-    public Gambler setInHand(boolean inHand) {
-        this.inHand = inHand;
-        return this;
-    }
-
     public boolean isHasCards() {
         return hasCards;
-    }
-
-    public Gambler setHasCards(boolean hasCards) {
-        this.hasCards = hasCards;
-        return this;
     }
 
     public BigDecimal getBet() {
@@ -189,40 +153,137 @@ public class Gambler implements Entity {
         return session;
     }
 
-    public Gambler setSession(Session session) {
-        this.session = session;
-        return this;
-    }
-
     public String getTitleRoom() {
         return titleRoom;
-    }
-
-    public Gambler setTitleRoom(String titleRoom) {
-        this.titleRoom = titleRoom;
-        return this;
     }
 
     public EvaluateHand getEvaluateHand() {
         return evaluateHand;
     }
 
-    public Gambler setEvaluateHand(EvaluateHand evaluateHand) {
-        this.evaluateHand = evaluateHand;
-        return this;
-    }
-
     public String getImg() {
         return img;
     }
 
-    public Gambler setImg(String img) {
-        this.img = img;
-        return this;
-    }
-
     public static GamblerBuilder builder() {
         return new GamblerBuilder();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMoneyInPlay(BigDecimal moneyInPlay) {
+        this.moneyInPlay = moneyInPlay;
+    }
+
+    public void setSittingIn(boolean sittingIn) {
+        this.sittingIn = sittingIn;
+    }
+
+    public void setInHand(boolean inHand) {
+        this.inHand = inHand;
+    }
+
+    public void setHasCards(boolean hasCards) {
+        this.hasCards = hasCards;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void setTitleRoom(String titleRoom) {
+        this.titleRoom = titleRoom;
+    }
+
+    public void setNumberSeatOnTable(int numberSeatOnTable) {
+        this.numberSeatOnTable = numberSeatOnTable;
+    }
+
+    public void setPrivateCards(String[] privateCards) {
+        this.privateCards = privateCards;
+    }
+
+    public void setEvaluateHand(EvaluateHand evaluateHand) {
+        this.evaluateHand = evaluateHand;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Gambler gambler = (Gambler) o;
+
+        if (sittingIn != gambler.sittingIn) return false;
+        if (inHand != gambler.inHand) return false;
+        if (hasCards != gambler.hasCards) return false;
+        if (sittingOnTable != gambler.sittingOnTable) return false;
+        if (numberSeatOnTable != gambler.numberSeatOnTable) return false;
+        if (name != null ? !name.equals(gambler.name) : gambler.name != null) return false;
+        if (moneyInPlay != null ? !moneyInPlay.equals(gambler.moneyInPlay) : gambler.moneyInPlay != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(publicCards, gambler.publicCards)) return false;
+        if (bet != null ? !bet.equals(gambler.bet) : gambler.bet != null) return false;
+        if (session != null ? !session.equals(gambler.session) : gambler.session != null) return false;
+        if (balance != null ? !balance.equals(gambler.balance) : gambler.balance != null) return false;
+        if (titleRoom != null ? !titleRoom.equals(gambler.titleRoom) : gambler.titleRoom != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(privateCards, gambler.privateCards)) return false;
+        if (evaluateHand != null ? !evaluateHand.equals(gambler.evaluateHand) : gambler.evaluateHand != null)
+            return false;
+        return img != null ? img.equals(gambler.img) : gambler.img == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (moneyInPlay != null ? moneyInPlay.hashCode() : 0);
+        result = 31 * result + (sittingIn ? 1 : 0);
+        result = 31 * result + (inHand ? 1 : 0);
+        result = 31 * result + (hasCards ? 1 : 0);
+        result = 31 * result + Arrays.hashCode(publicCards);
+        result = 31 * result + (bet != null ? bet.hashCode() : 0);
+        result = 31 * result + (session != null ? session.hashCode() : 0);
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        result = 31 * result + (titleRoom != null ? titleRoom.hashCode() : 0);
+        result = 31 * result + sittingOnTable;
+        result = 31 * result + numberSeatOnTable;
+        result = 31 * result + Arrays.hashCode(privateCards);
+        result = 31 * result + (evaluateHand != null ? evaluateHand.hashCode() : 0);
+        result = 31 * result + (img != null ? img.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Gambler{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", moneyInPlay=").append(moneyInPlay);
+        sb.append(", sittingIn=").append(sittingIn);
+        sb.append(", inHand=").append(inHand);
+        sb.append(", hasCards=").append(hasCards);
+        sb.append(", publicCards=").append(Arrays.toString(publicCards));
+        sb.append(", bet=").append(bet);
+        sb.append(", session=").append(session);
+        sb.append(", balance=").append(balance);
+        sb.append(", titleRoom='").append(titleRoom).append('\'');
+        sb.append(", sittingOnTable=").append(sittingOnTable);
+        sb.append(", numberSeatOnTable=").append(numberSeatOnTable);
+        sb.append(", privateCards=").append(Arrays.toString(privateCards));
+        sb.append(", evaluateHand=").append(evaluateHand);
+        sb.append(", img='").append(img).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     public static class GamblerBuilder {

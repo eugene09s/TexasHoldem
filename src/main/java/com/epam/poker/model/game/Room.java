@@ -113,26 +113,41 @@ public class Room implements Entity {
         return gamblers;
     }
 
-    public Room setGamblers(Map<String, Gambler> gamblers) {
-        this.gamblers = gamblers;
-        return this;
-    }
-
     public String getTitleRoom() {
         return titleRoom;
     }
 
-    public Room setTitleRoom(String titleRoom) {
-        this.titleRoom = titleRoom;
-        return this;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Room room = (Room) o;
+
+        if (statisticResultGame != null ? !statisticResultGame.equals(room.statisticResultGame) : room.statisticResultGame != null)
+            return false;
+        if (gamblers != null ? !gamblers.equals(room.gamblers) : room.gamblers != null) return false;
+        if (titleRoom != null ? !titleRoom.equals(room.titleRoom) : room.titleRoom != null) return false;
+        return table != null ? table.equals(room.table) : room.table == null;
     }
 
-    public Table getTable() {
-        return table;
+    @Override
+    public int hashCode() {
+        int result = statisticResultGame != null ? statisticResultGame.hashCode() : 0;
+        result = 31 * result + (gamblers != null ? gamblers.hashCode() : 0);
+        result = 31 * result + (titleRoom != null ? titleRoom.hashCode() : 0);
+        result = 31 * result + (table != null ? table.hashCode() : 0);
+        return result;
     }
 
-    public Room setTable(Table table) {
-        this.table = table;
-        return this;
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Room{");
+        sb.append("statisticResultGame=").append(statisticResultGame);
+        sb.append(", gamblers=").append(gamblers);
+        sb.append(", titleRoom='").append(titleRoom).append('\'');
+        sb.append(", table=").append(table);
+        sb.append('}');
+        return sb.toString();
     }
 }
