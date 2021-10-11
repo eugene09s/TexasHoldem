@@ -15,18 +15,18 @@ import static com.epam.poker.dao.ColumnName.USERS;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public static final String SQL_FIND_ALL_USERS = """
-            SELECT user_id, login, password, first_name, last_name, email, 
+            SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
-            FROM users 
+            FROM users
             """;
     public static final String SQL_ADD_USER = """
             INSERT INTO users
-            (login, password, first_name, last_name, email, 
+            (login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time)
             VALUES (?,?,?,?,?,?,?,?,?,?)
             """;
     public static final String SQL_FIND_USER_BY_ID = """
-            SELECT user_id, login, password, first_name, last_name, email, 
+            SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
             FROM users
             WHERE user_id=?
@@ -95,7 +95,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
             FROM users
-            WHERE role='USER'
             LIMIT ?,?
             """;
 

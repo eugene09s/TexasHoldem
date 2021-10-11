@@ -1,4 +1,4 @@
-package com.epam.poker.model.game;
+package com.epam.poker.model.dto;
 
 import com.epam.poker.model.database.game.Game;
 import com.epam.poker.model.database.game.GamePlayer;

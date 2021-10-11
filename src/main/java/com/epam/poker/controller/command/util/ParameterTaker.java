@@ -13,17 +13,19 @@ public class ParameterTaker {
         return paramValue;
     }
 
-    public static BigDecimal takeNumber(String parameterName, RequestContext requestContext)
+    public static int takeNumber(String parameterName, RequestContext requestContext)
             throws InvalidParametersException {
         String numberStr = requestContext.getRequestParameter(parameterName);
-        if (numberStr == null) {
-            throw new InvalidParametersException("Invalid " + parameterName + " parameter in request.");
-        }
+        int number = -1;
         try {
-            return new BigDecimal(numberStr);
+            number = Integer.parseInt(numberStr);
         } catch (NumberFormatException e) {
-            throw new InvalidParametersException("Invalid " + parameterName + " parameter in request.");
+            throw new InvalidParametersException("Invalid number parameter in request.");
         }
+        if (number < 0) {
+            throw new InvalidParametersException("Not positive number parameter in request.");
+        }
+        return number;
     }
 
     public static long takePhoneNumber(String parameterName, RequestContext requestContext)

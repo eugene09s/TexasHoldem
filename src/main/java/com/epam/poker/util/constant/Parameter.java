@@ -13,9 +13,8 @@ public final class Parameter {
     public static final String USER_ID = "userId";
     public static final String COMMAND = "command";
     public static final String LANGUAGE = "locale";
-    public static final String REPEATE_PASSWORD = "repeatePassword";
-    public static final String MONEY = "money";
-    public static final String PAGE = "page";
+    public static final String PAGE = "p";
+    public static final String SIZE = "s";
     public static final String DATE = "date";
     public static final String BIO = "bio";
 

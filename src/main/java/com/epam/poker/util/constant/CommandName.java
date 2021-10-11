@@ -8,6 +8,7 @@ public final class CommandName {
     public static final String PLAY_PAGE = "play-page";
     public static final String CHAT_PAGE = "chat-page";
     public static final String ACCOUNT_SETTINGS_PAGE = "account-settings-page";
+    public static final String USERS_PAGE = "users-page";
 
     public static final String USERS = "users";
     public static final String BLOCK_USER = "block-user";

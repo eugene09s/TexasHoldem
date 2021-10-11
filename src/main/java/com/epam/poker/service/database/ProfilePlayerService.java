@@ -1,5 +1,6 @@
 package com.epam.poker.service.database;
 
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.ProfilePlayer;
 
@@ -48,5 +49,6 @@ public interface ProfilePlayerService {
     boolean updateLostMoneyByLogin(String login, BigDecimal money) throws ServiceException;
     boolean updateWinMoneyByLogin(String login, BigDecimal money) throws ServiceException;
     boolean updateBestPrizeByLogin(String login, BigDecimal bestPrize) throws ServiceException;
+    List<ProfilePlayer> findProfilePlayerOfRange(int offset, int size) throws ServiceException;
     void add(ProfilePlayer profilePlayer) throws ServiceException;
 }

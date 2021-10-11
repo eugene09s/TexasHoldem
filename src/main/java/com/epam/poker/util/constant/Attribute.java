@@ -17,6 +17,10 @@ public final class Attribute {
     public static final String INVALIDATE_ATTRIBUTE = "invalidate";
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String SUCCES_MESSAGE = "successMessage";
+    //dto
+    public static final String USER_DTO_LIST = "userDtoList";
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String MAX_PAGE = "maxPage";
     //game
     public static final String TABLE_WITH_HYPHEN = "table-%d";
     public static final String TABLE = "table";

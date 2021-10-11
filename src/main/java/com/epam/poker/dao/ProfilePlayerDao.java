@@ -2,8 +2,10 @@ package com.epam.poker.dao;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.database.ProfilePlayer;
+import com.epam.poker.model.database.User;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /*
  *   Extending DAO interface for processing ProfilePlayer
@@ -17,7 +19,6 @@ public interface ProfilePlayerDao extends Dao<ProfilePlayer> {
          * @throws  DaoException  if database errors occurs.
          */
         int findProfilePlayerAmount() throws DaoException;
-//todo documentation code
         boolean updateProfilePlayerByUserId(long userId, ProfilePlayer profilePlayer) throws DaoException;
         boolean updatePhotoByUserId(long userId, String photo) throws DaoException;
         boolean updateBestPrizeByUserId(long userId, BigDecimal bestPrize) throws DaoException;
@@ -25,7 +26,7 @@ public interface ProfilePlayerDao extends Dao<ProfilePlayer> {
         boolean updateAboutYourselfByUserId(long userId, String aboutYourself) throws DaoException;
         boolean updateLostMoneyByUserId(long userId, BigDecimal money) throws DaoException;
         boolean updateWinMoneyByUserId(long userId, BigDecimal money) throws DaoException;
-
+        List<ProfilePlayer> findProfilePlayerOfRange(int offset, int amount) throws DaoException;
         /**
          *
          * @param profilePlayer field userId should be

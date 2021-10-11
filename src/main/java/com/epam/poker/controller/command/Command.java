@@ -23,7 +23,7 @@ public interface Command {
      *
      * @throws InvalidParametersException if there are errors in parameters of request.
      */
-    CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException, DaoException;
+    CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException;
 
     static Command of(String name) {
         return CommandManager.of(name);

@@ -32,6 +32,11 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
             SET photo=?
             WHERE player_id=?
             """;
+    public static final String SQL_FIND_PROFILE_PLAYER_RANGE = """
+            SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money
+            FROM profile_players
+            LIMIT ?,?
+            """;
     public static final String SQL_UPDATE_ABOUT_YOURSELF_BY_USER_ID = """
             UPDATE profile_players
             SET about_yourself=?
@@ -123,6 +128,11 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
     @Override
     public boolean updateWinMoneyByUserId(long userId, BigDecimal money) throws DaoException {
         return executeUpdateQuery(SQL_UPDATE_WIN_MONEY_BY_USER_ID, money, userId);
+    }
+
+    @Override
+    public List<ProfilePlayer> findProfilePlayerOfRange(int offset, int amount) throws DaoException {
+        return executeQuery(SQL_FIND_PROFILE_PLAYER_RANGE, offset, amount);
     }
 
     @Override

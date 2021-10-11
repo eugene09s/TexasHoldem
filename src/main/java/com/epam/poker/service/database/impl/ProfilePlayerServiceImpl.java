@@ -229,6 +229,24 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
     }
 
     @Override
+    public List<ProfilePlayer> findProfilePlayerOfRange(int offset, int size) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+                transaction.init((AbstractDao) profilePlayerDao);
+                return profilePlayerDao.findProfilePlayerOfRange(offset, size);
+            } catch (DaoException e) {
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
+        } catch (DaoException | ServiceException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean updateAwardByUserId(long userId, String award) throws ServiceException {
         try {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
