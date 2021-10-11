@@ -13,7 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
 
 import static com.epam.poker.util.constant.Attribute.*;
 
@@ -23,8 +22,7 @@ public class PostBlindPartOfGameEvent implements EventSocket {
     private static Lobby lobby = Lobby.getInstance();
     private static final PostBlindPartOfGameEvent instance = new PostBlindPartOfGameEvent();
     private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
-    private static final List<String> PARTS_OF_GAMES = List.of(PRE_FLOP_PART_OF_GAME,
-            FLOP_PART_OF_GAME, TURN_PART_OF_GAME, RIVER_PART_OF_GAME);
+
     private PostBlindPartOfGameEvent() {
     }
 

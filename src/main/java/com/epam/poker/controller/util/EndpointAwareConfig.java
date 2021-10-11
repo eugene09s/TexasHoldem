@@ -1,4 +1,4 @@
-package com.epam.poker.util;
+package com.epam.poker.controller.util;
 
 import jakarta.websocket.HandshakeResponse;
 import jakarta.websocket.server.HandshakeRequest;

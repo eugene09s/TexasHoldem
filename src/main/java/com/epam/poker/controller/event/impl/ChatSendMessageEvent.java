@@ -43,7 +43,7 @@ public class ChatSendMessageEvent implements EventSocket {
                 ObjectNode objectNode = mapper.createObjectNode();
                 objectNode.put(Attribute.SENDER, gambler.getName());
                 objectNode.put(Attribute.IMG, gambler.getImg());
-                objectNode.put(Attribute.MESSAGE, checkerHtmlInjectionMessage(message));
+                objectNode.put(Attribute.MESSAGE, message);
                 ObjectNode response = mapper.createObjectNode();
                 response.put(Attribute.EVENT, Attribute.RECEIVE_MESSAGE_EVENT);
                 response.putPOJO(Attribute.DATA, objectNode);
@@ -52,13 +52,5 @@ public class ChatSendMessageEvent implements EventSocket {
         } catch (NullPointerException e) {
             LOGGER.error("Parse data: " + e);
         }
-    }
-
-    private String checkerHtmlInjectionMessage(String line) {
-        return line.replace("$", "Dollars")
-                .replace("<", "&lt;")
-                .replace(">", "&rt;")
-                .replace("}", "circle bracket")
-                .replace("{", "circle bracket");
     }
 }

@@ -7,7 +7,5 @@ public final class PagePath {
     public static final String SIGN_UP = "/jsp/pages/sign-up.jsp";
     public static final String PROFILE = "/jsp/pages/profile.jsp";
     public static final String SETTINGS = "/jsp/pages/account-settings.jsp";
-
     public static final String GAME = "/game/index.html";
-    public static final String CHAT = "/jsp/pages/chat.jsp";
 }
