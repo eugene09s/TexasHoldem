@@ -117,6 +117,22 @@ public class Room implements Entity {
         return titleRoom;
     }
 
+    public void setGamblers(Map<String, Gambler> gamblers) {
+        this.gamblers = gamblers;
+    }
+
+    public void setTitleRoom(String titleRoom) {
+        this.titleRoom = titleRoom;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
