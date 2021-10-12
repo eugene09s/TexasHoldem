@@ -35,11 +35,15 @@ public class UserDtoCommandHelper {
         List<UserDto> userDtoList = buildUserDtoList(page, size);
         requestContext.addAttribute(Attribute.USER_DTO_LIST, userDtoList);
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
-        int maxPage = (int) ((amount / size) + 1);
+        int maxPage = (int) (amount / size);
+        if (amount % size != 0) {
+            ++maxPage;
+        }
+        requestContext.addAttribute(Attribute.AMOUNT_OF_PAGE, size);
         requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
     }
 
-    public List<UserDto> buildUserDtoList(int page, int size) throws InvalidParametersException {
+    private List<UserDto> buildUserDtoList(int page, int size) throws InvalidParametersException {
         int offset = (page - 1) * size;
         List<User> userList;
         List<ProfilePlayer> profilePlayerList;

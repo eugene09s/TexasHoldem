@@ -1,9 +1,9 @@
 package com.epam.poker.controller.filter;
 
-import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.impl.UserServiceImpl;
+import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -16,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 
 public class BlockFilter implements Filter {
@@ -36,7 +35,7 @@ public class BlockFilter implements Filter {
         Cookie[] cookies = httpServletRequest.getCookies();
         Optional<Cookie> cookieToken = Optional.empty();
         if (cookies != null) {
-            cookieToken = getTokenFromCookies(cookies);
+            cookieToken = jwtProvider.getTokenFromCookies(cookies);
         }
         if (cookieToken.isPresent()) {
             String token = cookieToken.get().getValue();
@@ -57,12 +56,6 @@ public class BlockFilter implements Filter {
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    private Optional<Cookie> getTokenFromCookies(Cookie[] cookies) {
-        return Arrays.stream(cookies)
-                .filter(c -> c.getName().equals(Attribute.ACCESS_TOKEN))
-                .findFirst();
     }
 
     @Override

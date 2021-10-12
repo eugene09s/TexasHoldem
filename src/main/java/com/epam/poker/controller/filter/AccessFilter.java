@@ -1,13 +1,11 @@
 package com.epam.poker.controller.filter;
 
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.database.ProfilePlayer;
+import com.epam.poker.model.database.type.UserRole;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
-import com.epam.poker.model.database.type.UserRole;
 import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -20,7 +18,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 
 public class AccessFilter implements Filter {

@@ -3,28 +3,21 @@ package com.epam.poker.controller.command.util;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.model.database.ProfilePlayer;
-import com.epam.poker.model.database.User;
 import com.epam.poker.model.dto.StatisticResultGame;
-import com.epam.poker.model.dto.UserDto;
 import com.epam.poker.service.database.GameService;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.StatisticOfGameService;
-import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.impl.GameServiceImpl;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.service.database.impl.StatisticOfGameServiceImpl;
-import com.epam.poker.service.database.impl.UserServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
-import org.w3c.dom.Attr;
 
 import java.util.List;
 
 public class StatisticGameCommandHelper {
     private static GameService gameService = GameServiceImpl.getInstance();
     private static StatisticOfGameService statisticOfGameService = StatisticOfGameServiceImpl.getInstance();
-    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
 
     public void processCommandWithPagination(RequestContext requestContext)
             throws InvalidParametersException, ServiceException {
@@ -41,7 +34,10 @@ public class StatisticGameCommandHelper {
         List<StatisticResultGame> statisticResultGameList = buildStatisticOfGame(page, size);
         requestContext.addAttribute(Attribute.STATISTIC_OF_GAME_LIST, statisticResultGameList);
         requestContext.addAttribute(Attribute.CURRENT_PAGE, page);
-        int maxPage = (int) ((amount / size) + 1);
+        int maxPage = (int) (amount / size);
+        if (amount % size != 0) {
+            ++maxPage;
+        }
         requestContext.addAttribute(Attribute.AMOUNT_OF_PAGE, size);
         requestContext.addAttribute(Attribute.MAX_PAGE, maxPage);
     }

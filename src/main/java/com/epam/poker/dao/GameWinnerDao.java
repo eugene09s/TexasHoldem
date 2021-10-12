@@ -15,6 +15,6 @@ public interface GameWinnerDao extends Dao<GameWinner> {
      */
     int findGameWinnerAmount() throws DaoException;
     long add(GameWinner gameWinner) throws DaoException;
-    List<GameWinner> findGameWinnerByGameId(long gameId) throws DaoException;
+    List<GameWinner> findGameWinnersByGameId(long gameId) throws DaoException;
     List<GameWinner> findGameWinnerByUserId(long userId) throws DaoException;
 }

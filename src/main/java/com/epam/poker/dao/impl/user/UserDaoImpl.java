@@ -131,7 +131,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public int findUsersAmount() throws DaoException {
-        Optional<String> additionalCondition = Optional.of("WHERE role='USER'");
+        Optional<String> additionalCondition = Optional.of("");
         return findRowsAmount(additionalCondition);
     }
 
