@@ -77,23 +77,19 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <c:forEach var="i" begin="1" end="${maxPage}">
-                    <c:choose>
-                        <c:when test="${i > 3 and i < statisticResultGameList.size() - 3}">
-                            <li class="page-item">
-                                <a class="page-link">
-                                    ...
-                                </a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item <c:if test="${currentPage == i}">active</c:if>">
-                                <a class="page-link"
-                                   href="${pageContext.request.contextPath}/poker?command=statistic-games-page&p=<c:out value = "${i}"/>&s=${amountOfPage}">
-                                    <c:out value="${i}"/>
-                                </a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:if test="${i == currentPage+4}">
+                        <li class="page-item">
+                            <a class="page-link">...</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${(((currentPage-1) == i) || ((i < currentPage+3) && (i > currentPage-3))) || (i > maxPage-2) || (i == 1)}">
+                        <li class="page-item <c:if test="${currentPage == i}">active</c:if>">
+                            <a class="page-link"
+                               href="${pageContext.request.contextPath}/poker?command=statistic-games-page&p=<c:out value = "${i}"/>&s=${amountOfPage}">
+                                <c:out value="${i}"/>
+                            </a>
+                        </li>
+                    </c:if>
                 </c:forEach>
             </ul>
         </nav>

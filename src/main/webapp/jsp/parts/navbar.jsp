@@ -94,9 +94,7 @@
                     <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
                     </li>
-                    <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white"><fmt:message
-                            key="nav.ranking.page"/></a>
-                    </li>
+
                     <li><a href="${pageContext.request.contextPath}/poker?command=play-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
                     <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white"><fmt:message
