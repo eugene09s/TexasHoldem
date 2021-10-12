@@ -17,13 +17,14 @@ public class StatisticResultGame {
         this.gameWinners = new ArrayList<>(1);
     }
 
-    public Game getGame() {
-        return game;
+    public StatisticResultGame(Game game, List<GamePlayer> gamePlayers, List<GameWinner> gameWinners) {
+        this.game = game;
+        this.gamePlayers = gamePlayers;
+        this.gameWinners = gameWinners;
     }
 
-    public StatisticResultGame setGame(Game game) {
-        this.game = game;
-        return this;
+    public Game getGame() {
+        return game;
     }
 
     public List<GamePlayer> getGamePlayers() {
@@ -40,6 +41,10 @@ public class StatisticResultGame {
 
     public void setGameWinners(List<GameWinner> gameWinners) {
         this.gameWinners = gameWinners;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     @Override
@@ -70,5 +75,34 @@ public class StatisticResultGame {
         sb.append(", gameWinners=").append(gameWinners);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static StatisticResultGameBuilder build() {
+        return new StatisticResultGameBuilder();
+    }
+
+    public static class StatisticResultGameBuilder {
+        private Game game;
+        private List<GamePlayer> gamePlayers;
+        private List<GameWinner> gameWinners;
+
+        public StatisticResultGameBuilder setGame(Game game) {
+            this.game = game;
+            return this;
+        }
+
+        public StatisticResultGameBuilder setGamePlayers(List<GamePlayer> gamePlayers) {
+            this.gamePlayers = gamePlayers;
+            return this;
+        }
+
+        public StatisticResultGameBuilder setGameWinners(List<GameWinner> gameWinners) {
+            this.gameWinners = gameWinners;
+            return this;
+        }
+
+        public StatisticResultGame createStatisticResultGame() {
+            return new StatisticResultGame(game, gamePlayers, gameWinners);
+        }
     }
 }

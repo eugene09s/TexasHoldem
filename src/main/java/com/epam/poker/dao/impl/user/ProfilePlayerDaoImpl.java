@@ -35,6 +35,7 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
     public static final String SQL_FIND_PROFILE_PLAYER_RANGE = """
             SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money
             FROM profile_players
+            ORDER BY player_id DESC
             LIMIT ?,?
             """;
     public static final String SQL_UPDATE_ABOUT_YOURSELF_BY_USER_ID = """

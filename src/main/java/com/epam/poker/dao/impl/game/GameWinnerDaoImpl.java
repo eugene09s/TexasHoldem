@@ -66,7 +66,7 @@ public class GameWinnerDaoImpl extends AbstractDao<GameWinner> implements GameWi
     }
 
     @Override
-    public List<GameWinner> findGameWinnerByGameId(long gameId) throws DaoException {
+    public List<GameWinner> findGameWinnersByGameId(long gameId) throws DaoException {
         return executeQuery(SQL_FIND_GAME_WINNER_BY_GAME_ID, gameId);
     }
 

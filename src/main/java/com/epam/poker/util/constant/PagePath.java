@@ -9,4 +9,5 @@ public final class PagePath {
     public static final String SETTINGS = "/jsp/pages/account-settings.jsp";
     public static final String GAME = "/game/index.html";
     public static final String USERS = "/jsp/pages/users.jsp";
+    public static final String STATISTIC_GAMES = "/jsp/pages/statistic-games.jsp";
 }

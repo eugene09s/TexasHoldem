@@ -74,7 +74,7 @@ public class GamePlayerDaoImpl extends AbstractDao<GamePlayer> implements GamePl
 
     @Override
     public List<GamePlayer> findGamePlayersByGameId(long gameId) throws DaoException {
-        return executeQuery(SQL_FIND_GAME_PLAYER_BY_GAME_ID);
+        return executeQuery(SQL_FIND_GAME_PLAYER_BY_GAME_ID, gameId);
     }
 
     @Override

@@ -21,6 +21,8 @@ public final class Attribute {
     public static final String USER_DTO_LIST = "userDtoList";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String MAX_PAGE = "maxPage";
+    public static final String STATISTIC_OF_GAME_LIST = "statisticResultGameList";
+    public static final String AMOUNT_OF_PAGE = "amountOfPage";
     //game
     public static final String TABLE_WITH_HYPHEN = "table-%d";
     public static final String TABLE = "table";

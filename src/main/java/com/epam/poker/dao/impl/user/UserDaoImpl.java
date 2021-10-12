@@ -95,6 +95,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             SELECT user_id, login, password, first_name, last_name, email,
             balance, role, status, phone_number, create_time
             FROM users
+            ORDER BY create_time DESC
             LIMIT ?,?
             """;
 

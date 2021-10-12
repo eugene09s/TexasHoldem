@@ -8,10 +8,10 @@ import com.epam.poker.model.game.*;
 import com.epam.poker.model.dto.StatisticResultGame;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.UserService;
-import com.epam.poker.service.database.WriteStatisticResultGame;
+import com.epam.poker.service.database.StatisticOfGameService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.service.database.impl.UserServiceImpl;
-import com.epam.poker.service.database.impl.WriteStatisticResultGameImpl;
+import com.epam.poker.service.database.impl.StatisticOfGameServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +26,7 @@ public class PotService {
     private static Lobby lobby = Lobby.getInstance();
     private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
     private static UserService userService = UserServiceImpl.getInstance();
-    private static WriteStatisticResultGame writeStatisticResultGame = WriteStatisticResultGameImpl.getInstance();
+    private static StatisticOfGameService writeStatisticResultGame = StatisticOfGameServiceImpl.getInstance();
 
     private PotService() {
     }
@@ -238,7 +238,7 @@ public class PotService {
                     .createGameWinner();
             statisticResultGame.getGameWinners().add(gameWinner);
         }
-        writeStatisticResultGame.execute(statisticResultGame);
+        writeStatisticResultGame.pushData(statisticResultGame);
     }
 
     private String handlerMessage(List<String> cards) {

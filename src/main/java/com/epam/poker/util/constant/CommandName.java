@@ -9,6 +9,7 @@ public final class CommandName {
     public static final String CHAT_PAGE = "chat-page";
     public static final String ACCOUNT_SETTINGS_PAGE = "account-settings-page";
     public static final String USERS_PAGE = "users-page";
+    public static final String STATISTIC_GAMES_PAGE = "statistic-games-page";
 
     public static final String USERS = "users";
     public static final String BLOCK_USER = "block-user";
@@ -19,11 +20,10 @@ public final class CommandName {
     public static final String CHECK_EXIST_LOGIN = "checkExistLogin";
     public static final String CHECK_EXIST_EMAIL = "checkExistEmail";
     public static final String LOCALIZATION = "localization";
-    public static final String PAGINATION = "pagination";
+    public static final String STATISTIC_GAMES = "statistic-games";
     public static final String UPLOAD_PHOTO = "upload-photo";
     public static final String CHANGE_PASSWORD = "change-pas";
     public static final String CHANGE_GENERAL_INFO = "change-general-info";
-
     //game
     public static final String LOBBY_DATA = "lobby-data";
     public static final String TABLE_DATA = "table-data";

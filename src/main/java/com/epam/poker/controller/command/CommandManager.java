@@ -15,6 +15,7 @@ public enum CommandManager {
     GO_TO_ACCOUNT_SETTING_PAGE(new GoToAccountSettingPageCommand(), CommandName.ACCOUNT_SETTINGS_PAGE),
     GO_TO_GAME_PAGE(new GoToGamePageCommand(), CommandName.PLAY_PAGE),
     GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
+    GO_TO_STATISTIC_GAMES(new GoToStatisticGamesPageCommand(),CommandName.STATISTIC_GAMES_PAGE),
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
     LOGIN(new LoginCommand(), CommandName.LOGIN),
     LOGOUT(new LogoutCommand(), CommandName.LOGOUT),

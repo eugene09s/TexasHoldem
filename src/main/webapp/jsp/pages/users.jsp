@@ -39,7 +39,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${userDtoList}" var="userDto" varStatus="counter" >
+                <c:forEach items="${userDtoList}" var="userDto" varStatus="counter">
                     <tr>
                         <td>${counter.index+1}</td>
                         <td><a href="${pageContext.request.contextPath}/poker?command=profile-page&id=${userDto.getId()}">
@@ -61,7 +61,7 @@
                     <ul class="pagination">
                         <c:forEach var = "i" begin = "1" end = "${maxPage}">
                         <li class="page-item <c:if test="${currentPage == i}">active</c:if>">
-                            <a class="page-link" href="${pageContext.request.contextPath}/poker?command=users-page&p=<c:out value = "${i}"/>&s=5">
+                            <a class="page-link" href="${pageContext.request.contextPath}/poker?command=users-page&p=<c:out value = "${i}"/>&s=${amountOfPage}">
                                 <c:out value = "${i}"/>
                             </a>
                         </li>

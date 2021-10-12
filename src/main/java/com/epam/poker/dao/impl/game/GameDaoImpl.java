@@ -29,6 +29,7 @@ public class GameDaoImpl extends AbstractDao<Game> implements GameDao {
     public static final String SQL_FIND_GAMES_RANGE = """
             SELECT game_id, title, date, bank, five_cards
             FROM games
+            ORDER BY date DESC
             LIMIT ?,?
             """;
 
