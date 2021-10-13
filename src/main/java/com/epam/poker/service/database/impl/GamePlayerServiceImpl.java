@@ -40,7 +40,7 @@ public class GamePlayerServiceImpl implements GamePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
-                transaction.init((AbstractDao) gamePlayerDao);
+                transaction.init(gamePlayerDao);
                 return gamePlayerDao.add(gamePlayer);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -64,7 +64,7 @@ public class GamePlayerServiceImpl implements GamePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
-                transaction.init((AbstractDao) gamePlayerDao);
+                transaction.init(gamePlayerDao);
                 return gamePlayerDao.findAll();
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -83,7 +83,7 @@ public class GamePlayerServiceImpl implements GamePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
-                transaction.init((AbstractDao) gamePlayerDao);
+                transaction.init(gamePlayerDao);
                 return gamePlayerDao.findGamePLayerAmount();
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -102,7 +102,7 @@ public class GamePlayerServiceImpl implements GamePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
-                transaction.init((AbstractDao) gamePlayerDao);
+                transaction.init(gamePlayerDao);
                 return gamePlayerDao.findGamePlayersByGameId(gameId);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -121,7 +121,7 @@ public class GamePlayerServiceImpl implements GamePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
-                transaction.init((AbstractDao) gamePlayerDao);
+                transaction.init(gamePlayerDao);
                 return gamePlayerDao.findGamePlayersByUserId(userId);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);

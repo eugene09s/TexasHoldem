@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.findUsersRange(offset, amount);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.findUsersAmount();
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findUserByLoginPassword(login, password);
                 if (!user.isPresent()) {
                     throw new ServiceException("User with login=" + login + " is not found.");
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findUserByLogin(login);
                 if (!user.isPresent()) {
                     throw new ServiceException("User with login=" + login + " is not found.");
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findUserByEmail(email);
                 if (!user.isPresent()) {
                     throw new ServiceException("User with email=" + email + " is not found.");
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.blockById(id);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.unblockById(id);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.addMoneyById(money, id);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -197,7 +197,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.minusMoneyByLogin(money, login);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -216,7 +216,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.addMoneyByLogin(money, login);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -235,7 +235,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.update(item);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -254,7 +254,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.add(user);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -273,7 +273,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.updateBalanceByLogin(login, money);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -292,7 +292,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findById(id);
                 if (!user.isPresent()) {
                     throw new ServiceException("User with id=" + id + " is not found.");
@@ -315,7 +315,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findUserByLoginPassword(login, password);
                 return user.isPresent();
             } catch (DaoException e) {
@@ -335,7 +335,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 return userDao.findAll();
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -354,7 +354,7 @@ public class UserServiceImpl implements UserService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findById(id);
                 if (!user.isPresent()) {
                     throw new ServiceException("User with id=" + id + " is not found.");

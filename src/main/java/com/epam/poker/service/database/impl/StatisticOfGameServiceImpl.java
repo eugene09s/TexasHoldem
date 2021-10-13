@@ -52,8 +52,7 @@ public class StatisticOfGameServiceImpl implements StatisticOfGameService {
             GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
             GameWinnerDao gameWinnerDao = new GameWinnerDaoImpl();
             try {
-                transaction.initTransaction((AbstractDao) gameDao,
-                        (AbstractDao) gamePlayerDao, (AbstractDao) gameWinnerDao);
+                transaction.initTransaction( gameDao, gamePlayerDao, gameWinnerDao);
                 gameId = gameDao.add(statisticResultGame.getGame());
                 for (GamePlayer gamePlayer : statisticResultGame.getGamePlayers()) {
                     gamePlayer.setGameId(gameId);
@@ -85,8 +84,7 @@ public class StatisticOfGameServiceImpl implements StatisticOfGameService {
             GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
             GameWinnerDao gameWinnerDao = new GameWinnerDaoImpl();
             try {
-                transaction.initTransaction((AbstractDao) gameDao,
-                        (AbstractDao) gamePlayerDao, (AbstractDao) gameWinnerDao);
+                transaction.initTransaction(gameDao, gamePlayerDao, gameWinnerDao);
                 List<Game> gameList = gameDao.findGamesRange(offset, amount);
                 for (Game game : gameList) {
                     List<GamePlayer> gamePlayerList = gamePlayerDao.findGamePlayersByGameId(game.getGameId());

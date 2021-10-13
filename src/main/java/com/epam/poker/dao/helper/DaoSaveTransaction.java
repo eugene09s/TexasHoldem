@@ -1,20 +1,25 @@
 package com.epam.poker.dao.helper;
 
+import com.epam.poker.dao.Dao;
+import com.epam.poker.dao.UserDao;
+import com.epam.poker.dao.impl.user.UserDaoImpl;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.dao.AbstractDao;
+import com.epam.poker.model.Entity;
 import com.epam.poker.pool.ConnectionPool;
 import com.epam.poker.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.Collections;
 
 public class DaoSaveTransaction {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private ProxyConnection proxyConnection;
 
-    public void initTransaction(AbstractDao dao, AbstractDao... daos) throws DaoException {
+    public void initTransaction(Dao<? extends Entity> dao, Dao<? extends Entity>... daos) throws DaoException {
         if (proxyConnection == null) {
             proxyConnection = connectionPool.getConnection();
         }
@@ -25,12 +30,12 @@ public class DaoSaveTransaction {
             throw new DaoException(e);
         }
         dao.setConnection(proxyConnection);
-        for (AbstractDao daoElement : daos) {
+        for (Dao<? extends Entity> daoElement : daos) {
             daoElement.setConnection(proxyConnection);
         }
     }
 
-    public void init(AbstractDao dao) {
+    public void init(Dao<? extends Entity> dao) {
         if (proxyConnection == null) {
             proxyConnection = connectionPool.getConnection();
         }

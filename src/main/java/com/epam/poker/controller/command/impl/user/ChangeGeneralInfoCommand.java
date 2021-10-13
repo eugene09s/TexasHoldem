@@ -7,8 +7,8 @@ import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.User;
-import com.epam.poker.service.database.ChangeDataOfAccountUserService;
-import com.epam.poker.service.database.impl.ChangeDataOfAccountUserServiceImpl;
+import com.epam.poker.service.database.AccountInfoChangeService;
+import com.epam.poker.service.database.impl.AccountInfoChangeServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.CommandName;
 import com.epam.poker.util.constant.PagePath;
@@ -24,7 +24,7 @@ public class ChangeGeneralInfoCommand implements Command {
     private static final String PROFILE_PAGE_COMMAND = "poker?command=" + CommandName.PROFILE_PAGE + "&id=";
     private static final String INVALID_DATA_KEY = "invalid.data";
     private static final String VALID_DATA_KEY = "success.pass";
-    private static ChangeDataOfAccountUserService changeDataOfAccountUser = ChangeDataOfAccountUserServiceImpl.getInstance();
+    private static AccountInfoChangeService changeDataOfAccountUser = AccountInfoChangeServiceImpl.getInstance();
     private static JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override

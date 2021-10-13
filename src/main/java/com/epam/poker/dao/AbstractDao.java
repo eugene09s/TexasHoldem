@@ -26,6 +26,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         this.tableName = tableName;
     }
 
+    @Override
     public void setConnection(ProxyConnection proxyConnection) {
         this.proxyConnection = proxyConnection;
     }

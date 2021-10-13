@@ -39,7 +39,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 int answer = profilePlayerDao.findProfilePlayerAmount();
                 return answer;
             } catch (DaoException e) {
@@ -59,7 +59,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 List<ProfilePlayer> profilePlayerList = profilePlayerDao.findAll();
                 return profilePlayerList;
             } catch (DaoException e) {
@@ -79,7 +79,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 Optional<ProfilePlayer> profilePlayer = profilePlayerDao.findById(id);
                 if (!profilePlayer.isPresent()) {
                     throw new ServiceException("Profile player id=" + id + " is not found");
@@ -102,7 +102,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.updateProfilePlayerByUserId(userId, profilePlayer);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -121,7 +121,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.updatePhotoByUserId(userId, photo);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -140,7 +140,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.updateBestPrizeByUserId(userId, bestPrize);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -160,7 +160,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             try {
                 UserDao userDao = new UserDaoImpl();
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                transaction.initTransaction( userDao, profilePlayerDao);
                  Optional<User> userOptional = userDao.findUserByLogin(login);
                 if (!userOptional.isPresent()) {
                     throw new ServiceException("User login=" + login + " is not found");
@@ -185,7 +185,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             try {
                 UserDao userDao = new UserDaoImpl();
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                transaction.initTransaction(userDao, profilePlayerDao);
                 Optional<User> userOptional = userDao.findUserByLogin(login);
                 if (!userOptional.isPresent()) {
                     throw new ServiceException("User login=" + login + " is not found");
@@ -210,7 +210,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             try {
                 UserDao userDao = new UserDaoImpl();
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                transaction.initTransaction(userDao, profilePlayerDao);
                 Optional<User> userOptional = userDao.findUserByLogin(login);
                 if (!userOptional.isPresent()) {
                     throw new ServiceException("User login=" + login + " is not found");
@@ -234,7 +234,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.findProfilePlayerOfRange(offset, size);
             } catch (DaoException e) {
                 throw new ServiceException(e);
@@ -252,7 +252,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.updateAwardByUserId(userId, award);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -271,7 +271,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.updateAboutYourselfByUserId(userId, aboutYourself);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -290,7 +290,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.updateLostMoneyByUserId(userId, money);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -309,7 +309,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 return profilePlayerDao.updateWinMoneyByUserId(userId, money);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -331,7 +331,7 @@ public class ProfilePlayerServiceImpl implements ProfilePlayerService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-                transaction.init((AbstractDao) profilePlayerDao);
+                transaction.init(profilePlayerDao);
                 profilePlayerDao.add(profilePlayer);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);

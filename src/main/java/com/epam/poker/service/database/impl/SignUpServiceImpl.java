@@ -46,7 +46,7 @@ public class SignUpServiceImpl implements SignUpService {
             UserDao userDao = new UserDaoImpl();
             ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
             try {
-                transaction.initTransaction((AbstractDao) userDao, (AbstractDao) profilePlayerDao);
+                transaction.initTransaction(userDao, profilePlayerDao);
                 userId = userDao.add(user);
                 profilePlayer.setUserId(userId);
                 profilePlayerDao.add(profilePlayer);
@@ -70,7 +70,7 @@ public class SignUpServiceImpl implements SignUpService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findUserByLogin(login);
                 return user.isPresent();
             } catch (DaoException e) {
@@ -90,7 +90,7 @@ public class SignUpServiceImpl implements SignUpService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 UserDao userDao = new UserDaoImpl();
-                transaction.init((AbstractDao) userDao);
+                transaction.init(userDao);
                 Optional<User> user = userDao.findUserByEmail(email);
                 return user.isPresent();
             } catch (DaoException e) {

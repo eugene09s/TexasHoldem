@@ -1,6 +1,5 @@
 package com.epam.poker.service.validator.impl;
 
-import com.epam.poker.service.validator.ModifiableDataOfUserValidator;
 import com.epam.poker.service.validator.Validator;
 import com.epam.poker.model.database.User;
 
@@ -8,11 +7,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserValidator implements Validator<User> {
+    private static final int MIN_FIELD_USER_LENGTH = 2;
     private static final int MAX_FIELD_USER_LENGTH = 32;
     private static final int MIN_LOGIN_LENGTH = 8;
-    private static final int LENGTH_HASH_PASSWORD = 64;
+    private static final int MIN_PHONE_LENGTH = 12;
     private static final int MAX_PHONE_NUMBER_LENGTH = 18;
     private static final int MAX_EMAIL_LENGTH = 64;
+    private static final int MAX_PASSWORD_LENGTH = 32;
+    private static final int MIN_PASSWORD_LENGTH = 8;
+    private static final int MIN_BIO_LENGTH = 10;
+    private static final int MAX_BIO_LENGTH = 512;
+    private static final int LENGTH_HASH_PASSWORD = 64;
+    private static final String NAME_PATTERN = "[A-zА-яЁё]+";
+    private static final Pattern COMPILED_PATTERN_NAME = Pattern.compile(NAME_PATTERN);
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
     private static final Pattern COMPILED_PATTERN_EMAIL = Pattern.compile(EMAIL_PATTERN);
     private static UserValidator instance;
@@ -29,9 +36,7 @@ public class UserValidator implements Validator<User> {
 
     @Override
     public boolean isValid(User user) {
-        ModifiableDataOfUserValidator generalInfoValidator = new ModifiableDataOfUserValidator();
-        if (!generalInfoValidator.isValidGeneralInfo(user)
-                || !generalInfoValidator.isValidPassword(user.getPassword())) {
+        if (!isValidGeneralInfo(user)) {
             return false;
         }
         String login = user.getLogin();
@@ -53,6 +58,47 @@ public class UserValidator implements Validator<User> {
             return false;
         }
         return true;
+    }
+
+    public boolean isValidPassword(String line) {
+        if (line == null || line.length() > MAX_PASSWORD_LENGTH
+                || line.length() < MIN_PASSWORD_LENGTH) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isValidGeneralInfo(User user) {
+        if (user.getFirstName() == null
+                || user.getFirstName().length() > MAX_FIELD_USER_LENGTH
+                || user.getFirstName().length() < MIN_FIELD_USER_LENGTH
+                || !isValidName(user.getFirstName())) {
+            return false;
+        }
+        if (user.getLastName() == null
+                || user.getLastName().length() > MAX_FIELD_USER_LENGTH
+                ||user.getLastName().length() < MIN_FIELD_USER_LENGTH
+                || !isValidName(user.getLastName())) {
+            return false;
+        }
+        String phone = String.valueOf(user.getPhoneNumber());
+        if (phone.length() > MAX_PHONE_NUMBER_LENGTH || phone.length() <= MIN_PHONE_LENGTH) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isValidBio(String bio) {
+        if (bio == null || bio.length() < MIN_BIO_LENGTH
+                || bio.length() > MAX_BIO_LENGTH) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidName(String name) {
+        Matcher matcher = COMPILED_PATTERN_NAME.matcher(name);
+        return matcher.matches();
     }
 
     private boolean isValidEmail(String email) {

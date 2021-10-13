@@ -21,6 +21,7 @@
         <fmt:message key="label.title"/>
     </title>
     <link rel="stylesheet" href="/css/statistic-games.css">
+    <link rel="stylesheet" href="/css/cut-cards.css">
 </head>
 
 <body>

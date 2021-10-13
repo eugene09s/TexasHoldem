@@ -37,7 +37,7 @@ public class GameServiceImpl implements GameService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GameDao gameDao = new GameDaoImpl();
-                transaction.init((AbstractDao) gameDao);
+                transaction.init(gameDao);
                 return gameDao.add(game);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -56,7 +56,7 @@ public class GameServiceImpl implements GameService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GameDao gameDao = new GameDaoImpl();
-                transaction.init((AbstractDao) gameDao);
+                transaction.init(gameDao);
                 return gameDao.findGameAmount();
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -75,7 +75,7 @@ public class GameServiceImpl implements GameService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GameDao gameDao = new GameDaoImpl();
-                transaction.init((AbstractDao) gameDao);
+                transaction.init(gameDao);
                 return gameDao.findGamesRange(offset, amount);
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
@@ -94,7 +94,7 @@ public class GameServiceImpl implements GameService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GameDao gameDao = new GameDaoImpl();
-                transaction.init((AbstractDao) gameDao);
+                transaction.init(gameDao);
                 Optional<Game> gameOptional = gameDao.findById(id);
                 if (!gameOptional.isPresent()) {
                     throw new ServiceException("Game id=" + id + " is not found");
@@ -117,7 +117,7 @@ public class GameServiceImpl implements GameService {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
             try {
                 GameDao gameDao = new GameDaoImpl();
-                transaction.init((AbstractDao) gameDao);
+                transaction.init(gameDao);
                 return gameDao.findAll();
             } catch (DaoException e) {
                 LOGGER.error("Transaction error: " + e);
