@@ -12,7 +12,7 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $s
 
 	$scope.register = async function() {
 		if( $scope.username === '') {
-			await socket.onOpenSocket();
+			await socket.connect();
 			socket.emit( 'register', $scope.username, function( response ){
 				if( response.success ){
 					$rootScope.username = response.username;

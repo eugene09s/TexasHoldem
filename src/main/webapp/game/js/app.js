@@ -1,4 +1,67 @@
-var app = angular.module( 'app', ['ngRoute'] ).config( function( $routeProvider, $locationProvider ) {
+class Socket {
+	constructor() {
+		this.connected = false;
+	}
+
+	emit(event, data, callback) {
+		this.ws.send(JSON.stringify({
+			event: event,
+			data: data
+		}));
+		if (callback !== undefined) {
+			this.on(event, callback);
+		}
+	}
+
+	async onOpenSocket() {
+		console.log("Websocket connected!");
+		return new Promise((resolve) => resolve());
+	}
+
+	getStateSocket() {
+		return this.ws.readyState;
+	}
+
+	onClose() {
+
+	}
+
+	onError(err) {
+		console.log("!!!WebSocket error: " + err);
+	}
+
+	removeAllListeners() {
+		this.events.length = 0;
+	}
+
+	on(event, callback) {
+		this.events[event] = callback;
+	}
+
+	onMessage(msg) {
+		console.log(msg.event);
+		console.log(msg.data);
+		this.events[msg.event](msg.data);
+	}
+	async connect() {
+		return new Promise(resolve => {
+			if (this.connected) return resolve();
+			this.ws = new WebSocket(`ws://${location.host}/game-poker`);
+			this.ws.onopen = () => {
+				this.connected = true;
+				resolve();
+			}
+			this.ws.onmessage = (e) => this.onMessage(JSON.parse(e.data));
+			this.ws.onclose = this.onClose;
+			this.ws.onerror = (err) => this.onError(err);
+			this.events = {};
+		});
+	}
+}
+
+const socket = new Socket();
+
+let app = angular.module( 'app', ['ngRoute'] ).config( function( $routeProvider, $locationProvider ) {
 	$routeProvider.when('/table-10/:tableId', {
 		templateUrl: '/game/partials/table-10-handed.html',
 		controller: 'TableController',
@@ -29,61 +92,3 @@ app.run( function( $rootScope ) {
 	$rootScope.totalChips = 0;
 	$rootScope.sittingOnTable = '';
 });
-
-class Socket {
-	constructor() {
-		this.ws = new WebSocket(`ws://${location.host}/game-poker`);
-		this.ws.onopen = this.onOpenSocket;
-		this.ws.onmessage = (e) => this.onMessage(JSON.parse(e.data));
-		this.ws.onclose = this.onClose;
-		this.ws.onerror = (err) => this.onError(err);
-		this.events = {};
-	}
-
-	emit(event, data, callback) {
-		this.ws.send(JSON.stringify({
-			event: event,
-			data: data
-		}));
-		if (callback !== undefined) {
-			this.on(event, callback);
-		}
-	}
-
-	async onOpenSocket() {
-		console.log("Websocket connected!");
-		return new Promise((resolve) => resolve());
-		// app.controller("LobbyController", function ($scope, angularService, $modal) {
-		// 	console.log($scope);
-		// 	$scope.register();
-		// });
-	}
-
-	getStateSocket() {
-		return this.ws.readyState;
-	}
-
-	onClose() {
-
-	}
-
-	onError(err) {
-		console.log("!!!WebSocket error: " + err);
-	}
-
-	removeAllListeners() {
-		this.events.length = 0;
-	}
-
-	on(event, callback) {
-		this.events[event] = callback;
-	}
-
-	onMessage(msg) {
-		console.log(msg.event);
-		console.log(msg.data);
-		this.events[msg.event](msg.data);
-	}
-}
-
-const socket = new Socket();

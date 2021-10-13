@@ -5,7 +5,7 @@
  */
 app.controller( 'TableController', ['$scope', '$rootScope', '$http', '$routeParams', '$timeout', 'sounds',
 function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
-	var seat = null;
+	let seat = null;
 	$scope.table = {};
 	$scope.notifications = [{},{},{},{},{},{},{},{},{},{}];
 	$scope.showingChipsModal = false;
@@ -15,7 +15,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	$scope.mySeat = null;
 	$scope.betAmount = 0;
 	$rootScope.sittingOnTable = null;
-	var showingNotification = false;
+	let showingNotification = false;
 
 	// Existing listeners should be removed
 	socket.removeAllListeners();
@@ -34,10 +34,10 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	socket.emit( 'enterRoom', $routeParams.tableId );
 
 	$scope.minBetAmount = function() {
-		if( $scope.mySeat === null || typeof $scope.table.seats[$scope.mySeat] === 'undefined' || $scope.table.seats[$scope.mySeat] === null ) return 0;
+		if ( $scope.mySeat === null || typeof $scope.table.seats[$scope.mySeat] === 'undefined' || $scope.table.seats[$scope.mySeat] === null ) return 0;
 		// If the pot was raised
-		if( $scope.actionState === "actBettedPot" ) {
-			var proposedBet = +$scope.table.biggestBet + $scope.table.bigBlind;
+		if ( $scope.actionState === "actBettedPot" ) {
+			let proposedBet = +$scope.table.biggestBet + $scope.table.bigBlind;
 			return $scope.table.seats[$scope.mySeat].chipsInPlay < proposedBet ? $scope.table.seats[$scope.mySeat].chipsInPlay : proposedBet;
 		} else {
 			return $scope.table.seats[$scope.mySeat].chipsInPlay < $scope.table.bigBlind ? $scope.table.seats[$scope.mySeat].chipsInPlay : $scope.table.bigBlind;
@@ -45,13 +45,13 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	}
 
 	$scope.maxBetAmount = function() {
-		if( $scope.mySeat === null || typeof $scope.table.seats[$scope.mySeat] === 'undefined' || $scope.table.seats[$scope.mySeat] === null ) return 0;
+		if ( $scope.mySeat === null || typeof $scope.table.seats[$scope.mySeat] === 'undefined' || $scope.table.seats[$scope.mySeat] === null ) return 0;
 		return $scope.actionState === "actBettedPot" ? $scope.table.seats[$scope.mySeat].chipsInPlay + $scope.table.seats[$scope.mySeat].bet : $scope.table.seats[$scope.mySeat].chipsInPlay;
 	}
 
 	$scope.callAmount = function() {
 		if( $scope.mySeat === null || typeof $scope.table.seats[$scope.mySeat] === 'undefined' || $scope.table.seats[$scope.mySeat] == null ) return 0;
-		var callAmount = +$scope.table.biggestBet - $scope.table.seats[$scope.mySeat].bet;
+		let callAmount = +$scope.table.biggestBet - $scope.table.seats[$scope.mySeat].bet;
 		return callAmount > $scope.table.seats[$scope.mySeat].chipsInPlay ? $scope.table.seats[$scope.mySeat].chipsInPlay : callAmount;
 	}
 
@@ -102,11 +102,11 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 
 	$scope.potText = function() {
 		if( typeof $scope.table.pot !== 'undefined' && $scope.table.pot[0].amount ) {
-			var potText = 'Pot: ' + $scope.table.pot[0].amount;
+			let potText = 'Pot: ' + $scope.table.pot[0].amount;
 
-			var potCount = $scope.table.pot.length;
+			let potCount = $scope.table.pot.length;
 			if( potCount > 1 ) {
-				for( var i=1 ; i<potCount ; i++ ) {
+				for( let i=1 ; i<potCount ; i++ ) {
 					potText += ' - Sidepot: ' + $scope.table.pot[i].amount;
 				}
 			}
@@ -315,7 +315,7 @@ function( $scope, $rootScope, $http, $routeParams, $timeout, sounds ) {
 	socket.on( 'actBettedPot', function() {
 		$scope.actionState = 'actBettedPot';
 
-		var proposedBet = +$scope.table.biggestBet + $scope.table.bigBlind;
+		let proposedBet = +$scope.table.biggestBet + $scope.table.bigBlind;
 		$scope.betAmount = $scope.table.seats[$scope.mySeat].chipsInPlay < proposedBet ? $scope.table.seats[$scope.mySeat].chipsInPlay : proposedBet;
 		$scope.$digest();
 	});
