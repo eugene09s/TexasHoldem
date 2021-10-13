@@ -10,8 +10,9 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $s
 		}
 	});
 
-	$scope.register = function() {
+	$scope.register = async function() {
 		if( $scope.username === '') {
+			await socket.onOpenSocket();
 			socket.emit( 'register', $scope.username, function( response ){
 				if( response.success ){
 					$rootScope.username = response.username;
@@ -25,7 +26,7 @@ app.controller('LobbyController', ['$scope', '$rootScope', '$http', function( $s
 				$scope.$digest();
 			});
 		} else {
-			console.log("FALSE !!!!!!!")
+			console.log("Error send register")
 		}
 	}
 }]);

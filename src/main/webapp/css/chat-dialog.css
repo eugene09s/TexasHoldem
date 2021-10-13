@@ -230,7 +230,8 @@ body {
 
 .direct-chat-msg,
 .direct-chat-text {
-    display: block
+    display: block;
+    word-break: break-word;
 }
 
 .direct-chat-info {

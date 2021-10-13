@@ -91,14 +91,17 @@
                     <li><a href="${pageContext.request.contextPath}/poker?command=home-page"
                            class="nav-link px-2 text-secondary"><fmt:message
                             key="nav.home.page"/></a></li>
-                    <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
-                           class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
-                    </li>
-
                     <li><a href="${pageContext.request.contextPath}/poker?command=play-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
-                    <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white"><fmt:message
-                            key="nav.about"/></a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/poker?command=users-page&p=1&s=5" class="nav-link px-2 text-white">
+                        <fmt:message key="nav.users.page"/></a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/poker?command=statistic-games-page&p=1&s=10" class="nav-link px-2 text-white">
+                        <fmt:message key="nav.statistic.games.page"/></a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white">
+                        <fmt:message key="nav.about"/></a>
                     </li>
                 </ul>
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -113,9 +116,9 @@
                              width="40" height="40" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="#">Users</a></li>
-                        <li><a class="dropdown-item" href="#"><fmt:message key="nav.setting"/></a></li>
-                        <li><a class="dropdown-item" href="#"><fmt:message key="nav.profile"/></a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/poker?command=account-settings-page"><fmt:message key="nav.setting"/></a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/poker?command=profile-page&id=${sessionScope.get("userId")}"><fmt:message key="nav.profile"/></a></li>
+                        <li><a class="dropdown-item bg-warning" href="${pageContext.request.contextPath}/poker?command=admin-panel-page"><fmt:message key="nav.admin.panel"/></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
