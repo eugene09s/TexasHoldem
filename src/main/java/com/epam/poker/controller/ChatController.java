@@ -62,7 +62,7 @@ public class ChatController {
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        LOGGER.error("Websocket error with user id:" + session + "\n\n" + throwable);
+        LOGGER.warn("Websocket error with user id:" + session + "\n\n" + throwable);
     }
 
     @OnMessage
