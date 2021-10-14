@@ -35,7 +35,7 @@ const chatUnit = {
     },
     send(e) {
         e.preventDefault();
-        if (!checkExistInsertAtackSymbols(this.msgTextArea.value)) {
+        if (!checkExistInsertAtackSymbols(this.msgTextArea.value) && this.msgTextArea.value) {
             this.sendMessage({
                 name: this.name,
                 text: this.msgTextArea.value
@@ -81,6 +81,9 @@ const chatUnit = {
                 <div class="direct-chat-text">${msg.text}</div>
             </div>
         `);
+            chatWindow = document.querySelector('.direct-chat-messages')
+            let xH = chatWindow.scrollHeight;
+            chatWindow.scrollTo(0, xH);
         }
         if (!this.isGivenMyMark) {
             this.initMessage();

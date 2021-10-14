@@ -104,11 +104,11 @@
                         <fmt:message key="nav.about"/></a>
                     </li>
                 </ul>
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                    <input type="search" class="form-control form-control-dark"
-                           placeholder="<fmt:message key="nav.search"/>..."
-                           aria-label="<fmt:message key="nav.search"/>">
-                </form>
+<%--                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">--%>
+<%--                    <input type="search" class="form-control form-control-dark"--%>
+<%--                           placeholder="<fmt:message key="nav.search"/>..."--%>
+<%--                           aria-label="<fmt:message key="nav.search"/>">--%>
+<%--                </form>--%>
                 <div class="dropdown text-end mr-3">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">
