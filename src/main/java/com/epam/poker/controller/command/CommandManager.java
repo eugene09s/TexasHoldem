@@ -1,6 +1,7 @@
 package com.epam.poker.controller.command;
 
 import com.epam.poker.controller.command.impl.admin.ActionBanUserCommand;
+import com.epam.poker.controller.command.impl.admin.ActionChangeBalanceUserCommand;
 import com.epam.poker.controller.command.impl.admin.ActionUnbanUserCommand;
 import com.epam.poker.controller.command.impl.admin.GoToAdminPanelPageCommand;
 import com.epam.poker.util.constant.CommandName;
@@ -31,6 +32,7 @@ public enum CommandManager {
     CHECK_EXIST_EMAIL(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_EMAIL),
     ACTION_BAN_USER(new ActionBanUserCommand(), CommandName.ACTION_BAN_USER),
     ACTION_UNBAN_USER(new ActionUnbanUserCommand(), CommandName.ACTION_UNBAN_USER),
+    ACTION_CHANGE_BALANCE_USER(new ActionChangeBalanceUserCommand(), CommandName.ACTION_CHANGE_BALANCE),
     //game
     TAKE_LOBBY_DATA(new TakeLobbyDataCommand(), CommandName.LOBBY_DATA),
     TAKE_TABLE_DATA(new TakeTableDataCommand(), CommandName.TABLE_DATA);

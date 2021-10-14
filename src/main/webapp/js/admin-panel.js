@@ -5,6 +5,9 @@ tableOfUsers.onclick = function (event) {
     if (targetElement.classList.contains('btn-action-ban')) {
         actionBanUser(targetElement);
     }
+    if (targetElement.classList.contains('btn-action-save-balance')) {
+        actionChangeBalance(targetElement);
+    }
 }
 
 async function actionBanUser(btnElement) {
@@ -15,7 +18,6 @@ async function actionBanUser(btnElement) {
     let idUser = idElement.innerHTML;
     let response;
     let btnEvent = btnElement.innerHTML.trim();
-    console.log(btnEvent);
     switch (btnEvent) {
         case 'BAN': {
             response = await sendEventBan(idUser, 'ban');
@@ -52,7 +54,43 @@ function changeStylesBtnAndDotByStatus(status, btn, dot) {
     }
 }
 
-async function sendEventBan(data, action) {
-    const response = await fetch('poker?command=action-' + action + '-user&id=' + data);
+async function sendEventBan(id, action) {
+    const response = await fetch('poker?command=action-' + action + '-user&id=' + id);
+    return await response.json();
+}
+
+async function actionChangeBalance(btnElement) {
+    let parentElement = btnElement.closest("tr");
+    let idElement = parentElement.firstElementChild;
+    let idUser = idElement.innerHTML;
+    let divInputGroup = parentElement.children[5].children[0];
+    let inputBalance = divInputGroup.children[1];
+    let response = await sendEventChangeBalance(idUser, inputBalance.value);
+    let btnSave = divInputGroup.lastElementChild;
+    let btnValue = btnSave.innerHTML;
+    if (response.success) {
+        btnSave.classList.remove('btn-primary');
+        btnSave.innerHTML = 'Success';
+        btnSave.classList.add('btn-success');
+        inputBalance.value = response.message;
+    } else {
+        btnSave.classList.remove('btn-primary');
+        btnSave.innerHTML = 'Error';
+        btnSave.classList.add('btn-danger');
+        inputBalance.classList.add('border-danger');
+    }
+    setTimeout(function () {
+        btnSave.classList.remove('btn-success');
+        btnSave.classList.remove('btn-danger');
+        btnSave.classList.add('btn-primary');
+        btnSave.innerHTML = btnValue;
+
+        inputBalance.classList.remove('border-danger');
+        inputBalance.classList.add('border-primary');
+    },4000);
+}
+
+async function sendEventChangeBalance(id, money) {
+    const response = await fetch('poker?command=action-change-balance&id=' + id + '&money=' + money);
     return await response.json();
 }

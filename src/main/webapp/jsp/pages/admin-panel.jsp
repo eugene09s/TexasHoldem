@@ -59,7 +59,7 @@
 <c:when test="${userDto.getUserStatus() == 'ACTIVE'}">text-success</c:when><c:otherwise>text-danger</c:otherwise>
 </c:choose> mr-2 h2">•</span>
                             <span class="status-user">${userDto.getUserStatus()}</span>
-                            <button type="button" class="btn btn-action-ban
+                            <button type="button" class="btn border btn-action-ban
 <c:choose>
 <c:when test="${userDto.getUserStatus() == 'ACTIVE'}">btn-outline-danger ml-4</c:when>
 <c:otherwise>btn-outline-success ml-2</c:otherwise>
@@ -72,11 +72,11 @@
                         </td>
                         <td>
                             <div class="input-group">
-                                <button type="button" class="btn btn-light text-warning font-weight-bold">-</button>
-                                <input type="number" value="${userDto.getBalance()}" data-decimals="2" min="0" max="9"
+                                <button type="button" class="btn btn-light border text-warning font-weight-bold">-</button>
+                                <input type="number" class="border border-primary rounded" value="${userDto.getBalance()}" data-decimals="2" min="0" max="10000"
                                        step="0.1">
-                                <button type="button" class="btn btn-light text-warning font-weight-bold">+</button>
-                                <button type="button" class="btn btn-primary ml-2">Save</button>
+                                <button type="button" class="btn border btn-light text-warning font-weight-bold">+</button>
+                                <button type="button" class="btn btn-primary ml-2 btn-action-save-balance"><fmt:message key="admin.save"/></button>
                             </div>
                         </td>
                     </tr>

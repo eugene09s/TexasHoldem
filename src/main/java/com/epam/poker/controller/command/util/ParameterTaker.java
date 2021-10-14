@@ -50,4 +50,19 @@ public class ParameterTaker {
             throw new InvalidParametersException("Invalid id parameter in request.");
         }
     }
+
+    public static BigDecimal takeMoney(String parameterName, RequestContext requestContext)
+            throws InvalidParametersException {
+        String numberStr = requestContext.getRequestParameter(parameterName);
+        BigDecimal number = BigDecimal.ZERO.subtract(BigDecimal.ONE);
+        try {
+            number = new BigDecimal(numberStr);
+        } catch (NumberFormatException e) {
+            throw new InvalidParametersException("Invalid number parameter in request. Line: " + numberStr + e);
+        }
+        if (number.compareTo(BigDecimal.ZERO) < 0) {
+            throw new InvalidParametersException("Not positive number parameter in request.");
+        }
+        return number;
+    }
 }

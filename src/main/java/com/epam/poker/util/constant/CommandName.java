@@ -13,6 +13,7 @@ public final class CommandName {
     public static final String ADMIN_PANEL_PAGE = "admin-panel-page";
 
     public static final String USERS = "users";
+    public static final String ACTION_CHANGE_BALANCE = "action-change-balance";
     public static final String ACTION_BAN_USER = "action-ban-user";
     public static final String ACTION_UNBAN_USER = "action-unban-user";
     public static final String LOGIN = "login";

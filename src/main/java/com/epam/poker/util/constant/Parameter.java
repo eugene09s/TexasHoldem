@@ -17,6 +17,7 @@ public final class Parameter {
     public static final String SIZE = "s";
     public static final String DATE = "date";
     public static final String BIO = "bio";
+    public static final String MONEY = "money";
 
     //for JSON
     public static final String EVENT = "event";

@@ -287,6 +287,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean updateBalanceById(long id, BigDecimal money) throws ServiceException {
+        try {
+            DaoSaveTransaction transaction = new DaoSaveTransaction();
+            try {
+                UserDao userDao = new UserDaoImpl();
+                transaction.init(userDao);
+                return userDao.updateBalanceById(id, money);
+            } catch (DaoException e) {
+                LOGGER.error("Transaction error: " + e);
+                throw new ServiceException(e);
+            } finally {
+                transaction.end();
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean isBlockedById(long id) throws ServiceException {
         try {
             DaoSaveTransaction transaction = new DaoSaveTransaction();
