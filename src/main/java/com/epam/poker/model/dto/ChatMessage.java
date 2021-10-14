@@ -1,18 +1,18 @@
-package com.epam.poker.controller.chat;
+package com.epam.poker.model.dto;
 
-public class Message {
+public class ChatMessage {
     private String name;
     private String text;
     private String img;
     private String time;
 
-    private Message() {}
+    private ChatMessage() {}
 
     public String getName() {
         return name;
     }
 
-    public Message setTime(String localTime) {
+    public ChatMessage setTime(String localTime) {
         this.time = localTime;
         return this;
     }
@@ -46,7 +46,7 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Message message = (Message) o;
+        ChatMessage message = (ChatMessage) o;
 
         if (name != null ? !name.equals(message.name) : message.name != null) return false;
         if (text != null ? !text.equals(message.text) : message.text != null) return false;
@@ -79,10 +79,10 @@ public class Message {
     }
 
     public static class MessageBuilder {
-        private Message message;
+        private ChatMessage message;
 
         public MessageBuilder() {
-            message = new Message();
+            message = new ChatMessage();
         }
 
         public void setName(String name) {
@@ -93,7 +93,7 @@ public class Message {
             message.setText(text);
         }
 
-        public Message createMessage() {
+        public ChatMessage createMessage() {
             return message;
         }
     }

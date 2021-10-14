@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 
 @ServerEndpoint(value = "/game-poker",
         configurator = EndpointAwareConfig.class)
-public class GameSocketController {
+public class GameController {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String LINE_COOKIE = "cookie";
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -100,7 +100,7 @@ public class GameSocketController {
         if (gambler != null) {
             nameGambler = gambler.getName();
         }
-        LOGGER.error("Websocket error with user: " + nameGambler + ". Error: " + throwable);
+        LOGGER.warn("Websocket error with user: " + nameGambler + ". Error: " + throwable);
     }
 
     private void disconnectGambler() {

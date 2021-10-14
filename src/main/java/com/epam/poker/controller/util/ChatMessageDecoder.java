@@ -1,16 +1,17 @@
-package com.epam.poker.controller.chat;
+package com.epam.poker.controller.util;
 
+import com.epam.poker.model.dto.ChatMessage;
 import com.google.gson.Gson;
 import jakarta.websocket.DecodeException;
 import jakarta.websocket.Decoder;
 import jakarta.websocket.EndpointConfig;
 
-public class MessageDecoder implements Decoder.Text<Message> {
+public class ChatMessageDecoder implements Decoder.Text<ChatMessage> {
     private static Gson gson = new Gson();
 
     @Override
-    public Message decode(String s) throws DecodeException {
-        return gson.fromJson(s, Message.class);
+    public ChatMessage decode(String s) throws DecodeException {
+        return gson.fromJson(s, ChatMessage.class);
     }
 
     @Override

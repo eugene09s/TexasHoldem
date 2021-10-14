@@ -1,8 +1,8 @@
 package com.epam.poker.controller;
 
-import com.epam.poker.controller.chat.Message;
-import com.epam.poker.controller.chat.MessageDecoder;
-import com.epam.poker.controller.chat.MessageEncoder;
+import com.epam.poker.model.dto.ChatMessage;
+import com.epam.poker.controller.util.ChatMessageDecoder;
+import com.epam.poker.controller.util.ChatMessageEncoder;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
@@ -23,8 +23,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @ServerEndpoint(value = "/chat",
-        decoders = {MessageDecoder.class},
-        encoders = {MessageEncoder.class},
+        decoders = {ChatMessageDecoder.class},
+        encoders = {ChatMessageEncoder.class},
         configurator = EndpointAwareConfig.class)
 public class ChatController {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -66,7 +66,7 @@ public class ChatController {
     }
 
     @OnMessage
-    public void onMessage(Message message) {
+    public void onMessage(ChatMessage message) {
         message.setName(this.username);
         message.setImg(this.img);
         String time = LocalTime.now().toString();
