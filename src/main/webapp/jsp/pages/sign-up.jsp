@@ -27,8 +27,8 @@
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.pass"/></span>
-                <input type="password" name="password" minlength="8" maxlength="32" class="form-control password"
-                       required>
+                <input type="password" name="password" id="currentPass" minlength="8" maxlength="32" class="form-control password" required>
+                <input type="checkbox" onclick="showPass()"> <fmt:message key="settings.current.password.show"/>
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.repeat.pass"/></span>

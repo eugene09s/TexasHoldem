@@ -99,7 +99,8 @@
                                     <label class="form-label">
                                         <fmt:message key="settings.current.password" />
                                     </label>
-                                    <input type="password" name="currPas" minlength="8" maxlength="32" class="form-control" required>
+                                    <input type="password" id="currentPass" name="currPas" minlength="8" maxlength="32" class="form-control" required>
+                                    <input type="checkbox" onclick="showPass()"> <fmt:message key="settings.current.password.show"/>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">

@@ -26,7 +26,18 @@
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="login.password"/></span>
-                <input type="password" name="password" class="form-control" minlength="8" maxlength="32" required>
+                <input type="password" id="currentPass" name="password" class="form-control" minlength="8" maxlength="32" required>
+                <input type="checkbox" onclick="showPass()"> <fmt:message key="settings.current.password.show"/>
+                <script>
+                    const currentPass = document.getElementById('currentPass');
+                    function showPass() {
+                        if (currentPass.type === "password") {
+                            currentPass.type = "text";
+                        } else {
+                            currentPass.type = "password";
+                        }
+                    }
+                </script>
             </div>
             <h3 class="text-danger error-message">
                 <fmt:message key="login.error.${errorMessage}"/>
