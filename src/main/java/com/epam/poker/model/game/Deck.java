@@ -3,11 +3,12 @@ package com.epam.poker.model.game;
 import com.epam.poker.model.Entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Deck implements Entity {
     private static final int SIZE_DECK = 52;
-    private static final List<String> FULL_DECK_CARDS = new ArrayList<>(List.of(
+    private static final List<String> FULL_DECK_CARDS = Arrays.asList(
             "As", "Ah", "Ad", "Ac",
             "Ks", "Kh", "Kd", "Kc",
             "Qs", "Qh", "Qd", "Qc",
@@ -21,7 +22,7 @@ public class Deck implements Entity {
             "4s", "4h", "4d", "4c",
             "3s", "3h", "3d", "3c",
             "2s", "2h", "2d", "2c"
-    ));
+    );
     private List<String> freshDeck;
     private int nextCard;
 

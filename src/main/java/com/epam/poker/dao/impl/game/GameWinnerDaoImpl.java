@@ -12,30 +12,25 @@ import java.util.Optional;
 import static com.epam.poker.dao.ColumnName.GAME_WINNERS;
 
 public class GameWinnerDaoImpl extends AbstractDao<GameWinner> implements GameWinnerDao {
-    public static final String SQL_FIND_ALL_GAME_WINNERS = """
-            SELECT game_winner_id, game_id, game_winner_user_id
-            FROM game_winners
-            """;
-    public static final String SQL_ADD_GAME_WINNER = """
-            INSERT INTO game_winners
-            (game_winner_id, game_id, game_winner_user_id)
-            VALUES (?,?,?)
-            """;
-    public static final String SQL_FIND_GAME_WINNER_BY_USER_ID = """
-            SELECT game_winner_id, game_id, game_winner_user_id
-            FROM game_winners
-            WHERE game_winner_user_id=?
-            """;
-    public static final String SQL_FIND_GAME_WINNER_BY_GAME_ID = """
-            SELECT game_winner_id, game_id, game_winner_user_id
-            FROM game_winners
-            WHERE game_id=?
-            """;
-    public static final String SQL_FIND_GAME_WINNER_BY_GAME_WINNER_ID = """
-            SELECT game_winner_id, game_id, game_winner_user_id
-            FROM game_winners
-            WHERE game_winner_id=?
-            """;
+    public static final String SQL_FIND_ALL_GAME_WINNERS =
+            "SELECT game_winner_id, game_id, game_winner_user_id " +
+            "FROM game_winners";
+    public static final String SQL_ADD_GAME_WINNER =
+            "INSERT INTO game_winners " +
+            "(game_winner_id, game_id, game_winner_user_id) " +
+            "VALUES (?,?,?)";
+    public static final String SQL_FIND_GAME_WINNER_BY_USER_ID =
+            "SELECT game_winner_id, game_id, game_winner_user_id " +
+            "FROM game_winners " +
+            "WHERE game_winner_user_id=?";
+    public static final String SQL_FIND_GAME_WINNER_BY_GAME_ID =
+            "SELECT game_winner_id, game_id, game_winner_user_id " +
+            "FROM game_winners " +
+            "WHERE game_id=?";
+    public static final String SQL_FIND_GAME_WINNER_BY_GAME_WINNER_ID =
+            "SELECT game_winner_id, game_id, game_winner_user_id " +
+            "FROM game_winners " +
+            "WHERE game_winner_id=?";
 
     public GameWinnerDaoImpl() {
         super(GameWinnerRowMapper.getInstance(), GAME_WINNERS);

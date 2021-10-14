@@ -7,7 +7,7 @@ import com.epam.poker.model.game.Table;
 import java.util.*;
 
 public class EvaluateHandService {
-    private static final List<Character> cardNames = List.of(
+    private static final List<Character> cardNames = Arrays.asList(
             '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A');
     private static final char SPADES_SUIT = 's';
     private static final char HEARTS_SUIT = 'h';
@@ -258,39 +258,44 @@ public class EvaluateHandService {
 
     private void calcEvaluateHand() {
         switch (evaluateHand.getRank()) {
-            case PAIR -> {
+            case (PAIR): {
                 evaluateHand.setName("a pair of "
                         + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 1000000);
             }
-            case TWO_PAIR -> {
+            break;
+            case (TWO_PAIR): {
                 evaluateHand.setName("two pair, "
                         + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)
                         + " and " + findCardNameByKey(evaluateHand.getCards().get(2).charAt(0), true));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 2000000);
             }
-            case THREE_OF_KIND -> {
+            break;
+            case (THREE_OF_KIND): {
                 evaluateHand.setName("three of a kind, "
                         + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 3000000);
             }
-            case STRAIGHT -> {
+            break;
+            case (STRAIGHT): {
                 evaluateHand.setName("a straight to "
                         + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 4000000);
             }
-            case FLUSH -> {
+            break;
+            case (FLUSH): {
                 evaluateHand.setName("a flush, "
                         + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)
                         + " high");
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 5000000);
             }
-            case FULL_HOUSE -> {
+            break;
+            case (FULL_HOUSE): {
                 evaluateHand.setName("a full house, "
                         + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)
                         + " full of "
@@ -298,13 +303,14 @@ public class EvaluateHandService {
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 6000000);
             }
-            case FOUR_OF_KIND -> {
+            break;
+            case (FOUR_OF_KIND): {
                 evaluateHand.setName("four of a kind, "
                         + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 7000000);
             }
-            case STRAIGHT_FLUSH -> {
+            case (STRAIGHT_FLUSH): {
                 evaluateHand.setName("a straight flush, "
                         + findCardNameByKey(evaluateHand.getCards().get(4).charAt(0), true)
                         + " to "
@@ -312,12 +318,14 @@ public class EvaluateHandService {
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 8000000);
             }
-            case ROYAL_FLUSH -> {
+            break;
+            case (ROYAL_FLUSH): {
                 evaluateHand.setName("a royal flush");
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 8000000);
             }
-            default -> {//High card
+            break;
+            default: {//High card
                 evaluateHand.setName(
                         findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), false));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards()));

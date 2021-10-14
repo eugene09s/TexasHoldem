@@ -1,5 +1,6 @@
 package com.epam.poker.model.database.type;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public enum UserRole {
     private Set<String> commandsName = new HashSet<>();
 
     UserRole(String... commandsName) {
-        this.commandsName.addAll(Set.of(commandsName));
+        this.commandsName.addAll(Arrays.asList(commandsName));
     }
 
     public boolean isExistCommandName(String command) {

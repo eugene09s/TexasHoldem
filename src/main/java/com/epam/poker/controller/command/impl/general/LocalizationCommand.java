@@ -35,11 +35,10 @@ public class LocalizationCommand implements Command {
     }
 
     private String getLocaleByLanguage(String language) {
-        return switch (language) {
-            case RU -> RU_LOCALE;
-            //case EN -> EN_LOCALE;
-            default -> EN_LOCALE;
-        };
+        switch (language) {
+            case (RU): return RU_LOCALE;
+            default: return EN_LOCALE;
+        }
     }
 
     private String changeCommandToCommandPage(String prevCommand) {
