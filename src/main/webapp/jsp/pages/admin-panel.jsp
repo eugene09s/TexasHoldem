@@ -6,110 +6,110 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!DOCTYPE html>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="locale"/>
+
+<html lang="<fmt:message key="html.lang" />">
+
 <head>
-    <title>Title</title>
+    <c:import url="/jsp/parts/head.jsp"/>
+    <title>
+        <fmt:message key="label.title"/>
+    </title>
 </head>
+
 <body>
+<c:import url="/jsp/parts/navbar.jsp"/>
 
 <div class="container py-3">
     <div class="table-responsive">
         <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-5">
-                        <h2>User <b>Management</b></h2>
-                    </div>
-                    <div class="col-sm-7">
-                        <a href="#" class="btn btn-secondary"><i class="material-icons"></i> <span>Add New User</span></a>
-                        <a href="#" class="btn btn-secondary"><i class="material-icons"></i> <span>Export to Excel</span></a>
-                    </div>
-                </div>
-            </div>
+
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Date Created</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th><fmt:message key="admin.user.id"/></th>
+                    <th><fmt:message key="admin.user.login"/></th>
+                    <th><fmt:message key="user.data.time"/></th>
+                    <th><fmt:message key="user.role"/></th>
+                    <th><fmt:message key="user.status"/></th>
+                    <th><fmt:message key="admin.user.balance"/></th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#"><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"> Michael Holz</a></td>
-                    <td>04/10/2013</td>
-                    <td>Admin</td>
-                    <td><span class="status text-success">•</span> Active</td>
-                    <td>
-                        <a href="#" class="settings" title="" data-toggle="tooltip" data-original-title="Settings"><i class="material-icons"></i></a>
-                        <a href="#" class="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i class="material-icons"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="#"><img src="/examples/images/avatar/2.jpg" class="avatar" alt="Avatar"> Paula Wilson</a></td>
-                    <td>05/08/2014</td>
-                    <td>Publisher</td>
-                    <td><span class="status text-success">•</span> Active</td>
-                    <td>
-                        <a href="#" class="settings" title="" data-toggle="tooltip" data-original-title="Settings"><i class="material-icons"></i></a>
-                        <a href="#" class="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i class="material-icons"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><a href="#"><img src="/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno</a></td>
-                    <td>11/05/2015</td>
-                    <td>Publisher</td>
-                    <td><span class="status text-danger">•</span> Suspended</td>
-                    <td>
-                        <a href="#" class="settings" title="" data-toggle="tooltip" data-original-title="Settings"><i class="material-icons"></i></a>
-                        <a href="#" class="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i class="material-icons"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><a href="#"><img src="/examples/images/avatar/4.jpg" class="avatar" alt="Avatar"> Mary Saveley</a></td>
-                    <td>06/09/2016</td>
-                    <td>Reviewer</td>
-                    <td><span class="status text-success">•</span> Active</td>
-                    <td>
-                        <a href="#" class="settings" title="" data-toggle="tooltip" data-original-title="Settings"><i class="material-icons"></i></a>
-                        <a href="#" class="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i class="material-icons"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td><a href="#"><img src="/examples/images/avatar/5.jpg" class="avatar" alt="Avatar"> Martin Sommer</a></td>
-                    <td>12/08/2017</td>
-                    <td>Moderator</td>
-                    <td><span class="status text-warning">•</span> Inactive</td>
-                    <td>
-                        <a href="#" class="settings" title="" data-toggle="tooltip" data-original-title="Settings"><i class="material-icons"></i></a>
-                        <a href="#" class="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i class="material-icons"></i></a>
-                    </td>
-                </tr>
+                <tbody class="table-of-users">
+                <c:forEach items="${userDtoList}" var="userDto" varStatus="counter">
+                    <tr>
+                        <td id="id-user">${userDto.getId()}</td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/poker?command=profile-page&id=${userDto.getId()}">
+                                <img src="${pageContext.request.contextPath}/images/photo/${userDto.getPhoto()}"
+                                     class="avatar rounded-circle mr-4" height="50px" width="50px"
+                                     alt="Avatar">${userDto.getLogin()}
+                            </a>
+                        </td>
+                        <td>${userDto.getCreateTime()}</td>
+                        <td>${userDto.getUserRole()}</td>
+                        <td id="status-part">
+                            <span id="status-dot" class="status
+<c:choose>
+<c:when test="${userDto.getUserStatus() == 'ACTIVE'}">text-success</c:when><c:otherwise>text-danger</c:otherwise>
+</c:choose> mr-2 h2">•</span>
+                            <span class="status-user">${userDto.getUserStatus()}</span>
+                            <button type="button" class="btn btn-action-ban
+<c:choose>
+<c:when test="${userDto.getUserStatus() == 'ACTIVE'}">btn-outline-danger ml-4</c:when>
+<c:otherwise>btn-outline-success ml-2</c:otherwise>
+</c:choose>">
+                                <c:choose>
+                                    <c:when test="${userDto.getUserStatus() == 'ACTIVE'}">BAN</c:when>
+                                    <c:otherwise>UNBAN</c:otherwise>
+                                </c:choose>
+                            </button>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-light text-warning font-weight-bold">-</button>
+                                <input type="number" value="${userDto.getBalance()}" data-decimals="2" min="0" max="9"
+                                       step="0.1">
+                                <button type="button" class="btn btn-light text-warning font-weight-bold">+</button>
+                                <button type="button" class="btn btn-primary ml-2">Save</button>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
-            <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div>
+
+            <c:if test="${userDtoList.size() != 0}">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <c:forEach var="i" begin="1" end="${maxPage}">
+                            <c:if test="${i == currentPage+4}">
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            </c:if>
+                            <c:if test="${(((currentPage-1) == i) || ((i < currentPage+3) && (i > currentPage-3))) || (i > maxPage-2) || (i == 1)}">
+                                <li class="page-item <c:if test="${currentPage == i}">active</c:if>">
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/poker?command=admin-panel-page&p=<c:out value = "${i}"/>&s=${amountOfPage}">
+                                        <c:out value="${i}"/>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                </nav>
+            </c:if>
+
         </div>
     </div>
 </div>
 
+<script src="/js/admin-panel.js"></script>
 </body>
 </html>

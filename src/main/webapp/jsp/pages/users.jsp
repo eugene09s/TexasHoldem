@@ -52,7 +52,9 @@
                         <td>${userDto.getCreateTime()}</td>
                         <td>${userDto.getUserRole()}</td>
                         <td>
-                            <span class="status text-success mr-2 h3">•</span>
+                            <span class="status <c:choose>
+<c:when test="${userDto.getUserStatus() == 'ACTIVE'}">text-success</c:when><c:otherwise>text-danger</c:otherwise>
+</c:choose> mr-2 h2">•</span>
                             <span>${userDto.getUserStatus()}</span>
                         </td>
                     </tr>

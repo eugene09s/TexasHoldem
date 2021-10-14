@@ -77,14 +77,14 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return result == 1;
+        return result != 0;
     }
 
     protected boolean executeUpdateQuery(String query, Object... params) throws DaoException {
         int result = 0;
         try (PreparedStatement preparedStatement = createStatement(query, params)) {
             result = preparedStatement.executeUpdate();
-            return result == 0;
+            return result != 0;
         } catch (SQLException e) {
             throw new DaoException(e);
         }

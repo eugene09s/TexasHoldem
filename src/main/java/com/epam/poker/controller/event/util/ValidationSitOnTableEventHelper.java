@@ -1,20 +1,17 @@
-package com.epam.poker.util;
+package com.epam.poker.controller.event.util;
 
 import com.epam.poker.model.game.Gambler;
 import com.epam.poker.model.game.Lobby;
 import com.epam.poker.util.constant.Attribute;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-public class ValidationJsonData {
-    private static final Logger LOGGER = LogManager.getLogger();
+public class ValidationSitOnTableEventHelper {
     private static final Lobby lobby = Lobby.getInstance();
-    private static final ValidationJsonData instance = new ValidationJsonData();
+    private static final ValidationSitOnTableEventHelper instance = new ValidationSitOnTableEventHelper();
 
-    private ValidationJsonData() {
+    private ValidationSitOnTableEventHelper() {
     }
 
-    public static ValidationJsonData getInstance() {
+    public static ValidationSitOnTableEventHelper getInstance() {
         return instance;
     }
 

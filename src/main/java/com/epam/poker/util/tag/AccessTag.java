@@ -8,7 +8,6 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 public class AccessTag extends TagSupport {
     private static final String GUEST = "GUEST";
     private static final String NOT_GUEST = "NOT_GUEST";
-
     private String role;
 
     public void setRole(String role) {

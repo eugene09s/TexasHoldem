@@ -10,10 +10,11 @@ public final class CommandName {
     public static final String ACCOUNT_SETTINGS_PAGE = "account-settings-page";
     public static final String USERS_PAGE = "users-page";
     public static final String STATISTIC_GAMES_PAGE = "statistic-games-page";
+    public static final String ADMIN_PANEL_PAGE = "admin-panel-page";
 
     public static final String USERS = "users";
-    public static final String BLOCK_USER = "block-user";
-    public static final String UNBLOCK_USER = "unblock-user";
+    public static final String ACTION_BAN_USER = "action-ban-user";
+    public static final String ACTION_UNBAN_USER = "action-unban-user";
     public static final String LOGIN = "login";
     public static final String LOGOUT = "logout";
     public static final String SIGN_UP = "sign-up";

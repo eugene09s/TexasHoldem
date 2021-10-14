@@ -3,19 +3,23 @@ package com.epam.poker.model.dto;
 import com.epam.poker.model.database.type.UserRole;
 import com.epam.poker.model.database.type.UserStatus;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class UserDto {
     private long id;
+    private String login;
     private String firstName;
     private String lastName;
     private UserRole userRole;
     private UserStatus userStatus;
     private Timestamp createTime;
     private String photo;
+    private BigDecimal balance;
 
     public UserDto(long id, String firstName, String lastName, UserRole userRole,
-                   UserStatus userStatus, Timestamp createTime, String photo) {
+                   UserStatus userStatus, Timestamp createTime, String photo,
+                   BigDecimal balance, String login) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +27,8 @@ public class UserDto {
         this.userStatus = userStatus;
         this.createTime = createTime;
         this.photo = photo;
+        this.balance = balance;
+        this.login = login;
     }
 
     public long getId() {
@@ -31,6 +37,22 @@ public class UserDto {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public String getFirstName() {
@@ -81,48 +103,6 @@ public class UserDto {
         this.photo = photo;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserDto userDto = (UserDto) o;
-
-        if (id != userDto.id) return false;
-        if (firstName != null ? !firstName.equals(userDto.firstName) : userDto.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(userDto.lastName) : userDto.lastName != null) return false;
-        if (userRole != userDto.userRole) return false;
-        if (userStatus != userDto.userStatus) return false;
-        if (createTime != null ? !createTime.equals(userDto.createTime) : userDto.createTime != null) return false;
-        return photo != null ? photo.equals(userDto.photo) : userDto.photo == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
-        result = 31 * result + (userStatus != null ? userStatus.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (photo != null ? photo.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("UserDto{");
-        sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", userRole=").append(userRole);
-        sb.append(", userStatus=").append(userStatus);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", photo='").append(photo).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
-
     public static UserDtoBuilder builder() {
         return new UserDtoBuilder();
     }
@@ -135,6 +115,8 @@ public class UserDto {
         private UserStatus userStatus;
         private Timestamp createTime;
         private String photo;
+        private BigDecimal balance;
+        private String login;
 
         public UserDtoBuilder setId(long id) {
             this.id = id;
@@ -171,8 +153,19 @@ public class UserDto {
             return this;
         }
 
+        public UserDtoBuilder setBalance(BigDecimal balance) {
+            this.balance = balance;
+            return this;
+        }
+
+        public UserDtoBuilder setLogin(String login) {
+            this.login = login;
+            return this;
+        }
+
         public UserDto createUserDto() {
-            return new UserDto(id, firstName, lastName, userRole, userStatus, createTime, photo);
+            return new UserDto(id, firstName, lastName, userRole, userStatus,
+                    createTime, photo, balance, login);
         }
     }
 }

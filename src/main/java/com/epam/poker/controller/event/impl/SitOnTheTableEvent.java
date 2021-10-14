@@ -9,7 +9,7 @@ import com.epam.poker.model.game.Table;
 import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.impl.UserServiceImpl;
 import com.epam.poker.service.game.EventHandlerService;
-import com.epam.poker.util.ValidationJsonData;
+import com.epam.poker.controller.event.util.ValidationSitOnTableEventHelper;
 import com.epam.poker.util.constant.Attribute;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -28,7 +28,7 @@ public class SitOnTheTableEvent implements EventSocket {
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final SitOnTheTableEvent instance = new SitOnTheTableEvent();
     private static Lobby lobby = Lobby.getInstance();
-    private static ValidationJsonData validationJsonData = ValidationJsonData.getInstance();
+    private static ValidationSitOnTableEventHelper validationJsonData = ValidationSitOnTableEventHelper.getInstance();
     private static UserService userService = UserServiceImpl.getInstance();
     private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
     private static final String MESSAGE_ERROR_CHIPS = "Your chips is invalid!";

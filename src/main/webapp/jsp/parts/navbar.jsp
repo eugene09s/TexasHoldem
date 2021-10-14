@@ -118,7 +118,7 @@
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/poker?command=account-settings-page"><fmt:message key="nav.setting"/></a></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/poker?command=profile-page&id=${sessionScope.get("userId")}"><fmt:message key="nav.profile"/></a></li>
-                        <li><a class="dropdown-item bg-warning" href="${pageContext.request.contextPath}/poker?command=admin-panel-page"><fmt:message key="nav.admin.panel"/></a></li>
+                        <li><a class="dropdown-item bg-warning" href="${pageContext.request.contextPath}/poker?command=admin-panel-page&p=1&s=5"><fmt:message key="nav.admin.panel"/></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

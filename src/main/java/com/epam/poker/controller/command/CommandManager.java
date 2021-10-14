@@ -1,5 +1,8 @@
 package com.epam.poker.controller.command;
 
+import com.epam.poker.controller.command.impl.admin.ActionBanUserCommand;
+import com.epam.poker.controller.command.impl.admin.ActionUnbanUserCommand;
+import com.epam.poker.controller.command.impl.admin.GoToAdminPanelPageCommand;
 import com.epam.poker.util.constant.CommandName;
 import com.epam.poker.controller.command.impl.game.GoToGamePageCommand;
 import com.epam.poker.controller.command.impl.game.TakeLobbyDataCommand;
@@ -16,6 +19,7 @@ public enum CommandManager {
     GO_TO_GAME_PAGE(new GoToGamePageCommand(), CommandName.PLAY_PAGE),
     GO_TO_GAMBLERS_PAGE(new GoToUsersPageCommand(), CommandName.USERS_PAGE),
     GO_TO_STATISTIC_GAMES(new GoToStatisticGamesPageCommand(),CommandName.STATISTIC_GAMES_PAGE),
+    GO_TO_ADMIN_PANEL_PAGE(new GoToAdminPanelPageCommand(), CommandName.ADMIN_PANEL_PAGE),
     SIGN_UP(new SignUpCommand(), CommandName.SIGN_UP),
     LOGIN(new LoginCommand(), CommandName.LOGIN),
     LOGOUT(new LogoutCommand(), CommandName.LOGOUT),
@@ -25,6 +29,8 @@ public enum CommandManager {
     //AJAX
     CHECK_EXIST_LOGIN(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_LOGIN),
     CHECK_EXIST_EMAIL(new CheckExistUsernameCommand(), CommandName.CHECK_EXIST_EMAIL),
+    ACTION_BAN_USER(new ActionBanUserCommand(), CommandName.ACTION_BAN_USER),
+    ACTION_UNBAN_USER(new ActionUnbanUserCommand(), CommandName.ACTION_UNBAN_USER),
     //game
     TAKE_LOBBY_DATA(new TakeLobbyDataCommand(), CommandName.LOBBY_DATA),
     TAKE_TABLE_DATA(new TakeTableDataCommand(), CommandName.TABLE_DATA);

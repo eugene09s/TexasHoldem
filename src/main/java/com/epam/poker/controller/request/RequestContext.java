@@ -1,6 +1,8 @@
 package com.epam.poker.controller.request;
 
 import com.epam.poker.util.constant.Attribute;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.*;
 
 public class RequestContext {
+    private static final ObjectMapper mapper = new ObjectMapper();
     private static final String REFERER_HEADER = "Referer";
     private final Map<String, Object> requestAttributes;
     private final Map<String, Object> sessionAttributes;
@@ -16,7 +19,7 @@ public class RequestContext {
     private final String requestHeader;
     private final Cookie[] cookies;
     private final Set<Cookie> newCookies = new HashSet<>();
-    private boolean isSession;//todo functionals
+    private boolean isSession;
 
     public RequestContext(HttpServletRequest req) {
         this.requestAttributes = retrieveRequestAttributes(req);

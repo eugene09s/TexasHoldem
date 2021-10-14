@@ -42,7 +42,7 @@ public class UserValidator implements Validator<User> {
         String login = user.getLogin();
         String password = user.getPassword();
         String phoneNumber = String.valueOf(user.getPhoneNumber());
-        if (phoneNumber.length() > MAX_PHONE_NUMBER_LENGTH) {
+        if (phoneNumber.length() > MAX_PHONE_NUMBER_LENGTH || phoneNumber.length() < MIN_PHONE_LENGTH) {
             return false;
         }
         if (login == null || login.length() > MAX_FIELD_USER_LENGTH
@@ -82,7 +82,7 @@ public class UserValidator implements Validator<User> {
             return false;
         }
         String phone = String.valueOf(user.getPhoneNumber());
-        if (phone.length() > MAX_PHONE_NUMBER_LENGTH || phone.length() <= MIN_PHONE_LENGTH) {
+        if (phone.length() > MAX_PHONE_NUMBER_LENGTH || phone.length() < MIN_PHONE_LENGTH) {
             return false;
         }
         return true;

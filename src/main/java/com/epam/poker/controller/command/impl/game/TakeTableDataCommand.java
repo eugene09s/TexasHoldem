@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 
 public class TakeTableDataCommand implements Command {
     private static final Lobby lobby = Lobby.getInstance();
-    private static final Gson gson = new Gson();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final ParserDataToJsonService parserDataToJson = ParserDataToJsonService.getInstance();
 

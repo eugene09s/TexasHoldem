@@ -63,6 +63,8 @@ public class UserDtoCommandHelper {
                     .setUserRole(userList.get(i).getUserRole())
                     .setUserStatus(userList.get(i).getUserStatus())
                     .setPhoto(profilePlayerList.get(i).getPhoto())
+                    .setBalance(userList.get(i).getBalance())
+                    .setLogin(userList.get(i).getLogin())
                     .createUserDto();
             userDtoList.add(userDto);
         }

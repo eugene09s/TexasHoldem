@@ -2,14 +2,13 @@ package com.epam.poker.controller;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
+import com.epam.poker.controller.request.RequestContext;
+import com.epam.poker.exception.DaoException;
+import com.epam.poker.pool.ConnectionPool;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.CommandName;
 import com.epam.poker.util.constant.PagePath;
 import com.epam.poker.util.constant.Parameter;
-import com.epam.poker.controller.request.RequestContext;
-import com.epam.poker.exception.DaoException;
-import com.epam.poker.pool.ConnectionPool;
-import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,18 +23,19 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/poker"}, name = "mainServlet")
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Gson gson = new Gson();
+    private static final String UTF_EIGHT = "UTF-8";
+    private static final String JSON_CONTENT_TYPE = "application/json";
     private static final String HOME_PAGE_COMMAND = "poker?command=" + CommandName.HOME_PAGE;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
         process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
         process(req, resp);
     }
 
@@ -72,8 +72,8 @@ public class Controller extends HttpServlet {
                 }
             }
         } else {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            response.setContentType(JSON_CONTENT_TYPE);
+            response.setCharacterEncoding(UTF_EIGHT);
             response.getWriter().write(commandResult.getJsonResponse());
         }
     }

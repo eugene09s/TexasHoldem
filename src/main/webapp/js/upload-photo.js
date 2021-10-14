@@ -20,7 +20,6 @@ const input = document.getElementById("ajaxfile");
 
 function openForm() {
     input.click();
-    console.log(input)
 }
 
 const btnUpload = document.querySelector(".btnUpload")
