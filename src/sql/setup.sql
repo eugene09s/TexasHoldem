@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `p0exjzr6gemg7f9r`.`games` (
     `title` VARCHAR(128) NOT NULL,
     `date` TIMESTAMP NOT NULL,
     `bank` DECIMAL(10,2) NOT NULL,
-    `five_cards` VARCHAR(128) NOT NULL,
+    `five_cards` VARCHAR(128),
     PRIMARY KEY (`game_id`),
     UNIQUE INDEX `game_id_UNIQUE` (`game_id` ASC) VISIBLE);
 
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `p0exjzr6gemg7f9r`.`profile_players` (
 CREATE TABLE IF NOT EXISTS `p0exjzr6gemg7f9r`.`game_players` (
     `game_player_id` BIGINT NOT NULL AUTO_INCREMENT,
     `last_action` VARCHAR(64) NOT NULL,
-    `two_cards` VARCHAR(64) NOT NULL,
-    `combinations_cards` VARCHAR(128) NOT NULL,
+    `two_cards` VARCHAR(64),
+    `combinations_cards` VARCHAR(128),
     `game_player_user_id` BIGINT NOT NULL,
     `game_id` BIGINT NOT NULL,
     PRIMARY KEY (`game_player_id`),
