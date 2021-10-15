@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.epam.poker</groupId>
     <artifactId>Poker</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -137,28 +136,18 @@
             <version>2.13.0</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>16</source>
-                    <target>16</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>copy</goal></goals>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
