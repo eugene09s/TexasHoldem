@@ -17,8 +17,8 @@ public class GameDaoImpl extends AbstractDao<Game> implements GameDao {
             " FROM games";
     public static final String SQL_ADD_GAME =
             "INSERT INTO games" +
-            " (title, date, bank, five_cards)" +
-            " VALUES (?,?,?,?)";
+            "(title, date, bank, five_cards) " +
+            "VALUES (?,?,?,?)";
     public static final String SQL_FIND_GAME_BY_ID =
             "SELECT game_id, title, date, bank, five_cards " +
             "FROM games " +

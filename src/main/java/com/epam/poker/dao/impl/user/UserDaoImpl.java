@@ -40,8 +40,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "phone_number=? " +
             "WHERE user_id=?";
     public static final String SQL_UPDATE_PASSWORD_BY_ID =
-            "UPDATE users" +
-            "SET password=?" +
+            "UPDATE users " +
+            "SET password=? " +
             "WHERE user_id=?";
     public static final String SQL_UPDATE_BALANCE_BY_LOGIN =
             "UPDATE users " +
