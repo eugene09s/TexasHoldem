@@ -72,10 +72,10 @@
                         </td>
                         <td>
                             <div class="input-group">
-                                <button type="button" class="btn btn-light border text-warning font-weight-bold">-</button>
-                                <input type="number" class="border border-primary rounded" value="${userDto.getBalance()}" data-decimals="2" min="0" max="10000"
+                                <button type="button" class="btn btn-light border text-warning font-weight-bold btn-minus">-</button>
+                                <input type="number" id="input-money" maxlength="7" minlength="1" class="border border-primary rounded" value="${userDto.getBalance()}" data-decimals="2" min="0" max="10000"
                                        step="0.1">
-                                <button type="button" class="btn border btn-light text-warning font-weight-bold">+</button>
+                                <button type="button" class="btn border btn-light text-warning font-weight-bold btn-plus">+</button>
                                 <button type="button" class="btn btn-primary ml-2 btn-action-save-balance"><fmt:message key="admin.save"/></button>
                             </div>
                         </td>

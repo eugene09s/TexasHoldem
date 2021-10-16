@@ -8,6 +8,18 @@ tableOfUsers.onclick = function (event) {
     if (targetElement.classList.contains('btn-action-save-balance')) {
         actionChangeBalance(targetElement);
     }
+    if (targetElement.classList.contains('btn-minus')) {
+        const inputMoney = targetElement.closest('#input-money');
+        let num = Number.parseInt(inputMoney.value).valueOf();
+        console.log(num)
+        inputMoney.value = --num;
+    }
+    if (targetElement.classList.contains('btn-plus')) {
+        const inputMoney = targetElement.closest('#input-money');
+        let num = Number.parseInt(inputMoney.value).valueOf();
+        console.log(num)
+        inputMoney.value = --num;
+    }
 }
 
 async function actionBanUser(btnElement) {

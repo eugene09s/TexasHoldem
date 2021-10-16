@@ -50,7 +50,7 @@
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="signup.phone.number"/></span>
-                <input type="phone" pattern="[+]{1}[0-9]{12, 16}" name="phoneNumber" minlength="7" maxlength="18" class="form-control">
+                <input type="phone" pattern="[+]{1}[0-9]{12, 16}" name="phoneNumber" minlength="12" maxlength="18" class="form-control">
             </div>
             <br/>
             <h3 class="text-danger error-message">
