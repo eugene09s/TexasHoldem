@@ -17,6 +17,7 @@ public class Launcher {
         //The port that we should run on can be set into an environment variable
         //Look for that variable and default to 8080 if it isn't there.
         String webPort = System.getenv("PORT");
+        System.out.println("PORT: " + webPort);
         if(webPort == null || webPort.isEmpty()) {
             webPort = "8080";
         }
