@@ -52,12 +52,9 @@
                 <span class="form-label"><fmt:message key="signup.phone.number"/></span>
                 <input type="phone" pattern="[+]{1}[0-9]{12, 16}" name="phoneNumber" minlength="12" maxlength="18" class="form-control">
             </div>
-            <br/>
             <h3 class="text-danger error-message">
                 <fmt:message key="login.error.${errorMessage}"/>
             </h3>
-            ${errorLoginPassMessage}
-            ${nullPage}
             <button type="submit" class="btn btn-primary"><fmt:message key="signup.btn.submit"/></button>
         </form>
     </div>

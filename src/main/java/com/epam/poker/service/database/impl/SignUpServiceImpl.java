@@ -36,7 +36,7 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public long signUp(User user, ProfilePlayer profilePlayer) throws ServiceException {
         if (!userValidator.isValid(user) || !profilePlayerValidator.isValid(profilePlayer)) {
-            throw new ServiceException("Invalid user or profile player data.");
+            return -1;
         }
         long userId = -1;
         UserDao userDao = new UserDaoImpl();

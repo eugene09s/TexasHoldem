@@ -1,7 +1,6 @@
 package com.epam.poker.controller.command;
 
 import com.epam.poker.controller.request.RequestContext;
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 
@@ -26,6 +25,6 @@ public interface Command {
     CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException;
 
     static Command of(String name) {
-        return CommandManager.of(name);
+        return CommandProvider.of(name);
     }
 }

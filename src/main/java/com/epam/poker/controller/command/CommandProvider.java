@@ -11,7 +11,7 @@ import com.epam.poker.controller.command.impl.game.TakeTableDataCommand;
 import com.epam.poker.controller.command.impl.general.*;
 import com.epam.poker.controller.command.impl.user.*;
 
-public enum CommandManager {
+public enum CommandProvider {
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand(), CommandName.SIGN_UP_PAGE),
     GO_TO_LOGIN_PAGE(new GoToLoginPageCommand(), CommandName.LOGIN_PAGE),
     GO_TO_PROFILE_PAGE(new GoToProfilePageCommand(), CommandName.PROFILE_PAGE),
@@ -40,7 +40,7 @@ public enum CommandManager {
     private final Command command;
     private final String commandName;
 
-    CommandManager(Command command, String commandName) {
+    CommandProvider(Command command, String commandName) {
         this.command = command;
         this.commandName = commandName;
     }
@@ -54,7 +54,7 @@ public enum CommandManager {
     }
 
     static Command of(String name) {
-        for (CommandManager action : CommandManager.values()) {
+        for (CommandProvider action : CommandProvider.values()) {
             if (action.getCommandName().equalsIgnoreCase(name)) {
                 return action.command;
             }

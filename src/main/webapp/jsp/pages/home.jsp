@@ -20,8 +20,7 @@
 </head>
 <body>
 <c:import url="/jsp/parts/navbar.jsp"/>
-session:
-${sessionScope}
+
 <div class="container">
     <span>
         <h2>Texas Holdem Poker</h2>

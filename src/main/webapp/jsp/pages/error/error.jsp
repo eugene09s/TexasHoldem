@@ -20,16 +20,26 @@
 <body>
 <c:import url="/jsp/parts/navbar.jsp"/>
 
-<div class="container py-3">
-    Request from ${pageContext.errorData.requestURI} is failed
-    <br/>
-    Servlet name or
-    type: ${pageContext.errorData.servletName}
-    <br/>
-    Status code: ${pageContext.errorData.statusCode}
-    <br/>
-    Exception: ${pageContext.errorData.throwable}
-    Error: ${errorMessage}
+<div class="container py-3 h4">
+    <c:if test="${not empty pageContext.errorData.requestURI}">
+        Request from ${pageContext.errorData.requestURI} is failed
+        <br/>
+    </c:if>
+    <c:if test="${not empty pageContext.errorData.servletName}">
+        Servlet name or type: ${pageContext.errorData.servletName}
+        <br/>
+    </c:if>
+    <c:if test="${pageContext.errorData.statusCode != 0}">
+        <span class="text-warning">Status code: </span>${pageContext.errorData.statusCode}
+        <br/>
+    </c:if>
+    <c:if test="${not empty pageContext.errorData.throwable}">
+        <span class="text-danger">Exception: </span>${pageContext.errorData.throwable}
+        <br/>
+    </c:if>
+    <c:if test="${not empty errorMessage}">
+        <span class="text-danger">Error: </span>${errorMessage}
+    </c:if>
     <h2><a href="/jsp/pages/home.jsp"></a></h2>
 </div>
 </body>
