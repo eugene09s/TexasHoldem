@@ -1,7 +1,7 @@
 ## Poker game
 This is a Java web project. The topic is the ...
 ## How it's works:
-Guest can find passing scores for past years. Then register and their status changes on user. User can fill the form and see own profile information. Admin can check users information, activate users to participate in the entrance competition, block and unblock users, make user admin. Admin can start the entrance competition and see enrolled and unenrolled applicants by specialties.
+The first thing the guest sees is the home page that shows the rules of the poker game. Also, the guest can log in or register. Further, the guest, having passed the authorization, becomes a user. Each user has his own profile. The profile can be edited: name, bio, phone number and photo. Also, the user can change his password.
 ## Project features:
 * User friendly URL
 * Localization: en_EN, ru_RU
