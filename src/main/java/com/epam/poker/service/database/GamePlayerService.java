@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface GamePlayerService {
     long add(GamePlayer gamePlayer) throws ServiceException;
-    GamePlayer findGamePlayersByUserIdAndByGameId(long userId, long gameId) throws ServiceException;
     List<GamePlayer> findGamePlayersAll() throws ServiceException;
     int findGamePlayersAmount() throws ServiceException;
     List<GamePlayer> findGamePlayersByGameId(long gameId) throws ServiceException;

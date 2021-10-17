@@ -1,13 +1,12 @@
 package com.epam.poker.service.database.impl;
 
+import com.epam.poker.dao.ProfilePlayerDao;
+import com.epam.poker.dao.UserDao;
+import com.epam.poker.dao.helper.DaoTransactionProvider;
+import com.epam.poker.dao.impl.user.ProfilePlayerDaoImpl;
+import com.epam.poker.dao.impl.user.UserDaoImpl;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.dao.AbstractDao;
-import com.epam.poker.dao.helper.DaoSaveTransaction;
-import com.epam.poker.dao.ProfilePlayerDao;
-import com.epam.poker.dao.impl.user.ProfilePlayerDaoImpl;
-import com.epam.poker.dao.UserDao;
-import com.epam.poker.dao.impl.user.UserDaoImpl;
 import com.epam.poker.model.database.ProfilePlayer;
 import com.epam.poker.model.database.User;
 import com.epam.poker.service.database.SignUpService;
@@ -20,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 public class SignUpServiceImpl implements SignUpService {
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final Validator<User> userValidator = UserValidator.getInstance();
     private static final Validator<ProfilePlayer> profilePlayerValidator = ProfilePlayerValidator.getInstance();
     private static SignUpService instance;
@@ -41,23 +39,14 @@ public class SignUpServiceImpl implements SignUpService {
             throw new ServiceException("Invalid user or profile player data.");
         }
         long userId = -1;
-        try {
-            DaoSaveTransaction transaction = new DaoSaveTransaction();
-            UserDao userDao = new UserDaoImpl();
-            ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
-            try {
-                transaction.initTransaction(userDao, profilePlayerDao);
-                userId = userDao.add(user);
-                profilePlayer.setUserId(userId);
-                profilePlayerDao.add(profilePlayer);
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                LOGGER.error("Transaction error: " + e);
-                throw new ServiceException(e);
-            } finally {
-                transaction.endTransaction();
-            }
+        UserDao userDao = new UserDaoImpl();
+        ProfilePlayerDao profilePlayerDao = new ProfilePlayerDaoImpl();
+        try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
+            transaction.initTransaction(userDao, profilePlayerDao);
+            userId = userDao.add(user);
+            profilePlayer.setUserId(userId);
+            profilePlayerDao.add(profilePlayer);
+            transaction.commit();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -66,19 +55,11 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public boolean isUserLoginExist(String login) throws ServiceException {
-        try {
-            DaoSaveTransaction transaction = new DaoSaveTransaction();
-            try {
-                UserDao userDao = new UserDaoImpl();
-                transaction.init(userDao);
-                Optional<User> user = userDao.findUserByLogin(login);
-                return user.isPresent();
-            } catch (DaoException e) {
-                LOGGER.error("Transaction error: " + e);
-                throw new ServiceException(e);
-            } finally {
-                transaction.end();
-            }
+        UserDao userDao = new UserDaoImpl();
+        try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
+            transaction.initTransaction(userDao);
+            Optional<User> user = userDao.findUserByLogin(login);
+            return user.isPresent();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -86,19 +67,11 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public boolean isUserEmailExist(String email) throws ServiceException {
-        try {
-            DaoSaveTransaction transaction = new DaoSaveTransaction();
-            try {
-                UserDao userDao = new UserDaoImpl();
-                transaction.init(userDao);
-                Optional<User> user = userDao.findUserByEmail(email);
-                return user.isPresent();
-            } catch (DaoException e) {
-                LOGGER.error("Transaction error: " + e);
-                throw new ServiceException(e);
-            } finally {
-                transaction.end();
-            }
+        UserDao userDao = new UserDaoImpl();
+        try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
+            transaction.initTransaction(userDao);
+            Optional<User> user = userDao.findUserByEmail(email);
+            return user.isPresent();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

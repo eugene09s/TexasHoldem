@@ -137,8 +137,8 @@ public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements 
     }
 
     @Override
-    public void add(ProfilePlayer profilePlayer) throws DaoException {
-         updateSingle(SQL_ADD_PROFILE_PLAYER,
+    public boolean add(ProfilePlayer profilePlayer) throws DaoException {
+         return updateSingle(SQL_ADD_PROFILE_PLAYER,
                 profilePlayer.getUserId(),
                 profilePlayer.getBestPrize(),
                 profilePlayer.getAward(),

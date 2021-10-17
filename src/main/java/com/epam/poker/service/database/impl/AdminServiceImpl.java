@@ -96,6 +96,10 @@ public class AdminServiceImpl implements AdminService {
         BigDecimal money = BigDecimal.ZERO;
         try {
             money = ParameterTaker.takeMoney(Parameter.MONEY, requestContext);
+            if (money.toString().length() > 8) {
+                objectNode.put(Attribute.SUCCESS, false);
+                response = String.valueOf(objectNode);
+            }
         } catch (InvalidParametersException e) {
             LOGGER.warn(e);
             objectNode.put(Attribute.SUCCESS, false);

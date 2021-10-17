@@ -1,10 +1,9 @@
 package com.epam.poker.service.database.impl;
 
-import com.epam.poker.dao.AbstractDao;
 import com.epam.poker.dao.GameDao;
 import com.epam.poker.dao.GamePlayerDao;
 import com.epam.poker.dao.GameWinnerDao;
-import com.epam.poker.dao.helper.DaoSaveTransaction;
+import com.epam.poker.dao.helper.DaoTransactionProvider;
 import com.epam.poker.dao.impl.game.GameDaoImpl;
 import com.epam.poker.dao.impl.game.GamePlayerDaoImpl;
 import com.epam.poker.dao.impl.game.GameWinnerDaoImpl;
@@ -26,9 +25,9 @@ import java.util.List;
 
 public class StatisticOfGameServiceImpl implements StatisticOfGameService {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static GameValidator gameValidator = GameValidator.getInstance();
-    private static GamePlayerValidator gamePlayerValidator = GamePlayerValidator.getInstance();
-    private static GameWinnerValidator gameWinnerValidator = GameWinnerValidator.getInstance();
+    private static final GameValidator gameValidator = GameValidator.getInstance();
+    private static final GamePlayerValidator gamePlayerValidator = GamePlayerValidator.getInstance();
+    private static final GameWinnerValidator gameWinnerValidator = GameWinnerValidator.getInstance();
     private static final String ERROR_MESSAGE = "Data is invalid!";
     private static StatisticOfGameService instance = new StatisticOfGameServiceImpl();
 
@@ -46,30 +45,22 @@ public class StatisticOfGameServiceImpl implements StatisticOfGameService {
             throw new ServiceException(ERROR_MESSAGE);
         }
         long gameId = -1;
-        try {
-            DaoSaveTransaction transaction = new DaoSaveTransaction();
-            GameDao gameDao = new GameDaoImpl();
-            GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
-            GameWinnerDao gameWinnerDao = new GameWinnerDaoImpl();
-            try {
-                transaction.initTransaction( gameDao, gamePlayerDao, gameWinnerDao);
-                gameId = gameDao.add(statisticResultGame.getGame());
-                for (GamePlayer gamePlayer : statisticResultGame.getGamePlayers()) {
-                    gamePlayer.setGameId(gameId);
-                    gamePlayerDao.add(gamePlayer);
-                }
-                for (GameWinner gameWinner : statisticResultGame.getGameWinners()) {
-                    gameWinner.setGameId(gameId);
-                    gameWinnerDao.add(gameWinner);
-                }
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                throw new ServiceException(e);
-            } finally {
-                transaction.endTransaction();
+        GameDao gameDao = new GameDaoImpl();
+        GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
+        GameWinnerDao gameWinnerDao = new GameWinnerDaoImpl();
+        try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
+            transaction.initTransaction(gameDao, gamePlayerDao, gameWinnerDao);
+            gameId = gameDao.add(statisticResultGame.getGame());
+            for (GamePlayer gamePlayer : statisticResultGame.getGamePlayers()) {
+                gamePlayer.setGameId(gameId);
+                gamePlayerDao.add(gamePlayer);
             }
-        } catch (DaoException | ServiceException e) {
+            for (GameWinner gameWinner : statisticResultGame.getGameWinners()) {
+                gameWinner.setGameId(gameId);
+                gameWinnerDao.add(gameWinner);
+            }
+            transaction.commit();
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
         return gameId;
@@ -78,32 +69,24 @@ public class StatisticOfGameServiceImpl implements StatisticOfGameService {
     @Override
     public List<StatisticResultGame> fetchDataByRange(int offset, int amount) throws ServiceException {
         List<StatisticResultGame> statisticResultGameList = new ArrayList<>();
-        try {
-            DaoSaveTransaction transaction = new DaoSaveTransaction();
-            GameDao gameDao = new GameDaoImpl();
-            GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
-            GameWinnerDao gameWinnerDao = new GameWinnerDaoImpl();
-            try {
-                transaction.initTransaction(gameDao, gamePlayerDao, gameWinnerDao);
-                List<Game> gameList = gameDao.findGamesRange(offset, amount);
-                for (Game game : gameList) {
-                    List<GamePlayer> gamePlayerList = gamePlayerDao.findGamePlayersByGameId(game.getGameId());
-                    List<GameWinner> gameWinnerList = gameWinnerDao.findGameWinnersByGameId(game.getGameId());
-                    StatisticResultGame statisticResultGame = StatisticResultGame.build()
-                            .setGame(game)
-                            .setGamePlayers(gamePlayerList)
-                            .setGameWinners(gameWinnerList)
-                            .createStatisticResultGame();
-                    statisticResultGameList.add(statisticResultGame);
-                }
-                transaction.commit();
-            } catch (DaoException e) {
-                transaction.rollback();
-                throw new ServiceException("Error fetch statistic data of games");
-            } finally {
-                transaction.endTransaction();
+        GameDao gameDao = new GameDaoImpl();
+        GamePlayerDao gamePlayerDao = new GamePlayerDaoImpl();
+        GameWinnerDao gameWinnerDao = new GameWinnerDaoImpl();
+        try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
+            transaction.initTransaction(gameDao, gamePlayerDao, gameWinnerDao);
+            List<Game> gameList = gameDao.findGamesRange(offset, amount);
+            for (Game game : gameList) {
+                List<GamePlayer> gamePlayerList = gamePlayerDao.findGamePlayersByGameId(game.getGameId());
+                List<GameWinner> gameWinnerList = gameWinnerDao.findGameWinnersByGameId(game.getGameId());
+                StatisticResultGame statisticResultGame = StatisticResultGame.build()
+                        .setGame(game)
+                        .setGamePlayers(gamePlayerList)
+                        .setGameWinners(gameWinnerList)
+                        .createStatisticResultGame();
+                statisticResultGameList.add(statisticResultGame);
             }
-        } catch (DaoException | ServiceException e) {
+            transaction.commit();
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
         return statisticResultGameList;

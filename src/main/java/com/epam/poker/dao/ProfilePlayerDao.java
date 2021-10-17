@@ -33,5 +33,5 @@ public interface ProfilePlayerDao extends Dao<ProfilePlayer> {
          * @return
          * @throws DaoException
          */
-        void add(ProfilePlayer profilePlayer) throws DaoException;
+        boolean add(ProfilePlayer profilePlayer) throws DaoException;
 }
