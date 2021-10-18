@@ -3,7 +3,6 @@ package com.epam.poker.model.database;
 import com.epam.poker.model.Entity;
 
 import java.math.BigDecimal;
-import java.util.StringJoiner;
 
 public class ProfilePlayer implements Entity {
     private long userId;

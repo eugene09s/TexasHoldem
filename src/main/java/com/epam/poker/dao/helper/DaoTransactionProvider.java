@@ -15,7 +15,8 @@ public class DaoTransactionProvider implements AutoCloseable {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private ProxyConnection proxyConnection;
 
-    public void initTransaction(Dao<? extends Entity>... daos) throws DaoException {
+    @SafeVarargs
+    public final void initTransaction(Dao<? extends Entity>... daos) throws DaoException {
         if (proxyConnection == null) {
             proxyConnection = connectionPool.getConnection();
         }

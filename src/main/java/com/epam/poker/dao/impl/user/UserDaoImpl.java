@@ -1,9 +1,9 @@
 package com.epam.poker.dao.impl.user;
 
 import com.epam.poker.dao.AbstractDao;
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.dao.UserDao;
 import com.epam.poker.dao.mapper.impl.UserRowMapper;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.database.User;
 import com.epam.poker.model.database.type.UserStatus;
 

@@ -1,11 +1,9 @@
 package com.epam.poker.controller;
 
-import com.epam.poker.util.constant.Attribute;
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
-import com.epam.poker.util.tag.AccessTag;
+import com.epam.poker.util.constant.Attribute;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;

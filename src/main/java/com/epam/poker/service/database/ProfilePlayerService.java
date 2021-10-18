@@ -1,6 +1,5 @@
 package com.epam.poker.service.database;
 
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.ProfilePlayer;
 

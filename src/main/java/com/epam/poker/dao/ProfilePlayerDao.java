@@ -2,7 +2,6 @@ package com.epam.poker.dao;
 
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.database.ProfilePlayer;
-import com.epam.poker.model.database.User;
 
 import java.math.BigDecimal;
 import java.util.List;

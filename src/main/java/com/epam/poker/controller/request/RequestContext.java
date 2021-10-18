@@ -2,7 +2,6 @@ package com.epam.poker.controller.request;
 
 import com.epam.poker.util.constant.Attribute;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

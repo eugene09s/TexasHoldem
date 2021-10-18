@@ -2,11 +2,11 @@ package com.epam.poker.controller.command.impl.user;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
-import com.epam.poker.util.constant.Attribute;
-import com.epam.poker.util.constant.CommandName;
 import com.epam.poker.controller.request.RequestContext;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
+import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.CommandName;
 import jakarta.servlet.http.Cookie;
 
 public class LogoutCommand implements Command {

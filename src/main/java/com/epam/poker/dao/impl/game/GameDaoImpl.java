@@ -1,9 +1,9 @@
 package com.epam.poker.dao.impl.game;
 
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.dao.AbstractDao;
 import com.epam.poker.dao.GameDao;
 import com.epam.poker.dao.mapper.impl.game.GameRowMapper;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.database.game.Game;
 
 import java.util.List;

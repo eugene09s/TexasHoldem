@@ -8,8 +8,6 @@ import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.User;
 import com.epam.poker.model.database.type.UserStatus;
 import com.epam.poker.service.database.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;

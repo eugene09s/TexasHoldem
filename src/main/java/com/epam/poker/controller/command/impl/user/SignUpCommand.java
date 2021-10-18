@@ -2,14 +2,8 @@ package com.epam.poker.controller.command.impl.user;
 
 import com.epam.poker.controller.command.Command;
 import com.epam.poker.controller.command.CommandResult;
-import com.epam.poker.util.LineHasher;
-import com.epam.poker.util.constant.Attribute;
-import com.epam.poker.util.constant.CommandName;
-import com.epam.poker.util.constant.PagePath;
-import com.epam.poker.util.constant.Parameter;
 import com.epam.poker.controller.command.util.ParameterTaker;
 import com.epam.poker.controller.request.RequestContext;
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.ProfilePlayer;
@@ -18,13 +12,13 @@ import com.epam.poker.model.database.type.UserRole;
 import com.epam.poker.model.database.type.UserStatus;
 import com.epam.poker.service.database.SignUpService;
 import com.epam.poker.service.database.impl.SignUpServiceImpl;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.epam.poker.util.LineHasher;
+import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.CommandName;
+import com.epam.poker.util.constant.PagePath;
+import com.epam.poker.util.constant.Parameter;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
 public class SignUpCommand implements Command {

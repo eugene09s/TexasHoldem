@@ -1,14 +1,14 @@
 package com.epam.poker.controller;
 
+import com.epam.poker.controller.event.EventSocket;
+import com.epam.poker.controller.util.EndpointAwareConfig;
 import com.epam.poker.exception.ServiceException;
+import com.epam.poker.model.game.Gambler;
+import com.epam.poker.model.game.Lobby;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
-import com.epam.poker.controller.event.EventSocket;
-import com.epam.poker.model.game.Gambler;
-import com.epam.poker.model.game.Lobby;
-import com.epam.poker.controller.util.EndpointAwareConfig;
 import com.epam.poker.util.jwt.JwtProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

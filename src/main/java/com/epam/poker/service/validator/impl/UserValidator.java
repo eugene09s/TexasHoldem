@@ -1,15 +1,11 @@
 package com.epam.poker.service.validator.impl;
 
-import com.epam.poker.service.validator.Validator;
 import com.epam.poker.model.database.User;
-import com.epam.poker.util.constant.Parameter;
+import com.epam.poker.service.validator.Validator;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 public class UserValidator implements Validator<User> {
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";

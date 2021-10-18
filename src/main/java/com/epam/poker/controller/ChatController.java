@@ -1,13 +1,13 @@
 package com.epam.poker.controller;
 
-import com.epam.poker.model.dto.ChatMessage;
 import com.epam.poker.controller.util.ChatMessageDecoder;
 import com.epam.poker.controller.util.ChatMessageEncoder;
+import com.epam.poker.controller.util.EndpointAwareConfig;
 import com.epam.poker.exception.ServiceException;
+import com.epam.poker.model.dto.ChatMessage;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;
 import com.epam.poker.util.constant.Attribute;
-import com.epam.poker.controller.util.EndpointAwareConfig;
 import com.epam.poker.util.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

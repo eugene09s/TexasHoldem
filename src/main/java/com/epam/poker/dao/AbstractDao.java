@@ -1,7 +1,7 @@
 package com.epam.poker.dao;
 
-import com.epam.poker.exception.DaoException;
 import com.epam.poker.dao.mapper.RowMapper;
+import com.epam.poker.exception.DaoException;
 import com.epam.poker.model.Entity;
 import com.epam.poker.pool.ProxyConnection;
 

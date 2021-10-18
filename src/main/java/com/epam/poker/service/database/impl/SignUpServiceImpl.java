@@ -13,8 +13,6 @@ import com.epam.poker.service.database.SignUpService;
 import com.epam.poker.service.validator.Validator;
 import com.epam.poker.service.validator.impl.ProfilePlayerValidator;
 import com.epam.poker.service.validator.impl.UserValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 

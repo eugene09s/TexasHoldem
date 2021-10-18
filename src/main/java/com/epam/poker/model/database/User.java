@@ -1,8 +1,8 @@
 package com.epam.poker.model.database;
 
+import com.epam.poker.model.Entity;
 import com.epam.poker.model.database.type.UserRole;
 import com.epam.poker.model.database.type.UserStatus;
-import com.epam.poker.model.Entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

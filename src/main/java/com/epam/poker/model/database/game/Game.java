@@ -4,7 +4,6 @@ import com.epam.poker.model.Entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.StringJoiner;
 
 public class Game implements Entity {
     private long gameId;

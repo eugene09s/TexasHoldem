@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.epam.poker.util.constant.Attribute.*;
-import static com.epam.poker.util.constant.Attribute.RIVER_PART_OF_GAME;
 
 public class BetEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();

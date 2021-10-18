@@ -1,19 +1,17 @@
 package com.epam.poker.service.database.impl;
 
+import com.epam.poker.dao.ProfilePlayerDao;
 import com.epam.poker.dao.UserDao;
+import com.epam.poker.dao.helper.DaoTransactionProvider;
+import com.epam.poker.dao.impl.user.ProfilePlayerDaoImpl;
 import com.epam.poker.dao.impl.user.UserDaoImpl;
 import com.epam.poker.exception.DaoException;
 import com.epam.poker.exception.ServiceException;
-import com.epam.poker.dao.helper.DaoTransactionProvider;
-import com.epam.poker.dao.ProfilePlayerDao;
-import com.epam.poker.dao.impl.user.ProfilePlayerDaoImpl;
 import com.epam.poker.model.database.ProfilePlayer;
 import com.epam.poker.model.database.User;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.validator.Validator;
 import com.epam.poker.service.validator.impl.ProfilePlayerValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;

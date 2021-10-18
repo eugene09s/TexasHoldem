@@ -1,9 +1,9 @@
 package com.epam.poker.controller.event.impl;
 
-import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.controller.event.EventSocket;
 import com.epam.poker.model.game.Gambler;
 import com.epam.poker.model.game.Lobby;
+import com.epam.poker.util.constant.Attribute;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

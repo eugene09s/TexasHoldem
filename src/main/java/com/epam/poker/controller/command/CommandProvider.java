@@ -4,12 +4,12 @@ import com.epam.poker.controller.command.impl.admin.ActionBanUserCommand;
 import com.epam.poker.controller.command.impl.admin.ActionChangeBalanceUserCommand;
 import com.epam.poker.controller.command.impl.admin.ActionUnbanUserCommand;
 import com.epam.poker.controller.command.impl.admin.GoToAdminPanelPageCommand;
-import com.epam.poker.util.constant.CommandName;
 import com.epam.poker.controller.command.impl.game.GoToGamePageCommand;
 import com.epam.poker.controller.command.impl.game.TakeLobbyDataCommand;
 import com.epam.poker.controller.command.impl.game.TakeTableDataCommand;
 import com.epam.poker.controller.command.impl.general.*;
 import com.epam.poker.controller.command.impl.user.*;
+import com.epam.poker.util.constant.CommandName;
 
 public enum CommandProvider {
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand(), CommandName.SIGN_UP_PAGE),

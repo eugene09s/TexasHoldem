@@ -2,8 +2,11 @@ package com.epam.poker.service.game;
 
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.game.GamePlayer;
-import com.epam.poker.model.game.*;
 import com.epam.poker.model.dto.StatisticResultGame;
+import com.epam.poker.model.game.Gambler;
+import com.epam.poker.model.game.Lobby;
+import com.epam.poker.model.game.Log;
+import com.epam.poker.model.game.Table;
 import com.epam.poker.service.database.ProfilePlayerService;
 import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.impl.ProfilePlayerServiceImpl;

@@ -2,8 +2,6 @@ package com.epam.poker.model.game;
 
 import com.epam.poker.model.Entity;
 
-import java.util.StringJoiner;
-
 public class Log implements Entity {
     private static final String EMPTY_LINE = "";
     private String message;
