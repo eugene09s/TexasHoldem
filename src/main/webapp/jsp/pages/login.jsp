@@ -22,7 +22,6 @@
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="login.login"/></span>
                 <input type="text" class="form-control" minlength="8" maxlength="32" name="login" value="${login}" required>
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="login.password"/></span>

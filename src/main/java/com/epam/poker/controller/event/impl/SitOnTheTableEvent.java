@@ -27,10 +27,10 @@ public class SitOnTheTableEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final SitOnTheTableEvent instance = new SitOnTheTableEvent();
-    private static Lobby lobby = Lobby.getInstance();
-    private static ValidationSitOnTableEventHelper validationJsonData = ValidationSitOnTableEventHelper.getInstance();
-    private static UserService userService = UserServiceImpl.getInstance();
-    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
+    private static final Lobby lobby = Lobby.getInstance();
+    private static final ValidationSitOnTableEventHelper validationJsonData = ValidationSitOnTableEventHelper.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
+    private static final EventHandlerService eventHandlerService = EventHandlerService.getInstance();
     private static final String MESSAGE_ERROR_CHIPS = "Your chips is invalid!";
     private static final String MESSAGE_ERROR_COMPARE_CHIPS_MAX_MIN_TABLE =
             "The amount of chips should be between the maximum and the minimum amount of allowed buy in";

@@ -4,15 +4,18 @@ import com.epam.poker.model.Entity;
 import com.epam.poker.util.constant.Attribute;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Lobby implements Entity {
     private static final AtomicBoolean isLobbyCreated = new AtomicBoolean();
     private static final ReentrantLock instanceLocker = new ReentrantLock();
-    private static final Map<String, Gambler> users = Collections.synchronizedMap(new HashMap<>());
-    private static final Map<String, Room> rooms = Collections.synchronizedMap(new HashMap<>());
+    private static final Map<String, Gambler> users = new ConcurrentHashMap<>();
+    private static final Map<String, Room> rooms = new ConcurrentHashMap<>();
     private static Lobby instance;
 
     static {
@@ -33,8 +36,8 @@ public class Lobby implements Entity {
         rooms.put(titleRoom2, room2);
         String titleRoom3 = String.format(Attribute.TABLE_WITH_HYPHEN, 3);
         Room room3 = new Room(titleRoom3,
-                new Table(3, "6-handed Table Private Table", 6, new BigDecimal(20), new BigDecimal(10),
-                        new BigDecimal(2000), new BigDecimal(400), true));
+                new Table(3, "6-handed Table", 6, new BigDecimal(20), new BigDecimal(10),
+                        new BigDecimal(2000), new BigDecimal(400), false));
         rooms.put(titleRoom3, room3);
     }
 

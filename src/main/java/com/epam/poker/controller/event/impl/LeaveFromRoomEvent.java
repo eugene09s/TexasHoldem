@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 public class LeaveFromRoomEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final LeaveFromRoomEvent instance = new LeaveFromRoomEvent();
-    private static Lobby lobby = Lobby.getInstance();
+    private static final Lobby lobby = Lobby.getInstance();
 
     private LeaveFromRoomEvent() {
     }

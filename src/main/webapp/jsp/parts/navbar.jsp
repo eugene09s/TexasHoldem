@@ -21,7 +21,7 @@
             <sc:access role="GUEST">
                 <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="${pageContext.request.contextPath}/poker?command=home-page"
-                           class="nav-link px-2 text-secondary"><fmt:message key="nav.home.page"/></a></li>
+                           class="nav-link px-2 text-white"><fmt:message key="nav.home.page"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
                     <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white"><fmt:message
@@ -44,12 +44,12 @@
             <sc:access role="USER">
                 <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="${pageContext.request.contextPath}/poker?command=home-page"
-                           class="nav-link px-2 text-secondary"><fmt:message
+                           class="nav-link px-2 text-white"><fmt:message
                             key="nav.home.page"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=play-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
                     </li>
-                    <li><a href="${pageContext.request.contextPath}/poker?command=users-page&p=1&s=5" class="nav-link px-2 text-white">
+                    <li><a href="${pageContext.request.contextPath}/poker?command=users-page&p=1&s=10" class="nav-link px-2 text-white">
                         <fmt:message key="nav.users.page"/></a>
                     </li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=statistic-games-page&p=1&s=10" class="nav-link px-2 text-white">
@@ -89,7 +89,7 @@
             <sc:access role="ADMIN">
                 <ul class="nav col col-lg-auto me-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="${pageContext.request.contextPath}/poker?command=home-page"
-                           class="nav-link px-2 text-secondary"><fmt:message
+                           class="nav-link px-2 text-white"><fmt:message
                             key="nav.home.page"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=play-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
@@ -104,11 +104,6 @@
                         <fmt:message key="nav.about"/></a>
                     </li>
                 </ul>
-<%--                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">--%>
-<%--                    <input type="search" class="form-control form-control-dark"--%>
-<%--                           placeholder="<fmt:message key="nav.search"/>..."--%>
-<%--                           aria-label="<fmt:message key="nav.search"/>">--%>
-<%--                </form>--%>
                 <div class="dropdown text-end mr-3">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                        data-bs-toggle="dropdown" aria-expanded="false">

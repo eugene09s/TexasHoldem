@@ -52,7 +52,7 @@
                         <div class="card-body media align-items-center">
                             <img src="${pageContext.request.contextPath}/images/photo/${sessionScope.photo}" class="rounded-circle" width="100px" alt="" class="d-block ui-w-80">
                             <div class="media-body ml-4">
-                                <input id="ajaxfile" type="file" class="d-none" accept="image/*" onchange="uploadFile()" />
+                                <input id="ajaxfile" type="file" class="d-none" accept=".png, .jpg, .jpeg .gif" size="10" onchange="uploadFile()" />
                                 <button type="submit" class="btnUpload btn btn-primary">
                                     <fmt:message key="profile.change.photo" />
                                 </button>

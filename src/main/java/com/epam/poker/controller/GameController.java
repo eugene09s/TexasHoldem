@@ -91,11 +91,11 @@ public class GameController {
 
     @OnClose
     public void onClose() {
-        disconnectGambler();//todo sometimes out of bounds exept
+        disconnectGambler();
     }
 
     @OnError
-    public void onError(Session session, Throwable throwable) {
+    public void onError(Throwable throwable) {
         String nameGambler = "not authorization";
         if (gambler != null) {
             nameGambler = gambler.getName();
@@ -107,7 +107,6 @@ public class GameController {
         if (gambler != null) {
             String roomName = gambler.getTitleRoom();
             if (roomName != null) {
-//            lobby.findRoom(roomName).getTable().deleteGamblerToSeats(gambler);
                 lobby.findRoom(roomName).deleteGambler(gambler);
             }
             lobby.deleteGambler(this.gambler.getName());

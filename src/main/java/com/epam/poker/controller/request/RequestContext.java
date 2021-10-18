@@ -18,7 +18,6 @@ public class RequestContext {
     private final String requestHeader;
     private final Cookie[] cookies;
     private final Set<Cookie> newCookies = new HashSet<>();
-    private boolean isSession;
 
     public RequestContext(HttpServletRequest req) {
         this.requestAttributes = retrieveRequestAttributes(req);

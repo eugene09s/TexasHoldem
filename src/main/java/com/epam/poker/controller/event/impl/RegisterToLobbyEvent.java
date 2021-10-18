@@ -4,7 +4,6 @@ import com.epam.poker.controller.event.EventSocket;
 import com.epam.poker.exception.ServiceException;
 import com.epam.poker.model.database.User;
 import com.epam.poker.model.game.Gambler;
-import com.epam.poker.model.game.Lobby;
 import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.impl.UserServiceImpl;
 import com.epam.poker.util.constant.Attribute;
@@ -12,7 +11,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,9 +20,7 @@ import java.math.BigDecimal;
 public class RegisterToLobbyEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
-    private static final Gson gson = new Gson();
-    private static final Lobby lobby = Lobby.getInstance();
-    private static UserService userService = UserServiceImpl.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
     private static final RegisterToLobbyEvent instance = new RegisterToLobbyEvent();
 
     private RegisterToLobbyEvent() {

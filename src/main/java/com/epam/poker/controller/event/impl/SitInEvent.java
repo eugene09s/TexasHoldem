@@ -19,9 +19,9 @@ import static com.epam.poker.util.constant.Attribute.*;
 public class SitInEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
-    private static Lobby lobby = Lobby.getInstance();
+    private static final Lobby lobby = Lobby.getInstance();
     private static final SitInEvent instance = new SitInEvent();
-    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
+    private static final EventHandlerService eventHandlerService = EventHandlerService.getInstance();
 
     private SitInEvent() {
     }

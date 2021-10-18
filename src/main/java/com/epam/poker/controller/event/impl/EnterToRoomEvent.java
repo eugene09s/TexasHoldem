@@ -14,7 +14,7 @@ public class EnterToRoomEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final EnterToRoomEvent instance = new EnterToRoomEvent();
-    private static Lobby lobby = Lobby.getInstance();
+    private static final Lobby lobby = Lobby.getInstance();
 
     private EnterToRoomEvent() {
     }

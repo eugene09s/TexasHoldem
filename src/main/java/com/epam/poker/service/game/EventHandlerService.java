@@ -21,12 +21,12 @@ import java.util.Arrays;
 public class EventHandlerService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final EventHandlerService instance = new EventHandlerService();
-    private static PotService potService = PotService.getInstance();
-    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
-    private static NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
-    private static Lobby lobby = Lobby.getInstance();
-    private static UserService userService = UserServiceImpl.getInstance();
-    private static PokerGameService pokerGameService = PokerGameService.getInstacne();
+    private static final PotService potService = PotService.getInstance();
+    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static final NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
+    private static final Lobby lobby = Lobby.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
+    private static final PokerGameService pokerGameService = PokerGameService.getInstacne();
 
     private EventHandlerService() {
     }

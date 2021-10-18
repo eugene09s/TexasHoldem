@@ -21,9 +21,9 @@ import static com.epam.poker.util.constant.Attribute.*;
 public class FoldPartOfGameEvent implements EventSocket {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
-    private static Lobby lobby = Lobby.getInstance();
+    private static final Lobby lobby = Lobby.getInstance();
     private static final FoldPartOfGameEvent instance = new FoldPartOfGameEvent();
-    private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
+    private static final EventHandlerService eventHandlerService = EventHandlerService.getInstance();
     private static final List<String> PARTS_OF_GAMES = List.of(PRE_FLOP_PART_OF_GAME,
             FLOP_PART_OF_GAME, TURN_PART_OF_GAME, RIVER_PART_OF_GAME);
 

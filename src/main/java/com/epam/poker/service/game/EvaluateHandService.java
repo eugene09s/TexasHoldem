@@ -227,7 +227,7 @@ public class EvaluateHandService {
                         int previousCardValue = cardNames.indexOf(entry.getValue().get(j - 1).charAt(0));
                         if (currentCardValue + 1 == previousCardValue) {
                             straightFlush.add(entry.getValue().get(j));
-                        } else if (currentCardValue != previousCardValue && straightFlush.size() < 5) {
+                        } else if (currentCardValue != previousCardValue) {
                             straightFlush = new ArrayList<>();
                             straightFlush.add(entry.getValue().get(j));
                         }

@@ -36,9 +36,8 @@ public class ChatController {
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
-        String token = null;
         Object cookies = config.getUserProperties().get(LINE_COOKIE);
-        token = parseToken(cookies);
+        String token = parseToken(cookies);
         if (null != token && jwtProvider.validateToken(token)) {
             Jws<Claims> claimsJws = jwtProvider.getClaimsFromToken(token);
             this.username = claimsJws.getBody().get(Attribute.LOGIN).toString();
