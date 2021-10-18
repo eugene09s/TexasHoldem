@@ -4,21 +4,26 @@ tableOfUsers.onclick = function (event) {
     let targetElement = event.target;
     if (targetElement.classList.contains('btn-action-ban')) {
         actionBanUser(targetElement);
+        return;
     }
     if (targetElement.classList.contains('btn-action-save-balance')) {
         actionChangeBalance(targetElement);
+        return;
     }
+
+    const parentElement = targetElement.closest("tr")
+    const divInput = parentElement.lastElementChild.firstElementChild;
+    const inputMoney = divInput.children[1];
     if (targetElement.classList.contains('btn-minus')) {
-        const inputMoney = targetElement.closest('#input-money');
-        let num = Number.parseInt(inputMoney.value).valueOf();
-        console.log(num)
-        inputMoney.value = --num;
+        let num = Number.parseFloat(inputMoney.value);
+        if (num > 0) {
+            inputMoney.value = --num;
+        }
+        return;
     }
     if (targetElement.classList.contains('btn-plus')) {
-        const inputMoney = targetElement.closest('#input-money');
-        let num = Number.parseInt(inputMoney.value).valueOf();
-        console.log(num)
-        inputMoney.value = --num;
+        let num = Number.parseFloat(inputMoney.value);
+        inputMoney.value = ++num;
     }
 }
 
@@ -99,7 +104,7 @@ async function actionChangeBalance(btnElement) {
 
         inputBalance.classList.remove('border-danger');
         inputBalance.classList.add('border-primary');
-    },4000);
+    }, 3000);
 }
 
 async function sendEventChangeBalance(id, money) {

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: evges
-  Date: 11.10.2021
-  Time: 23:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -44,7 +37,11 @@
                     </h5>
                 </div>
                 <div class="card-body pt-0 ">
-                    <span><fmt:message key="game.cards"/>: ${statisticResultGame.game.fiveCards}</span>
+                    <div><fmt:message key="game.cards"/>:
+                        <div class="output-cards d-flex" data-linecards="${statisticResultGame.game.fiveCards}">
+
+                        </div>
+                    </div>
 
                     <c:forEach items="${statisticResultGame.getGamePlayers()}" var="gamePlayer" varStatus="i">
                         <div class="gambler">
@@ -54,8 +51,12 @@
                                             key="game.gambler"/></a>
                                 </span>
                             <span>${gamePlayer.lastAction}</span>
-                            <span>${gamePlayer.twoCards}</span>
-                            <span>${gamePlayer.combinationsCards}</span>
+                            <div class="output-cards d-flex" data-linecards="${gamePlayer.twoCards}">
+
+                            </div>
+                            <div class="output-cards d-flex" data-linecards="${gamePlayer.combinationsCards}">
+
+                            </div>
                         </div>
                     </c:forEach>
 
@@ -97,6 +98,23 @@
     </c:if>
 
 </div>
+
+<script>
+    const lineCards = document.querySelectorAll('.output-cards');
+    lineCards.forEach(el => {
+        let data = el.dataset.linecards;
+        const arrayCards = data.match(/\[(.*)\]/);
+        if (arrayCards === null) return;
+        const cards = arrayCards[1].split(',');
+            cards.forEach(str => {
+                str = str.trim();
+                if (str !== '' && str !== 'null') {
+                    let divElementCard = '<div class="playing-card ml-1 mr-1 card-' + str + '"></div>';
+                    el.insertAdjacentHTML('beforeend', divElementCard);
+                }
+            });
+    });
+</script>
 
 </body>
 </html>

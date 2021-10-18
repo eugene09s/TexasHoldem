@@ -1,12 +1,12 @@
 .playing-card {
     background-image: url("/game/images/deck.png");
-    background-size: 1040px auto;
+    background-size: 650px auto;
     border-radius: 8px 8px 0 0;
     height: 100%;
     box-shadow: 0 0 3px 0 #808080;
     overflow: hidden;
-    width: 72px;
-    height: 107px
+    width: 43px;
+    height: 66px
 }
 
 .playing-card.card-As {
