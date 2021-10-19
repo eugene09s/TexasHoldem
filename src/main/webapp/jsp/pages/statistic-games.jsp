@@ -46,16 +46,14 @@
                     <c:forEach items="${statisticResultGame.getGamePlayers()}" var="gamePlayer" varStatus="i">
                         <div class="gambler">
                                 <span>
-                                    ${i.index})
+                                    ${i.index + 1})
                                     <a href="${pageContext.request.contextPath}/poker?command=profile-page&id=${gamePlayer.userId}"><fmt:message
                                             key="game.gambler"/></a>
                                 </span>
                             <span>${gamePlayer.lastAction}</span>
+                            <br/>
+                            <span>${gamePlayer.combinationsCards}</span>
                             <div class="output-cards d-flex" data-linecards="${gamePlayer.twoCards}">
-
-                            </div>
-                            <div class="output-cards d-flex" data-linecards="${gamePlayer.combinationsCards}">
-
                             </div>
                         </div>
                     </c:forEach>

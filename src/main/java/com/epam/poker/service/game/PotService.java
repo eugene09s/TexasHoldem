@@ -25,11 +25,15 @@ import java.util.*;
 
 public class PotService {
     private static final PotService instance = new PotService();
+    private static final String CODE_SPADES = "&#9824;";
+    private static final String CODE_CLUBS = "&#9827;";
+    private static final String CODE_HEARTS = "&#9829;";
+    private static final String CODE_DIAMONDS = "&#9830;";
     private static final Logger LOGGER = LogManager.getLogger();
-    private static Lobby lobby = Lobby.getInstance();
-    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
-    private static UserService userService = UserServiceImpl.getInstance();
-    private static StatisticOfGameService writeStatisticResultGame = StatisticOfGameServiceImpl.getInstance();
+    private static final Lobby lobby = Lobby.getInstance();
+    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
+    private static final StatisticOfGameService writeStatisticResultGame = StatisticOfGameServiceImpl.getInstance();
 
     private PotService() {
     }
@@ -143,7 +147,7 @@ public class PotService {
                     profilePlayerService.updateWinMoneyByLogin(winners.get(0).getName(), winMoney);
                     profilePlayerService.updateBestPrizeByLogin(winners.get(0).getName(), winMoney);
                 } catch (ServiceException e) {
-                    LOGGER.error("Update win money profile player. " + e);
+                    LOGGER.warn("Update win money profile player. " + e);
                 }
                 BigDecimal moneyInPlay = winners.get(0).getMoneyInPlay().add(winMoney);
                 winners.get(0).setMoneyInPlay(moneyInPlay);
@@ -164,7 +168,7 @@ public class PotService {
                     try {
                         profilePlayerService.updateWinMoneyByLogin(gambler.getName(), gamblersWinnings);
                     } catch (ServiceException e) {
-                        LOGGER.error("Update win money profile player. " + e);
+                        LOGGER.warn("Update win money profile player. " + e);
                     }
                     gambler.setMoneyInPlay(gambler.getMoneyInPlay().add(gamblersWinnings));
                     messages.add(gambler.getName() + " ties the pot (%d) with %s " + gamblersWinnings
@@ -183,7 +187,7 @@ public class PotService {
         for (Gambler gambler : winGamblers) {
             loseGamblers.remove(gambler);
         }
-        BigDecimal loseMoney = allMoney.divide(BigDecimal.valueOf(gamlerCount));
+        BigDecimal loseMoney = allMoney.subtract(BigDecimal.valueOf(gamlerCount));
         for (Gambler gambler : loseGamblers) {
             try {
                 profilePlayerService.updateLostMoneyByLogin(gambler.getName(), loseMoney);
@@ -245,10 +249,10 @@ public class PotService {
     }
 
     private String handlerMessage(List<String> cards) {
-        return cards.toString().replace("s", "&#9824;")
-                .replace("c", "&#9827;")
-                .replace("h", "&#9829;")
-                .replace("d", "&#9830;");
+        return cards.toString().replace("s", CODE_SPADES)
+                .replace("c", CODE_CLUBS)
+                .replace("h", CODE_HEARTS)
+                .replace("d", CODE_DIAMONDS);
     }
 
     public String givenToWinner(Table table, Gambler gambler) throws ServiceException {
@@ -266,7 +270,8 @@ public class PotService {
         winGambler.add(gambler);
         saveStatisticeGame(table, allGamblers, winGambler);
         reset(table);
-        return gambler.getName() + " wins the pot (" + totalAmount + ")";
+        return gambler.getName().concat(" wins the pot (")
+                .concat(String.valueOf(totalAmount)).concat(")");
     }
 
     public void reset(Table table) {

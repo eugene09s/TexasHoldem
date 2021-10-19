@@ -18,6 +18,8 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+import static com.epam.poker.util.constant.EventMessage.*;
+
 public class EventHandlerService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final EventHandlerService instance = new EventHandlerService();
@@ -38,10 +40,10 @@ public class EventHandlerService {
     public void gamblerFolded(Table table, Gambler gambler) throws ServiceException {
         foldGambler(table, gambler);
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " folded")
-                .setAction("fold")
+                .setMessage(gambler.getName().concat(MSG_FOLDED))
+                .setAction(ACTION_FOLD)
                 .setSeat(String.valueOf(table.getActiveSeat()))
-                .setNotification("Fold")
+                .setNotification(NOTE_FOLD)
                 .createLog();
         table.setLog(log);
         notifierTableDataService.notifyALLGamblersOfRoom(table);
@@ -51,7 +53,7 @@ public class EventHandlerService {
         if (gamblersInHandCount <= 1) {
             potService.addTableBets(table);
             int winnerSeat = pokerGameService.findNextGambler(table, String.valueOf(table.getActiveSeat()), true, false);
-            String winMessage = potService.givenToWinner(table, table.getSeats()[winnerSeat]);//todo output win message
+            String winMessage = potService.givenToWinner(table, table.getSeats()[winnerSeat]);
             pokerGameService.endRound(table);
         } else {
             if (table.getLastGamblerToAct() == table.getActiveSeat()) {
@@ -65,7 +67,7 @@ public class EventHandlerService {
     private void foldGambler(Table table, Gambler gambler) throws ServiceException {
         if (gambler != null) {
             BigDecimal loseMoney = table.getPots().get(0).getAmount()
-                    .divide(BigDecimal.valueOf(table.getGamblersInHandCount()));
+                    .subtract(BigDecimal.valueOf(table.getGamblersInHandCount()));
             profilePlayerService.updateLostMoneyByLogin(gambler.getName(), loseMoney);
             StatisticResultGame statisticResultGame = lobby.findRoom(String.format(
                     Attribute.TABLE_WITH_HYPHEN, table.getId())).getStatisticResultGame();
@@ -98,10 +100,10 @@ public class EventHandlerService {
 
     public void gamblerChecked(Table table, Gambler gambler) throws ServiceException {
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " checked")
-                .setAction("check")
+                .setMessage(gambler.getName().concat(MSG_CHECKED))
+                .setAction(ACTION_CHECK)
                 .setSeat(String.valueOf(table.getActiveSeat()))
-                .setNotification("Check")
+                .setNotification(NOTE_CHECK)
                 .createLog();
         table.setLog(log);
         notifierTableDataService.notifyALLGamblersOfRoom(table);
@@ -117,10 +119,10 @@ public class EventHandlerService {
                 table.getSmallBlind() : gambler.getMoneyInPlay();
         table.getSeats()[table.getActiveSeat()].bet(bet);
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " posted the small blind")
-                .setAction("bet")
+                .setMessage(gambler.getName().concat(MSG_POSTED_SMALL_BLIND))
+                .setAction(Attribute.BET)
                 .setSeat(String.valueOf(table.getActiveSeat()))
-                .setNotification("Posted blind")
+                .setNotification(NOTE_POSTED_BLIND)
                 .createLog();
         table.setLog(log);
         BigDecimal biggestBet = table.getBiggestBet().compareTo(bet) < 0 ? bet : table.getBiggestBet();
@@ -134,10 +136,10 @@ public class EventHandlerService {
                 table.getBigBlind() : gambler.getMoneyInPlay();
         table.getSeats()[table.getActiveSeat()].bet(bet);
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " posted the big blind")
-                .setAction("bet")
+                .setMessage(gambler.getName().concat(MSG_POSTED_BIG_BLIND))
+                .setAction(Attribute.BET)
                 .setSeat(String.valueOf(table.getActiveSeat()))
-                .setNotification("Posted blind")
+                .setNotification(MSG_POSTED_BIG_BLIND)
                 .createLog();
         table.setLog(log);
         BigDecimal biggestBet = table.getBiggestBet().compareTo(bet) < 0 ? bet : table.getBiggestBet();
@@ -149,7 +151,7 @@ public class EventHandlerService {
     public void gamblerSatOut(Table table, Gambler gambler, boolean gamblerLeft) {
         if (!gamblerLeft) {
             Log log = Log.builder()
-                    .setMessage(gambler.getName() + " sat out")
+                    .setMessage(gambler.getName() + MSG_SAT_OUT)
                     .setAction("")
                     .setSeat("")
                     .setNotification("")
@@ -197,7 +199,7 @@ public class EventHandlerService {
 
     public void gamblerLeft(Table table, Gambler gambler) throws ServiceException {
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " left")
+                .setMessage(gambler.getName() + MSG_LEFT)
                 .setAction("")
                 .setSeat("")
                 .setNotification("")
@@ -233,10 +235,10 @@ public class EventHandlerService {
         BigDecimal calledAmount = table.getBiggestBet().subtract(gambler.getBet());
         gambler.bet(calledAmount);
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " called")
-                .setAction("call")
+                .setMessage(gambler.getName().concat(MSG_CALLED))
+                .setAction(ACTION_CALL)
                 .setSeat(String.valueOf(table.getActiveSeat()))
-                .setNotification("Call")
+                .setNotification(NOTE_CALL)
                 .createLog();
         table.setLog(log);
         notifierTableDataService.notifyALLGamblersOfRoom(table);
@@ -254,10 +256,11 @@ public class EventHandlerService {
                 ? gambler.getBet() : table.getBiggestBet();
         table.setBiggestBet(biggestBet);
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " betted " + amount)
-                .setAction("bet")
+                .setMessage(gambler.getName().concat(MSG_BETTED)
+                        .concat(String.valueOf(amount)))
+                .setAction(Attribute.BET)
                 .setSeat(String.valueOf(table.getActiveSeat()))
-                .setNotification("Bet " + amount)
+                .setNotification(NOTE_BET.concat(String.valueOf(amount)))
                 .createLog();
         table.setLog(log);
         notifierTableDataService.notifyALLGamblersOfRoom(table);
@@ -279,10 +282,11 @@ public class EventHandlerService {
         table.setBiggestBet(biggestBet);
         BigDecimal raiseAmount = table.getBiggestBet().subtract(oldBiggestBet);
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " raise to " + table.getBiggestBet())
-                .setAction("raise")
+                .setMessage(gambler.getName().concat(MSG_RAISE_TO)
+                        .concat(String.valueOf(table.getBiggestBet())))
+                .setAction(ACTION_RAISE)
                 .setSeat(String.valueOf(table.getActiveSeat()))
-                .setNotification("Raise  " + raiseAmount)
+                .setNotification(NOTE_RAISE.concat(String.valueOf(raiseAmount)))
                 .createLog();
         table.setLog(log);
         notifierTableDataService.notifyALLGamblersOfRoom(table);
@@ -298,7 +302,7 @@ public class EventHandlerService {
 
     public void gamblerSatIn(Table table, Gambler gambler) {
         Log log = Log.builder()
-                .setMessage(gambler.getName() + " sat in")
+                .setMessage(gambler.getName().concat(MSG_SET_IN))
                 .setAction("")
                 .setSeat("")
                 .setNotification("")

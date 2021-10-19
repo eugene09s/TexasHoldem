@@ -31,63 +31,56 @@ public class ProfilePlayer implements Entity {
         return userId;
     }
 
-    public ProfilePlayer setUserId(long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
-        return this;
     }
 
     public BigDecimal getLostMoney() {
         return lostMoney;
     }
 
-    public ProfilePlayer setLostMoney(BigDecimal lostMoney) {
+    public void setLostMoney(BigDecimal lostMoney) {
         this.lostMoney = lostMoney;
-        return this;
     }
 
     public BigDecimal getWinMoney() {
         return winMoney;
     }
 
-    public ProfilePlayer setWinMoney(BigDecimal winMoney) {
+    public void setWinMoney(BigDecimal winMoney) {
         this.winMoney = winMoney;
-        return this;
     }
 
     public BigDecimal getBestPrize() {
         return bestPrize;
     }
 
-    public ProfilePlayer setBestPrize(BigDecimal bestPrize) {
+    public void setBestPrize(BigDecimal bestPrize) {
         this.bestPrize = bestPrize;
-        return this;
     }
 
     public String getAward() {
         return award;
     }
 
-    public ProfilePlayer setAward(String award) {
+    public void setAward(String award) {
         this.award = award;
-        return this;
     }
 
     public String getPhoto() {
         return photo;
     }
 
-    public ProfilePlayer setPhoto(String photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
-        return this;
     }
 
     public String getAboutYourself() {
         return aboutYourselt;
     }
 
-    public ProfilePlayer setAboutYourselt(String aboutYourselt) {
+    public void setAboutYourselt(String aboutYourselt) {
         this.aboutYourselt = aboutYourselt;
-        return this;
     }
 
     @Override
@@ -138,7 +131,7 @@ public class ProfilePlayer implements Entity {
     }
 
     public static class ProfilePlayerBuilder {
-        private ProfilePlayer profilePlayer;
+        private final ProfilePlayer profilePlayer;
 
         public ProfilePlayerBuilder() {
             profilePlayer = new ProfilePlayer();

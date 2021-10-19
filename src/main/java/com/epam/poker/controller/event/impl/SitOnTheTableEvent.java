@@ -86,7 +86,7 @@ public class SitOnTheTableEvent implements EventSocket {
                 objectNode.put(Attribute.SUCCESS, false);
                 sendEvent(gambler, response, objectNode);
             }
-        } catch (NullPointerException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             LOGGER.error("JSON line don't exist data. " + e);
         }
     }

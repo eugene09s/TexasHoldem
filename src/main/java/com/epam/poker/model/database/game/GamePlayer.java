@@ -26,54 +26,48 @@ public class GamePlayer implements Entity {
         return gamePlayerId;
     }
 
-    public GamePlayer setGamePlayerId(long gamePlayerId) {
+    public void setGamePlayerId(long gamePlayerId) {
         this.gamePlayerId = gamePlayerId;
-        return this;
     }
 
     public String getLastAction() {
         return lastAction;
     }
 
-    public GamePlayer setLastAction(String lastAction) {
+    public void setLastAction(String lastAction) {
         this.lastAction = lastAction;
-        return this;
     }
 
     public String getTwoCards() {
         return twoCards;
     }
 
-    public GamePlayer setTwoCards(String twoCards) {
+    public void setTwoCards(String twoCards) {
         this.twoCards = twoCards;
-        return this;
     }
 
     public String getCombinationsCards() {
         return combinationsCards;
     }
 
-    public GamePlayer setCombinationsCards(String combinationsCards) {
+    public void setCombinationsCards(String combinationsCards) {
         this.combinationsCards = combinationsCards;
-        return this;
     }
 
     public long getUserId() {
         return userId;
     }
 
-    public GamePlayer setUserId(long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
-        return this;
     }
 
     public long getGameId() {
         return gameId;
     }
 
-    public GamePlayer setGameId(long gameId) {
+    public void setGameId(long gameId) {
         this.gameId = gameId;
-        return this;
     }
 
     @Override
@@ -120,7 +114,7 @@ public class GamePlayer implements Entity {
     }
 
     public static class GamePlayerBuilder {
-        private GamePlayer gamePlayer;
+        private final GamePlayer gamePlayer;
 
         public GamePlayerBuilder() {
             gamePlayer = new GamePlayer();

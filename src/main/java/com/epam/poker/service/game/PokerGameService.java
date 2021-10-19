@@ -22,8 +22,12 @@ public class PokerGameService {
     private static final String FIRST_CARD = "firstCard";
     private static final String SECOND_CARD = "secondCard";
     private static final String DEALING_CARDS_EVENT = "dealingCards";
-    private static PotService potService = PotService.getInstance();
-    private static NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
+    private static final String PREFLOP = "preflop";
+    private static final String FLOP = "flop";
+    private static final String TURN = "turn";
+    private static final String RIVER = "river";
+    private static final PotService potService = PotService.getInstance();
+    private static final NotifierTableDataService notifierTableDataService = NotifierTableDataService.getInstance();
 
     private PokerGameService() {
     }
@@ -76,7 +80,6 @@ public class PokerGameService {
                     }
                 }
             }
-
             //Giving thr dealer button to a room player
             if (table.getDealerSeat() == null) {
                 int randomDealerSeat = (int) Math.ceil(Math.random() * table.getGamblersSittingInCount());
@@ -124,8 +127,8 @@ public class PokerGameService {
 
     public void endPhase(Table table) throws ServiceException {
         switch (table.getPhaseGame()) {
-            case "preflop", "flop", "turn" -> initializeNextPhase(table);
-            case "river" -> showdown(table);
+            case PREFLOP, FLOP, TURN -> initializeNextPhase(table);
+            case RIVER -> showdown(table);
         }
     }
 
@@ -183,7 +186,7 @@ public class PokerGameService {
                             validStatus = table.getSeats()[i].isInHand();
                         }
                         if (checkMoneyInGame) {
-                            validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0 ? true : false;
+                            validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0;
                         }
                         if (validStatus) {
                             return i;
@@ -198,7 +201,7 @@ public class PokerGameService {
                         validStatus = table.getSeats()[i].isInHand();
                     }
                     if (checkMoneyInGame) {
-                        validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0 ? true : false;
+                        validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0;
                     }
                     if (validStatus) {
                         return i;
@@ -276,7 +279,7 @@ public class PokerGameService {
                             validStatus = table.getSeats()[i].isInHand();
                         }
                         if (checkMoneyInGame) {
-                            validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0 ? true : false;
+                            validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0;
                         }
                         if (validStatus) {
                             return i;
@@ -291,7 +294,7 @@ public class PokerGameService {
                         validStatus = table.getSeats()[i].isInHand();
                     }
                     if (checkMoneyInGame) {
-                        validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0 ? true : false;
+                        validStatus = table.getSeats()[i].getMoneyInPlay().compareTo(BigDecimal.ZERO) > 0;
                     }
                     if (validStatus) {
                         return i;

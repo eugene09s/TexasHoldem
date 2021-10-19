@@ -8,10 +8,10 @@ import java.util.Properties;
 
 public final class ConfigReaderJwt {
     private static final String CONFIG_APP_PROPERTIES_LOCATION = "prop/application.properties";
-    private static String SECRET_KEY_PROPERTIES = "jwt.secretKey";
-    private static String ACCESS_TOKEN_LIFE_TIME_PROPERTIES = "jwt.accessToken.lifeTime";
-    private static String secretKey;
-    private static long accessTokenLifeTime;
+    private static final String SECRET_KEY_PROPERTIES = "jwt.secretKey";
+    private static final String ACCESS_TOKEN_LIFE_TIME_PROPERTIES = "jwt.accessToken.lifeTime";
+    private static final String secretKey;
+    private static final long accessTokenLifeTime;
 
     static {
         try (InputStream inputStream =

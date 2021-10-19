@@ -6,7 +6,6 @@ import com.epam.poker.model.database.type.UserStatus;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.StringJoiner;
 
 public class User implements Entity {
     private long userId;
@@ -44,99 +43,88 @@ public class User implements Entity {
         return userId;
     }
 
-    public User setUserId(long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
-        return this;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public User setLogin(String login) {
-        this.login = login;
-        return this;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public User setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public User setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
     public BigDecimal getBalance() {
         return balance;
-    }
-
-    public User setBalance(BigDecimal balance) {
-        this.balance = balance;
-        return this;
     }
 
     public UserRole getUserRole() {
         return userRole;
     }
 
-    public User setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-        return this;
-    }
-
     public UserStatus getUserStatus() {
         return userStatus;
-    }
-
-    public User setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
-        return this;
     }
 
     public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public User setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
-        return this;
     }
 
     public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public User setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
-        return this;
     }
 
     @Override
@@ -177,19 +165,20 @@ public class User implements Entity {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
-                .add("userId=" + userId)
-                .add("login='" + login + "'")
-                .add("password='" + password + "'")
-                .add("firstName='" + firstName + "'")
-                .add("lastName='" + lastName + "'")
-                .add("email='" + email + "'")
-                .add("balance=" + balance)
-                .add("userRole=" + userRole)
-                .add("userStatus=" + userStatus)
-                .add("phoneNumber=" + phoneNumber)
-                .add("createTime=" + createTime)
-                .toString();
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("userId=").append(userId);
+        sb.append(", login='").append(login).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", balance=").append(balance);
+        sb.append(", userRole=").append(userRole);
+        sb.append(", userStatus=").append(userStatus);
+        sb.append(", phoneNumber=").append(phoneNumber);
+        sb.append(", createTime=").append(createTime);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static UserBuilder builder() {
@@ -197,7 +186,7 @@ public class User implements Entity {
     }
 
     public static class UserBuilder {
-        private User user;
+        private final User user;
 
         public UserBuilder() {
             user = new User();

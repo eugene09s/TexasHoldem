@@ -9,14 +9,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Room implements Entity {
     private static final Logger LOGGER = LogManager.getLogger();
     private static EventHandlerService eventHandlerService = EventHandlerService.getInstance();
-    private final StatisticResultGame statisticResultGame = new StatisticResultGame();
-    private Map<String, Gambler> gamblers = new ConcurrentHashMap<>();
+    private StatisticResultGame statisticResultGame = new StatisticResultGame();
+    private Map<String, Gambler> gamblers = Collections.synchronizedMap(new HashMap<>());
     private String titleRoom;
     private Table table;
 
@@ -79,7 +80,7 @@ public class Room implements Entity {
         String gamblerName = gambler.getName();
         if (jsonLine != null) {
             gamblers.forEach((k, v) -> {
-                if (k.equals(gamblerName)) {
+                if (!k.equals(gamblerName)) {
                     try {
                         v.getSession().getBasicRemote().sendText(jsonLine);
                     } catch (IOException e) {
@@ -92,6 +93,10 @@ public class Room implements Entity {
 
     public StatisticResultGame getStatisticResultGame() {
         return statisticResultGame;
+    }
+
+    public void setStatisticResultGame(StatisticResultGame statisticResultGame) {
+        this.statisticResultGame = statisticResultGame;
     }
 
     public static EventHandlerService getEventHandlerService() {

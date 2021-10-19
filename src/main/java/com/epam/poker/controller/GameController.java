@@ -51,8 +51,6 @@ public class GameController {
                     .setSession(session)
                     .setImg(img)
                     .createGambler();
-        } else {
-            onClose();
         }
     }
 
@@ -76,22 +74,12 @@ public class GameController {
         }
     }
 
-    private String parseToken(Object cookies) {
-        String[] keyValueLines = String.valueOf(cookies).split(";");
-        for (String kvPair : keyValueLines) {
-            String[] kv = kvPair.split("=");
-            String key = kv[0].replace("[", "").trim();
-            String value = kv[1].replace("]", "");
-            if (key.equalsIgnoreCase(Attribute.ACCESS_TOKEN)) {
-                return value;
-            }
-        }
-        return null;
-    }
-
     @OnClose
     public void onClose() {
-        disconnectGambler();
+        if (gambler != null) {
+            disconnectGambler();
+            gambler = null;
+        }
     }
 
     @OnError
@@ -99,6 +87,8 @@ public class GameController {
         String nameGambler = "not authorization";
         if (gambler != null) {
             nameGambler = gambler.getName();
+            disconnectGambler();
+            gambler = null;
         }
         LOGGER.warn("Websocket error with user: " + nameGambler + ". Error: " + throwable);
     }
@@ -114,5 +104,16 @@ public class GameController {
         }
     }
 
-
+    private String parseToken(Object cookies) {
+        String[] keyValueLines = String.valueOf(cookies).split(";");
+        for (String kvPair : keyValueLines) {
+            String[] kv = kvPair.split("=");
+            String key = kv[0].replace("[", "").trim();
+            String value = kv[1].replace("]", "");
+            if (key.equalsIgnoreCase(Attribute.ACCESS_TOKEN)) {
+                return value;
+            }
+        }
+        return null;
+    }
 }

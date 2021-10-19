@@ -104,7 +104,7 @@ public class Game implements Entity {
     }
 
     public static class GameBuilder {
-        private Game game;
+        private final Game game;
 
         public GameBuilder() {
             game = new Game();

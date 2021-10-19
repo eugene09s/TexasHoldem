@@ -29,8 +29,8 @@ import java.util.Set;
 public class ChatController {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String LINE_COOKIE = "cookie";
-    private static Set<Session> sessionUsers = Collections.synchronizedSet(new HashSet<>());
-    private static JwtProvider jwtProvider = JwtProvider.getInstance();
+    private static final Set<Session> sessionUsers = Collections.synchronizedSet(new HashSet<>());
+    private static final JwtProvider jwtProvider = JwtProvider.getInstance();
     private String username;
     private String img;
 
@@ -46,7 +46,7 @@ public class ChatController {
                 this.img = profilePlayerService.findProfilePlayerById(
                         Long.parseLong(claimsJws.getBody().get(Attribute.USER_ID).toString())).getPhoto();
             } catch (ServiceException e) {
-                LOGGER.error("User not found with name: " + username + " Error: " + e);
+                LOGGER.warn("User not found with name: " + username + " Error: " + e);
             }
             sessionUsers.add(session);
         } else {

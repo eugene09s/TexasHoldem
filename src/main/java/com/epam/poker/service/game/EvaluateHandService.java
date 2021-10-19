@@ -6,6 +6,8 @@ import com.epam.poker.model.game.Table;
 
 import java.util.*;
 
+import static com.epam.poker.util.constant.EventMessage.*;
+
 public class EvaluateHandService {
     private static final List<Character> cardNames = List.of(
             '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A');
@@ -259,61 +261,61 @@ public class EvaluateHandService {
     private void calcEvaluateHand() {
         switch (evaluateHand.getRank()) {
             case PAIR -> {
-                evaluateHand.setName("a pair of "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
+                evaluateHand.setName(MSG_PAIR_OF
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 1000000);
             }
             case TWO_PAIR -> {
-                evaluateHand.setName("two pair, "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)
-                        + " and " + findCardNameByKey(evaluateHand.getCards().get(2).charAt(0), true));
+                evaluateHand.setName(MSG_TWO_PAIR
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true))
+                        .concat(MSG_AND + findCardNameByKey(evaluateHand.getCards().get(2).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 2000000);
             }
             case THREE_OF_KIND -> {
-                evaluateHand.setName("three of a kind, "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
+                evaluateHand.setName(MSG_THREE_OF_KIND
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 3000000);
             }
             case STRAIGHT -> {
-                evaluateHand.setName("a straight to "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
+                evaluateHand.setName(MSG_STRAIGHT_TO
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 4000000);
             }
             case FLUSH -> {
-                evaluateHand.setName("a flush, "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)
-                        + " high");
+                evaluateHand.setName(MSG_FLUSH
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true))
+                        .concat(MSG_HIGH));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 5000000);
             }
             case FULL_HOUSE -> {
-                evaluateHand.setName("a full house, "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)
-                        + " full of "
-                        + findCardNameByKey(evaluateHand.getCards().get(3).charAt(0), true));
+                evaluateHand.setName(MSG_FULL_HOUSE
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true))
+                        .concat(MSG_FULL_OF)
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(3).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 6000000);
             }
             case FOUR_OF_KIND -> {
-                evaluateHand.setName("four of a kind, "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
+                evaluateHand.setName(MSG_FOUR_OF_KIND
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 7000000);
             }
             case STRAIGHT_FLUSH -> {
-                evaluateHand.setName("a straight flush, "
-                        + findCardNameByKey(evaluateHand.getCards().get(4).charAt(0), true)
-                        + " to "
-                        + findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true));
+                evaluateHand.setName(MSG_STRAIGHT_FLUSH
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(4).charAt(0), true))
+                        .concat(MSG_TO)
+                        .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 8000000);
             }
             case ROYAL_FLUSH -> {
-                evaluateHand.setName("a royal flush");
+                evaluateHand.setName(MSG_ROYAL_FLUSH);
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 8000000);
             }

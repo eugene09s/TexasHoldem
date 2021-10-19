@@ -20,27 +20,24 @@ public class GameWinner implements Entity {
         return gameWinnerId;
     }
 
-    public GameWinner setGameWinnerId(long gameWinnerId) {
+    public void setGameWinnerId(long gameWinnerId) {
         this.gameWinnerId = gameWinnerId;
-        return this;
     }
 
     public long getGameId() {
         return gameId;
     }
 
-    public GameWinner setGameId(long gameId) {
+    public void setGameId(long gameId) {
         this.gameId = gameId;
-        return this;
     }
 
     public long getUserId() {
         return userId;
     }
 
-    public GameWinner setUserId(long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
-        return this;
     }
 
     @Override
@@ -78,7 +75,7 @@ public class GameWinner implements Entity {
     }
 
     public static class GameWinnerBuilder {
-        private GameWinner gameWinner;
+        private final GameWinner gameWinner;
 
         public GameWinnerBuilder() {
             gameWinner = new GameWinner();

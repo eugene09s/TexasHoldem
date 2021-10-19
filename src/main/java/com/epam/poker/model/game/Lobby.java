@@ -4,18 +4,15 @@ import com.epam.poker.model.Entity;
 import com.epam.poker.util.constant.Attribute;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Lobby implements Entity {
     private static final AtomicBoolean isLobbyCreated = new AtomicBoolean();
     private static final ReentrantLock instanceLocker = new ReentrantLock();
-    private static final Map<String, Gambler> users = new ConcurrentHashMap<>();
-    private static final Map<String, Room> rooms = new ConcurrentHashMap<>();
+    private static final Map<String, Gambler> users = Collections.synchronizedMap(new HashMap<>());
+    private static final Map<String, Room> rooms = Collections.synchronizedMap(new HashMap<>());
     private static Lobby instance;
 
     static {
