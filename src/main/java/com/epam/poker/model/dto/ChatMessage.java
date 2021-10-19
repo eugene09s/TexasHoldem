@@ -5,6 +5,7 @@ public class ChatMessage {
     private String text;
     private String img;
     private String time;
+    private boolean isOwner;
 
     private ChatMessage() {}
 
@@ -41,17 +42,26 @@ public class ChatMessage {
         return time;
     }
 
+    public boolean isOwner() {
+        return isOwner;
+    }
+
+    public void setOwner(boolean owner) {
+        isOwner = owner;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ChatMessage message = (ChatMessage) o;
+        ChatMessage that = (ChatMessage) o;
 
-        if (name != null ? !name.equals(message.name) : message.name != null) return false;
-        if (text != null ? !text.equals(message.text) : message.text != null) return false;
-        if (img != null ? !img.equals(message.img) : message.img != null) return false;
-        return time != null ? time.equals(message.time) : message.time == null;
+        if (isOwner != that.isOwner) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (text != null ? !text.equals(that.text) : that.text != null) return false;
+        if (img != null ? !img.equals(that.img) : that.img != null) return false;
+        return time != null ? time.equals(that.time) : that.time == null;
     }
 
     @Override
@@ -60,6 +70,7 @@ public class ChatMessage {
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + (img != null ? img.hashCode() : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (isOwner ? 1 : 0);
         return result;
     }
 
@@ -72,29 +83,5 @@ public class ChatMessage {
         sb.append(", time='").append(time).append('\'');
         sb.append('}');
         return sb.toString();
-    }
-
-    public static MessageBuilder builder() {
-        return new MessageBuilder();
-    }
-
-    public static class MessageBuilder {
-        private ChatMessage message;
-
-        public MessageBuilder() {
-            message = new ChatMessage();
-        }
-
-        public void setName(String name) {
-            message.setName(name);
-        }
-
-        public void setText(String text) {
-            message.setText(text);
-        }
-
-        public ChatMessage createMessage() {
-            return message;
-        }
     }
 }

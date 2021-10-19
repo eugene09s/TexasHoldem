@@ -65,18 +65,23 @@ public class ChatController {
     }
 
     @OnMessage
-    public void onMessage(ChatMessage message) {
+    public void onMessage(Session session, ChatMessage message) {
         message.setName(this.username);
         message.setImg(this.img);
         String time = LocalTime.now().toString();
         message.setTime(time.substring(0, time.length() - 7));
         message.setText(checkerHtmlInjectionMessage(message.getText()));
         sessionUsers.forEach(s -> {
-            try {
-                s.getBasicRemote().sendObject(message);
-            } catch (IOException | EncodeException e) {
-                LOGGER.error(e);
+            if (s.equals(session)) {
+                message.setOwner(true);
+            } else {
+                message.setOwner(false);
             }
+                try {
+                    s.getBasicRemote().sendObject(message);
+                } catch (IOException | EncodeException e) {
+                    LOGGER.error(e);
+                }
         });
     }
 

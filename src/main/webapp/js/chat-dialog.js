@@ -16,18 +16,10 @@ const chatUnit = {
         this.msgTextArea = document.querySelector(".form-control");
         this.sendBtn = document.querySelector(".send-msg");
         this.form = document.querySelector(".dialog-form");
-        this.myName = '';
-        this.markMessage = '';
-        this.isGivenMyMark = false;
+        this.chatWindow = document.querySelector('.direct-chat-messages')
+        this.isYourMsg = '';
         this.bindEvents();
         this.openSocket();
-    },
-    initMessage() {
-        this.markMessage = '%*#' + Math.random();
-        this.sendMessage({
-            name: this.name,
-            text: this.markMessage
-        });
     },
     bindEvents() {
         this.sendBtn.addEventListener("click", (e) => this.send(e));
@@ -58,20 +50,13 @@ const chatUnit = {
 
     },
     onMessage(msg) {
-        let messageLine = msg.text.toString();
-        if ((messageLine.indexOf('#') == 2 && messageLine.indexOf('%') == 0 && messageLine.indexOf('*') == 1)) {
-            let lineAuth = msg.text.toString();
-            if (this.markMessage == lineAuth) {
-                this.myName = msg.name;
-                this.isGivenMyMark = true;
-            }
+        if (msg.isOwner) {
+            this.isYourMsg = 'right';
         } else {
-            let isMyMessage = '';
-            if (this.myName == msg.name) {
-                isMyMessage = ' right';
-            }
-            this.messagesBody.insertAdjacentHTML('beforeend', `
-            <div class="direct-chat-msg${isMyMessage}">
+            this.isYourMsg = '';
+        }
+        this.messagesBody.insertAdjacentHTML('beforeend', `
+            <div class="direct-chat-msg ${this.isYourMsg}">
                 <div class="direct-chat-info clearfix">
                     <span class="direct-chat-name text-secondary pull-left">${msg.name}</span>
                     <span class="direct-chat-timestamp pull-right">${msg.time}</span></div>
@@ -81,13 +66,7 @@ const chatUnit = {
                 <div class="direct-chat-text">${msg.text}</div>
             </div>
         `);
-            chatWindow = document.querySelector('.direct-chat-messages')
-            let xH = chatWindow.scrollHeight;
-            chatWindow.scrollTo(0, xH);
-        }
-        if (!this.isGivenMyMark) {
-            this.initMessage();
-        }
+        this.chatWindow.scrollTo(0, this.chatWindow.scrollHeight);
     },
     onClose() {
 
