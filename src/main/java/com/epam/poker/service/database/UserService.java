@@ -41,7 +41,7 @@ public interface UserService {
      *
      * @throws  ServiceException  if database errors occurs.
      */
-    User findUserByLoginPassword(String login, String password) throws ServiceException;
+    User findUserByLoginAndPassword(String login, String password) throws ServiceException;
 
     /**
      * Finds user in database by login and returns container of account
@@ -128,7 +128,7 @@ public interface UserService {
      *                            also it's a wrapper for lower errors.
      */
     boolean isBlockedById(long id) throws ServiceException;
-    boolean isUserExistByLoginPassword(String login, String password) throws ServiceException;
+    boolean isUserExistByLoginAndPassword(String login, String password) throws ServiceException;
     List<User> findAll() throws ServiceException;
     User findUserById(long id) throws ServiceException;
 }

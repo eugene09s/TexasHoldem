@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByLoginPassword(String login, String password) throws ServiceException {
+    public User findUserByLoginAndPassword(String login, String password) throws ServiceException {
         UserDao userDao = new UserDaoImpl();
         try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
             transaction.initTransaction(userDao);
@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserExistByLoginPassword(String login, String password) throws ServiceException {
+    public boolean isUserExistByLoginAndPassword(String login, String password) throws ServiceException {
         UserDao userDao = new UserDaoImpl();
         try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
             transaction.initTransaction(userDao);

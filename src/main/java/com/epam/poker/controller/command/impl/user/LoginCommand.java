@@ -43,7 +43,7 @@ public class LoginCommand implements Command {
         String pass = ParameterTaker.takeString(Parameter.PASSWORD, requestContext);
         LineHasher lineHasher = new LineHasher();
         String hashPass = lineHasher.hashingLine(pass);
-        boolean isUserExist = service.isUserExistByLoginPassword(login, hashPass);
+        boolean isUserExist = service.isUserExistByLoginAndPassword(login, hashPass);
         if (isUserExist) {
             User user = service.findUserByLogin(login);
             if (user.getUserStatus() != UserStatus.BANNED) {

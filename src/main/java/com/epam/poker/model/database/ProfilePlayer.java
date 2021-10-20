@@ -126,6 +126,11 @@ public class ProfilePlayer implements Entity {
         return sb.toString();
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public static ProfilePlayerBuilder builder() {
         return new ProfilePlayerBuilder();
     }

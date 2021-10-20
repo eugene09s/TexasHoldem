@@ -181,6 +181,11 @@ public class User implements Entity {
         return sb.toString();
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public static UserBuilder builder() {
         return new UserBuilder();
     }
