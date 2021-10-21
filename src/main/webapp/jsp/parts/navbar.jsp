@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Eugene
-  Date: 30.08.2021
-  Time: 15:25
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -24,9 +17,6 @@
                            class="nav-link px-2 text-white"><fmt:message key="nav.home.page"/></a></li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=login-page"
                            class="nav-link px-2 text-white"><fmt:message key="nav.play.page"/></a>
-                    <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white"><fmt:message
-                            key="nav.about"/></a>
-                    </li>
                 </ul>
                 <div class="text-end">
                     <a type="button" href="${pageContext.request.contextPath}/poker?command=login-page"
@@ -54,9 +44,6 @@
                     </li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=statistic-games-page&p=1&s=10" class="nav-link px-2 text-white">
                         <fmt:message key="nav.statistic.games.page"/></a>
-                    </li>
-                    <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white">
-                        <fmt:message key="nav.about"/></a>
                     </li>
                 </ul>
 
@@ -99,9 +86,6 @@
                     </li>
                     <li><a href="${pageContext.request.contextPath}/poker?command=statistic-games-page&p=1&s=10" class="nav-link px-2 text-white">
                         <fmt:message key="nav.statistic.games.page"/></a>
-                    </li>
-                    <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 text-white">
-                        <fmt:message key="nav.about"/></a>
                     </li>
                 </ul>
                 <div class="dropdown text-end mr-3">
