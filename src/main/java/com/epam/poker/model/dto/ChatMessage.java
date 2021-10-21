@@ -1,6 +1,8 @@
 package com.epam.poker.model.dto;
 
-public class ChatMessage {
+import com.epam.poker.model.Entity;
+
+public class ChatMessage implements Entity {
     private String name;
     private String text;
     private String img;

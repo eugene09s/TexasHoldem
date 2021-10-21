@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDtoCommandHelper {
-    private static UserService userService = UserServiceImpl.getInstance();
-    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
+    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
 
     public void processCommandWithPagination(RequestContext requestContext)
             throws InvalidParametersException, ServiceException {

@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,7 +16,7 @@ public class ConnectionPool {
     private static final ReentrantLock instanceLocker = new ReentrantLock();
     private static final ReentrantLock connectionLocker = new ReentrantLock();
     private static final int POOL_SIZE = ConfigManager.getPoolSize();
-    private static final Semaphore semaphore = new Semaphore(POOL_SIZE, true);
+    private static final Semaphore SEMAPHORE = new Semaphore(POOL_SIZE, true);
     private static ConnectionPool instance = null;
     private final Queue<ProxyConnection> freeConnections;
     private final Queue<ProxyConnection> busyConnections;
@@ -54,7 +53,7 @@ public class ConnectionPool {
             if (busyConnections.contains(proxyConnection)) {
                 freeConnections.offer(proxyConnection);
                 busyConnections.poll();
-                semaphore.release();
+                SEMAPHORE.release();
             }
         } finally {
             connectionLocker.unlock();
@@ -63,7 +62,7 @@ public class ConnectionPool {
 
     public ProxyConnection getConnection() {
         try {
-            semaphore.tryAcquire(5, TimeUnit.SECONDS);
+            SEMAPHORE.acquire();
             connectionLocker.lock();
             ProxyConnection currentConnection = freeConnections.poll();
             busyConnections.offer(currentConnection);

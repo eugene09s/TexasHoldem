@@ -37,20 +37,16 @@ public class LocalizationCommand implements Command {
     private String getLocaleByLanguage(String language) {
         return switch (language) {
             case RU -> RU_LOCALE;
-            //case EN -> EN_LOCALE;
             default -> EN_LOCALE;
         };
     }
 
     private String changeCommandToCommandPage(String prevCommand) {
-        switch (prevCommand) {
-            case CommandName.LOGIN:
-                return LOGIN_PAGE;
-            case CommandName.SIGN_UP:
-                return SIGN_UP_PAGE;
-            default:
-                return PagePath.HOME;
-        }
+        return switch (prevCommand) {
+            case CommandName.LOGIN -> LOGIN_PAGE;
+            case CommandName.SIGN_UP -> SIGN_UP_PAGE;
+            default -> PagePath.HOME;
+        };
     }
 
     private String extractCommand(String url) {

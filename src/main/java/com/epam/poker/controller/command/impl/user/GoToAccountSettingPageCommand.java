@@ -21,9 +21,9 @@ import jakarta.servlet.http.Cookie;
 import java.util.Optional;
 
 public class GoToAccountSettingPageCommand implements Command {
-    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
-    private static UserService userService = UserServiceImpl.getInstance();
-    private static JwtProvider jwtProvider = JwtProvider.getInstance();
+    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
+    private static final JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext)

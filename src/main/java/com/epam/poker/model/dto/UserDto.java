@@ -1,12 +1,13 @@
 package com.epam.poker.model.dto;
 
+import com.epam.poker.model.Entity;
 import com.epam.poker.model.database.type.UserRole;
 import com.epam.poker.model.database.type.UserStatus;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class UserDto {
+public class UserDto implements Entity {
     private long id;
     private String login;
     private String firstName;
@@ -105,6 +106,54 @@ public class UserDto {
 
     public static UserDtoBuilder builder() {
         return new UserDtoBuilder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserDto userDto = (UserDto) o;
+
+        if (id != userDto.id) return false;
+        if (login != null ? !login.equals(userDto.login) : userDto.login != null) return false;
+        if (firstName != null ? !firstName.equals(userDto.firstName) : userDto.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(userDto.lastName) : userDto.lastName != null) return false;
+        if (userRole != userDto.userRole) return false;
+        if (userStatus != userDto.userStatus) return false;
+        if (createTime != null ? !createTime.equals(userDto.createTime) : userDto.createTime != null) return false;
+        if (photo != null ? !photo.equals(userDto.photo) : userDto.photo != null) return false;
+        return balance != null ? balance.equals(userDto.balance) : userDto.balance == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
+        result = 31 * result + (userStatus != null ? userStatus.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserDto{");
+        sb.append("id=").append(id);
+        sb.append(", login='").append(login).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", userRole=").append(userRole);
+        sb.append(", userStatus=").append(userStatus);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", photo='").append(photo).append('\'');
+        sb.append(", balance=").append(balance);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static class UserDtoBuilder {

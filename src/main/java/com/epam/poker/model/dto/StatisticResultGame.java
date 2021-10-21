@@ -1,5 +1,6 @@
 package com.epam.poker.model.dto;
 
+import com.epam.poker.model.Entity;
 import com.epam.poker.model.database.game.Game;
 import com.epam.poker.model.database.game.GamePlayer;
 import com.epam.poker.model.database.game.GameWinner;
@@ -7,7 +8,7 @@ import com.epam.poker.model.database.game.GameWinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatisticResultGame {
+public class StatisticResultGame implements Entity {
     private Game game;
     private List<GamePlayer> gamePlayers;
     private List<GameWinner> gameWinners;

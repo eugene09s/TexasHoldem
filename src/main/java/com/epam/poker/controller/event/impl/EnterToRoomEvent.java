@@ -24,10 +24,10 @@ public class EnterToRoomEvent implements EventSocket {
     }
 
     @Override
-    public void execute(String jsonLine, Gambler gambler) {
+    public void execute(String jsonRequest, Gambler gambler) {
         JsonNode json = null;
         try {
-            json = mapper.readTree(jsonLine);
+            json = mapper.readTree(jsonRequest);
         } catch (JsonProcessingException e) {
             LOGGER.error("Parse json: " + e);
         }

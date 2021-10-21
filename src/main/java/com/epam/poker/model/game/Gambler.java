@@ -297,34 +297,12 @@ public class Gambler implements Entity {
         private Session session;
         private BigDecimal chips;
         private String titleRoom;
-        private long sittingOnTable;
         private int seatTable;
         private String[] privateCards;
-        private EvaluateHand evaluateHand;
         private String img;
 
         public GamblerBuilder setTitleRoom(String titleRoom) {
             this.titleRoom = titleRoom;
-            return this;
-        }
-
-        public GamblerBuilder setSittingOnTable(long sittingOnTable) {
-            this.sittingOnTable = sittingOnTable;
-            return this;
-        }
-
-        public GamblerBuilder setSeatTable(int seatTable) {
-            this.seatTable = seatTable;
-            return this;
-        }
-
-        public GamblerBuilder setPrivateCards(String[] privateCards) {
-            this.privateCards = privateCards;
-            return this;
-        }
-
-        public GamblerBuilder setEvaluateHand(EvaluateHand evaluateHand) {
-            this.evaluateHand = evaluateHand;
             return this;
         }
 

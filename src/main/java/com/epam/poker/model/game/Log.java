@@ -67,7 +67,8 @@ public class Log implements Entity {
 
         if (message != null ? !message.equals(log.message) : log.message != null) return false;
         if (seat != null ? !seat.equals(log.seat) : log.seat != null) return false;
-        return action != null ? action.equals(log.action) : log.action == null;
+        if (action != null ? !action.equals(log.action) : log.action != null) return false;
+        return notification != null ? notification.equals(log.notification) : log.notification == null;
     }
 
     @Override
@@ -75,6 +76,7 @@ public class Log implements Entity {
         int result = message != null ? message.hashCode() : 0;
         result = 31 * result + (seat != null ? seat.hashCode() : 0);
         result = 31 * result + (action != null ? action.hashCode() : 0);
+        result = 31 * result + (notification != null ? notification.hashCode() : 0);
         return result;
     }
 

@@ -1,4 +1,4 @@
-package com.epam.poker.dao.mapper.impl.game;
+package com.epam.poker.dao.mapper.impl;
 
 import com.epam.poker.dao.mapper.RowMapper;
 import com.epam.poker.model.database.game.GameWinner;

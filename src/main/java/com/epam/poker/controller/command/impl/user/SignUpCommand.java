@@ -30,7 +30,7 @@ public class SignUpCommand implements Command {
     private static final String PRE_AWARD = "Your future award";
     private static final String PRE_ABOUT_YOURSELF = "Write about yourself";
     private static final String PRE_PHOTO = "notAva.jpg";
-    private SignUpService sigUpService = SignUpServiceImpl.getInstance();
+    private final SignUpService sigUpService = SignUpServiceImpl.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {

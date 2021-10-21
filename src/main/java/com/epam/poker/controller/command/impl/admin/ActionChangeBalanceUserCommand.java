@@ -9,7 +9,7 @@ import com.epam.poker.service.database.AdminService;
 import com.epam.poker.service.database.impl.AdminServiceImpl;
 
 public class ActionChangeBalanceUserCommand implements Command {
-    private static AdminService adminService = AdminServiceImpl.getInstance();
+    private static final AdminService adminService = AdminServiceImpl.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {

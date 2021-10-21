@@ -16,8 +16,8 @@ import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.PagePath;
 
 public class GoToProfilePageCommand implements Command {
-    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
-    private static UserService userService = UserServiceImpl.getInstance();
+    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext)

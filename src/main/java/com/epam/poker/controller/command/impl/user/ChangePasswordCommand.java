@@ -23,8 +23,8 @@ public class ChangePasswordCommand implements Command {
     private static final String PROFILE_PAGE_COMMAND = "poker?command=" + CommandName.PROFILE_PAGE + "&id=";
     private static final String INVALID_DATA_KEY = "invalid.pass";
     private static final String VALID_DATA_KEY = "success.pass";
-    private static AccountInfoChangeService changeDataOfAccountUser = AccountInfoChangeServiceImpl.getInstance();
-    private static JwtProvider jwtProvider = JwtProvider.getInstance();
+    private static final AccountInfoChangeService changeDataOfAccountUser = AccountInfoChangeServiceImpl.getInstance();
+    private static final JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext)

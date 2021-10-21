@@ -11,15 +11,10 @@ import com.epam.poker.util.constant.Attribute;
 import com.epam.poker.util.constant.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CheckExistUsernameCommand implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final ObjectMapper mapper = new ObjectMapper();
-    private static final Gson gson = new Gson();
-    private static SignUpService service = SignUpServiceImpl.getInstance();
+    private static final SignUpService service = SignUpServiceImpl.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {

@@ -7,7 +7,7 @@ import jakarta.websocket.Decoder;
 import jakarta.websocket.EndpointConfig;
 
 public class ChatMessageDecoder implements Decoder.Text<ChatMessage> {
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     @Override
     public ChatMessage decode(String s) throws DecodeException {

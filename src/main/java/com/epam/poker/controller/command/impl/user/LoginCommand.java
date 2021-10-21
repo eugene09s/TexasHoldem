@@ -32,10 +32,10 @@ public class LoginCommand implements Command {
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
     private static final long LIFE_TIME_COOKIE = ConfigReaderJwt.getAccessTokenLifeTime();
-    private static UserService service = UserServiceImpl.getInstance();
-    private static ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
+    private static final UserService service = UserServiceImpl.getInstance();
+    private static final ProfilePlayerService profilePlayerService = ProfilePlayerServiceImpl.getInstance();
     private static final int TIMEZONE_GMT_PLUS_THREE = 60*60*3;
-    private static JwtProvider jwtProvider = JwtProvider.getInstance();
+    private static final JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {

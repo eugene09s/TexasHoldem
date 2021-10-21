@@ -29,8 +29,6 @@ public class TakeTableDataCommand implements Command {
             ObjectNode response = mapper.createObjectNode();
             response.putPOJO(Attribute.TABLE, parserDataToJson.parseDataTableForRoom(table));
             jsonLine = String.valueOf(response);
-        } else {
-            //todo error if room not found
         }
         CommandResult commandResult = new CommandResult(true);
         commandResult.setJsonResponse(jsonLine);

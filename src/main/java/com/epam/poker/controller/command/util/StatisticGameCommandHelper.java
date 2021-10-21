@@ -14,8 +14,8 @@ import com.epam.poker.util.constant.Parameter;
 import java.util.List;
 
 public class StatisticGameCommandHelper {
-    private static GameService gameService = GameServiceImpl.getInstance();
-    private static StatisticOfGameService statisticOfGameService = StatisticOfGameServiceImpl.getInstance();
+    private static final GameService gameService = GameServiceImpl.getInstance();
+    private static final StatisticOfGameService statisticOfGameService = StatisticOfGameServiceImpl.getInstance();
 
     public void processCommandWithPagination(RequestContext requestContext)
             throws InvalidParametersException, ServiceException {

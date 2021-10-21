@@ -19,7 +19,7 @@ public class LeaveFromRoomEvent implements EventSocket {
     }
 
     @Override
-    public void execute(String jsonLine, Gambler gambler) {
+    public void execute(String jsonRequest, Gambler gambler) {
         if (gambler.getTitleRoom() != null && gambler.getSittingOnTable() < 0) {
             String titleRoom = gambler.getTitleRoom();
             gambler.leaveTable();

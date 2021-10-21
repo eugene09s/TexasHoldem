@@ -8,6 +8,7 @@ import com.epam.poker.exception.ServiceException;
 import com.epam.poker.util.constant.PagePath;
 
 public class GoToSignUpPageCommand implements Command {
+
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         return CommandResult.forward(PagePath.SIGN_UP);

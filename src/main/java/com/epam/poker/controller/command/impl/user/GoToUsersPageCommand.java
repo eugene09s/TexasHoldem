@@ -9,6 +9,7 @@ import com.epam.poker.exception.ServiceException;
 import com.epam.poker.util.constant.PagePath;
 
 public class GoToUsersPageCommand implements Command {
+
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException {
         UserDtoCommandHelper userDtoCommandHelper = new UserDtoCommandHelper();

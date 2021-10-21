@@ -5,7 +5,7 @@ import com.epam.poker.exception.InvalidParametersException;
 import com.epam.poker.exception.ServiceException;
 
 /**
-*   Interface for processing ewquest from web browser.
+ * The interface Command.
  */
 public interface Command {
     /**
@@ -24,6 +24,12 @@ public interface Command {
      */
     CommandResult execute(RequestContext requestContext) throws ServiceException, InvalidParametersException;
 
+    /**
+     * Of command.
+     *
+     * @param name the name of command
+     * @return the command
+     */
     static Command of(String name) {
         return CommandProvider.of(name);
     }

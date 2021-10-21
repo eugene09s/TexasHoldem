@@ -72,11 +72,7 @@ public class ChatController {
         message.setTime(time.substring(0, time.length() - 7));
         message.setText(checkerHtmlInjectionMessage(message.getText()));
         sessionUsers.forEach(s -> {
-            if (s.equals(session)) {
-                message.setOwner(true);
-            } else {
-                message.setOwner(false);
-            }
+            message.setOwner(s.equals(session));
                 try {
                     s.getBasicRemote().sendObject(message);
                 } catch (IOException | EncodeException e) {
