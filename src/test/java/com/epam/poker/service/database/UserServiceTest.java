@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -39,19 +38,15 @@ public class UserServiceTest {
 
     @Test
     public void testExpectedExceptionFindUserByLogin() {
-        Random random = new Random();
-        int randomNumber = random.nextInt();
         Assertions.assertThrows(ServiceException.class, () -> {
-            userService.findUserByLogin(String.valueOf(randomNumber));
+            userService.findUserByLogin(String.valueOf(-1));
         });
     }
 
     @Test
     public void testExpectedExceptionFindUserById() {
-        Random random = new Random();
-        long randomNumber = random.nextLong();
         Assertions.assertThrows(ServiceException.class, () -> {
-            userService.findUserById(randomNumber);
+            userService.findUserById(-1);
         });
     }
 
