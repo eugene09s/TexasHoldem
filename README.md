@@ -1,6 +1,6 @@
 ## Poker game
-The first thing the guest sees is the home page with the poker rules. Also, the guest can log in or register. Further, the guest, having passed the authorization, becomes a user. Each user has their own profile, which can be edited: name, biography, phone number and photo. Also, the user can change his password using the old password. The administrator role allows you to ban / unblock users and add money to users' balances. All users can go to the game page (lobby), select a table, sit at the table and start the game if there are at least two players at the table. After the end of the game, the statistics will be recorded and the user will be able to see it.
-## Project features:
+The first thing a guest sees is the home page with poker rules.
+A guest also can log in or register. After passing the authorization, a guest becomes a user. Each user has his own profile, which can be edited: name, biography, phone number and photo. Also, users can change their passwords using the old password. The administrator's rights allows you to ban/unban users and add money to users' balances. All users can go to the game page (lobby), select a table, join, and start the game if there are at least two players . After the game, the statistics will be recorded and a user can see it.## Project features:
 * User friendly URL
 * Localization: en_EN, ru_RU
 * 2 roles
