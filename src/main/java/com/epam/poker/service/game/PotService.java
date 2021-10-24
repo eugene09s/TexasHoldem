@@ -156,14 +156,14 @@ public class PotService {
                         + handlerMessage(winners.get(0).getEvaluateHand().getCards()));
             } else {
                 int winnersCount = winners.size();
-                BigDecimal winnigs = pots.get(i).getAmount().divide(BigDecimal.valueOf(winnersCount));
-                boolean isOddMoney = winnigs.multiply(BigDecimal.valueOf(winnersCount)).equals(pots.get(i).getAmount());
+                BigDecimal winnings = pots.get(i).getAmount().subtract(BigDecimal.valueOf(winnersCount));
+                boolean isOddMoney = winnings.multiply(BigDecimal.valueOf(winnersCount)).equals(pots.get(i).getAmount());
                 for (Gambler gambler : winners) {
                     BigDecimal gamblersWinnings = BigDecimal.ONE;
                     if (isOddMoney && gambler.getNumberSeatOnTable() == firstGamblerToAct) {
-                        gamblersWinnings = winnigs.add(BigDecimal.ONE);
+                        gamblersWinnings = winnings.add(BigDecimal.ONE);
                     } else {
-                        gamblersWinnings = winnigs;
+                        gamblersWinnings = winnings;
                     }
                     try {
                         profilePlayerService.updateWinMoneyByLogin(gambler.getName(), gamblersWinnings);
@@ -177,6 +177,7 @@ public class PotService {
                 }
             }
         }
+        LOGGER.debug("Save statistice: Tabele-" + table +" All Gamblers- "+ allGamblers + " Winners: " + allWinnerGamblers);
         saveStatisticeGame(table, allGamblers, allWinnerGamblers);
         reset(table);
         return messages;
@@ -230,6 +231,7 @@ public class PotService {
                 statisticResultGame.getGamePlayers().add(gamePlayer);
             }
         }
+
         for (Gambler gambler : allWinnerGamblers) {
             long userId = -1;
             try {
@@ -266,9 +268,10 @@ public class PotService {
         profilePlayerService.updateWinMoneyByLogin(gambler.getName(), totalAmount);
         Set<Gambler> allGamblers = new HashSet<>();
         allGamblers.add(gambler);
-        Set<Gambler> winGambler = new HashSet<>();
-        winGambler.add(gambler);
-        saveStatisticeGame(table, allGamblers, winGambler);
+        Set<Gambler> winGamblers = new HashSet<>();
+        winGamblers.add(gambler);
+        LOGGER.debug("Save statistice: Tabele-" + table + " All Gamblers-" + allGamblers + " Winners:" + winGamblers);
+        saveStatisticeGame(table, allGamblers, winGamblers);
         reset(table);
         return gambler.getName().concat(" wins the pot (")
                 .concat(String.valueOf(totalAmount)).concat(")");

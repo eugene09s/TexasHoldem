@@ -23,3 +23,5 @@ see statistic games | *  |  * |  |
 logout | * | * |
 singing in |   |   | * |
 register user |   |   | * |
+Schema database:
+![text](https://github.com/Evgenij009/TexasHoldem/blob/master/src/sql/pokerschema.png?raw=true)

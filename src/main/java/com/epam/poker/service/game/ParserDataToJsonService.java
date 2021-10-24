@@ -31,6 +31,7 @@ public class ParserDataToJsonService {
                 .put(PLAYER_SEATED_COUNT, table.getGamblersSittingInCount())
                 .put(BIG_BLIND, table.getBigBlind())
                 .put(SMALL_BLIND, table.getSmallBlind())
+                .put(SMALL_BLIND, table.getSmallBlind())
                 .put(MIN_BUY_IN, table.getMinBuyIn())
                 .put(MAX_BUY_IN, table.getMaxBuyIn());
         List<Pot> pots = table.getPots();
