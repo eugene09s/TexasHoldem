@@ -57,6 +57,12 @@ public class ChatController {
     @OnClose
     public void onClose(Session session) {
         sessionUsers.remove(session);
+        try {
+            session.close();
+        } catch (IOException e) {
+            LOGGER.warn("CLose session: " + e);
+        }
+        LOGGER.debug("Session closed");
     }
 
     @OnError

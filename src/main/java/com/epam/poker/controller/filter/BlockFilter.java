@@ -20,8 +20,8 @@ import java.util.Optional;
 
 public class BlockFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static UserService userService = UserServiceImpl.getInstance();
-    private static JwtProvider jwtProvider = JwtProvider.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
+    private static final JwtProvider jwtProvider = JwtProvider.getInstance();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

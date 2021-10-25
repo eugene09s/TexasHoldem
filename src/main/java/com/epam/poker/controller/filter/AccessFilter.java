@@ -61,7 +61,7 @@ public class AccessFilter implements Filter {
                     }
                 }
             } else {
-                LOGGER.info("Token not valid!");
+                LOGGER.debug("Token not valid!");
                 userRole = UserRole.GUEST;
                 session.setAttribute(Attribute.INVALIDATE_ATTRIBUTE, true);
                 HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -70,7 +70,7 @@ public class AccessFilter implements Filter {
                 response.addCookie(deleteBlackToken);
             }
         } else {
-            LOGGER.info("Token not found or dead!");
+            LOGGER.debug("Token not found or dead!");
             userRole = UserRole.GUEST;
         }
 

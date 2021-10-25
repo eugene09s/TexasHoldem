@@ -20,6 +20,8 @@ import jakarta.websocket.server.ServerEndpoint;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+
 @ServerEndpoint(value = "/game-poker",
         configurator = EndpointAwareConfig.class)
 public class GameController {
@@ -75,11 +77,17 @@ public class GameController {
     }
 
     @OnClose
-    public void onClose() {
+    public void onClose(Session session) {
         if (gambler != null) {
             disconnectGambler();
             gambler = null;
         }
+        try {
+            session.close();
+        } catch (IOException e) {
+            LOGGER.warn("CLose session: " + e);
+        }
+        LOGGER.debug("Session closed");
     }
 
     @OnError

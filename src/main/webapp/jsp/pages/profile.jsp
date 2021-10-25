@@ -46,7 +46,7 @@
                     <c:if test="${requestScope.user.userId == sessionScope.userId}">
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 class="mb-0">
-                                <img src="https://img.icons8.com/office/32/000000/money--v2.png"/> Your balance
+                                <img src="https://img.icons8.com/office/32/000000/money--v2.png"/> <fmt:message key="profile.your.balance"/>
                             </h6>
                             <span class="text-secondary">${user.getBalance()} $</span>
                         </li>
@@ -54,25 +54,25 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 class="mb-0">
                             <img src="https://img.icons8.com/external-vitaliy-gorbachev-flat-vitaly-gorbachev/32/000000/external-award-online-learning-vitaliy-gorbachev-flat-vitaly-gorbachev.png"/>
-                            Awards
+                            <fmt:message key="profile.award"/>
                         </h6>
                         <span class="text-secondary">${profilePlayer.getAward()}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 class="mb-0">
-                            <img src="https://img.icons8.com/color/32/000000/prize-money.png"/> Best prize
+                            <img src="https://img.icons8.com/color/32/000000/prize-money.png"/> <fmt:message key="profile.best.prize"/>
                         </h6>
                         <span class="text-secondary">${profilePlayer.getBestPrize()} $</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 class="mb-0">
-                            <img src="https://img.icons8.com/ios-filled/32/000000/money--v1.png"/> Lost money
+                            <img src="https://img.icons8.com/ios-filled/32/000000/money--v1.png"/> <fmt:message key="profile.lost.money"/>
                         </h6>
                         <span class="text-secondary">${profilePlayer.getLostMoney()} $</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 class="mb-0">
-                            <img src="https://img.icons8.com/material-rounded/32/000000/money-bag.png"/> Win money
+                            <img src="https://img.icons8.com/material-rounded/32/000000/money-bag.png"/> <fmt:message key="profile.win.money"/>
                         </h6>
                         <span class="text-secondary">${profilePlayer.getWinMoney()} $</span>
                     </li>

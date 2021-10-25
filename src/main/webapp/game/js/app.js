@@ -39,8 +39,6 @@ class Socket {
 	}
 
 	onMessage(msg) {
-		console.log(msg.event);
-		console.log(msg.data);
 		this.events[msg.event](msg.data);
 	}
 	async connect() {
