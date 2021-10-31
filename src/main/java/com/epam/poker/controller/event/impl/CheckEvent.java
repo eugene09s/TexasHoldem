@@ -6,6 +6,7 @@ import com.epam.poker.model.game.Gambler;
 import com.epam.poker.model.game.Lobby;
 import com.epam.poker.model.game.Table;
 import com.epam.poker.service.game.EventHandlerService;
+import com.epam.poker.util.constant.EventName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,14 +34,8 @@ public class CheckEvent implements EventSocket {
 
     @Override
     public void execute(String jsonRequest, Gambler gambler) {
-        JsonNode json = null;
-        try {
-            json = mapper.readTree(jsonRequest);
-        } catch (JsonProcessingException e) {
-            LOGGER.error("Parse json: " + e);
-        }
         ObjectNode response = mapper.createObjectNode();
-        response.putPOJO(EVENT, json.get(EVENT));
+        response.putPOJO(EVENT, EventName.CHECK);
         ObjectNode objectNode = mapper.createObjectNode();
         if (gambler.getSittingOnTable() > -1
                 && lobby.findTableByNameRoom(gambler.getTitleRoom()) != null) {

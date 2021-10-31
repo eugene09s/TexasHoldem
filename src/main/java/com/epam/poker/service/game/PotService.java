@@ -128,12 +128,15 @@ public class PotService {
                 if (gambler != null && gambler.isInHand()
                         && pots.get(i).getContributors()
                         .contains(gambler.getNumberSeatOnTable())) {
-                    loseGamblers.add(gambler);
+                    if (!loseGamblers.contains(gambler)) {
+                        loseGamblers.add(gambler);
+                    }
                     if (gambler.getEvaluateHand().getRating() > bestRating) {
                         bestRating = gambler.getEvaluateHand().getRating();
                         winners = new ArrayList<>();
                         winners.add(gambler);
-                    } else if (gambler.getEvaluateHand().getRating() == bestRating) {
+                    } else if (gambler.getEvaluateHand().getRating() == bestRating
+                            && !winners.contains(gambler)) {
                         winners.add(gambler);
                     }
                 }

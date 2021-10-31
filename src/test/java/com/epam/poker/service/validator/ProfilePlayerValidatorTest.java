@@ -37,10 +37,9 @@ public class ProfilePlayerValidatorTest {
     @Test
     public void testInvalidPhotoOfdProfilePlayer() throws CloneNotSupportedException {
         ProfilePlayer testProfilePlayer = (ProfilePlayer) VALID_PROFILE_PLAYER.clone();
-        testProfilePlayer.setPhoto("""
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa129symbol
-        """);
+        testProfilePlayer.setPhoto(
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa129symbssol");
         boolean actual = profilePlayerValidator.isValid(testProfilePlayer);
         assertFalse(actual);
     }

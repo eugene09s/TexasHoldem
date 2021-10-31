@@ -7,6 +7,7 @@ import com.epam.poker.model.game.Lobby;
 import com.epam.poker.model.game.Table;
 import com.epam.poker.service.game.EventHandlerService;
 import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.EventName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,14 +35,8 @@ public class CallEvent implements EventSocket {
 
     @Override
     public void execute(String jsonRequest, Gambler gambler) {
-        JsonNode json = null;
-        try {
-            json = mapper.readTree(jsonRequest);
-        } catch (JsonProcessingException e) {
-            LOGGER.error("Parse json: " + e);
-        }
         ObjectNode response = mapper.createObjectNode();
-        response.putPOJO(Attribute.EVENT, json.get(Attribute.EVENT));
+        response.putPOJO(Attribute.EVENT, EventName.CALL);
         ObjectNode objectNode = mapper.createObjectNode();
         if (gambler.getSittingOnTable() > -1
                 && lobby.findTableByNameRoom(gambler.getTitleRoom()) != null) {
@@ -49,7 +44,7 @@ public class CallEvent implements EventSocket {
             int activeSeat = table.getActiveSeat();
             if (table.getSeats()[activeSeat] == gambler
                     && !table.getBiggestBet().equals(BigDecimal.ZERO)
-                   && PARTS_OF_GAMES.contains(table.getPhaseGame())) {
+                    && PARTS_OF_GAMES.contains(table.getPhaseGame())) {
                 objectNode.put(Attribute.SUCCESS, true);
                 sendEvent(gambler, response, objectNode);
                 try {

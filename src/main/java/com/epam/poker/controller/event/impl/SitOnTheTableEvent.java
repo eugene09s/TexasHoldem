@@ -11,6 +11,7 @@ import com.epam.poker.service.database.UserService;
 import com.epam.poker.service.database.impl.UserServiceImpl;
 import com.epam.poker.service.game.EventHandlerService;
 import com.epam.poker.util.constant.Attribute;
+import com.epam.poker.util.constant.EventName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,7 +61,7 @@ public class SitOnTheTableEvent implements EventSocket {
         ObjectNode objectNode = mapper.createObjectNode();
         try {
             ObjectNode response = mapper.createObjectNode();
-            response.putPOJO(Attribute.EVENT, json.get(Attribute.EVENT));
+            response.putPOJO(Attribute.EVENT, EventName.SIT_ON_THE_TABLE);
             BigDecimal balanceGambler = user.getBalance();
             gambler.setBalance(balanceGambler);
             data = json.get(Attribute.DATA);
@@ -68,7 +69,7 @@ public class SitOnTheTableEvent implements EventSocket {
             long tableId = data.get(Attribute.TABLE_ID).asLong();
             BigDecimal bet = new BigDecimal(String.valueOf(data.get(Attribute.CHIPS)));
             if (validationJsonData.isValidSitOnTheTableEvent(gambler, numberSeat, tableId)) {
-                if (bet.compareTo(balanceGambler) >= 0) {
+                if (balanceGambler.compareTo(bet) >= 0) {
                     objectNode.put(Attribute.SUCCESS, false);
                     objectNode.put(Attribute.ERROR, MESSAGE_ERROR_CHIPS);
                     sendEvent(gambler, response, objectNode);

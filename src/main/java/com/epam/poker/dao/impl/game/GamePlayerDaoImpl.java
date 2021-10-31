@@ -12,35 +12,30 @@ import java.util.Optional;
 import static com.epam.poker.dao.ColumnName.GAME_PlAYERS;
 
 public class GamePlayerDaoImpl extends AbstractDao<GamePlayer> implements GamePlayerDao {
-    public static final String SQL_FIND_ALL_GAME_PLAYERS = """
-            SELECT game_player_id, last_action, two_cards, combinations_cards,
-            game_player_user_id, game_id
-            FROM game_players
-            """;
-    public static final String SQL_ADD_GAME_PLAYER = """
-            INSERT INTO game_players
-            (last_action, two_cards, combinations_cards,
-            game_player_user_id, game_id)
-            VALUES (?,?,?,?,?)
-            """;
-    public static final String SQL_FIND_GAME_PLAYER_BY_USER_ID = """
-            SELECT game_player_id, last_action, two_cards,
-            combinations_cards, game_player_user_id, game_id
-            FROM game_players
-            WHERE user_id=?
-            """;
-    public static final String SQL_FIND_GAME_PLAYER_BY_GAME_ID = """
-            SELECT game_player_id, last_action, two_cards,
-            combinations_cards, game_player_user_id, game_id
-            FROM game_players
-            WHERE game_id=?
-            """;
-    public static final String SQL_FIND_GAME_PLAYER_BY_GAME_PLAYER_ID = """
-            SELECT game_player_id, last_action, two_cards,
-            combinations_cards, game_player_user_id, game_id
-            FROM game_players
-            WHERE game_player_id=?
-            """;
+    public static final String SQL_FIND_ALL_GAME_PLAYERS =
+            "SELECT game_player_id, last_action, two_cards, combinations_cards," +
+                    "game_player_user_id, game_id " +
+                    "FROM game_players";
+    public static final String SQL_ADD_GAME_PLAYER =
+            "INSERT INTO game_players " +
+                    "(last_action, two_cards, combinations_cards, " +
+                    "game_player_user_id, game_id) " +
+                    "VALUES (?,?,?,?,?)";
+    public static final String SQL_FIND_GAME_PLAYER_BY_USER_ID =
+            "SELECT game_player_id, last_action, two_cards, " +
+                    "combinations_cards, game_player_user_id, game_id " +
+                    "FROM game_players " +
+                    "WHERE user_id=?";
+    public static final String SQL_FIND_GAME_PLAYER_BY_GAME_ID =
+            "SELECT game_player_id, last_action, two_cards, " +
+                    "combinations_cards, game_player_user_id, game_id " +
+                    "FROM game_players " +
+                    "WHERE game_id=?";
+    public static final String SQL_FIND_GAME_PLAYER_BY_GAME_PLAYER_ID =
+            "SELECT game_player_id, last_action, two_cards, " +
+                    "combinations_cards, game_player_user_id, game_id " +
+                    "FROM game_players " +
+                    "WHERE game_player_id=?";
 
     public GamePlayerDaoImpl() {
         super(GamePlayerRowMapper.getInstance(), GAME_PlAYERS);

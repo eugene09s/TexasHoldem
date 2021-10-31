@@ -14,95 +14,79 @@ import java.util.Optional;
 import static com.epam.poker.dao.ColumnName.USERS;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
-    public static final String SQL_FIND_ALL_USERS = """
-            SELECT user_id, login, password, first_name, last_name, email,
-            balance, role, status, phone_number, create_time
-            FROM users
-            """;
-    public static final String SQL_ADD_USER = """
-            INSERT INTO users
-            (login, password, first_name, last_name, email,
-            balance, role, status, phone_number, create_time)
-            VALUES (?,?,?,?,?,?,?,?,?,?)
-            """;
-    public static final String SQL_FIND_USER_BY_ID = """
-            SELECT user_id, login, password, first_name, last_name, email,
-            balance, role, status, phone_number, create_time
-            FROM users
-            WHERE user_id=?
-            """;
-    public static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD = """
-            SELECT user_id, login, password, first_name, last_name, email,
-            balance, role, status, phone_number, create_time
-            FROM users
-            WHERE login=?
-            AND password=?
-            """;
-    public static final String SQL_UPDATE_USER = """
-            UPDATE users
-            SET login=?, first_name=?, last_name=?, email=?,
-            phone_number=?
-            WHERE user_id=?
-            """;
-    public static final String SQL_UPDATE_PASSWORD_BY_ID = """
-            UPDATE users
-            SET password=?
-            WHERE user_id=?
-            """;
-    public static final String SQL_UPDATE_BALANCE_BY_LOGIN = """
-            UPDATE users
-            SET balance=?
-            WHERE login=?
-            """;
-    public static final String SQL_UPDATE_BALANCE_BY_ID = """
-            UPDATE users
-            SET balance=?
-            WHERE user_id=?
-            """;
-    public static final String SQL_UPDATE_GENERAL_INFO_BY_ID = """
-            UPDATE users
-            SET first_name=?, last_name=?, phone_number=?
-            WHERE user_id=?
-            """;
-    public static final String SQL_BLOCK_OR_UNBLOCK_USER = """
-            UPDATE users
-            SET status=?
-            WHERE user_id=?
-            """;
-    public static final String SQL_ADD_MONEY_BY_USER_ID = """
-            UPDATE users
-            SET balance=balance+?
-            WHERE user_id=?
-            """;
-    public static final String SQL_ADD_MONEY_BY_LOGIN = """
-            UPDATE users
-            SET balance=balance+?
-            WHERE login=?
-            """;
-    public static final String SQL_MINUS_MONEY_BY_LOGIN = """
-            UPDATE users
-            SET balance=balance-?
-            WHERE login=?
-            """;
-    public static final String SQL_FIND_BY_LOGIN = """
-            SELECT user_id, login, password, first_name, last_name, email,
-            balance, role, status, phone_number, create_time
-            FROM users
-            WHERE login=?
-            """;
-    public static final String SQL_FIND_BY_EMAIL = """
-            SELECT user_id, login, password, first_name, last_name, email,
-            balance, role, status, phone_number, create_time
-            FROM  users
-            WHERE email=?
-            """;
-    public static final String SQL_FIND_USERS_RANGE = """
-            SELECT user_id, login, password, first_name, last_name, email,
-            balance, role, status, phone_number, create_time
-            FROM users
-            ORDER BY create_time DESC
-            LIMIT ?,?
-            """;
+    public static final String SQL_FIND_ALL_USERS =
+            "SELECT user_id, login, password, first_name, last_name, email, " +
+                    "balance, role, status, phone_number, create_time " +
+                    "FROM users";
+    public static final String SQL_ADD_USER =
+            "INSERT INTO users " +
+                    "(login, password, first_name, last_name, email, " +
+                    "balance, role, status, phone_number, create_time) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?)";
+    public static final String SQL_FIND_USER_BY_ID =
+            "SELECT user_id, login, password, first_name, last_name, email, " +
+                    "balance, role, status, phone_number, create_time " +
+                    "FROM users " +
+                    "WHERE user_id=?";
+    public static final String SQL_FIND_USER_BY_LOGIN_AND_PASSWORD =
+            "SELECT user_id, login, password, first_name, last_name, email, " +
+                    "balance, role, status, phone_number, create_time " +
+                    "FROM users " +
+                    "WHERE login=? " +
+                    "AND password=?";
+    public static final String SQL_UPDATE_USER =
+            "UPDATE users " +
+                    "SET login=?, first_name=?, last_name=?, email=?, " +
+                    "phone_number=? " +
+                    "WHERE user_id=?";
+    public static final String SQL_UPDATE_PASSWORD_BY_ID =
+            "UPDATE users " +
+                    "SET password=? " +
+                    "WHERE user_id=?";
+    public static final String SQL_UPDATE_BALANCE_BY_LOGIN =
+            "UPDATE users " +
+                    "SET balance=? " +
+                    "WHERE login=? ";
+    public static final String SQL_UPDATE_BALANCE_BY_ID =
+            "UPDATE users " +
+                    "SET balance=? " +
+                    "WHERE user_id=?";
+    public static final String SQL_UPDATE_GENERAL_INFO_BY_ID =
+            "UPDATE users " +
+                    "SET first_name=?, last_name=?, phone_number=? " +
+                    "WHERE user_id=?";
+    public static final String SQL_BLOCK_OR_UNBLOCK_USER =
+            "UPDATE users " +
+                    "SET status=? " +
+                    "WHERE user_id=?";
+    public static final String SQL_ADD_MONEY_BY_USER_ID =
+            "UPDATE users " +
+                    "SET balance=balance+? " +
+                    "WHERE user_id=? ";
+    public static final String SQL_ADD_MONEY_BY_LOGIN =
+            "UPDATE users " +
+                    "SET balance=balance+? " +
+                    "WHERE login=?";
+    public static final String SQL_MINUS_MONEY_BY_LOGIN =
+            "UPDATE users " +
+                    "SET balance=balance-? " +
+                    "WHERE login=?";
+    public static final String SQL_FIND_BY_LOGIN =
+            "SELECT user_id, login, password, first_name, last_name, email, " +
+                    "balance, role, status, phone_number, create_time " +
+                    "FROM users " +
+                    "WHERE login=?";
+    public static final String SQL_FIND_BY_EMAIL =
+            "SELECT user_id, login, password, first_name, last_name, email, " +
+                    "balance, role, status, phone_number, create_time " +
+                    "FROM  users " +
+                    "WHERE email=?";
+    public static final String SQL_FIND_USERS_RANGE =
+            "SELECT user_id, login, password, first_name, last_name, email, " +
+                    "balance, role, status, phone_number, create_time " +
+                    "FROM users " +
+                    "ORDER BY create_time DESC " +
+                    "LIMIT ?,?";
 
     public UserDaoImpl() {
         super(UserRowMapper.getInstance(), USERS);

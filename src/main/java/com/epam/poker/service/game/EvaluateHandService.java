@@ -260,39 +260,44 @@ public class EvaluateHandService {
 
     private void calcEvaluateHand() {
         switch (evaluateHand.getRank()) {
-            case PAIR -> {
+            case PAIR: {
                 evaluateHand.setName(MSG_PAIR_OF
                         .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 1000000);
             }
-            case TWO_PAIR -> {
+            break;
+            case TWO_PAIR: {
                 evaluateHand.setName(MSG_TWO_PAIR
                         .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true))
                         .concat(MSG_AND + findCardNameByKey(evaluateHand.getCards().get(2).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 2000000);
             }
-            case THREE_OF_KIND -> {
+            break;
+            case THREE_OF_KIND: {
                 evaluateHand.setName(MSG_THREE_OF_KIND
                         .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 3000000);
             }
-            case STRAIGHT -> {
+            break;
+            case STRAIGHT: {
                 evaluateHand.setName(MSG_STRAIGHT_TO
                         .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 4000000);
             }
-            case FLUSH -> {
+            break;
+            case FLUSH: {
                 evaluateHand.setName(MSG_FLUSH
                         .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true))
                         .concat(MSG_HIGH));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 5000000);
             }
-            case FULL_HOUSE -> {
+            break;
+            case FULL_HOUSE: {
                 evaluateHand.setName(MSG_FULL_HOUSE
                         .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true))
                         .concat(MSG_FULL_OF)
@@ -300,13 +305,15 @@ public class EvaluateHandService {
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 6000000);
             }
-            case FOUR_OF_KIND -> {
+            break;
+            case FOUR_OF_KIND: {
                 evaluateHand.setName(MSG_FOUR_OF_KIND
                         .concat(findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), true)));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 7000000);
             }
-            case STRAIGHT_FLUSH -> {
+            break;
+            case STRAIGHT_FLUSH: {
                 evaluateHand.setName(MSG_STRAIGHT_FLUSH
                         .concat(findCardNameByKey(evaluateHand.getCards().get(4).charAt(0), true))
                         .concat(MSG_TO)
@@ -314,12 +321,14 @@ public class EvaluateHandService {
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 8000000);
             }
-            case ROYAL_FLUSH -> {
+            break;
+            case ROYAL_FLUSH: {
                 evaluateHand.setName(MSG_ROYAL_FLUSH);
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards())
                         + 8000000);
             }
-            default -> {//High card
+            break;
+            default: {//High card
                 evaluateHand.setName(
                         findCardNameByKey(evaluateHand.getCards().get(0).charAt(0), false));
                 evaluateHand.setRating(calcRateHand(evaluateHand.getCards()));

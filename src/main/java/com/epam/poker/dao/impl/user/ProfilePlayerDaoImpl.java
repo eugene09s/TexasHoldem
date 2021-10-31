@@ -13,61 +13,50 @@ import java.util.Optional;
 import static com.epam.poker.dao.ColumnName.PROFILE_PLAYERS;
 
 public class ProfilePlayerDaoImpl extends AbstractDao<ProfilePlayer> implements ProfilePlayerDao {
-    public static final String SQL_ADD_PROFILE_PLAYER = """
-            INSERT INTO profile_players
-            (player_id, best_prize, award, photo, about_yourself, lost_money, win_money)
-            VALUES (?,?,?,?,?,?,?)
-            """;
-    public static final String SQL_FIND_ALL_PROFILE_PLAYERS = """
-            SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money
-            FROM profile_players
-            """;
-    public static final String SQL_FIND_PROFILE_PLAYER_BY_USER_ID = """
-            SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money
-            FROM profile_players
-            WHERE player_id =?
-            """;
-    public static final String SQL_UPDATE_PHOTO_BY_USER_ID = """
-            UPDATE profile_players
-            SET photo=?
-            WHERE player_id=?
-            """;
-    public static final String SQL_FIND_PROFILE_PLAYER_RANGE = """
-            SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money
-            FROM profile_players
-            ORDER BY player_id DESC
-            LIMIT ?,?
-            """;
-    public static final String SQL_UPDATE_ABOUT_YOURSELF_BY_USER_ID = """
-            UPDATE profile_players
-            SET about_yourself=?
-            WHERE player_id=?
-            """;
-    public static final String SQL_UPDATE_BEST_PRIZE_BY_USER_ID = """
-            UPDATE profile_players
-            SET best_prize=?
-            WHERE ? > best_prize AND player_id=?
-            """;
-    public static final String SQL_UPDATE_AWARD_BY_USER_ID = """
-            UPDATE profile_players
-            SET award=?
-            WHERE player_id=?
-            """;
-    public static final String SQL_UPDATE_LOST_MONEY_BY_USER_ID = """
-            UPDATE profile_players
-            SET lost_money=lost_money+?
-            WHERE player_id=?
-            """;
-    public static final String SQL_UPDATE_WIN_MONEY_BY_USER_ID = """
-            UPDATE profile_players
-            SET win_money=win_money+?
-            WHERE player_id=?
-            """;
-    public static final String SQL_UPDATE_PROFILE_PLAYER_BY_USER_ID = """
-            UPDATE profile_players
-            SET best_prize=?, award=?, photo=?, about_yourself=?, lost_money=?, win_money=?
-            WHERE player_id=?
-            """;
+    public static final String SQL_ADD_PROFILE_PLAYER =
+            "INSERT INTO profile_players " +
+                    "(player_id, best_prize, award, photo, about_yourself, lost_money, win_money) " +
+                    "VALUES (?,?,?,?,?,?,?)";
+    public static final String SQL_FIND_ALL_PROFILE_PLAYERS =
+            "SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money " +
+                    "FROM profile_players";
+    public static final String SQL_FIND_PROFILE_PLAYER_BY_USER_ID =
+            "SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money " +
+                    "FROM profile_players " +
+                    "WHERE player_id =?";
+    public static final String SQL_UPDATE_PHOTO_BY_USER_ID =
+            "UPDATE profile_players " +
+                    "SET photo=? " +
+                    "WHERE player_id=?";
+    public static final String SQL_FIND_PROFILE_PLAYER_RANGE =
+            "SELECT player_id, best_prize, award, photo, about_yourself, lost_money, win_money " +
+                    "FROM profile_players " +
+                    "ORDER BY player_id DESC " +
+                    "LIMIT ?,?";
+    public static final String SQL_UPDATE_ABOUT_YOURSELF_BY_USER_ID =
+            "UPDATE profile_players " +
+                    "SET about_yourself=? " +
+                    "WHERE player_id=?";
+    public static final String SQL_UPDATE_BEST_PRIZE_BY_USER_ID =
+            "UPDATE profile_players " +
+                    "SET best_prize=? " +
+                    "WHERE ? > best_prize AND player_id=?";
+    public static final String SQL_UPDATE_AWARD_BY_USER_ID =
+            "UPDATE profile_players " +
+                    "SET award=? " +
+                    "WHERE player_id=?";
+    public static final String SQL_UPDATE_LOST_MONEY_BY_USER_ID =
+            "UPDATE profile_players " +
+                    "SET lost_money=lost_money+? " +
+                    "WHERE player_id=?";
+    public static final String SQL_UPDATE_WIN_MONEY_BY_USER_ID =
+            "UPDATE profile_players " +
+                    "SET win_money=win_money+? " +
+                    "WHERE player_id=?";
+    public static final String SQL_UPDATE_PROFILE_PLAYER_BY_USER_ID =
+            "UPDATE profile_players " +
+                    "SET best_prize=?, award=?, photo=?, about_yourself=?, lost_money=?, win_money=? " +
+                    "WHERE player_id=?";
 
     public ProfilePlayerDaoImpl() {
         super(ProfilePlayerRowMapper.getInstance(), PROFILE_PLAYERS);

@@ -12,26 +12,22 @@ import java.util.Optional;
 import static com.epam.poker.dao.ColumnName.GAMES;
 
 public class GameDaoImpl extends AbstractDao<Game> implements GameDao {
-    public static final String SQL_FIND_ALL_GAMES = """
-            SELECT game_id, title, date, bank, five_cards
-            FROM games
-            """;
-    public static final String SQL_ADD_GAME = """
-            INSERT INTO games
-            (title, date, bank, five_cards)
-            VALUES (?,?,?,?)
-            """;
-    public static final String SQL_FIND_GAME_BY_ID = """
-            SELECT game_id, title, date, bank, five_cards
-            FROM games
-            WHERE game_id=?
-            """;
-    public static final String SQL_FIND_GAMES_RANGE = """
-            SELECT game_id, title, date, bank, five_cards
-            FROM games
-            ORDER BY date DESC
-            LIMIT ?,?
-            """;
+    public static final String SQL_FIND_ALL_GAMES =
+            "SELECT game_id, title, date, bank, five_cards " +
+                    " FROM games";
+    public static final String SQL_ADD_GAME =
+            "INSERT INTO games " +
+                    "(title, date, bank, five_cards) " +
+                    "VALUES (?,?,?,?)";
+    public static final String SQL_FIND_GAME_BY_ID =
+            "SELECT game_id, title, date, bank, five_cards " +
+                    "FROM games " +
+                    "WHERE game_id=? ";
+    public static final String SQL_FIND_GAMES_RANGE =
+            "SELECT game_id, title, date, bank, five_cards " +
+                    "FROM games " +
+                    " ORDER BY date DESC " +
+                    "LIMIT ?,? ";
 
     public GameDaoImpl() {
         super(GameRowMapper.getInstance(), GAMES);

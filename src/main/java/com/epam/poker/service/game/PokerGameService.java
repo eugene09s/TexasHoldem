@@ -127,14 +127,17 @@ public class PokerGameService {
 
     public void endPhase(Table table) throws ServiceException {
         switch (table.getPhaseGame()) {
-            case PREFLOP, FLOP, TURN -> initializeNextPhase(table);
-            case RIVER -> showdown(table);
+            case PREFLOP:
+            case FLOP:
+            case TURN: initializeNextPhase(table);
+            break;
+            case RIVER: showdown(table);
         }
     }
 
     private void initializeNextPhase(Table table) throws ServiceException {
         switch (table.getPhaseGame()) {
-            case Attribute.PRE_FLOP_PART_OF_GAME -> {
+            case Attribute.PRE_FLOP_PART_OF_GAME: {
                 table.setPhaseGame(Attribute.FLOP_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 String[] cards = deck.pullSomeCardsFromDeck(3).toArray(new String[0]);
@@ -142,16 +145,19 @@ public class PokerGameService {
                 table.getBoard()[1] = cards[1];
                 table.getBoard()[2] = cards[2];
             }
-            case Attribute.FLOP_PART_OF_GAME -> {
+            break;
+            case Attribute.FLOP_PART_OF_GAME: {
                 table.setPhaseGame(Attribute.TURN_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 table.getBoard()[3] =  deck.pullSomeCardsFromDeck(1).get(0);;
             }
-            case Attribute.TURN_PART_OF_GAME -> {
+            break;
+            case Attribute.TURN_PART_OF_GAME: {
                 table.setPhaseGame(Attribute.RIVER_PART_OF_GAME);
                 Deck deck = table.getDeck();
                 table.getBoard()[4] = deck.pullSomeCardsFromDeck(1).get(0);
             }
+            break;
         }
         potService.addTableBets(table);
         table.setBiggestBet(BigDecimal.ZERO);
@@ -323,15 +329,17 @@ public class PokerGameService {
                 true, true));
 
         switch (table.getPhaseGame()) {
-            case Attribute.SMALL_BLIND_PART_OF_GAME -> {
+            case Attribute.SMALL_BLIND_PART_OF_GAME: {
                 Gambler gambler = table.getSeats()[table.getActiveSeat()];
                 notifierTableDataService.notifyGambler(Attribute.POST_SMALL_BLIND_EVENT, gambler, null);
             }
-            case Attribute.BIG_BLIND_PART_OF_GAME -> {
+            break;
+            case Attribute.BIG_BLIND_PART_OF_GAME: {
                 Gambler gambler = table.getSeats()[table.getActiveSeat()];
                 notifierTableDataService.notifyGambler(Attribute.POST_BIG_BLIND_EVENT, gambler, null);
             }
-            case Attribute.PRE_FLOP_PART_OF_GAME -> {
+            break;
+            case Attribute.PRE_FLOP_PART_OF_GAME: {
                 Gambler gambler = table.getSeats()[table.getActiveSeat()];
                 if (otherGamblersAreAllIn(table)) {
                     notifierTableDataService.notifyGambler(Attribute.ACT_OTHERS_ALL_IN_EVENT, gambler, null);
@@ -339,9 +347,10 @@ public class PokerGameService {
                     notifierTableDataService.notifyGambler(Attribute.ACT_BETTED_POT_EVENT, gambler, null);
                 }
             }
-            case Attribute.FLOP_PART_OF_GAME,
-                    Attribute.TURN_PART_OF_GAME,
-                    Attribute.RIVER_PART_OF_GAME -> {
+            break;
+            case Attribute.FLOP_PART_OF_GAME:
+                    case Attribute.TURN_PART_OF_GAME:
+                    case Attribute.RIVER_PART_OF_GAME: {
                 Gambler gambler = table.getSeats()[table.getActiveSeat()];
                 //if someone has betted
                 if (table.getBiggestBet().compareTo(BigDecimal.ZERO) > 0) {
@@ -354,6 +363,7 @@ public class PokerGameService {
                     notifierTableDataService.notifyGambler(Attribute.ACT_NOT_BETTED_POT_EVENT, gambler, null);
                 }
             }
+            break;
         }
         notifierTableDataService.notifyALLGamblersOfRoom(table);
     }
