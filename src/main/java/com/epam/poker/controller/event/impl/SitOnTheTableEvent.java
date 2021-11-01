@@ -69,7 +69,7 @@ public class SitOnTheTableEvent implements EventSocket {
             long tableId = data.get(Attribute.TABLE_ID).asLong();
             BigDecimal bet = new BigDecimal(String.valueOf(data.get(Attribute.CHIPS)));
             if (validationJsonData.isValidSitOnTheTableEvent(gambler, numberSeat, tableId)) {
-                if (balanceGambler.compareTo(bet) >= 0) {
+                if (bet.compareTo(balanceGambler) > 0) {
                     objectNode.put(Attribute.SUCCESS, false);
                     objectNode.put(Attribute.ERROR, MESSAGE_ERROR_CHIPS);
                     sendEvent(gambler, response, objectNode);
