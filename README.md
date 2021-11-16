@@ -29,3 +29,5 @@ App deployed on AWS: http://13.49.159.31:1234/
 
 ### Schema database:
 ![text](https://github.com/Evgenij009/TexasHoldem/blob/master/src/sql/pokerschema.png?raw=true)
+
+P.S: I spent over 500 hours developing this project:)
