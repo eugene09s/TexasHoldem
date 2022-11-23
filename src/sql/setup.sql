@@ -5,7 +5,7 @@ USE `pokerschema` ;
 CREATE TABLE IF NOT EXISTS `pokerschema`.`users` (
                                                      `user_id` BIGINT NOT NULL AUTO_INCREMENT,
                                                      `login` VARCHAR(32) NOT NULL,
-                                                     `password` VARCHAR(32) NOT NULL,
+                                                     `password` VARCHAR(64) NOT NULL,
                                                      `first_name` VARCHAR(32) NOT NULL,
                                                      `last_name` VARCHAR(32) NOT NULL,
                                                      `email` VARCHAR(64) NOT NULL,
