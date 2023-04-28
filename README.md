@@ -26,3 +26,6 @@ singing in |   |   | * |
 register user |   |   | * |
 ### Schema database:
 ![text](https://github.com/Evgenij009/TexasHoldem/blob/master/src/sql/pokerschema.png?raw=true)
+
+Statistic
+![image](https://user-images.githubusercontent.com/38386052/235198931-7d2d40c2-2015-4aef-8b99-fe4878b853d0.png)
